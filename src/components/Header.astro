@@ -1,25 +1,61 @@
 ---
-import HeaderLink from './HeaderLink.astro';
-import { SITE_TITLE } from '../consts';
+import { Icon } from "astro-icon";
+import { t } from "i18next";
+import { SOCIAL_LINK } from "../consts";
+import Footer from "./Footer.astro";
+import HeaderLink from "./HeaderLink.astro";
+import SocialLink from "./SocialLink.astro";
 ---
 
-<header>
-	<h2>
-		{SITE_TITLE}
-	</h2>
-	<nav>
-		<HeaderLink href="/">Home</HeaderLink>
-		<HeaderLink href="/blog">Blog</HeaderLink>
-		<HeaderLink href="/about">About</HeaderLink>
-		<HeaderLink href="https://twitter.com/astrodotbuild" target="_blank">Twitter</HeaderLink>
-		<HeaderLink href="https://github.com/withastro/astro" target="_blank">GitHub</HeaderLink>
-	</nav>
+<header class="flex items-center justify-between mb-12">
+  <button
+    id="hamburger-menu"
+    class="p-1"
+  >
+    <Icon name="mdi:hamburger" />
+  </button>
+  <nav
+    id="nav-section"
+    class="hidden fixed flex-col left-0 right-0 bottom-0 top-[62px] bg-gray-100"
+  >
+    <HeaderLink href="/">{t("navigation.homepage")}</HeaderLink>
+    <HeaderLink href="/blog">{t("navigation.blog")}</HeaderLink>
+    <HeaderLink href="/snippets">{t("navigation.snippets")}</HeaderLink>
+    <HeaderLink href="/about">{t("navigation.about")}</HeaderLink>
+    <Footer className="mt-auto mb-6 mx-10" />
+  </nav>
+  <div class="flex gap-2">
+    <SocialLink
+      platform="github"
+      link={SOCIAL_LINK.GITHUB}
+    />
+    <SocialLink
+      platform="twitter"
+      link={SOCIAL_LINK.TWITTER}
+    />
+  </div>
 </header>
-<style>
-	header {
-		margin: 0em 0 2em;
-	}
-	h2 {
-		margin: 0.5em 0;
-	}
+
+<script>
+  const hamburgerMenuEl = document.querySelector("#hamburger-menu");
+  const navSection = document.querySelector("#nav-section");
+
+  hamburgerMenuEl!.addEventListener("click", () => {
+    const isVisible = navSection!.classList.contains("flex");
+
+    if (isVisible) {
+      navSection!.classList.replace("flex", "hidden");
+      document.body.style.overflow = "initial";
+    } else {
+      navSection!.classList.replace("hidden", "flex");
+      document.body.style.overflow = "hidden";
+    }
+  });
+</script>
+
+<style lang="scss">
+  [astro-icon] {
+    width: 22px;
+    height: 22px;
+  }
 </style>

@@ -1,0 +1,25 @@
+---
+import { Icon } from "astro-icon";
+
+export interface Props {
+  platform: string;
+  link: string;
+}
+
+const { platform, link } = Astro.props;
+---
+
+<a
+  class="block rounded-lg bg-gray-200 p-1 transition-all hover:bg-gray-400"
+  href={link}
+  target="_blank"
+>
+  <Icon name={platform} />
+</a>
+
+<style lang="scss">
+  [astro-icon] {
+    width: 22px;
+    height: 22px;
+  }
+</style>

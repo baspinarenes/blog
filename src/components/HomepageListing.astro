@@ -1,0 +1,16 @@
+---
+import { t } from "i18next";
+
+interface Props {
+  titleKey: string;
+}
+
+const { titleKey } = Astro.props;
+---
+
+<div class="mt-12 -mx-6">
+  <h2 class="px-6 mb-5">{t(titleKey)}</h2>
+  <div class="flex flex-col">
+    <slot />
+  </div>
+</div>

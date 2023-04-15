@@ -1,0 +1,45 @@
+---
+import { Icon } from "astro-icon";
+
+export interface Props {
+  type: "warning" | "danger" | "info";
+}
+
+const { type } = Astro.props;
+
+const getIconName = () => {
+  if (type === "warning") {
+    return "mdi:warning-box";
+  }
+
+  if (type === "danger") {
+    return "uis:times-circle";
+  }
+
+  return "gridicons:info";
+};
+---
+
+<div
+  class:list={[
+    "p-5 flex flex-col items-center gap-2 mb-8 -mx-6 text-justify",
+    {
+      "bg-yellow": type === "warning",
+      "bg-[rgba(220,38,38,0.5)]": type === "danger",
+      "bg-gray-200": type === "info",
+    },
+  ]}
+>
+  <Icon name={getIconName()} />
+  <div>
+    <slot />
+  </div>
+</div>
+
+<style lang="scss">
+  [astro-icon] {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+  }
+</style>

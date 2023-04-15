@@ -1,0 +1,69 @@
+---
+import { Image } from "@astrojs/image/components";
+import type { CollectionEntry } from "astro:content";
+import i18next from "i18next";
+import avatarImage from "../assets/avatar.webp";
+import { PROFILE } from "../consts";
+import Layout from "./Layout.astro";
+
+type Props = CollectionEntry<"blog">["data"];
+
+const dateOptions: object = {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+};
+
+const { title, description, pubDate, updatedDate, heroImage, supTitle, tags, minutesRead } = Astro.props;
+
+console.log("minutesRead", minutesRead)
+---
+
+<Layout>
+  <main>
+    <article>
+      <div class="flex flex-col mb-16">
+        {supTitle && <h3 class="mb-0 text-lg font-normal">{supTitle}</h3>}
+        <h1 class="mb-5">{title}</h1>
+        <div class="flex justify-between items-center">
+          <div class="flex items-center gap-2">
+            <Image
+              src={avatarImage}
+              width={24}
+              height={24}
+              format="png"
+              alt="Writer avatar"
+              class="h-6 w-6 border-none"
+            />
+            <div class="text-sm">
+              {PROFILE.NAME} / {
+                new Date(pubDate).toLocaleDateString(i18next.language ? "tr-TR" : "en-US", dateOptions)
+              }
+            </div>
+          </div>
+          <div class="text-sm">
+            {minutesRead}
+          </div>
+        </div>
+      </div>
+      <slot />
+    </article>
+  </main>
+</Layout>
+
+<style is:global lang="scss">
+article {
+  h2 {
+    @apply mb-4;
+  }
+  
+  > p {
+    @apply mb-6;
+  }
+
+  p:has(img) {
+    @apply -mx-6;
+  }
+}
+</style>
+

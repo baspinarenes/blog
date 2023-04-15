@@ -1,5 +1,12 @@
-// Place any global data in this file.
-// You can import this data from anywhere in your site by using the `import` keyword.
-
-export const SITE_TITLE = 'My personal website.';
-export const SITE_DESCRIPTION = 'Welcome to my website!';
+export const SITE_TITLE = "Enes Başpınar";
+export const SITE_DESCRIPTION = "Welcome to my website!";
+export const GITHUB_USERNAME = "baspinarenes";
+export const POPULAR_REPO_SHOW_COUNT = 4;
+export const COLLABORATION_REPOS = ["trendyol/pollgroo", "trendyol/perfanalytics", "missing-semester/missing-semester"];
+export const SOCIAL_LINK = {
+  TWITTER: "https://twitter.com/enesbaspinar0",
+  GITHUB: "https://github.com/baspinarenes",
+};
+export const PROFILE = {
+  NAME: "Enes Başpınar",
+}

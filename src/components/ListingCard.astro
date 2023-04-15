@@ -1,0 +1,39 @@
+---
+import { Icon } from "astro-icon";
+
+interface Props {
+  type: "repo" | "article";
+  status: "writer" | "owner" | "contributor";
+  title: string;
+  description: string;
+  score: number;
+  url: string;
+}
+
+const { type, title, status, description, score, url } = Astro.props;
+---
+
+<a
+  href={url}
+  target="_blank"
+  class="flex flex-col px-6 py-3"
+>
+  <div class="flex justify-between text-primary text-md">
+    <p class="uppercase">{status}</p>
+    <div class="flex items-center align-middle">
+      {score}
+      <Icon name={type === "article" ? "ic:baseline-people-alt" : "ic:round-star"} />
+    </div>
+  </div>
+  <h4>{title}</h4>
+  <p class="font-medium">{description}</p>
+  <h3></h3>
+</a>
+
+<style lang="scss">
+  [astro-icon] {
+    width: 22px;
+    height: 22px;
+    margin-bottom: 1px;
+  }
+</style>

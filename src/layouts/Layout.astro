@@ -1,0 +1,64 @@
+---
+import i18next,{ t } from "i18next";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+---
+
+<!DOCTYPE html>
+<html lang={i18next.language}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/favicon.ico"
+    />
+    <meta
+      name="generator"
+      content={Astro.generator}
+    />
+    <meta
+      name="description"
+      content={t("site.description")}
+    />
+    <title>{t("site.title")}</title>
+  </head>
+  <body class="flex flex-col py-4 px-6 min-h-screen">
+    <Header />
+    <slot />
+    <Footer />
+  </body>
+</html>
+
+<style is:global>
+  html {
+    @apply text-gray-600;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply text-black;
+  }
+
+  h1 {
+    @apply text-display-md font-bold leading-none break-words;
+  }
+
+  h2 {
+    @apply text-display-xs leading-snug font-semibold;
+  }
+
+  h3 {
+    @apply text-display-xs font-semibold;
+  }
+
+  h4 {
+    @apply text-xl font-normal leading-none;
+  }
+</style>
