@@ -11,8 +11,6 @@ export async function getRepository(repoName: string) {
     repo: repoName.split("/")[1],
   });
 
-  console.log("repositoryrepository", repository);
-
   return repository.data as unknown as Promise<RawRepository>;
 }
 

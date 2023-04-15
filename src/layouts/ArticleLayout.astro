@@ -1,5 +1,6 @@
 ---
 import { Image } from "@astrojs/image/components";
+import '@fontsource/jetbrains-mono';
 import type { CollectionEntry } from "astro:content";
 import i18next from "i18next";
 import avatarImage from "../assets/avatar.webp";
@@ -15,8 +16,6 @@ const dateOptions: object = {
 };
 
 const { title, description, pubDate, updatedDate, heroImage, supTitle, tags, minutesRead } = Astro.props;
-
-console.log("minutesRead", minutesRead)
 ---
 
 <Layout>
@@ -36,9 +35,7 @@ console.log("minutesRead", minutesRead)
               class="h-6 w-6 border-none"
             />
             <div class="text-sm">
-              {PROFILE.NAME} / {
-                new Date(pubDate).toLocaleDateString(i18next.language ? "tr-TR" : "en-US", dateOptions)
-              }
+              {PROFILE.NAME} / {new Date(pubDate).toLocaleDateString(i18next.language ? "tr-TR" : "en-US", dateOptions)}
             </div>
           </div>
           <div class="text-sm">
@@ -52,18 +49,107 @@ console.log("minutesRead", minutesRead)
 </Layout>
 
 <style is:global lang="scss">
-article {
-  h2 {
-    @apply mb-4;
-  }
-  
-  > p {
-    @apply mb-6;
-  }
+  article {
+    h2 {
+      @apply mb-4;
+    }
 
-  p:has(img) {
-    @apply -mx-6;
+    a {
+      @apply text-blue font-medium hover:brightness-50;
+    }
+
+    & > p {
+      @apply mb-6;
+    }
+
+    p:has(img) {
+      @apply -mx-6;
+    }
+
+    pre:not([data-language]) {
+      @apply bg-black text-gray-500 -mx-6 -mt-6 mb-6 px-6 py-4 border-t border-gray-700 overflow-x-scroll text-sm;
+
+      &:before {
+        @apply block text-xs font-semibold mb-2 uppercase;
+
+        content: "Output";
+      }
+    }
+
+    code, pre {
+      font-family: "Jetbrains Mono";
+    }
+
+    div[data-rehype-pretty-code-fragment] {
+      @apply mb-6 -mx-6 overflow-hidden;
+
+      pre {
+        @apply py-3 overflow-x-scroll grid text-sm;
+
+        background-color: #101828 !important;
+
+        code {
+          @apply grid;
+
+          &:not([data-line-numbers]) {
+            .line {
+              @apply ml-2;
+            }
+          }
+
+          .highlighted {
+            background-color: rgba(255, 255, 255, 0.1);
+          }
+
+          .word {
+            @apply p-1 rounded-md;
+          }
+
+          .line {
+            @apply px-4;
+
+            &::before {
+
+              /* Other styling */
+              display: inline-block;
+              width: 1rem;
+              margin-right: 1rem;
+              text-align: right;
+              color: gray;
+            }
+          }
+
+          &[data-line-numbers] {
+            counter-reset: lineNumber;
+
+            .line::before {
+            counter-increment: lineNumber;
+            content: counter(lineNumber);
+            display: inline-block;
+            text-align: right;
+
+            /* stylistic preferences */
+            margin-right: 0.75rem;
+            width: 1rem;
+            color: rgb(255 255 255 / 0.2);
+          }
+          }
+        }
+      }
+    }
+
+    span[data-rehype-pretty-code-fragment] {
+      code {
+        @apply rounded-md text-sm p-1;
+      }
+    }
+
+    div[data-rehype-pretty-code-title] {
+      @apply bg-black text-gray-400 px-4 py-2 border-b border-gray-700;
+
+      & + pre {
+        background-color: #101828 !important;
+      }
+    }
   }
-}
 </style>
-

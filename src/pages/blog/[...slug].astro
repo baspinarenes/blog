@@ -14,10 +14,6 @@ type Props = CollectionEntry<"blog">;
 
 const post = Astro.props;
 const { Content, remarkPluginFrontmatter } = await post.render();
-
-console.log("post", post);
-console.log("remarkPluginFrontmatter", remarkPluginFrontmatter);
-
 ---
 
 <ArticleLayout {...post.data} minutesRead={remarkPluginFrontmatter.minutesRead}>
