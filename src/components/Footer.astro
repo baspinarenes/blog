@@ -7,7 +7,11 @@ const today = new Date();
 const { className } = Astro.props;
 ---
 
-<footer class={`flex flex-col mt-auto pt-12 md:pt-32 mb-2 text-center text-gray-600 text-xs ${className ?? ""}`}>
-    {today.getFullYear()}{t("site.copyright_1")}
-    <span>{t("site.copyright_2")}</span>
+<footer
+  class={`flex flex-col mt-auto pt-12 md:pt-32 mb-2 text-center text-gray-600 text-xs md:flex-row md:gap-1 md:justify-center ${
+    className ?? ""
+  }`}
+>
+  {today.getFullYear()}{t("site.copyright_1")}
+  <span>{t("site.copyright_2")}</span>
 </footer>

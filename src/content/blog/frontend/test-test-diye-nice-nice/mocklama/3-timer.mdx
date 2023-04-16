@@ -4,48 +4,34 @@ description: "setTimeout ve türevi zamanlayıcı içeren fonksiyonları nasıl 
 pubDate: 2022-11-18
 slug: test-test-diye-nice-nice-mocklama-3-timer
 draft: false
+heroImage: "/src/assets/articles/frontend/test-test-diye-nice-nice/mocklama/1-fonksiyon/001.jpeg"
 tags:
   - jest
   - testing-library
   - mocking
+otherParts:
+  - text: "Part 1 - Fonksiyon"
+    slug: "/blog/test-test-diye-nice-nice-mocklama-1-fonksiyon"
+  - text: "Part 2 - Modül"
+    slug: "/blog/test-test-diye-nice-nice-mocklama-2-modul"
+  - text: "Part 3 - Timer"
+    slug: "/blog/test-test-diye-nice-nice-mocklama-3-timer"
+  - text: "Part 4 - React"
+    slug: "/blog/test-test-diye-nice-nice-mocklama-4-react"
 ---
 
 import MessageBox from "../../../../../components/MessageBox.astro";
 
-## Bölümler
-
-- [Test Test Diye Nice Nice: Mocklama (1) - Fonksiyon](/blog/test-test-diye-nice-nice-mocklama-1-fonksiyon)
-- [Test Test Diye Nice Nice: Mocklama (2) - Modül](/blog/test-test-diye-nice-nice-mocklama-2-modul)
-- Test Test Diye Nice Nice: Mocklama (3) - Timer (Şu anda buradasınız)
-- [Test Test Diye Nice Nice: Mocklama (4) - React](/blog/test-test-diye-nice-nice-mocklama-4-react)
-
-![](/src/assets/articles/frontend/test-test-diye-nice-nice/mocklama/1-fonksiyon/001.jpeg)
-
-<MessageBox type="info">
-  Evren yaratıldığı anda gizli bir zamanlayıcı saymaya başladı. Bu uçsuz bucaksız düzlemde her birimize bir şerit
-  ayrıldı ve yaşadığımız tüm olaylarbu şeride yazılmaya başlandı. Bazen anılarımız kesişti ve şeritler birleşti,bazense
-  ummadığımız kadar uzaklaştılar birbirlerinden... Bu ne alaka diyebilirsiniz aniden zihnimde belirince dümenden
-  paylaştım. Garip blog dünyama hoşgeldiniz.
-</MessageBox>
+Evren yaratıldığı anda gizli bir zamanlayıcı saymaya başladı. Bu uçsuz bucaksız düzlemde her birimize bir şerit
+ayrıldı ve yaşadığımız tüm olaylar bu şeride yazılmaya başlandı. Bazen anılarımız kesişti ve şeritler birleşti, bazense
+ansızın uzaklaştılar birbirlerinden... Şimdi ne alaka diyebilirsiniz aniden zihnimde belirince dümenden
+paylaştım. Garip blog dünyama tekrardan hoşgeldiniz efenim.
 
 Günlük hayatımızda bir takım işlerimizi zamanlayıcılara göre yaparız. 40 dk
 sonra yemek yiyecek ya da 24 saatte bir ilaç içecek olabiliriz. Kodlarımızdaki
 eylemleri yapmak için de `setTimeout()` ve `setInterval()` gibi zamanlayıcı
 fonksiyonlardan faydalanırız. Bu makalede zamanlayıcı fonksiyonların mocklanış
 biçimlerine değineceğiz.
-
-Makaleye güzel bir arkaplan müziğinin eşlik etmesini isteyenlere fazlaca
-dinlediğim keman virtüözü Farid Farjad'ı takdim ediyorum:
-
-<iframe
-  width="560"
-  height="315"
-  src="https://www.youtube.com/embed/N0tmJOjwYUU"
-  title="YouTube video player"
-  frameborder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-  allowfullscreen
-></iframe>
 
 <MessageBox type="info">
   Yazının kodlarına [Github](https://github.com/baspinarenes/blog-code-examples/tree/main/jest-mocking-3-timer)

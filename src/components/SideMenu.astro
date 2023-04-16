@@ -1,0 +1,45 @@
+---
+import type { Heading } from "../models/interfaces/common";
+
+interface Props {
+  headings: Array<Heading>;
+  titleKey: string;
+  direction: "left" | "right";
+}
+
+const { headings, titleKey, direction } = Astro.props;
+const mappedHeadings = headings.filter((heading) => heading.slug !== "bölümler");
+
+console.log("heading.depth", mappedHeadings);
+---
+
+<div
+  class:list={[
+    "absolute h-full pt-36 hidden 2xl:block",
+    {
+      "-right-[360px]": direction === "right",
+      "-left-[360px]": direction === "left",
+    },
+  ]}
+>
+  <div class="bg-gray-100 w-[290px] px-8 py-6 rounded-lg sticky top-8">
+    <h4 class="mb-2 text-lg font-semibold">{titleKey}</h4>
+    <ul class="m-0 text-xs flex flex-col gap-1">
+      {
+        mappedHeadings.map((heading) => (
+          <li
+            class="before:hidden hover:text-black hover:font-semibold"
+            style={`padding-left: ${(heading.depth ?? 2) - 2}rem;`}
+          >
+            <a
+              class="block break-normal"
+              href={heading.slug.includes("/blog") ? heading.slug : `#${heading.slug}`}
+            >
+              {heading.text}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>

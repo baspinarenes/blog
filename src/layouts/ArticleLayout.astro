@@ -4,7 +4,7 @@ import "@fontsource/jetbrains-mono";
 import type { CollectionEntry } from "astro:content";
 import i18next from "i18next";
 import avatarImage from "../assets/avatar.webp";
-import Toc from "../components/Toc.astro";
+import SideMenu from "../components/SideMenu.astro";
 import { PROFILE } from "../consts";
 import type { Heading } from "../models/interfaces/common";
 import Layout from "./Layout.astro";
@@ -17,13 +17,16 @@ const dateOptions: object = {
   day: "numeric",
 };
 
-const { title, description, pubDate, updatedDate, heroImage, supTitle, tags, minutesRead, headings } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, supTitle, tags, minutesRead, headings, otherParts } =
+  Astro.props;
+
+console.log("otherParts", otherParts);
 ---
 
 <Layout>
-  <main class="flex">
+  <main class="flex relative">
     <article class="relative w-full">
-      <div class="flex flex-col mb-16">
+      <div class="flex flex-col mb-12">
         <h1 class="mb-5 flex flex-col">
           <span class="text-md md:text-xl font-normal">{supTitle}</span>
           {title}
@@ -46,15 +49,39 @@ const { title, description, pubDate, updatedDate, heroImage, supTitle, tags, min
                 / {minutesRead}
               </div>
               <div class="text-sm">
-                #{tags.join(", #")}
+                #{tags.join(" #")}
               </div>
             </div>
           </div>
         </div>
+        {
+          heroImage && (
+            <img
+              width={720}
+              height={360}
+              src={heroImage}
+              alt=""
+              class="mt-8"
+            />
+          )
+        }
       </div>
       <slot />
     </article>
-    <Toc headings={headings} />
+    {
+      otherParts && (
+        <SideMenu
+          titleKey="Seri Bölümleri"
+          direction="left"
+          headings={otherParts}
+        />
+      )
+    }
+    <SideMenu
+      titleKey="İçerik"
+      direction="right"
+      headings={headings}
+    />
   </main>
 </Layout>
 

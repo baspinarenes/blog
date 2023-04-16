@@ -21,7 +21,7 @@ module.exports = {
       yellow: "#FFC700",
       green: "#15B025",
       blue: "#1D4ED8",
-      orange: "#FF4600"
+      orange: "#FF4600",
     },
     fontSize: {
       "display-2xl": ["4.5rem", "5.625rem"],
@@ -37,7 +37,17 @@ module.exports = {
       xs: ["0.75rem", "1.125rem"],
     },
 
-    extend: {},
+    extend: {
+      animation: {
+        scream: "scream 3s linear infinite",
+      },
+      keyframes: {
+        scream: {
+          "0%, 100%": { transform: "rotateY(-30deg)" },
+          "50%": { transform: "rotate(10deg)" },
+        },
+      },
+    },
   },
   plugins: [],
 };
