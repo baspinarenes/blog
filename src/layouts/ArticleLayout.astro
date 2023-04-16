@@ -1,6 +1,6 @@
 ---
 import { Image } from "@astrojs/image/components";
-import '@fontsource/jetbrains-mono';
+import "@fontsource/jetbrains-mono";
 import type { CollectionEntry } from "astro:content";
 import i18next from "i18next";
 import avatarImage from "../assets/avatar.webp";
@@ -9,7 +9,7 @@ import { PROFILE } from "../consts";
 import type { Heading } from "../models/interfaces/common";
 import Layout from "./Layout.astro";
 
-type Props = CollectionEntry<"blog">["data"] | {headings: Heading[]};
+type Props = CollectionEntry<"blog">["data"] | { headings: Heading[] };
 
 const dateOptions: object = {
   year: "numeric",
@@ -24,10 +24,12 @@ const { title, description, pubDate, updatedDate, heroImage, supTitle, tags, min
   <main class="flex">
     <article class="relative w-full">
       <div class="flex flex-col mb-16">
-        {supTitle && <h3 class="mb-0 text-lg font-normal">{supTitle}</h3>}
-        <h1 class="mb-5">{title}</h1>
-        <div class="flex justify-between items-center">
-          <div class="flex items-center gap-2">
+        <h1 class="mb-5 flex flex-col">
+          <span class="text-md md:text-xl font-normal">{supTitle}</span>
+          {title}
+        </h1>
+        <div class="flex items-center">
+          <div class="flex items-center gap-2 w-full">
             <Image
               src={avatarImage}
               width={24}
@@ -36,12 +38,17 @@ const { title, description, pubDate, updatedDate, heroImage, supTitle, tags, min
               alt="Writer avatar"
               class="h-6 w-6 border-none"
             />
-            <div class="text-sm">
-              {PROFILE.NAME} / {new Date(pubDate).toLocaleDateString(i18next.language ? "tr-TR" : "en-US", dateOptions)}
+            <div class="flex justify-between w-full flex-col md:flex-row">
+              <div class="text-sm">
+                {PROFILE.NAME} / {
+                  new Date(pubDate).toLocaleDateString(i18next.language ? "tr-TR" : "en-US", dateOptions)
+                }
+                / {minutesRead}
+              </div>
+              <div class="text-sm">
+                #{tags.join(", #")}
+              </div>
             </div>
-          </div>
-          <div class="text-sm">
-            {minutesRead}
           </div>
         </div>
       </div>
@@ -53,23 +60,13 @@ const { title, description, pubDate, updatedDate, heroImage, supTitle, tags, min
 
 <style is:global lang="scss">
   article {
-    @apply text-sm sm:text-md;
+    * {
+      -ms-overflow-style: none; /* Internet Explorer 10+ */
+      scrollbar-width: none; /* Firefox */
 
-    * {      
-      -ms-overflow-style: none;  /* Internet Explorer 10+ */
-      scrollbar-width: none;  /* Firefox */
-
-      &::-webkit-scrollbar { 
-        display: none;  /* Safari and Chrome */
+      &::-webkit-scrollbar {
+        display: none; /* Safari and Chrome */
       }
-    }
-
-    h2 {
-      @apply mt-12 md:mt-20 mb-6;
-    }
-
-    h3 {
-      @apply mt-10 md:mt-14 mb-4
     }
 
     a {
@@ -81,13 +78,13 @@ const { title, description, pubDate, updatedDate, heroImage, supTitle, tags, min
     }
 
     ul {
-      @apply -mt-3 mb-8;
+      @apply mb-8;
 
       li {
         &::before {
           @apply h-[5px] w-[5px] inline-block bg-gray-600 align-middle rounded-full mr-2;
 
-          content: ""
+          content: "";
         }
       }
     }
@@ -104,7 +101,8 @@ const { title, description, pubDate, updatedDate, heroImage, supTitle, tags, min
       }
     }
 
-    code, pre {
+    code,
+    pre {
       font-family: "Jetbrains Mono";
     }
 
@@ -155,7 +153,6 @@ const { title, description, pubDate, updatedDate, heroImage, supTitle, tags, min
             @apply px-4;
 
             &::before {
-
               /* Other styling */
               display: inline-block;
               width: 1rem;
@@ -169,16 +166,16 @@ const { title, description, pubDate, updatedDate, heroImage, supTitle, tags, min
             counter-reset: lineNumber;
 
             .line::before {
-            counter-increment: lineNumber;
-            content: counter(lineNumber);
-            display: inline-block;
-            text-align: right;
+              counter-increment: lineNumber;
+              content: counter(lineNumber);
+              display: inline-block;
+              text-align: right;
 
-            /* stylistic preferences */
-            margin-right: 0.75rem;
-            width: 1rem;
-            color: rgb(255 255 255 / 0.2);
-          }
+              /* stylistic preferences */
+              margin-right: 0.75rem;
+              width: 1rem;
+              color: rgb(255 255 255 / 0.2);
+            }
           }
         }
       }

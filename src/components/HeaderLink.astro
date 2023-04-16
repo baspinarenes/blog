@@ -12,7 +12,7 @@ const isActive = href === pathname || href === pathname.replace(/\/$/, "");
 <a
   class:list={[
     "block px-6 py-4 rounded-md text-md text-gray-500 hover:bg-gray-200 translation-all sm:px-4 sm:py-2",
-    { "[sm:text-shadow:-0.05ex_0_currentColor,_0.05ex_0_currentColor]": isActive },
+    { "font-semibold text-black": isActive },
   ]}
   href={href}
 >

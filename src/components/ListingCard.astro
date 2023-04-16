@@ -16,7 +16,7 @@ const { type, title, status, description, score, url } = Astro.props;
 <a
   href={url}
   target="_blank"
-  class="flex flex-col px-6 py-3 gap-1"
+  class="flex flex-col px-6 py-3 gap-1 col-span-1"
 >
   <div class="flex justify-between text-primary text-md">
     <p class="uppercase">{status}</p>
@@ -27,7 +27,6 @@ const { type, title, status, description, score, url } = Astro.props;
   </div>
   <h4>{title}</h4>
   <p>{description}</p>
-  <h3></h3>
 </a>
 
 <style lang="scss">

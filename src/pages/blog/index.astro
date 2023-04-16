@@ -13,17 +13,17 @@ const categorizedPosts = categorizePosts(undraftedPosts);
 
 <Layout>
   <main>
-    <div class="flex flex-col gap-1 mb-12">
+    <div class="flex flex-col gap-1 mb-10">
       <h1 class="text-center">{t("blog.title")}</h1>
       <p class="text-justify mt-3">
         {t("blog.description")}
       </p>
     </div>
-    <div class="flex flex-col gap-8 -mx-6">
+    <div class="flex flex-col -mx-6 gap-8">
       {
         Object.keys(categorizedPosts).map((category) => (
           <div>
-            <h3 class="mb-4 px-6">{capitalize(category)}</h3>
+            <h2 class="mb-2 mt-4 px-6">{capitalize(category)}</h2>
             <section>
               <div class="flex flex-col">
                 {categorizedPosts[category].map((post) => (

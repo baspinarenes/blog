@@ -3,10 +3,11 @@ import HomepageListing from "../components/HomepageListing.astro";
 import ListingCard from "../components/ListingCard.astro";
 import Profile from "../components/Profile.astro";
 import Layout from "../layouts/Layout.astro";
-import { getCollaborationRepositories,getTopFiveRepositories } from "../utils/github";
 
-const topFiveRepositories = await getTopFiveRepositories();
-const collaborationRepositories = await getCollaborationRepositories();
+// const topFiveRepositories = await getTopFiveRepositories();
+const topFiveRepositories: any = [];
+// const collaborationRepositories = await getCollaborationRepositories();
+const collaborationRepositories: any = [];
 ---
 
 <Layout>

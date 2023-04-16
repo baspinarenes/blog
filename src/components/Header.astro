@@ -7,7 +7,7 @@ import HeaderLink from "./HeaderLink.astro";
 import SocialLink from "./SocialLink.astro";
 ---
 
-<header class="flex items-center justify-between mb-12">
+<header class="flex items-center justify-between mb-16">
   <button
     id="hamburger-menu"
     class="p-1 sm:hidden"
@@ -16,7 +16,7 @@ import SocialLink from "./SocialLink.astro";
   </button>
   <nav
     id="nav-section"
-    class="hidden fixed flex-col left-0 right-0 bottom-0 top-[62px] bg-gray-100 sm:flex sm:bg-[transparent] sm:static sm:flex-row sm:-ml-4"
+    class="hidden fixed z-[99999] flex-col left-0 right-0 bottom-0 top-[62px] bg-gray-100 sm:flex sm:bg-[transparent] sm:static sm:flex-row sm:-ml-4"
   >
     <HeaderLink href="/">{t("navigation.homepage")}</HeaderLink>
     <HeaderLink href="/blog">{t("navigation.blog")}</HeaderLink>

@@ -1,26 +1,33 @@
 ---
-import type { Heading } from '../models/interfaces/common';
+import type { Heading } from "../models/interfaces/common";
 
 interface Props {
-  headings: Array<Heading>
+  headings: Array<Heading>;
 }
 
 const { headings } = Astro.props;
-const mappedHeadings = headings.filter(heading => heading.slug !== "bölümler");
+const mappedHeadings = headings.filter((heading) => heading.slug !== "bölümler");
 ---
 
-<div class="ml-16 relative pt-36 hidden xl:block">
+<div class="ml-16 relative pt-36 hidden 2xl:block">
   <div class="bg-gray-100 w-[290px] p-8 rounded-lg sticky top-8">
     <h4 class="mb-2 text-lg font-semibold">Table of Content</h4>
-    <ul class="m-0 text-xs">
+    <ul class="m-0 text-xs flex flex-col gap-1">
       {
-        mappedHeadings.map(heading => (
-          <li class="before:hidden hover:text-black hover:font-semibold" style={`padding-left: ${heading.depth - 2}rem;`}>
-            <a class="block" href={`#${heading.slug}`}>{heading.text}</a>
+        mappedHeadings.map((heading) => (
+          <li
+            class="before:hidden hover:text-black hover:font-semibold"
+            style={`padding-left: ${heading.depth - 2}rem;`}
+          >
+            <a
+              class="block break-normal"
+              href={`#${heading.slug}`}
+            >
+              {heading.text}
+            </a>
           </li>
         ))
       }
     </ul>
   </div>
-  
 </div>
