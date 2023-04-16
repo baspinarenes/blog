@@ -27,7 +27,7 @@ import Header from "../components/Header.astro";
     />
     <title>{t("site.title")}</title>
   </head>
-  <body class="flex flex-col py-4 px-6 min-h-screen">
+  <body class="flex flex-col py-4 px-6 min-h-screen sm:py-12 w-screen md:max-w-4xl md:mx-auto md:pb-6">
     <Header />
     <slot />
     <Footer />
@@ -36,26 +36,26 @@ import Header from "../components/Header.astro";
 
 <style is:global>
   html {
-    @apply text-gray-600;
+    @apply text-gray-600 scroll-smooth;;
   }
 
   h1,
   h2,
   h3,
   h4 {
-    @apply text-black;
+    @apply text-black break-normal;
   }
 
   h1 {
-    @apply text-display-md font-bold leading-none break-words;
+    @apply text-display-md sm:text-display-lg md:text-display-xl font-bold leading-none break-words;
   }
 
   h2 {
-    @apply text-display-xs leading-snug font-semibold;
+    @apply text-display-xs md:text-display-md leading-snug font-semibold;
   }
 
   h3 {
-    @apply text-display-xs font-semibold;
+    @apply text-sm md:text-display-xs font-semibold;
   }
 
   h4 {
@@ -63,6 +63,10 @@ import Header from "../components/Header.astro";
   }
 
   a {
-    @apply break-all;
+    @apply break-all
+  }
+
+  b, strong {
+    @apply text-black;
   }
 </style>

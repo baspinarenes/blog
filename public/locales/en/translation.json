@@ -2,7 +2,8 @@
   "site": {
     "title": "Enes Başpınar's Blog",
     "description": "Blablablabla",
-    "copyright": " © No rights are reserved. Just have fun and learn."
+    "copyright_1": " © No rights are reserved.",
+    "copyright_2": "Just have fun and learn."
   },
   "navigation": {
     "homepage": "Homepage",

@@ -21,6 +21,7 @@ module.exports = {
       yellow: "#FFC700",
       green: "#15B025",
       blue: "#1D4ED8",
+      orange: "#FF4600"
     },
     fontSize: {
       "display-2xl": ["4.5rem", "5.625rem"],

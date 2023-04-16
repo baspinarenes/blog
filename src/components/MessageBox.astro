@@ -6,23 +6,11 @@ export interface Props {
 }
 
 const { type } = Astro.props;
-
-const getIconName = () => {
-  if (type === "warning") {
-    return "mdi:warning-box";
-  }
-
-  if (type === "danger") {
-    return "uis:times-circle";
-  }
-
-  return "gridicons:info";
-};
 ---
 
 <div
   class:list={[
-    "p-5 flex flex-col items-center gap-2 mb-8 -mx-6 text-justify",
+    "p-5 flex flex-col items-center gap-2 mb-8 -mx-6 text-justify md:text-start sm:flex-row sm:gap-4 md:rounded-md",
     {
       "bg-yellow": type === "warning",
       "bg-[rgba(220,38,38,0.5)]": type === "danger",
@@ -30,7 +18,7 @@ const getIconName = () => {
     },
   ]}
 >
-  <Icon name={getIconName()} />
+  <Icon name={type} />
   <div>
     <slot />
   </div>
@@ -38,8 +26,6 @@ const getIconName = () => {
 
 <style lang="scss">
   [astro-icon] {
-    width: 28px;
-    height: 28px;
-    flex-shrink: 0;
+    @apply w-8 h-8 shrink-0 sm:w-10 sm:h-10;
   }
 </style>

@@ -10,19 +10,19 @@ import SocialLink from "./SocialLink.astro";
 <header class="flex items-center justify-between mb-12">
   <button
     id="hamburger-menu"
-    class="p-1"
+    class="p-1 sm:hidden"
   >
     <Icon name="mdi:hamburger" />
   </button>
   <nav
     id="nav-section"
-    class="hidden fixed flex-col left-0 right-0 bottom-0 top-[62px] bg-gray-100"
+    class="hidden fixed flex-col left-0 right-0 bottom-0 top-[62px] bg-gray-100 sm:flex sm:bg-[transparent] sm:static sm:flex-row sm:-ml-4"
   >
     <HeaderLink href="/">{t("navigation.homepage")}</HeaderLink>
     <HeaderLink href="/blog">{t("navigation.blog")}</HeaderLink>
     <HeaderLink href="/snippets">{t("navigation.snippets")}</HeaderLink>
     <HeaderLink href="/about">{t("navigation.about")}</HeaderLink>
-    <Footer className="mt-auto mb-6 mx-10" />
+    <Footer className="mt-auto mb-6 mx-10 sm:hidden" />
   </nav>
   <div class="flex gap-2">
     <SocialLink
