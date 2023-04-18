@@ -1,0 +1,33 @@
+---
+import type { CollectionEntry } from "astro:content";
+import javascriptImage from "../assets/tech-images/javascript.png";
+import FormattedDate from "./FormattedDate.astro";
+
+interface Props {
+  category: string;
+  snippet: CollectionEntry<"snippets">;
+}
+
+const categoryImages: Record<string, string> = {
+  javascript: javascriptImage.src,
+  react: javascriptImage.src,
+};
+
+const { category, snippet } = Astro.props;
+---
+
+<a
+  href={`/snippets/${snippet.slug}/`}
+  class="flex justify-between items-baseline flex-col text-lg mt-0 mb-1 rounded-lg hover:bg-gray-50 overflow-hidden h-fit"
+>
+  <div
+    class="w-full h-24 shrink-0 bg-center bg-cover"
+    style={`background-image: url(${categoryImages[category]});`}
+  >
+  </div>
+  <div class="px-6 py-4 flex flex-col items-center w-full border-x border-b rounded-b-lg">
+    <span class="font-medium text-center leading-5 mb-2">{snippet.data.title}</span>
+    <FormattedDate date={snippet.data.pubDate} />
+    <span class="text-sm mt-2">#{snippet.data.subCategory}</span>
+  </div>
+</a>

@@ -13,10 +13,8 @@ const { post } = Astro.props;
   href={`/blog/${post.slug}/`}
   class="px-6 py-4 rounded-lg hover:bg-gray-100"
 >
-  <div
-    class="flex justify-between items-baseline flex-col sm:flex-row text-lg mt-0 mb-1 text-blue break-keep leading-tight"
-  >
-    <span>{post.data.supTitle ? `${post.data.supTitle} - ` : ""}{post.data.title}</span>
+  <div class="flex justify-between items-baseline flex-col sm:flex-row text-lg mt-0 mb-1 text-blue leading-tight">
+    <span class="font-medium">{post.data.title}</span>
     <FormattedDate date={post.data.pubDate} />
   </div>
   <p class="text-sm">{post.data.description}</p>

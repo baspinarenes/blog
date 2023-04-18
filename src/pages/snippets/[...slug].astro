@@ -1,0 +1,22 @@
+---
+import { CollectionEntry, getCollection } from "astro:content";
+import ArticleLayout from "../../layouts/ArticleLayout.astro";
+
+export async function getStaticPaths() {
+  const snippets = await getCollection("snippets");
+
+  return snippets.map((snippet) => ({
+    params: { slug: snippet.slug },
+    props: snippet,
+  }));
+}
+
+type Props = CollectionEntry<"snippets">;
+
+const snippet = Astro.props;
+const { Content, headings, remarkPluginFrontmatter } = await snippet.render();
+---
+
+<ArticleLayout {...snippet.data}>
+  <Content />
+</ArticleLayout>

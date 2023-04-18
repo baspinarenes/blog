@@ -9,8 +9,6 @@ tags:
   - linter
 ---
 
-import MessageBox from "../../../../components/MessageBox.astro";
-
 Trendyol'da Mweb ekibi olarak kullandığımız ESLint kuralları, isterlerimizin
 tamamını kapsamıyordu ve düzensizdi. Bu kuralları derli toplu hale getirmek,
 kullandığımız kütüphanelere özgü pluginleri dahil etmek ve ileride özel kurallar
@@ -18,9 +16,9 @@ tanımlayabilmek adına takıma özel bir plugin oluşturmaya karar verdik. Bu s
 edindiğim deneyimleri bir yazıya dökeceğim.
 
 <MessageBox type="info">
-Az sonra kitabi olmasa da bir tanımla karşılaşacaksınız. Tanımları hiç sevmem o yüzden çok üzerinde durmayacağım. Çok üzerinde durmadan arkalara doğru ilerleyelim. Bizim işimiz tanım ezberlemek değil, işin özüne dair fikir edinmek.
+  Az sonra kitabi olmasa da bir tanımla karşılaşacaksınız. Tanımları hiç sevmem o yüzden çok üzerinde durmayacağım. Çok
+  üzerinde durmadan arkalara doğru ilerleyelim. Bizim işimiz tanım ezberlemek değil, işin özüne dair fikir edinmek.
 </MessageBox>
-
 
 ## ESLint Nedir?
 
@@ -73,6 +71,7 @@ npm i eslint -D
 # üzere hazırlanan programı kullanalım
 npm init @eslint/config
 ```
+
 ```
 ? How would you like to use ESLint?
   ✔ To check syntax and find problems
@@ -92,31 +91,31 @@ Bu komutlar sonucunda `.eslintrc.js` dosyası oluşturulur. Bu dosya, ESLint'i
 konfigüre edeceğimiz yerdir. Kurallarımızı buraya ekleyeceğiz.
 
 İçerisine göz gezdirdiğimizde bazı ayarların otomatik oluşturulduğunu görebiliriz.
-*extends* kısmı, kural setlerini oluşturan ekibin tavsiye
+_extends_ kısmı, kural setlerini oluşturan ekibin tavsiye
 ettiği değerleri kullanmamızı sağlar. ESLint ekibi de bize bazı değerler önerir.
 Her bir kurala tek tek değer atamakla zaman kaybetmeden konfigüre etmiş oluruz. Bu
-sayede sadece özelleştirmek istediğimiz kuralları *rules* altında
+sayede sadece özelleştirmek istediğimiz kuralları _rules_ altında
 belirtiriz. Ancak şuan için başka hatalarla uğraşmadan senaryomuza odaklanmak
 adına ilgili satırı silerek diğer tüm kuralları kapatacağız.
 
 <MessageBox type="info">
-Blog yazısı içerisinde altı noktalı metinlere denk gelirseniz üzerinde durun. Belirttiğim kısımların kod bloğundaki yerini gösterir.
+  Blog yazısı içerisinde altı noktalı metinlere denk gelirseniz üzerinde durun. Belirttiğim kısımların kod bloğundaki
+  yerini gösterir.
 </MessageBox>
 
 ```javascript title=".eslintrc.js"
 module.exports = {
-  "env": {
-      "es2021": true,
-      "node": true
+  env: {
+    es2021: true,
+    node: true,
   },
-  "parserOptions": {
-      "ecmaVersion": "latest",
-      "sourceType": "module"
+  parserOptions: {
+    ecmaVersion: "latest",
+    sourceType: "module",
   },
-  "extends": "eslint:recommended",
-  "rules": {
-  }
-}
+  extends: "eslint:recommended",
+  rules: {},
+};
 ```
 
 Bu arada özel dosyasını kullanmayı tercih edeceğiz ancak oluşturmak istemezseniz
@@ -151,8 +150,8 @@ Toplama fonksiyonumuzu yazarak basit bir senaryo çizelim.
 
 ```javascript title="src/sum.js"
 var sum = (num1, num2) => {
-  return num1 + num2
-}
+  return num1 + num2;
+};
 ```
 
 Fonksiyonu incelediğimizde (ne var da neyini inceleyeceğiz acaba) farkedeceğimiz
@@ -163,7 +162,8 @@ otomatik formatlama hatalarının önüne geçmek için kullanmamızın yararı 
 Özetlersek, noktalı virgülün daima konulmasını ve `var` kullanılmamasını istiyoruz.
 
 <MessageBox type="info">
-Kuralların tam olarak nasıl çalıştıklarına serinin diğer yazılarında değineceğiz. Önce uygulanışını görelim ki anlatırken kafamızda eşleşsin.
+  Kuralların tam olarak nasıl çalıştıklarına serinin diğer yazılarında değineceğiz. Önce uygulanışını görelim ki
+  anlatırken kafamızda eşleşsin.
 </MessageBox>
 
 ESLint ekibi bize built-in [kurallar](https://eslint.org/docs/rules/) sağlar.
@@ -171,9 +171,9 @@ Yani plugin paketlerinden, diğer yazıda bahsedeceğiz, indirmemiz gerekmeden
 kullanabiliriz. Senaryomuza uygun iki kurala bakalım:
 
 - `semi` kuralı, statement sonlarında noktalı virgül konulmasını zorunlu kılar
-ya da kullanımını engeller.
+  ya da kullanımını engeller.
 - `no-var` kuralı, `var` yerine `let` ya da `const` kullanılmasını zorunlu kılar
-ya da `var` keyword'üne izin verir.
+  ya da `var` keyword'üne izin verir.
 
 ESLint`e bu senaryomuzda istemediğimiz bir durumla karşılaşırsan yazılımcıyı uyar
 diyeceğiz. Kurallarımızı bu doğrultuda ekleyelim:
@@ -181,11 +181,11 @@ diyeceğiz. Kurallarımızı bu doğrultuda ekleyelim:
 ```javascript title=".eslintrc.js"
 module.exports = {
   // ...
-  "rules": {
-    "semi": "error",
-    "no-var": "error"
-  }
-}
+  rules: {
+    semi: "error",
+    "no-var": "error",
+  },
+};
 ```
 
 ESLint kurallara verilen değerlere göre üç farklı şekilde davranır:
@@ -200,7 +200,7 @@ imkan sağlar. Farklı kullanımlara sahip bazı örnekleri inceleyelim.
 ```javascript title=".eslintrc.js"
 module.exports = {
   // ...
-  "rules": {
+  rules: {
     "no-restricted-syntax": "off",
     // kuralların hata değil uyarı vermesini istiyorsak 'warn' geçebiliriz.
     // adından belli olduğu gibi "error" aksine "warn" olarak belirtilen
@@ -209,12 +209,12 @@ module.exports = {
     // "semi": ["error", "always"] şeklinde de yazabilirdik ve her seferinde
     // hata ver manasına gelirdi tahmin edebileceğimiz gibi.
     // varsayılan değer 'always' olduğu için yazılmadan geçilebilir.
-    "semi": "error", // ya da ["error"]
-    "quotes": ["error", "double"],
+    semi: "error", // ya da ["error"]
+    quotes: ["error", "double"],
     // bazı kuralları ise options ile özelleştirebiliriz.
-    "camelcase": ["error", { "ignoreDestructuring": true }],
-  }
-}
+    camelcase: ["error", { ignoreDestructuring: true }],
+  },
+};
 ```
 
 Neyse basit senaryomuza geri dönelim. Tanımladığımız kurallarla birlikte kodumuzu
@@ -223,12 +223,13 @@ analiz ederek çıktımızı görelim.
 ```powershell
 npx eslint src/sum.js
 ```
+
 ```
 /Users/enes.baspinar/Projects/posts-codes/example-eslint-project/src/sum.js
     1:1   error  Unexpected var, use let or const instead  no-var
     2:21  error  Missing semicolon                         semi
     3:2   error  Missing semicolon                         semi
-  
+
 ✖ 3 problems (3 errors, 0 warnings)
     3 errors and 0 warnings potentially fixable with the '--fix' option.
 ```
@@ -236,17 +237,17 @@ npx eslint src/sum.js
 Üç tane hata fırlattı. Bunları elle düzeltebiliriz falan filan ama neden biz
 uğraşalım ki? Pekala ESLint'e yaptırabiliriz.
 [Dökümantasyona](https://eslint.org/docs/rules/) bakarsak bazı kuralların
-yanlarında ingiliz anahtarı olduğunu görebilirsiniz. Bu "fixable" olduğunu yani 
+yanlarında ingiliz anahtarı olduğunu görebilirsiniz. Bu "fixable" olduğunu yani
 otomatik düzeltilebildiği anlamına gelir. Kullandığımız iki kural da aslında
-bu şekildedir. 
+bu şekildedir.
 
 "Fixable" olarak belirtilen kurallar `--fix` bayrağı eklenerek düzeltilebilir.
 Öncesinde kodumuza son kez bakalım.
 
 ```javascript title="src/sum.js"
 var sum = (num1, num2) => {
-  return num1 + num2
-}
+  return num1 + num2;
+};
 ```
 
 Şimdi otomatik düzeltilmesini istediğimizi belirterek kodumuzu çalıştıralım.
@@ -274,9 +275,9 @@ Eski blogumu yaparken birkaç yazı takip etmiştim ama aklımı karıştıran
 kurmamız gerekiyor? Bize tam olarak ne sağlıyor?". Siz de de oluştuysa hemen bu
 soruları def edelim.
 
-Halihazırda bahsetmiş olduğumuz *ESLint paketi*, terminalden çalıştırdığımız
-komutla kodumuzu analiz eden ve uymayanları konsoldan bize bildirir. *VSCode
-ESLint eklentisi* ise arkaplanda ESLint paketini kullanır ve hataları hiçbir komut
+Halihazırda bahsetmiş olduğumuz _ESLint paketi_, terminalden çalıştırdığımız
+komutla kodumuzu analiz eden ve uymayanları konsoldan bize bildirir. _VSCode
+ESLint eklentisi_ ise arkaplanda ESLint paketini kullanır ve hataları hiçbir komut
 çalıştırmadan, kodu yazarken editörde görmemizi sağlar.
 
 Hemen indirip deneyelim.
@@ -289,13 +290,14 @@ yaptığı sihre odaklanalım.
 ![](/src/assets/articles/frontend/kurallari-yikmayin-eslint/1-temel-bilgiler/005.gif)
 
 <MessageBox type="info">
-Bu menüyü fareyle açmak zorunda değilsiniz klavyeden `CTRL/CMD + .` kombinasyonunu kullanabilirsiniz.
+  Bu menüyü fareyle açmak zorunda değilsiniz klavyeden `CTRL/CMD + .` kombinasyonunu kullanabilirsiniz.
 </MessageBox>
 
-Peki bizim için son bir şarkı çalıp `CTRL/CMD + S` ile kaydettiğimizde tüm düzeltmeleri otomatik yapsa? O halde hemen VSCode ayarlarına girip bir ekleme yapalım. 
+Peki bizim için son bir şarkı çalıp `CTRL/CMD + S` ile kaydettiğimizde tüm düzeltmeleri otomatik yapsa? O halde hemen VSCode ayarlarına girip bir ekleme yapalım.
 
 <MessageBox type="info">
-Her kaydedişte düzeltme yapmasını istemeyeceğimiz durumlar olabilir. Aşağıdaki değişikliği atlayıp VSCode'a sağ tıkladığımızda çıkan menüden 'Format Document' seçeneğini kullanabilirsiniz.
+  Her kaydedişte düzeltme yapmasını istemeyeceğimiz durumlar olabilir. Aşağıdaki değişikliği atlayıp VSCode'a sağ
+  tıkladığımızda çıkan menüden 'Format Document' seçeneğini kullanabilirsiniz.
 </MessageBox>
 
 ```json title="settings.json" {3-6}
@@ -331,24 +333,25 @@ Bunun için birkaç farklı yol kullanabiliriz:
 /* eslint-disable */
 
 var sum = (num1, num2) => {
-  return num1 + num2
-}
+  return num1 + num2;
+};
 ```
+
 - dosyanın bir kısmında göz ardı etmek istiyorsak;
 
 ```javascript title="src/freedom.js"
 /* eslint-disable */
 
 var sum = (num1, num2) => {
-  return num1 + num2
-}
+  return num1 + num2;
+};
 
 /* eslint-enable */
 
 // give error
 var sqr = (num1) => {
-  return num1 ** 2
-}
+  return num1 ** 2;
+};
 ```
 
 - satır bazlı göz ardı etmek istiyorsak;
@@ -356,8 +359,8 @@ var sqr = (num1) => {
 ```javascript title="src/freedom.js"
 // eslint-disable-next-line
 var sqr = (num1) => {
-  return num1 ** 2 // eslint-disable-line
-} // eslint-disable-line 
+  return num1 ** 2; // eslint-disable-line
+}; // eslint-disable-line
 ```
 
 Örnek kullanımlarda ilgili blok için tüm kuralları kapatır. Hepsini değil de
@@ -366,8 +369,8 @@ bazılarını kapatmak istersek ismini belirtebiliriz.
 ```javascript
 // eslint-disable-next-line no-var
 var sqr = (num1) => {
-  return num1 ** 2 // eslint-disable-line semi
-} // give 'semi' error
+  return num1 ** 2; // eslint-disable-line semi
+}; // give 'semi' error
 ```
 
 ## Özetle..
@@ -377,23 +380,23 @@ kalıplarda tutar. Böylece çok fazla kişinin çalıştığı projelerin her s
 telden çalmaz. Aynı zamanda noktalı virgül, boşluk gibi çok fazla kullandığınız
 stillendirmeleri otomatik formatlamak için de faydalıdır.
 
-Her kurallarını `.eslintrc.js` dosyasından ya da `eslintConfig` alanından yönetir. Kodu ESLint'in doğru parse etmesi için ayarlamalar yapabilir ve kural tanımlayabiliriz.  
+Her kurallarını `.eslintrc.js` dosyasından ya da `eslintConfig` alanından yönetir. Kodu ESLint'in doğru parse etmesi için ayarlamalar yapabilir ve kural tanımlayabiliriz.
 
 ```javascript title=".eslintrc.js"
 module.exports = {
-  "env": {
-      "es2021": true,
-      "node": true
+  env: {
+    es2021: true,
+    node: true,
   },
-  "parserOptions": {
-      "ecmaVersion": "latest",
-      "sourceType": "module"
+  parserOptions: {
+    ecmaVersion: "latest",
+    sourceType: "module",
   },
-  "rules": {
-    "semi": "error",
-    "no-var": "error"
-  }
-}
+  rules: {
+    semi: "error",
+    "no-var": "error",
+  },
+};
 ```
 
 VSCode ESLint eklentisiyle birlikte kurallara uymayan bölümleri editörde canlı

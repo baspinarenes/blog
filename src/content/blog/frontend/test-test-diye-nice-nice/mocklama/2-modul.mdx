@@ -20,14 +20,13 @@ otherParts:
     slug: "/blog/test-test-diye-nice-nice-mocklama-4-react"
 ---
 
-import MessageBox from "../../../../../components/MessageBox.astro";
-
-Önceki yazıda mock kavramının ne olduğuna ve hangi ihtiyaçtan doğduğuna 
-değindik. Kütüphane ve built-in metodların mocklanış yöntemlerinden bahsettik. 
+Önceki yazıda mock kavramının ne olduğuna ve hangi ihtiyaçtan doğduğuna
+değindik. Kütüphane ve built-in metodların mocklanış yöntemlerinden bahsettik.
 Artık modüllere böldüğümüz fonksiyonları nasıl mocklayabileceğimize göz atalım.
 
 <MessageBox type="info">
-Yazının kodlarına [Github](https://github.com/baspinarenes/blog-code-examples/tree/main/jest-mocking-2-module) üzerinden erişebilirsiniz.
+  Yazının kodlarına [Github](https://github.com/baspinarenes/blog-code-examples/tree/main/jest-mocking-2-module)
+  üzerinden erişebilirsiniz.
 </MessageBox>
 
 ## Modül Nedir?
@@ -39,9 +38,7 @@ kullanabileceğimiz anlayabilmek için içe aktarılan dosyaların içeriklerine
 
 CommonJs kullanarak yapabileceğimiz farklı import çeşitleri:
 
-<MessageBox type="info">
-Dosyaların içeriklerini görmek için sekmeler arasında geçiş yapabilirsiniz.
-</MessageBox>
+<MessageBox type="info">Dosyaların içeriklerini görmek için sekmeler arasında geçiş yapabilirsiniz.</MessageBox>
 
 ```typescript utils.test.ts
 const utils = require("./utils");
@@ -82,6 +79,7 @@ module.exports = {
   getProduct,
 };
 ```
+
 ```
 require with default: {
   get: [Function: get],
@@ -141,6 +139,7 @@ export default {
   getProduct,
 };
 ```
+
 ```
 import with * as: {
   get: [Function: get],
@@ -170,7 +169,10 @@ Uygulamamızda ürün ve kullanıcı bilgilerini çekmek için yardımcı fonksi
 sahip olduğumuzu varsayalım.
 
 <MessageBox type="info">
-Kod kümelerimizi yardımcı metodlara çıkarma işlemine **abstraction** denir. Örneğin ürün bilgisini çekmek görevini ifa eden kodları `getProduct()` isimli bir fonksiyona yerleştirebiliriz. Koda bakan birisi bu fonksiyonunun ne döndüreceğini isminden anlayabilmelidir. Abstraction'ı sevelim çünkü test yazılmasını inanılmaz derecede kolaylaştırır.
+  Kod kümelerimizi yardımcı metodlara çıkarma işlemine **abstraction** denir. Örneğin ürün bilgisini çekmek görevini ifa
+  eden kodları `getProduct()` isimli bir fonksiyona yerleştirebiliriz. Koda bakan birisi bu fonksiyonunun ne
+  döndüreceğini isminden anlayabilmelidir. Abstraction'ı sevelim çünkü test yazılmasını inanılmaz derecede
+  kolaylaştırır.
 </MessageBox>
 
 ```javascript utils.ts
@@ -209,6 +211,7 @@ test("should be mock", () => {
   expect(jest.isMockFunction(get)).toBe(true);
 });
 ```
+
 ```
 error TS2632: Cannot assign to 'get' because it is an import.
 ```
@@ -227,6 +230,7 @@ test("should be mock", () => {
   expect(jest.isMockFunction(UtilsModule.get)).toBe(true);
 });
 ```
+
 ```
 error TS2540: Cannot assign to 'get' because it is a read-only property.
 ```
@@ -249,6 +253,7 @@ test("playground", () => {
   console.log("utils Module:", utils);
 });
 ```
+
 ```javascript utils.ts
 import axios from "axios";
 
@@ -272,6 +277,7 @@ export function getUser(userId: number): Promise<any> {
   return get(`${API_URL}/users/${userId}`);
 }
 ```
+
 ```
 utils Module: {
   __esModule: true,
@@ -319,13 +325,19 @@ test("playground", () => {
   expect(jest.isMockFunction(UtilsModule.get)).toBe(true);
 });
 ```
+
 ```
 PASS  src/utils.test.ts
 `  ✓ playground`
 ```
 
 <MessageBox type="info">
-**Fonksiyonları kullanmadan önce mocklamıştık. Modüllerin de import edilmeden önce mocklanması gerekmez mi?**<br /><br />Çok güzel bir noktaya parmak bastın. Herhangi bir nesnenin kullanılmadan önce mocklanması zorunludur. Fakat biliyoruz ki `import` ifadelerinin dosyanın en üstünde olması JS yazılımcılarının genel alışkanlığıdır. Jest'de bu yapıyı bozmamak adına `jest. mock` ifadelerini hoist eder yani import'un üzerine taşır.
+  **Fonksiyonları kullanmadan önce mocklamıştık. Modüllerin de import edilmeden önce mocklanması gerekmez mi?**
+  <br />
+  <br />
+  Çok güzel bir noktaya parmak bastın. Herhangi bir nesnenin kullanılmadan önce mocklanması zorunludur. Fakat biliyoruz ki
+  `import` ifadelerinin dosyanın en üstünde olması JS yazılımcılarının genel alışkanlığıdır. Jest'de bu yapıyı bozmamak adına
+  `jest. mock` ifadelerini hoist eder yani import'un üzerine taşır.
 </MessageBox>
 
 Jest'in sınırlarını keşfetmeye devam edelim.
@@ -390,9 +402,7 @@ describe("utils tests", () => {
     test("should return null when request is failed", async () => {
       const apiUrl = "https://dummyjson.com/product/1000";
 
-      mockedAxios.get.mockRejectedValueOnce(
-        new Error("Error occured when fetching data!")
-      );
+      mockedAxios.get.mockRejectedValueOnce(new Error("Error occured when fetching data!"));
 
       const result = await UtilsModule.get(apiUrl);
 
@@ -402,6 +412,7 @@ describe("utils tests", () => {
   });
 });
 ```
+
 ```typescript utils.ts
 import axios from "axios";
 
@@ -423,6 +434,7 @@ export function getUser(userId: number): Promise<any> {
   return get(`https://dummyjson.com/users/${userId}`);
 }
 ```
+
 ```
 PASS  src/tests/utils.test.ts
   utils tests
@@ -448,9 +460,7 @@ import * as UtilsModule from "./utils";
 
 jest.mock("axios", () => {
   return {
-    get: jest
-      .fn()
-      .mockRejectedValue(new Error("Error occured when fetching data!")),
+    get: jest.fn().mockRejectedValue(new Error("Error occured when fetching data!")),
   };
 });
 
@@ -507,10 +517,12 @@ PASS  src/tests/utils.test.ts
 ```
 
 <MessageBox type="info">
-**Peki ne zaman `factory` kullanmalıyız?** <br /><br /> Fonksiyonların mocklamaları testler boyunca aynı kalacaksa, default  mock değeri tanımlamamız gerekiyorsa ya da kısmi mocklama yapacaksak  kullanabiliriz.
+  **Peki ne zaman `factory` kullanmalıyız?** <br />
+  <br /> Fonksiyonların mocklamaları testler boyunca aynı kalacaksa, default mock değeri tanımlamamız gerekiyorsa ya da kısmi
+  mocklama yapacaksak kullanabiliriz.
 </MessageBox>
 
-Dikkat etmemiz gereken önemli bir nokta, factory ve test içerisinde 
+Dikkat etmemiz gereken önemli bir nokta, factory ve test içerisinde
 mockların ahengidir. Lafı uzatmadan şu üç farklı kullanımı özümseyelim.
 
 ```typescript focus=5,14:16
@@ -531,7 +543,6 @@ test("playground", async () => {
   console.log(await mockedAxios.get(apiUrl)); // Output: Mock in test
   console.log(await mockedAxios.get(apiUrl)); // Output: Mock in test
 });
-
 ```
 
 ```typescript focus=5,14:16
@@ -594,14 +605,13 @@ test("playground", async () => {
 });
 ```
 
-
 ### Kısmi Mocklama
 
 Şimdiye kadar daima tüm modülü mockladık. Ancak yalnızca bazı işlevleri mocklamak isteyebiliriz. Modüllerin gerçek içeriğine erişmek için `jest.requireActual` kullanılır.
 
 ```typescript
-jest.mock('../moduleName', () => {
-  const originalModule = jest.requireActual('../moduleName');
+jest.mock("../moduleName", () => {
+  const originalModule = jest.requireActual("../moduleName");
 
   return {
     __esModule: true,
@@ -613,9 +623,9 @@ jest.mock('../moduleName', () => {
 
 ## Spesifik Testlerde Modül Mocklamak
 
-`get` fonksiyonun testlerini yazdık. Dilerseniz `getProduct` testine geçelim. 
-Test ettiğimiz foksiyonun bağımlı olduğu diğer fonksiyonları mocklamak iyi bir 
-pratiktir. Bu sebeple `getProduct` içerisinde kullanılan `get` fonksiyonunu 
+`get` fonksiyonun testlerini yazdık. Dilerseniz `getProduct` testine geçelim.
+Test ettiğimiz foksiyonun bağımlı olduğu diğer fonksiyonları mocklamak iyi bir
+pratiktir. Bu sebeple `getProduct` içerisinde kullanılan `get` fonksiyonunu
 mocklayacağız.
 
 ```typescript
@@ -625,9 +635,7 @@ import * as UtilsModule from "./utils";
 jest.mock("./utils");
 jest.mock("axios", () => {
   return {
-    get: jest
-      .fn()
-      .mockRejectedValue(new Error("Error occured when fetching data!")),
+    get: jest.fn().mockRejectedValue(new Error("Error occured when fetching data!")),
   };
 });
 
@@ -656,15 +664,13 @@ describe("utils tests", () => {
 
       const result = UtilsModule.getProduct(productId);
 
-      expect(UtilsModule.get).toHaveBeenCalledWith(
-        `https://dummyjson.com/products/${productId}`
-      );
+      expect(UtilsModule.get).toHaveBeenCalledWith(`https://dummyjson.com/products/${productId}`);
       expect(result).toStrictEqual(mockProduct);
     });
   });
 });
-
 ```
+
 ```
 utils tests
     get() tests
@@ -686,25 +692,25 @@ utils tests
     Number of calls: 0
 ```
 
-Hoppalaa... Yeni testimiz patladı, üstüne üstlük geçen testlerde 
-patlamaya başladı. Çıktıyı incelediğimizde, mockladığımız fonksiyonların 
-çağırılmadığını anlıyoruz. Jest bize, "Sen bi değerle çağırılmasını bekliyordun 
+Hoppalaa... Yeni testimiz patladı, üstüne üstlük geçen testlerde
+patlamaya başladı. Çıktıyı incelediğimizde, mockladığımız fonksiyonların
+çağırılmadığını anlıyoruz. Jest bize, "Sen bi değerle çağırılmasını bekliyordun
 fakat bu fonksiyon hiç çağırılmadı." diyor.
 
-`getProduct` fonksiyonunun implementasyonunu mocklamak için `Utils` modülünü 
-mockladık. Ancak testi için orijinal implementasyonuna ihtiyaç duyduğumuz `get` 
+`getProduct` fonksiyonunun implementasyonunu mocklamak için `Utils` modülünü
+mockladık. Ancak testi için orijinal implementasyonuna ihtiyaç duyduğumuz `get`
 fonksiyonu da mocklanmış oldu. Test bazlı fonksiyon mocklamak işimize yarardı.
 Bu problemi birkaç farklı yöntemle çözebiliriz.
 
 ### jest.doMock()
 
-Jest'te modül mocklamanın diğer bir yolu `jest.doMock()` kullanmaktır. Bunun 
+Jest'te modül mocklamanın diğer bir yolu `jest.doMock()` kullanmaktır. Bunun
 `jest.mock`'tan farkı, hoist edilmiyor olmasıdır. Yani sadece kendisinden sonra
 yazılan importları mocklar.
 
-
 <MessageBox type="info">
-Mocklanmasını beklediğiniz bir modül mocklanmamışsa import edildikten sonra mocklanmış olma ihtimali çok yüksektir. Kontrol etmeyi unutmayın.
+  Mocklanmasını beklediğiniz bir modül mocklanmamışsa import edildikten sonra mocklanmış olma ihtimali çok yüksektir.
+  Kontrol etmeyi unutmayın.
 </MessageBox>
 
 ```typescript
@@ -749,7 +755,7 @@ describe("utils tests", () => {
         get: jest.fn().mockResolvedValue(mockProduct),
       }));
 
-       // burası kritik bir nokta. doMock hoist edilmeyeceği
+      // burası kritik bir nokta. doMock hoist edilmeyeceği
       // için sonrasında yaptığımız require'ı kullanmalıyız.
       const GetModule = require("./utils");
       const UtilsModule = require("./utils");
@@ -774,8 +780,9 @@ test("should call get func with api product endpoint when given product id", () 
 
   console.log("get:", UtilsModule.get);
   // ...
-})
+});
 ```
+
 ```
 get: [Function: mockConstructor] {
   _isMockFunction: true,
@@ -807,11 +814,12 @@ export function getProduct(productId: number): Promise<any> {
   // ...
 }
 ```
+
 ```
 get Function: [Function: get]
 ```
 
-Düşündüğümüz gibi fonksiyon mocklanmamış. Ayrı bir dosyaya çıkarıp yeni dosya 
+Düşündüğümüz gibi fonksiyon mocklanmamış. Ayrı bir dosyaya çıkarıp yeni dosya
 üzerinden mocklayabiliriz.
 
 ```typescript utils.test.ts
@@ -899,6 +907,7 @@ describe("utils tests", () => {
   });
 });
 ```
+
 ```typescript utils.ts
 import get from "./get";
 
@@ -912,6 +921,7 @@ export function getUser(userId: number): Promise<any> {
   return get(`${API_URL}/users/${userId}`);
 }
 ```
+
 ```typescript get.ts
 import axios from "axios";
 
@@ -925,6 +935,7 @@ export default async function get(apiUrl: string): Promise<any> {
   }
 }
 ```
+
 ```
 utils tests
   get() tests
@@ -936,8 +947,8 @@ utils tests
 
 ### jest.spyOn()
 
-Eski bir dostla karşılaşmış gibiyiz. Evet, modüllerde de `jest.spyOn()` 
-kullanabiliriz. Ayrı dosyaya çıkartmak bu yöntemle de gerekli olsa bile 
+Eski bir dostla karşılaşmış gibiyiz. Evet, modüllerde de `jest.spyOn()`
+kullanabiliriz. Ayrı dosyaya çıkartmak bu yöntemle de gerekli olsa bile
 çok daha temiz bir kullanım sağlar.
 
 ```typescript utils.test.ts
@@ -947,9 +958,7 @@ import * as UtilsModule from "./utils";
 
 jest.mock("axios", () => {
   return {
-    get: jest
-      .fn()
-      .mockRejectedValue(new Error("Error occured when fetching data!")),
+    get: jest.fn().mockRejectedValue(new Error("Error occured when fetching data!")),
   };
 });
 
@@ -977,14 +986,13 @@ describe("utils tests", () => {
 
       const result = await UtilsModule.getProduct(productId);
 
-      expect(GetModule.default).toHaveBeenCalledWith(
-        `https://dummyjson.com/products/${productId}`
-      );
+      expect(GetModule.default).toHaveBeenCalledWith(`https://dummyjson.com/products/${productId}`);
       expect(result).toStrictEqual(mockProduct);
     });
   });
 });
 ```
+
 ```typescript utils.ts
 import get from "./get";
 
@@ -996,6 +1004,7 @@ export function getUser(userId: number): Promise<any> {
   return get(`https://dummyjson.com/users/${userId}`);
 }
 ```
+
 ```typescript get.ts
 import axios from "axios";
 
@@ -1009,6 +1018,7 @@ export default async function get(apiUrl: string): Promise<any> {
   }
 }
 ```
+
 ```
 utils tests
   get() tests
@@ -1020,8 +1030,8 @@ utils tests
 
 ## Modül Mockunu Temizleme
 
-Modülleri mockladık ancak mockları temizlemek de isteyebiliriz. Bunun için iki 
-methoda sahibiz. `jest.dontMock()` kendinden sonraki import nesnelerinin 
+Modülleri mockladık ancak mockları temizlemek de isteyebiliriz. Bunun için iki
+methoda sahibiz. `jest.dontMock()` kendinden sonraki import nesnelerinin
 mocklarını temizler.
 
 ```typescript
@@ -1029,26 +1039,21 @@ jest.mock("axios");
 
 test("playground", () => {
   const axiosInstance1 = require("axios"); // mocked
-  console.log(
-    "Is axiosInstance1.get mocked:",
-    jest.isMockFunction(axiosInstance1.get)
-  );
+  console.log("Is axiosInstance1.get mocked:", jest.isMockFunction(axiosInstance1.get));
 
   jest.dontMock("axios");
 
   const axiosInstance2 = require("axios"); // unmocked
-  console.log(
-    "Is axiosInstance2.get mocked:",
-    jest.isMockFunction(axiosInstance2.get)
-  );
+  console.log("Is axiosInstance2.get mocked:", jest.isMockFunction(axiosInstance2.get));
 });
 ```
+
 ```
 Is axiosInstance1.get mocked: true
 Is axiosInstance2.get mocked: false
 ```
 
-`jest.unmock()` ise bulunduğu kod bloğundaki ilgili tüm import nesnelerinin 
+`jest.unmock()` ise bulunduğu kod bloğundaki ilgili tüm import nesnelerinin
 mocklarını temizler.
 
 ```typescript
@@ -1056,20 +1061,15 @@ jest.mock("axios");
 
 test("playground", () => {
   const axiosInstance1 = require("axios"); // mocked
-  console.log(
-    "Is axiosInstance1.get mocked:",
-    jest.isMockFunction(axiosInstance1.get)
-  );
+  console.log("Is axiosInstance1.get mocked:", jest.isMockFunction(axiosInstance1.get));
 
   jest.unmock("axios");
 
   const axiosInstance2 = require("axios"); // unmocked
-  console.log(
-    "Is axiosInstance2.get mocked:",
-    jest.isMockFunction(axiosInstance2.get)
-  );
+  console.log("Is axiosInstance2.get mocked:", jest.isMockFunction(axiosInstance2.get));
 });
 ```
+
 ```
 Is axiosInstance1.get mocked: false
 Is axiosInstance2.get mocked: false
@@ -1077,8 +1077,8 @@ Is axiosInstance2.get mocked: false
 
 ## Kapanış
 
-İşin içine girip gerçek senaryolarla ilgili kod yazmadıkça test öğrenmek zor 
-görünebilir. Ancak olumsuz bir yargıya varmayın istediğimiz takdirde 
+İşin içine girip gerçek senaryolarla ilgili kod yazmadıkça test öğrenmek zor
+görünebilir. Ancak olumsuz bir yargıya varmayın istediğimiz takdirde
 öğrenebileceğimizi biliyoruz.
 
 Yazı burada biter. Sağlıcakla kalın.

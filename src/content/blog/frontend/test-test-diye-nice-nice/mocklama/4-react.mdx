@@ -20,23 +20,25 @@ otherParts:
     slug: "/blog/test-test-diye-nice-nice-mocklama-4-react"
 ---
 
-import MessageBox from "../../../../../components/MessageBox.astro";
-
 <MessageBox type="info">
-Angular sevdiğimiz bir abimizdi. Karmaşık bir framework'tü, her şeyi yapmaya çalışırdı. Mesela ben yapmam. Bundle size'ı arttırırdı, ben arttırmam. Developerlar'ın işi düştüğünde sırtını dönerdi, ben dönmem. Angular sevdiğimiz bir abimizdi ama komponentleri de bir tuhaf render'lardı. Bizde hook'lar masaya konur. Herkes ihtiyacı kadarını alır. Eskiler sende kalsın kardeş, junior'ların kafasını karıştırma yeter.<br />
-**- React**
+  Angular sevdiğimiz bir abimizdi. Karmaşık bir framework'tü, her şeyi yapmaya çalışırdı. Mesela ben yapmam. Bundle
+  size'ı arttırırdı, ben arttırmam. Developerlar'ın işi düştüğünde sırtını dönerdi, ben dönmem. Angular sevdiğimiz bir
+  abimizdi ama komponentleri de bir tuhaf render'lardı. Bizde hook'lar masaya konur. Herkes ihtiyacı kadarını alır.
+  Eskiler sende kalsın kardeş, junior'ların kafasını karıştırma yeter.
+  <br />
+  **- React**
 </MessageBox>
 
 Mocklama serüvenimizde React'a kadar geldik. Çoğumuz React framework'ünü kullanıyoruz ve komponent testleriyle
 haşır neşir oluyoruz. Peki mocklama React komponentleriyle birlikte nasıl çalışır?
 
 <MessageBox type="info">
-Yazının kodlarına [Github](https://github.com/baspinarenes/blog-code-examples/tree/main/jest-mocking-4-react) üzerinden erişebilirsiniz.
+  Yazının kodlarına [Github](https://github.com/baspinarenes/blog-code-examples/tree/main/jest-mocking-4-react)
+  üzerinden erişebilirsiniz.
 </MessageBox>
- 
 ## Girizgah
 
-Framework'lerle birlikte komponent dediğimiz özel fonksiyon türleri hayatımıza girer ve temel amaçları DOM elementri üretmek ve DOM ağacına render etmektir. Kullanıcının kayıtlı olup olmamasına göre formun içeriğini yöneten 
+Framework'lerle birlikte komponent dediğimiz özel fonksiyon türleri hayatımıza girer ve temel amaçları DOM elementri üretmek ve DOM ağacına render etmektir. Kullanıcının kayıtlı olup olmamasına göre formun içeriğini yöneten
 `Registration` komponentini ele alalım.
 
 ```typescript Registration.tsx
@@ -54,6 +56,7 @@ interface RegistrationProps {
 
 export default Registration;
 ```
+
 ```typescript RegisterForm.tsx
 import React, { useState } from "react";
 
@@ -66,15 +69,12 @@ const RegisterForm = () => {
 
   // ...
 
-  return (
-    <form onSubmit={handleRegisterSubmit}>
-      ...
-    </form>
-  );
+  return <form onSubmit={handleRegisterSubmit}>...</form>;
 };
 
 export default RegisterForm;
 ```
+
 ```typescript LoginForm.tsx
 import React, { useState } from "react";
 
@@ -86,11 +86,7 @@ const LoginForm = () => {
 
   // ...
 
-  return (
-    <form onSubmit={handleLoginSubmit}>
-      ...
-    </form>
-  );
+  return <form onSubmit={handleLoginSubmit}>...</form>;
 };
 
 export default LoginForm;
@@ -111,11 +107,11 @@ root.render(
 );
 ```
 
-İlgili dosya browser'da çalıştırıldığında DOM ağacı erişebilir haldedir. Ancak 
-testlerimiz NodeJS ortamında çalıştığından ötürü ortada DOM ağacı yoktur. 
-Komponentlerin test edilebilmesi için özel test kütüphaneleri 
-tarafından sahte DOM ağacı oluşturulur. Makalede Jest ile birlikte 
-React'tın en popüler test kütüphanesi olan **React Testing Library** 
+İlgili dosya browser'da çalıştırıldığında DOM ağacı erişebilir haldedir. Ancak
+testlerimiz NodeJS ortamında çalıştığından ötürü ortada DOM ağacı yoktur.
+Komponentlerin test edilebilmesi için özel test kütüphaneleri
+tarafından sahte DOM ağacı oluşturulur. Makalede Jest ile birlikte
+React'tın en popüler test kütüphanesi olan **React Testing Library**
 kullanacağız.
 
 Komponentleri mocklamak için önceki yazılardan faydalanabilir ve döndüreceği DOM içeriğini belirleyebiliriz. Genelde `div` döndürüp `data-testid` parametresi olarak komponent ismi vermeyi tercih ediyorum.
@@ -137,6 +133,7 @@ test("playground", () => {
   debug();
 });
 ```
+
 ```
 DOM:
 
@@ -147,28 +144,29 @@ DOM:
 </body>
 ```
 
-`render` metodu DOM ağacıyla yapabileceğimiz işlemler için metodlar barındıran 
+`render` metodu DOM ağacıyla yapabileceğimiz işlemler için metodlar barındıran
 bir nesne döndürür. Mock içeriklerin başarıyla render olduğunu görmek için  
-`debug` metodunu kullanabiliriz.  Çıktıya baktığımızda istediğimiz değerin 
-render edilmiş olduğunu görebiliriz. Komponentin başarıyla mocklandığını 
+`debug` metodunu kullanabiliriz. Çıktıya baktığımızda istediğimiz değerin
+render edilmiş olduğunu görebiliriz. Komponentin başarıyla mocklandığını
 görmenin huzuruyla yolumuza devam edelim.
 
 ## Komponent Mocklama
 
-Hatırlarsanız test yazarkenki temel prensibimiz, testin odaklandığı fonksiyon 
-dışındaki fonksiyonların mümkün mertebe çalıştırılmamasıydı. React'da ise child 
-komponentlerin render edilmemesini ve unit test gerekliliklerinin 
+Hatırlarsanız test yazarkenki temel prensibimiz, testin odaklandığı fonksiyon
+dışındaki fonksiyonların mümkün mertebe çalıştırılmamasıydı. React'da ise child
+komponentlerin render edilmemesini ve unit test gerekliliklerinin
 karşılanmasını istiyoruz.
 
-Test yazarken kendimize sormamız gereken soru "Bu komponentin görevi nedir?" 
-olmalıdır. `Registration` komponentinin görevi, `isRegistered` props değerine 
-göre hangi formun ekranda gösterileceğine karar vermektir. İçerisinde hangi 
-inputlarin olduğunu ve işlem bitince yönlendirdiği sayfayı test etmemeliyiz. 
-Bunlar formu render eden komponentin testinde ele alınmalıdır. `data-testid` 
+Test yazarken kendimize sormamız gereken soru "Bu komponentin görevi nedir?"
+olmalıdır. `Registration` komponentinin görevi, `isRegistered` props değerine
+göre hangi formun ekranda gösterileceğine karar vermektir. İçerisinde hangi
+inputlarin olduğunu ve işlem bitince yönlendirdiği sayfayı test etmemeliyiz.
+Bunlar formu render eden komponentin testinde ele alınmalıdır. `data-testid`
 değeriyle doğru formun render edilip edilmediğini kontrol edebiliriz.
 
 <MessageBox type="info">
-Örnekleri basit tutmaya çalışacağım ve her seferinde farklı biçimde yazışlar göstereceğim ki kullanım örneklerini kafamızda çeşitlendirelim. Temel fikre odaklanırsanız kendi örneklerinize uygulayabileceğinizi düşünüyorum.
+  Örnekleri basit tutmaya çalışacağım ve her seferinde farklı biçimde yazışlar göstereceğim ki kullanım örneklerini
+  kafamızda çeşitlendirelim. Temel fikre odaklanırsanız kendi örneklerinize uygulayabileceğinizi düşünüyorum.
 </MessageBox>
 
 Testlerimizi yazalım.
@@ -213,6 +211,7 @@ describe("<Registration /> tests", () => {
   });
 });
 ```
+
 ```javascript jest.spyOn
 import { render, screen } from "@testing-library/react";
 import * as LoginFormModule from "./LoginForm";
@@ -221,9 +220,7 @@ import Registration from "./Registration";
 
 describe("<Registration> tests", () => {
   test("should render <RegisterForm /> when isRegistered equal false", () => {
-    jest.spyOn(RegisterFormModule, "default").mockReturnValue(
-      <div data-testid="register-form" />
-    );
+    jest.spyOn(RegisterFormModule, "default").mockReturnValue(<div data-testid="register-form" />);
 
     render(<Registration isRegistered={false} />);
 
@@ -231,9 +228,7 @@ describe("<Registration> tests", () => {
   });
 
   test("should render <LoginForm /> when isRegistered equal true", () => {
-    jest.spyOn(LoginFormModule, "default").mockReturnValue(
-      <div data-testid="login-form" />
-    );
+    jest.spyOn(LoginFormModule, "default").mockReturnValue(<div data-testid="login-form" />);
 
     render(<Registration isRegistered={true} />);
 
@@ -241,6 +236,7 @@ describe("<Registration> tests", () => {
   });
 });
 ```
+
 ```
 PASS  src/Registration.test.tsx
   <Registration> tests
@@ -248,12 +244,12 @@ PASS  src/Registration.test.tsx
     ✓ should render <LoginForm /> when isRegistered equal true (4 ms)
 ```
 
-Mocklamalar test ihtiyaçlarına göre şekillendirilmelidir. Render edildiğini 
+Mocklamalar test ihtiyaçlarına göre şekillendirilmelidir. Render edildiğini
 görmek istiyorsak basit bir `data-testid` işimizi görecektir.
 
 ### Propsları Mock Komponente Geçme
 
-Yapılacaklar listesi ve maddeleri için iki farklı komponentimiz olduğunu 
+Yapılacaklar listesi ve maddeleri için iki farklı komponentimiz olduğunu
 düşünelim.
 
 ```javascript App.tsx
@@ -280,13 +276,12 @@ function App() {
     },
   ];
 
-  return (
-    <TodoList todos={todos} />
-  );
+  return <TodoList todos={todos} />;
 }
 
 export default App;
 ```
+
 ```javascript TodoList.tsx
 import React from "react";
 import TodoItem from "./TodoItem";
@@ -307,13 +302,14 @@ const TodoList: React.FC<TodoListProps> = ({ todos }) => {
 
 interface TodoListProps {
   todos: Array<{
-    title: string;
-    isCompleted: boolean;
+    title: string,
+    isCompleted: boolean,
   }>;
 }
 
 export default TodoList;
 ```
+
 ```javascript TodoItem.tsx
 import React from "react";
 
@@ -339,9 +335,7 @@ Tamamlanan maddelerin ekranda gösterilmediğinden emin olmak istiyoruz.
 import { render, screen } from "@testing-library/react";
 import TodoList from "./TodoList";
 
-jest.mock("./TodoItem", () => jest.fn().mockReturnValue(
-  <div data-testid="todo-item" />
-));
+jest.mock("./TodoItem", () => jest.fn().mockReturnValue(<div data-testid="todo-item" />));
 
 describe("<TodoList> tests", () => {
   test("should render only incomplete todo items", () => {
@@ -375,6 +369,7 @@ describe("<TodoList> tests", () => {
   });
 });
 ```
+
 ```
 DOM:
 <body>
@@ -396,9 +391,9 @@ FAIL  src/TodoList.test.tsx
       Received length: 4
 ```
 
-Mock başarılı... ama bir problem var gibi. Tamamlanan maddeler de gösteriliyor 
-ve hangi maddelerin render ettirildiğini belirten bir şey yok. Komponenti 
-mockladığımızda render olmasını engelleyen koşul da kaybolur. Tamamlanma 
+Mock başarılı... ama bir problem var gibi. Tamamlanan maddeler de gösteriliyor
+ve hangi maddelerin render ettirildiğini belirten bir şey yok. Komponenti
+mockladığımızda render olmasını engelleyen koşul da kaybolur. Tamamlanma
 durumuna göre mock fonksiyonunun döndürdüğü değeri manipüle edebiliriz.
 
 ```javascript TodoList.test.tsx focus=2,5:9
@@ -444,6 +439,7 @@ describe("<TodoList> tests", () => {
   });
 });
 ```
+
 ```
 DOM:
 <body>
@@ -463,8 +459,8 @@ PASS  src/TodoList.test.tsx
 
 ### State'leri Manipüle Ettiğimiz Child Komponentleri Mocklama
 
-Bazen komponent state değerlerini alt komponentlerden değiştirip yeniden render 
-olmasını isteriz. Butona tıklandığında kişi listesinin çekildiği ve üst 
+Bazen komponent state değerlerini alt komponentlerden değiştirip yeniden render
+olmasını isteriz. Butona tıklandığında kişi listesinin çekildiği ve üst
 komponentte render edildiği bir senaryo olabilir.
 
 ```javascript PersonList.tsx
@@ -473,7 +469,7 @@ import FetchButton from "./FetchButton";
 import Person from "./Person";
 
 const PersonList: React.FC = () => {
-  const [persons, setPersons] = useState<any>([]);
+  const [persons, setPersons] = useState < any > [];
 
   return (
     <div>
@@ -492,6 +488,7 @@ const PersonList: React.FC = () => {
 
 export default PersonList;
 ```
+
 ```javascript Person.tsx
 import React from "react";
 
@@ -513,6 +510,7 @@ export interface PersonProps {
 
 export default Person;
 ```
+
 ```javascript FetchButton.tsx
 import React from "react";
 
@@ -542,7 +540,7 @@ import * as FetchButtonModule from "./FetchButton";
 import PersonList from "./PersonList";
 
 // div içeriğinin gerçekte nasıl olduğu hiç önemli değil.
-// doğru kişiyi render ettiğimizi teyit edebiliyorsak kafi. 
+// doğru kişiyi render ettiğimizi teyit edebiliyorsak kafi.
 jest.mock("./Person", () =>
   jest.fn(({ firstName, lastName, email }: PersonProps) => (
     <div data-testid="person">
@@ -566,13 +564,14 @@ describe("<PersonList /> tests", () => {
       },
     ];
 
-    jest.spyOn(FetchButtonModule, "default")
-        .mockImplementation(({ setPersons }: FetchButtonModule.FetchButtonProps) => (
-          <button
-            data-testid="fetch-button"
-            onClick={() => setPersons(mockPersons)}
-          />
-        ));
+    jest
+      .spyOn(FetchButtonModule, "default")
+      .mockImplementation(({ setPersons }: FetchButtonModule.FetchButtonProps) => (
+        <button
+          data-testid="fetch-button"
+          onClick={() => setPersons(mockPersons)}
+        />
+      ));
 
     render(<PersonList />);
 
@@ -591,14 +590,15 @@ describe("<PersonList /> tests", () => {
   });
 });
 ```
+
 ```
 PASS  src/PersonList.test.tsx
   <PersonList /> tests
     ✓ should get persons when click fetch button (36 ms)
 ```
 
-`PersonList` komponentinin görevi state değerine göre kişileri render 
-ettirmektir. Dolayısıyla alt komponentin listeyi nereden ve nasıl çektiğiyle 
+`PersonList` komponentinin görevi state değerine göre kişileri render
+ettirmektir. Dolayısıyla alt komponentin listeyi nereden ve nasıl çektiğiyle
 ilgilenmez.
 
 ### Kütüphane Komponentlerini Mocklama
@@ -606,7 +606,8 @@ ilgilenmez.
 Sayfalarımızın içeriği karmaşıklaştıkça yüklenme süresi şaha kalkar. Bu gibi durumlarda bildiğimiz üzere **lazy load** namı diğer tembel yükleme kullanırız. Adeta ödevini son güne bırakan tembel bir öğrenci misali komponentin ekranda gözükmesi yaklaşana kadar render etmez. Testleri yaptığımız NodeJS ortamında ekran dediğimiz kavram da olmadığı için komponentler hiçbir zaman render olmaz ve testleri gerçekleştiremeyiz.
 
 <MessageBox type="info">
-Örneğimizi rastgele seçtiğim `react-lazyload` kütüphanesi üzerinden gösteriyor olacağım. Bunun yerine diğer herhangi bir kütüphane gelebilir.
+  Örneğimizi rastgele seçtiğim `react-lazyload` kütüphanesi üzerinden gösteriyor olacağım. Bunun yerine diğer herhangi
+  bir kütüphane gelebilir.
 </MessageBox>
 
 ```javascript Photos.tsx
@@ -704,6 +705,7 @@ describe("<Photos /> tests", () => {
   });
 });
 ```
+
 ```
 <body>
   <div>
@@ -736,9 +738,9 @@ FAIL src/Photos.test.tsx
       wUnable to find an element by: [data-testid="photo"]
 ```
 
-`img` elementi görmek yerine yer tutucuyla karşılaşıyoruz. NodeJS'de 
-intersection observer olmadığından ötürü hiçbir zaman resim elementi DOM'a 
-render olmaz. Bu şekilde testimizi gerçekleştiremeyeceğimizden dolayı 
+`img` elementi görmek yerine yer tutucuyla karşılaşıyoruz. NodeJS'de
+intersection observer olmadığından ötürü hiçbir zaman resim elementi DOM'a
+render olmaz. Bu şekilde testimizi gerçekleştiremeyeceğimizden dolayı
 `LazyLoad` komponentini mocklayacağız.
 
 ```javascript Photos.test.tsx focus=42:44
@@ -783,9 +785,7 @@ describe("<Photos /> tests", () => {
   });
 
   test("should render greeting text without name", async () => {
-    jest
-      .spyOn(ReactLazyLoadModule, "default")
-      .mockImplementation(({ children }: any) => children);
+    jest.spyOn(ReactLazyLoadModule, "default").mockImplementation(({ children }: any) => children);
 
     const { debug } = render(<Photos />);
 
@@ -804,6 +804,7 @@ describe("<Photos /> tests", () => {
   });
 });
 ```
+
 ```
 <body>
   <div>
@@ -834,11 +835,19 @@ PASS  src/components/lazyload/Photos.test.tsx
 
 ## Seri Sonu Canavarı
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/2ZHK-hVhELc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/2ZHK-hVhELc"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+></iframe>
 
-Yazının sonuna gelirken serideki bütün konuları birleştiren ve size challange 
-olacak bir örnek koymak istedim. Geriye doğru sayma vazifesi icra eden mini 
-React projesinin kodlarını aşağıya bıraktım. Buyrun testlerini yazmaya. Testin 
+Yazının sonuna gelirken serideki bütün konuları birleştiren ve size challange
+olacak bir örnek koymak istedim. Geriye doğru sayma vazifesi icra eden mini
+React projesinin kodlarını aşağıya bıraktım. Buyrun testlerini yazmaya. Testin
 çıktısından faydalanabilirsiniz.
 
 ```javascript RemainingTimer.tsx
@@ -894,8 +903,8 @@ const RemainingTimer: React.FC = () => {
 };
 
 export default RemainingTimer;
-
 ```
+
 ```javascript TimeBox.tsx
 import React from "react";
 
@@ -922,6 +931,7 @@ export interface TimeBoxProps {
 
 export default TimeBox;
 ```
+
 ```javascript utils/date.ts
 function calculateDeltaBetweenDates(futureDate: Date, currDate: Date = new Date()) {
   let delta = futureDate.valueOf() - currDate.valueOf();
@@ -946,6 +956,7 @@ function convertDeltaToDaysHoursMinutes(delta: number) {
 
 export { calculateDeltaBetweenDates, convertDeltaToDaysHoursMinutes };
 ```
+
 ```
 PASS  src/RemainingTimer.test.tsx
   <RemainingTimer /> tests
@@ -955,11 +966,11 @@ PASS  src/RemainingTimer.test.tsx
 
 ## Kapanış
 
-React komponentlerine değindiğimiz bu yazıyla birlikte mocking serim sona erdi. 
-Umarım açıklayıcı olmuştur. Testle ilgili İngilizce olarak bile çok büyük bir 
-kaynak sıkıntısı varken bu yazının can suyu olmasını umuyorum. Sonuna kadar 
-okuduysanız birkaç projenin testine giriştikten sonra yola alfa testçi olarak 
-devam edebileceğinizi düşünüyorum. Seri hakkında geribildirimlerinizi duymaktan 
+React komponentlerine değindiğimiz bu yazıyla birlikte mocking serim sona erdi.
+Umarım açıklayıcı olmuştur. Testle ilgili İngilizce olarak bile çok büyük bir
+kaynak sıkıntısı varken bu yazının can suyu olmasını umuyorum. Sonuna kadar
+okuduysanız birkaç projenin testine giriştikten sonra yola alfa testçi olarak
+devam edebileceğinizi düşünüyorum. Seri hakkında geribildirimlerinizi duymaktan
 mutlu ve motive olurum.
 
 Yazı burada biter. Sağlıcakla kalın.

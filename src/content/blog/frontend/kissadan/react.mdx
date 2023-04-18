@@ -14,10 +14,9 @@ otherParts:
     slug: "/blog/kissadan-golang"
 ---
 
-import MessageBox from "../../../../components/MessageBox.astro";
-
 <MessageBox type="warning">
-  **Yaşayan Yazı**, bir yerimden uydurduğum bir terimdir ve ileriki dönemde içeriği zenginleşecek ama şu anki haliyle de faydalı olabilecek yazıları belirtir.
+  **Yaşayan Yazı**, bir yerimden uydurduğum bir terimdir ve ileriki dönemde içeriği zenginleşecek ama şu anki haliyle de
+  faydalı olabilecek yazıları belirtir.
 </MessageBox>
 
 Yeni React dökümantasyonunun çıkmasıyla birlikte baştan takip etmek istedim. Dolayısıyla sıfırdan öğrenen birisine yardımcı olacak kilit noktaları az ve öz paylaşıyor olacağım.
@@ -29,7 +28,7 @@ Yeni React dökümantasyonunun çıkmasıyla birlikte baştan takip etmek istedi
 - Uygulama başladığında yalnızca bir kez çalıştırılacak kod komponent dışına koyulabilir.
 
 ```javascript
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   checkAuthToken();
   loadDataFromLocalStorage();
 }
@@ -45,9 +44,7 @@ function App() {
 
 ```javascript
 function MyButton() {
-  return (
-    <button>I'm a button</button>
-  );
+  return <button>I'm a button</button>;
 }
 
 export default function MyApp() {
@@ -61,6 +58,7 @@ export default function MyApp() {
 ```
 
 - Tek bir element/komponent döndürmesi gerekir. Eğer iç içe olmaması gereken bir şeyler varsa etrafına `<div>` ya da `<>` sarabiliriz.
+
 ```javascript
 <div>
   <CustomElement />
@@ -69,6 +67,7 @@ export default function MyApp() {
 ```
 
 - Child komponenti yoksa her zaman kapanan etiket (closing tag) ile yazmalıyız.
+
 ```javascript
 <CustomElement />
 <div />
@@ -87,8 +86,8 @@ export default function MyApp() {
 
 ```javascript
 const user = {
-  name: 'Hedy Lamarr',
-  imageUrl: 'https://i.imgur.com/yXOvdOSs.jpg',
+  name: "Hedy Lamarr",
+  imageUrl: "https://i.imgur.com/yXOvdOSs.jpg",
   imageSize: 90,
 };
 
@@ -102,7 +101,7 @@ export default function Profile() {
         alt={`Photo of ${user.name}`}
         style={{
           width: user.imageSize,
-          height: user.imageSize
+          height: user.imageSize,
         }}
       />
     </>
@@ -120,27 +119,15 @@ if (isLoggedIn) {
 } else {
   content = <LoginForm />;
 }
-return (
-  <div>
-    {content}
-  </div>
-);
+return <div>{content}</div>;
 ```
 
 ```javascript
-<div>
-  {isLoggedIn ? (
-    <AdminPanel />
-  ) : (
-    <LoginForm />
-  )}
-</div>
+<div>{isLoggedIn ? <AdminPanel /> : <LoginForm />}</div>
 ```
 
 ```javascript
-<div>
-  {isLoggedIn && <AdminPanel />}
-</div>
+<div>{isLoggedIn && <AdminPanel />}</div>
 ```
 
 - Koşullu render yapmak istersek `condition ? result1 : result2` , `condition && result` şeklinde kısaltma ya da `if` koşulunu kullanabiliriz.
@@ -152,84 +139,74 @@ if (isPacked) {
 
 return <li className="item">{name}</li>;
 ```
+
 ```javascript
-return (
-  <li className="item">
-    {isPacked ? name + ' ✔' : name}
-  </li>
-);
+return <li className="item">{isPacked ? name + " ✔" : name}</li>;
 ```
+
 ```javascript
 return (
   <li className="item">
-    {name} {isPacked && '✔'}
+    {name} {isPacked && "✔"}
   </li>
 );
 ```
 
-- Listeleri render etmek istersek array metodlarıyla ürettiğimiz JSX element 
-element listesi kullanabiliriz. Burda dikkat edilmesi gereken listedeki 
-değişikliklere adapte olabilmesi için elementlere `key` özelliği iletilmelidir. 
-Aksi halde indeks değerleri kullanır ve elemanların sıraları değişirse ya da 
-içlerinden birisi silinirse doğru şeyleri render edemez. 
+- Listeleri render etmek istersek array metodlarıyla ürettiğimiz JSX element
+  element listesi kullanabiliriz. Burda dikkat edilmesi gereken listedeki
+  değişikliklere adapte olabilmesi için elementlere `key` özelliği iletilmelidir.
+  Aksi halde indeks değerleri kullanır ve elemanların sıraları değişirse ya da
+  içlerinden birisi silinirse doğru şeyleri render edemez.
 
 <MessageBox type="info">
-`key` olarak uuid üreten bir kütüphane yada apiden dönen id değerini kullanabilirsiniz. Aksi halde şu hatayı alırsınız: 'Warning: Each child in a list should have a unique “key” prop.'
+  `key` olarak uuid üreten bir kütüphane yada apiden dönen id değerini kullanabilirsiniz. Aksi halde şu hatayı
+  alırsınız: 'Warning: Each child in a list should have a unique “key” prop.'
 </MessageBox>
 
 <MessageBox type="info">
-`key` özelliğine her seferinde rastgele değer üreten bir metod verilirse (örneğin Math.random) DOM'a her seferinde yeniden render edilir.
+  `key` özelliğine her seferinde rastgele değer üreten bir metod verilirse (örneğin Math.random) DOM'a her seferinde
+  yeniden render edilir.
 </MessageBox>
 
 ```javascript
 const products = [
-  { title: 'Cabbage', id: 1 },
-  { title: 'Garlic', id: 2 },
-  { title: 'Apple', id: 3 },
+  { title: "Cabbage", id: 1 },
+  { title: "Garlic", id: 2 },
+  { title: "Apple", id: 3 },
 ];
 
-const listItems = products.map(product =>
-  <li key={product.id}>
-    {product.title}
-  </li>
-);
+const listItems = products.map((product) => <li key={product.id}>{product.title}</li>);
 
-return (
-  <ul>{listItems}</ul>
-);
+return <ul>{listItems}</ul>;
 ```
 
 - Normal davranışta React değişen state ile birlikte ilgili tüm işlemler bittikten sonra DOM'u günceller. O kodun arkasından state değişikliğiyle gelecek yeni DOM'a erişmemiz gerekirse `flushSync` metodunu kullanabiliriz.
 
 ```javascript
-import { useState, useRef } from 'react';
-import { flushSync } from 'react-dom';
+import { useState, useRef } from "react";
+import { flushSync } from "react-dom";
 
 export default function TodoList() {
   const listRef = useRef(null);
-  const [todos, setTodos] = useState(
-    initialTodos
-  );
+  const [todos, setTodos] = useState(initialTodos);
 
   function handleAdd() {
     flushSync(() => {
-      setTodos([ ...todos, { id: nextId++, text: text }]);      
+      setTodos([...todos, { id: nextId++, text: text }]);
     });
-    
-    listRef.current.lastChild // can access new todo dom element
+
+    listRef.current.lastChild; // can access new todo dom element
   }
 
   return (
     <>
-      <button onClick={handleAdd}>
-        Add
-      </button>
+      <button onClick={handleAdd}>Add</button>
       <input
         value={text}
-        onChange={e => setText(e.target.value)}
+        onChange={(e) => setText(e.target.value)}
       />
       <ul ref={listRef}>
-        {todos.map(todo => (
+        {todos.map((todo) => (
           <li key={todo.id}>{todo.text}</li>
         ))}
       </ul>
@@ -245,14 +222,12 @@ export default function TodoList() {
 ```javascript
 function MyButton() {
   function handleClick() {
-    alert('You clicked me!');
+    alert("You clicked me!");
   }
 
   return (
     // <button onClick={(e) => handleClick(e)}>
-    <button onClick={handleClick}>
-      Click me
-    </button>
+    <button onClick={handleClick}>Click me</button>
   );
 }
 ```
@@ -263,19 +238,24 @@ function MyButton() {
 <button onClick={handleClick()}>
 ```
 
-- Elementlerin beklediği event props isimlerinde `on`, handler isimlerinde `handle` ile başlamak yaygındır. Örn: `onMouseEnter={handleMouseEnter}` 
+- Elementlerin beklediği event props isimlerinde `on`, handler isimlerinde `handle` ile başlamak yaygındır. Örn: `onMouseEnter={handleMouseEnter}`
 - Event propagation komponentlerde de geçerlidir. Örnekte önce button sonra div `onClick` metodu çağrılır. `onScroll` harici tüm olaylar yukarıya yayılır. Engellemek için `e.stopPropagation()` kullanılır.
 
 ```javascript
 export default function Toolbar() {
   return (
-    <div className="Toolbar" onClick={() => {
-      alert('You clicked on the toolbar!');
-    }}>
-      <button onClick={() => {
-        e.stopPropagation();
-        alert('Playing!')  
-      }}>
+    <div
+      className="Toolbar"
+      onClick={() => {
+        alert("You clicked on the toolbar!");
+      }}
+    >
+      <button
+        onClick={() => {
+          e.stopPropagation();
+          alert("Playing!");
+        }}
+      >
         Play Movie
       </button>
     </div>
@@ -287,27 +267,32 @@ export default function Toolbar() {
 - Event handler'ları yukarıdan aşağıya doğru (capturing) çalıştırmak istersek `onClick` yerine `onClickCapture` kullanımını yapabiliriz.
 
 ```javascript
-<div onClick={() => {
-  alert('Call 1');
-}}>
-  <div onClickCapture={() => {
-    alert('Call 2');
-  }}>
-    <div onClickCapture={() => {
-      alert('Call 3');
-    }}>
+<div
+  onClick={() => {
+    alert("Call 1");
+  }}
+>
+  <div
+    onClickCapture={() => {
+      alert("Call 2");
+    }}
+  >
+    <div
+      onClickCapture={() => {
+        alert("Call 3");
+      }}
+    >
       Click!
     </div>
   </div>
 </div>
 ```
+
 ```
 Call 2
 Call 3
 Call 1
 ```
-
-
 
 ### Props
 
@@ -334,11 +319,7 @@ function Profile() {
 
 ```javascript
 function Heading({ children }) {
-  return (
-    <div className="heading">
-      {children}
-    </div>
-  );
+  return <div className="heading">{children}</div>;
 }
 
 export default function Text() {
@@ -348,16 +329,18 @@ export default function Text() {
 
 ### State
 
-- Zamanla değişebilen ve ekranın güncellenmesine yol açacak değerler için  **state** değişkenlerini kullanırız. Bi nevi komponent bazlı bellektir. Render'lar arasında değeri korunur.
+- Zamanla değişebilen ve ekranın güncellenmesine yol açacak değerler için **state** değişkenlerini kullanırız. Bi nevi komponent bazlı bellektir. Render'lar arasında değeri korunur.
 - State komponentin DOM'daki yeriyle ilişkilendirilir. State'in rerender'lar esnasında korunmasını istiyorsanız, DOM ağacının yenisiyle 'eşleşmesi' gerekir. Eğer aynı konumda render olan komponentlerde state'i sıfırlamak istersek farklı `key` parametresi verebiliriz.
 - React'da state tanımlamak için `useState` hook'u kullanılır.
 
 <MessageBox type="info">
-React'da `use` ile başlayan fonksiyonlara `hook` diyoruz ve esasen React'ın özelliklerini kullanabilmemize yarıyorlar. Komponentlerin root'unda kullanılabilirler. Koşul ya da döngü içine kullanmamalıyız. Gerekiyorsa yeni bir bileşen oluşturabiliriz.
+  React'da `use` ile başlayan fonksiyonlara `hook` diyoruz ve esasen React'ın özelliklerini kullanabilmemize yarıyorlar.
+  Komponentlerin root'unda kullanılabilirler. Koşul ya da döngü içine kullanmamalıyız. Gerekiyorsa yeni bir bileşen
+  oluşturabiliriz.
 </MessageBox>
 
 ```javascript
-import { useState } from 'react';
+import { useState } from "react";
 
 function MyButton() {
   // count: mevcut değer
@@ -369,11 +352,7 @@ function MyButton() {
     setCount(count + 1);
   }
 
-  return (
-    <button onClick={handleClick}>
-      Clicked {count} times
-    </button>
-  );
+  return <button onClick={handleClick}>Clicked {count} times</button>;
 }
 ```
 
@@ -383,12 +362,12 @@ function MyButton() {
 
 ```javascript
 const [person, setPerson] = useState({
-  name: 'Niki de Saint Phalle',
+  name: "Niki de Saint Phalle",
   artwork: {
-    title: 'Blue Nana',
-    city: 'Hamburg',
-    image: 'https://i.imgur.com/Sd1AgUOm.jpg',
-  }
+    title: "Blue Nana",
+    city: "Hamburg",
+    image: "https://i.imgur.com/Sd1AgUOm.jpg",
+  },
 });
 
 function handleTitleChange(e) {
@@ -396,8 +375,8 @@ function handleTitleChange(e) {
     ...person,
     artwork: {
       ...person.artwork,
-      title: e.target.value
-    }
+      title: e.target.value,
+    },
   });
 }
 ```
@@ -405,7 +384,7 @@ function handleTitleChange(e) {
 - State güncelleme metodu çalıştığı anda değeri yenilemez. Örnekte üç kez çağırılan setNumber metoduyla birlikte son değerin 3 olmasını bekleyebiliriz ancak öyle olmaz. Her bir setter çalıştığında state değeri mevcuttaki değer yani 0'dır. Metod çalışmayı bitirdikten sonra rerender olur ve state değeri güncellenir. Komponent context'deki değeri elde etmek istersek parametre olarak güncel değeri alan **updater** fonksiyon verebiliriz.
 
 ```javascript
-import { useState } from 'react';
+import { useState } from "react";
 
 export default function Counter() {
   const [number, setNumber] = useState(0);
@@ -413,36 +392,44 @@ export default function Counter() {
   return (
     <>
       <h1>{number}</h1>
-      <button onClick={() => {
-        setNumber(number + 1); // setNumber(0 + 1)
-        setNumber(number + 1); // setNumber(0 + 1)
-        setNumber(number + 1); // setNumber(0 + 1)
-        // yeni değer sonraki rerender'da 1 olur.
-      }}>+3</button>
-      <button onClick={() => {
-        setNumber(number => number + 1); // setNumber(0 + 1)
-        setNumber(number => number + 1); // setNumber(1 + 1)
-        setNumber(number => number + 1); // setNumber(2 + 1)
-        // yeni değer sonraki rerender'da 3 olur.
-      }}>+3</button>
+      <button
+        onClick={() => {
+          setNumber(number + 1); // setNumber(0 + 1)
+          setNumber(number + 1); // setNumber(0 + 1)
+          setNumber(number + 1); // setNumber(0 + 1)
+          // yeni değer sonraki rerender'da 1 olur.
+        }}
+      >
+        +3
+      </button>
+      <button
+        onClick={() => {
+          setNumber((number) => number + 1); // setNumber(0 + 1)
+          setNumber((number) => number + 1); // setNumber(1 + 1)
+          setNumber((number) => number + 1); // setNumber(2 + 1)
+          // yeni değer sonraki rerender'da 3 olur.
+        }}
+      >
+        +3
+      </button>
     </>
-  )
+  );
 }
 ```
 
 - Karmaşık state'leri yönetmek çok karmaşık olabilir. React'ın `useReducer` hook'u ile reducer oluşturup kullanılabiliriz. Esasen alınan aksiyonlar sonunda yapılacak state değişikliklerini tanımlamamızı sağlar.
 
 ```javascript title="TaskApp.tsx"
-import AddTask from './AddTask.js';
-import TaskList from './TaskList.js';
-import { useTasksReducer } from './tasksReducer.js';
+import AddTask from "./AddTask.js";
+import TaskList from "./TaskList.js";
+import { useTasksReducer } from "./tasksReducer.js";
 
 export default function TaskApp() {
   const [tasks, dispatch] = useTasksReducer();
 
   function handleAddTask(text) {
     dispatch({
-      type: 'added',
+      type: "added",
       id: nextId++,
       text: text,
     });
@@ -450,29 +437,30 @@ export default function TaskApp() {
 
   function handleChangeTask(task) {
     dispatch({
-      type: 'changed',
+      type: "changed",
       task: task,
     });
   }
 
   function handleDeleteTask(taskId) {
     dispatch({
-      type: 'deleted',
+      type: "deleted",
       id: taskId,
     });
   }
 
   return {
     // ...
-  }
+  };
 }
 ```
+
 ```javascript title="tasksReducer.js"
-import { useReducer } from 'react';
+import { useReducer } from "react";
 
 function tasksReducer(tasks, action) {
   switch (action.type) {
-    case 'added': {
+    case "added": {
       return [
         ...tasks,
         {
@@ -482,7 +470,7 @@ function tasksReducer(tasks, action) {
         },
       ];
     }
-    case 'changed': {
+    case "changed": {
       return tasks.map((t) => {
         if (t.id === action.task.id) {
           return action.task;
@@ -491,27 +479,24 @@ function tasksReducer(tasks, action) {
         }
       });
     }
-    case 'deleted': {
+    case "deleted": {
       return tasks.filter((t) => t.id !== action.id);
     }
     default: {
-      throw Error('Unknown action: ' + action.type);
+      throw Error("Unknown action: " + action.type);
     }
   }
 }
 
 const initialTasks = [
-  {id: 0, text: 'Visit Kafka Museum', done: true},
-  {id: 1, text: 'Watch a puppet show', done: false},
-  {id: 2, text: 'Lennon Wall pic', done: false},
+  { id: 0, text: "Visit Kafka Museum", done: true },
+  { id: 1, text: "Watch a puppet show", done: false },
+  { id: 2, text: "Lennon Wall pic", done: false },
 ];
 
 const useTasksReducer = () => useReducer(tasksReducer, initialTasks);
 
-export {
-  tasksReducer,
-  useTasksReducer
-}
+export { tasksReducer, useTasksReducer };
 ```
 
 ### Ref
@@ -519,21 +504,17 @@ export {
 - Referans tanımlamak için `useRef` hook'u kullanabiliriz. Değeri render'lar sırasında korur ancak rerender'a sebep olmaz. Event handler içerisinde kullanılabilir. Belirli bir event yoksa **Effect** ihtiyacı olabilir.
 
 ```javascript
-import { useRef } from 'react';
+import { useRef } from "react";
 
 export default function Counter() {
   let count = useRef(0);
 
   function handleClick() {
     count.current = count.current + 1;
-    alert('You clicked ' + count.current + ' times!');
+    alert("You clicked " + count.current + " times!");
   }
 
-  return (
-    <button onClick={handleClick}>
-      Click me!
-    </button>
-  );
+  return <button onClick={handleClick}>Click me!</button>;
 }
 ```
 
@@ -549,7 +530,14 @@ function VideoPlayer({ src, isPlaying }) {
     ref.current.pause();
   }
 
-  return <video ref={ref} src={src} loop playsInline />;
+  return (
+    <video
+      ref={ref}
+      src={src}
+      loop
+      playsInline
+    />
+  );
 }
 ```
 
@@ -574,7 +562,7 @@ export default function CatFriends() {
             }
           }}
         >
-        ...
+          ...
         </li>
       ))}
     </ul>
@@ -585,7 +573,7 @@ export default function CatFriends() {
 - DOM elementlerini manipüle etmek istersek `ref` parametresini kullanabiliriz.
 
 ```javascript
-import { useRef } from 'react';
+import { useRef } from "react";
 
 export default function Form() {
   const inputRef = useRef(null);
@@ -597,9 +585,7 @@ export default function Form() {
   return (
     <>
       <input ref={inputRef} />
-      <button onClick={handleClick}>
-        Focus the input
-      </button>
+      <button onClick={handleClick}>Focus the input</button>
     </>
   );
 }
@@ -608,10 +594,15 @@ export default function Form() {
 - Komponente ilettiğimiz ref otomatik olarak DOM'a eklenmez. Bunun için `forwardRef` API'sinin kullanılması gerekir.
 
 ```javascript
-import { forwardRef, useRef } from 'react';
+import { forwardRef, useRef } from "react";
 
 const MyInput = forwardRef((props, ref) => {
-  return <input {...props} ref={ref} />;
+  return (
+    <input
+      {...props}
+      ref={ref}
+    />
+  );
 });
 
 export default function Form() {
@@ -626,39 +617,35 @@ export default function Form() {
 - Props'ları komponentler arasında 100 kat aşağıya indirmek yerine bir context tanımlayıp `useContext` hook'u yardımıyla okuyabiliriz.
 
 ```javascript title="Section.jsx"
-import { LevelContextProvider } from './LevelContext.js';
+import { LevelContextProvider } from "./LevelContext.js";
 
 export default function Section({ level, children }) {
   return (
     <section className="section">
-      <LevelContextProvider value={level}>
-        {children}
-      </LevelContextProvider>
+      <LevelContextProvider value={level}>{children}</LevelContextProvider>
     </section>
   );
 }
 ```
+
 ```javascript title="Heading.jsx"
 import { useLevelContext } from "./LevelContext";
 
 export default function Heading({ children }) {
   const level = useLevelContext();
- 
- // ...
-}
 
+  // ...
+}
 ```
+
 ```javascript title="LevelContext.jsx"
-import { createContext, useContext } from 'react';
+import { createContext, useContext } from "react";
 
 const LevelContext = createContext(1);
 const LevelContextProvider = LevelContext.Provider;
 const useLevelContext = () => useContext(LevelContext);
 
-export {
-  LevelContextProvider,
-  useLevelContext
-}
+export { LevelContextProvider, useLevelContext };
 ```
 
 ### Effect
@@ -677,7 +664,7 @@ useEffect(() => {
 
   return () => {
     // run on before each effect runs and unmount
-  }
+  };
 }, []);
 ```
 

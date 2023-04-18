@@ -4,11 +4,11 @@ import { t } from "i18next";
 import ArticleSummary from "../../components/ArticleSummary.astro";
 import Layout from "../../layouts/Layout.astro";
 import { capitalize } from "../../utils/common";
-import { categorizePosts } from "../../utils/posts";
+import { categorize } from "../../utils/posts";
 
 const posts = await getCollection("blog");
 const undraftedPosts = posts.filter((post) => !post.data.draft);
-const categorizedPosts = categorizePosts(undraftedPosts);
+const categorizedPosts = categorize(undraftedPosts);
 ---
 
 <Layout>
@@ -27,8 +27,8 @@ const categorizedPosts = categorizePosts(undraftedPosts);
             <section>
               <div class="flex flex-col">
                 {categorizedPosts[category]
-                  .sort((a, b) => b.data.pubDate!.valueOf() - a.data.pubDate!.valueOf())
-                  .map((post) => (
+                  .sort((a: any, b: any) => b.data.pubDate!.valueOf() - a.data.pubDate!.valueOf())
+                  .map((post: any) => (
                     <ArticleSummary post={post} />
                   ))}
               </div>

@@ -17,8 +17,19 @@ const dateOptions: object = {
   day: "numeric",
 };
 
-const { title, description, pubDate, updatedDate, heroImage, supTitle, tags, minutesRead, headings, otherParts } =
-  Astro.props;
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  heroImage,
+  supTitle,
+  tags,
+  minutesRead,
+  headings,
+  otherParts,
+  disableSideMenu,
+} = Astro.props;
 ---
 
 <Layout>
@@ -44,11 +55,9 @@ const { title, description, pubDate, updatedDate, heroImage, supTitle, tags, min
                 {PROFILE.NAME} / {
                   new Date(pubDate).toLocaleDateString(i18next.language ? "tr-TR" : "en-US", dateOptions)
                 }
-                / {minutesRead}
+                {minutesRead ? `/ ${minutesRead}` : ""}
               </div>
-              <div class="text-sm">
-                #{tags.join(" #")}
-              </div>
+              {tags && <div class="text-sm">#{tags.join(" #")}</div>}
             </div>
           </div>
         </div>
@@ -75,11 +84,15 @@ const { title, description, pubDate, updatedDate, heroImage, supTitle, tags, min
         />
       )
     }
-    <SideMenu
-      titleKey="İçerik"
-      direction="right"
-      headings={headings}
-    />
+    {
+      !disableSideMenu && headings && (
+        <SideMenu
+          titleKey="İçerik"
+          direction="right"
+          headings={headings}
+        />
+      )
+    }
   </main>
 </Layout>
 
@@ -95,11 +108,11 @@ const { title, description, pubDate, updatedDate, heroImage, supTitle, tags, min
     }
 
     a {
-      @apply text-blue font-medium hover:brightness-50 break-all;
+      @apply text-blue font-medium hover:brightness-50;
     }
 
     iframe {
-      @apply mb-6 mx-auto w-full aspect-video rounded-lg;
+      @apply mb-6 w-full aspect-video rounded-lg;
     }
 
     ul {
@@ -118,9 +131,7 @@ const { title, description, pubDate, updatedDate, heroImage, supTitle, tags, min
       @apply mb-6;
     }
 
-    p:has(img) {
-      @apply -mx-6;
-
+    > p:has(img) {
       img {
         @apply w-full md:rounded-lg;
       }
@@ -136,7 +147,7 @@ const { title, description, pubDate, updatedDate, heroImage, supTitle, tags, min
     }
 
     pre:not([data-language]) {
-      @apply bg-black text-gray-500 -mx-6 -mt-[27px] mb-6 px-6 pb-6 border-gray-700 overflow-x-scroll text-sm grid  md:rounded-b-lg;
+      @apply bg-black text-gray-500 -mt-[27px] mb-6 px-6 pb-6 border-gray-700 overflow-x-scroll text-sm grid  md:rounded-b-lg;
 
       &:before {
         @apply block text-xs font-bold mb-2 uppercase font-mono;
@@ -150,10 +161,10 @@ const { title, description, pubDate, updatedDate, heroImage, supTitle, tags, min
     }
 
     div[data-rehype-pretty-code-fragment] {
-      @apply mb-6 -mx-6 overflow-hidden md:rounded-md;
+      @apply mb-6 overflow-hidden md:rounded-md;
 
       pre {
-        @apply py-8 overflow-x-scroll grid text-sm;
+        @apply py-6 overflow-x-scroll grid text-sm;
 
         background-color: #101828 !important;
 

@@ -1,7 +1,7 @@
 import type { CollectionEntry } from "astro:content";
 
-export function categorizePosts(posts: CollectionEntry<"blog">[]) {
-  const categorizedPosts: Record<string, CollectionEntry<"blog">[]> = {};
+export function categorize(posts: CollectionEntry<any>[]) {
+  const categorizedPosts: Record<string, CollectionEntry<any>> = {};
 
   for (const post of posts) {
     const category = post.id.split("/")[0];
