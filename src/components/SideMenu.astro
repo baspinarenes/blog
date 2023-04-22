@@ -1,5 +1,7 @@
 ---
+import i18next from "i18next";
 import type { Heading } from "../models/interfaces/common";
+import { generateURLWithLanguage } from "../utils/common";
 
 interface Props {
   headings: Array<Heading>;
@@ -32,7 +34,11 @@ const mappedHeadings = headings ? headings.filter((heading) => heading.slug !== 
             >
               <a
                 class="block"
-                href={heading.slug.includes("/blog") ? heading.slug : `#${heading.slug}`}
+                href={
+                  heading.slug.startsWith("/")
+                    ? generateURLWithLanguage(i18next.language, `/blog${heading.slug}`)
+                    : `#${heading.slug}`
+                }
               >
                 {heading.text}
               </a>

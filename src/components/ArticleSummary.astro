@@ -1,21 +1,25 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import i18next from "i18next";
+import { generateURLWithLanguage } from "../utils/common";
 import FormattedDate from "./FormattedDate.astro";
 
 interface Props {
-  post: CollectionEntry<"blog">;
+  post: CollectionEntry<"blog-tr">;
 }
 
 const { post } = Astro.props;
 ---
 
 <a
-  href={`/blog/${post.slug}/`}
+  href={generateURLWithLanguage(i18next.language, `/blog/${post.slug}`)}
   class="px-6 py-4 rounded-lg hover:bg-gray-100"
 >
   <div class="flex justify-between items-baseline flex-col sm:flex-row text-lg mt-0 mb-1 text-blue leading-tight">
     <span class="font-medium">{post.data.title}</span>
-    <FormattedDate date={post.data.pubDate} />
+    <span class="sm:ml-2 text-sm text-gray-400">
+      <FormattedDate date={post.data.pubDate} />
+    </span>
   </div>
   <p class="text-sm">{post.data.description}</p>
 </a>

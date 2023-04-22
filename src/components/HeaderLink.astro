@@ -1,14 +1,17 @@
 ---
 interface Props {
-  href: string;
+  pathname: string;
 }
 
-const { href } = Astro.props;
-const { pathname } = Astro.url;
+const { pathname } = Astro.props;
+const { pathname: currentPathname } = Astro.url;
 
-console.log(href);
-console.log(pathname);
-const isActive = href === "/" ? pathname === href : pathname.includes(href);
+const languagelessCurrentPathname = currentPathname.replace("en/", "");
+const languagelessPathname = pathname.replace("en/", "");
+const isActive =
+  languagelessPathname === "/"
+    ? languagelessCurrentPathname === languagelessPathname
+    : languagelessCurrentPathname.includes(languagelessPathname);
 ---
 
 <a
@@ -16,7 +19,7 @@ const isActive = href === "/" ? pathname === href : pathname.includes(href);
     "block px-6 py-4 rounded-md text-md text-gray-500 hover:bg-gray-200 translation-all sm:px-4 sm:py-2",
     { "font-bold !text-[#000]": isActive },
   ]}
-  href={href}
+  href={pathname}
 >
   <slot />
 </a>

@@ -1,12 +1,14 @@
 ---
 import { getCollection } from "astro:content";
-import { t } from "i18next";
+import { changeLanguage, t } from "i18next";
 import SnippetSummary from "../../components/SnippetSummary.astro";
 import Layout from "../../layouts/Layout.astro";
 import { capitalize } from "../../utils/common";
 import { categorize } from "../../utils/posts";
 
-const snippets = await getCollection("snippets");
+changeLanguage("tr");
+
+const snippets = await getCollection("snippets-tr");
 const undraftedSnippets = snippets.filter((snippet) => !snippet.data.draft);
 const categorizedSnippets = categorize(undraftedSnippets);
 ---

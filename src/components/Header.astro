@@ -1,7 +1,9 @@
 ---
 import { Icon } from "astro-icon";
-import { t } from "i18next";
+import i18next, { t } from "i18next";
 import { SOCIAL_LINK } from "../consts";
+import { generateURLWithLanguage } from "../utils/common";
+import ChangeLanguageButton from "./ChangeLanguageButton.astro";
 import Footer from "./Footer.astro";
 import HeaderLink from "./HeaderLink.astro";
 import SocialLink from "./SocialLink.astro";
@@ -18,10 +20,12 @@ import SocialLink from "./SocialLink.astro";
     id="nav-section"
     class="hidden fixed z-[99999] flex-col left-0 right-0 bottom-0 top-[62px] bg-gray-100 sm:flex sm:bg-[transparent] sm:static sm:flex-row sm:-ml-4"
   >
-    <HeaderLink href="/">{t("navigation.homepage")}</HeaderLink>
-    <HeaderLink href="/blog">{t("navigation.blog")}</HeaderLink>
-    <HeaderLink href="/snippets">{t("navigation.snippets")}</HeaderLink>
-    <HeaderLink href="/about">{t("navigation.about")}</HeaderLink>
+    <HeaderLink pathname={generateURLWithLanguage(i18next.language, "/")}>{t("navigation.homepage")}</HeaderLink>
+    <HeaderLink pathname={generateURLWithLanguage(i18next.language, "/blog")}>{t("navigation.blog")}</HeaderLink>
+    <HeaderLink pathname={generateURLWithLanguage(i18next.language, "/snippets")}>
+      {t("navigation.snippets")}
+    </HeaderLink>
+    <HeaderLink pathname={generateURLWithLanguage(i18next.language, "/about")}>{t("navigation.about")}</HeaderLink>
     <Footer className="mt-auto mb-6 mx-10 sm:hidden" />
   </nav>
   <div class="flex gap-2">
@@ -33,6 +37,7 @@ import SocialLink from "./SocialLink.astro";
       platform="twitter"
       link={SOCIAL_LINK.TWITTER}
     />
+    <ChangeLanguageButton />
   </div>
 </header>
 

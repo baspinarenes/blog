@@ -1,0 +1,22 @@
+---
+import { CollectionEntry, getCollection } from "astro:content";
+import { changeLanguage } from "i18next";
+import ArticleLayout from "../../../layouts/ArticleLayout.astro";
+
+changeLanguage("en");
+
+export async function getStaticPaths() {
+  const snippets = await getCollection("snippets-en");
+  return snippets.map((snippet) => ({
+    params: { slug: snippet.slug },
+    props: snippet,
+  }));
+}
+type Props = CollectionEntry<"snippets-en">;
+const snippet = Astro.props;
+const { Content, headings, remarkPluginFrontmatter } = await snippet.render();
+---
+
+<ArticleLayout {...snippet.data}>
+  <Content />
+</ArticleLayout>

@@ -1,0 +1,46 @@
+---
+import { Icon } from "astro-icon";
+
+interface Props extends HTMLImageElement {
+  reference: string;
+  fluid: boolean;
+  float: "" | "left" | "right";
+}
+
+const { src, alt = "", reference, fluid = true, float = "" } = Astro.props;
+---
+
+<div
+  class:list={[
+    "relative my-6",
+    {
+      "-mx-6 md:mx-0": fluid,
+      "float-left mr-4 my-0": float === "left",
+      "float-right ml-4 my-0": float === "right",
+    },
+  ]}
+>
+  <img
+    src={src}
+    alt={alt}
+    class="w-full md:rounded-lg"
+  />
+  <a
+    href={reference}
+    class="absolute bottom-0 right-0 bg-[#fff] hover:bg-gray-300 hover:brightness-100 rounded-tl-full overflow-hidden pt-3 pl-3 pb-1 pr-1 text-black"
+  >
+    <Icon name="ic:baseline-link" />
+  </a>
+</div>
+
+<style lang="scss">
+  [astro-icon] {
+    width: 18px;
+    height: 18px;
+
+    @media only screen and (min-width: 768px) {
+      width: 24px;
+      height: 24px;
+    }
+  }
+</style>

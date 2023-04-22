@@ -1,0 +1,471 @@
+---
+title: "Short Notes: Golang"
+description: "Golang çalışırken tuttuğum kısa notlar."
+pubDate: 2022-10-11
+slug: short-notes-golang
+draft: true
+heroImage: "/images/heroImages/golang.png"
+tags:
+  - golang
+  - live-article
+otherParts:
+  - text: "React"
+    slug: "/kissadan-react"
+  - text: "Golang"
+    slug: "/kissadan-golang"
+---
+
+<MessageBox type="warning">
+  **Yaşayan Yazı**, bir yerimden uydurduğum bir terimdir ve ileriki dönemde içeriği zenginleşecek ama şu anki haliyle de
+  faydalı olabilecek yazıları belirtir.
+</MessageBox>
+
+## Golang Nedir?
+
+Golang, C gibi ama daha basit, hızlıca derlenebilen, multithread bir dildir.
+Daha çok mikroservis uygulamalarında kullanılır.
+
+## Temel Dosya İçeriği
+
+- Basit bir Golang dosyasının yapısı (kodu çalıştırmak için `go run main.go`):
+
+```go
+// kod organizasyonu paketler ile sağlanır.
+// aynı klasör içinde bulunan dosyalarda paket ismi aynı olmalıdır.
+package main
+
+// kütüphaneler klasik şekilde dahil edilir.
+import "fmt"
+
+// programın giriş noktasıdır.
+// her pakette bir main fonksiyonu olabilir.
+func main() {
+  fmt.Println("Hello World")
+}
+```
+
+## Yazdırma Biçimleri
+
+- Farklı yazdırma fonksiyonlarına sahiptir. `Print` ile başlayanlar
+  stdout'a yani konsola çıktı verir. `Fprint` olanlar dosya ve tarayıcı
+  gibi dış bir kaynağa, `Sprint` olanlar ise çıktıyı **character buffer**'da
+  saklar.
+
+```go
+package main
+
+import "fmt"
+
+func main(){
+  // Printler metnin byte sayısını döndürür.
+  fmt.Println("Hello!")
+  fmt.Print("Hello!\n")
+  fmt.Printf("Hi! My name is %s. I have lived in %s for %d years. They say the weather is amazing, which is %t", "Enes", "Bursa", 23, true)
+
+  // "Hello Enes!" metni döndürür ama çıktı vermez.
+  result := fmt.Sprintf("Hello %s!", "Enes")
+}
+```
+
+## Tipler
+
+- Veri tipleri şunlardır:
+  - Integer: **int**, **int8**, **int16**, **int32**, **int64**, **uint**, **uint8**, **uint16**, **uint32**, **uint64**
+  - Float: **float32**, **float64**
+  - String: **string**
+  - Boolean: **bool**
+  - Null: **nil**
+- Bir değerin tipini görmek istersek `reflect.TypeOf()` kullanabiliriz.
+
+```go
+fmt.Println(reflect.TypeOf("Enes")) // => string
+```
+
+- Tür adlarıyla aynı fonksiyonları convert için kullanabiliriz.
+
+## Değişkenler
+
+- Değişken farklı çeşitlerde tanımlanır.
+
+```go
+var text string = "Text"
+var text2 = "Text2" // tip için çıkarım (inference) yapabilir.
+var text3 string // type vermek zorundayız.
+text3 = "Text3"
+var text4, text5 = "Text4", "Text5"
+
+// var keywordüne gerek kalmadan değişkeni tanımlar
+// ve tipini çıkarır. fonksiyon dışında kullanılamaz.
+text6 := "Text6" // eğer değer olmasaydı nil atanırdı.
+```
+
+## Koşul Yapıları
+
+- `if-else` yapısı parantezsizdir.
+
+```go
+if num > 50 {
+  // ...
+} else if num > 20 {
+  // ...
+} else {
+  // ...
+}
+```
+
+- Eğer bir fonksiyonun değerine göre işlem yapcaksak
+  farklı bir sözdizimi daha mevcut.
+
+```go
+// err değişkeni sadece bu blok içinden erişilebilir.
+if err := someFunction(); err != nil {
+  fmt.Println(err.Error())
+}
+```
+
+- `switch` yapısının iki kullanımı vardır. Değişkenin eşitliğini kontrol
+  edeceksek değişkeni verebiliriz. Aksi takdirde atlayabiliriz. Eğer
+  altındaki `case` ile ilerletmek istersek `fallthrough` kullanabiliriz.
+
+```go
+var variable string
+
+switch variable {
+  case "...":
+    // ...
+  case "...":
+    // ...
+  default:
+    // ...
+}
+
+//=================
+
+var num string
+
+switch {
+  case num < 50:
+    // ...
+  case num < 100:
+    // ...
+  default:
+    // ...
+}
+```
+
+- `for` yapısının da farklı kullanımları mevcut. `while` için ayrı
+  bir yapı söz konusu değildir.
+
+```go
+for i := 1; i <= 100; i++ {
+  fmt.Println(i)
+}
+
+i := 0
+for i <= 100 {
+	fmt.Println(i)
+	// This will behave like a while loop
+	i += 1
+}
+```
+
+## Fonksiyon
+
+- Fonksiyonda tipleri verirken TypeScript'ten farklı olarak iki nokta kullanmayız.
+
+```go
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+	fmt.Println(getAgeByYear(1999))
+}
+
+func getAgeByYear(yearOfBirth int) int {
+	return time.Now().Year() - yearOfBirth
+}
+```
+
+- Birden fazla değer döndürebiliriz.
+
+```go
+func blaBla() (int, int)  {
+  return 4, 5
+}
+```
+
+- Ve hatta döndüreceğimiz değerleri otomatik değişkene atayıp dönmesini sağlayabiliriz.
+
+```go
+func getAgeByYear(yearOfBirth int) (age int) {
+	age = time.Now().Year() - yearOfBirth
+	return
+}
+```
+
+- Belirsiz sayıda argümanı koleksiyon olarak almak istersek `...` operatörünü kullanabiliriz.
+  Bu fonksiyonlara **variadic function** denir.
+
+```go
+func printNames(names ...string) {
+	for _, name := range names {
+		fmt.Println(name)
+	}
+}
+```
+
+## Array
+
+- Dizi tanımlarken boyutu sabit, elemanları ise tek tip olmalıdır.
+  Dikkat etmek gereken şey tip tanımının içerisinde bulunmasıdır. Yani
+  `[5]int != [4]int`. Eğer girdiğimiz eleman kadar boyut alsın istersek
+  yine `...` operatörünü kullanabiliriz.
+
+```go
+var nums [5]int
+fmt.Println(nums)
+
+var nums2 [2]float64 = [2]float64{2.2, 3.8}
+fmt.Println(nums2)
+
+names := [4]string{"Ali", "Veli"}
+fmt.Println(names)
+
+names2 := [...]string{"Ali", "Veli", "Ahmet"}
+fmt.Print(names2)
+fmt.Println(" - type: ", reflect.TypeOf(names2))
+```
+
+```
+[0 0 0 0 0] [2.2 3.8] [Ali Veli ] [Ali Veli Ahmet] - type: [3]string
+```
+
+- Dizilerin elemanlarını iterate etmek istersek `range` kullanabiliriz.
+
+```go
+nums := [5]int{1, 2, 3, 4, 5}
+
+// indexi göz ardı edeceksek '_' kullanabiliriz.
+for _, num := range nums {
+  fmt.Print(num)
+}
+```
+
+```
+12345
+```
+
+```go
+var mySentence = "Sentence"
+
+for index, letter := range mySentence {
+  // letter byte değerini döner. harfi almak için stringe çeviririz.
+  fmt.Println("Index:", index, "Letter:", string(letter))
+}
+```
+
+```
+Index: 0 Letter: S Index: 1 Letter: e Index: 2 Letter: n Index: 3 Letter: t Index: 4 Letter: e Index: 5 Letter: n
+Index: 6 Letter: c Index: 7 Letter: e
+
+```
+
+- Sabit boyut demişken dinamik tanımı da bilmek isteriz. `map(type, len, cap)`,
+  slice, map ve channel türünden nesne oluşturur ve bellekte yer ayırır.
+
+```go
+// var mySlice []int dersek bu hataya sebep olur. çünkü bellekte
+// ayıracağı boyutu bilemez. map ilk eleman dizinin tipidir.
+// ikincisi başlangıç boyutudur. üçüncüsü ise maksimum kapasitedir.
+var mySlice []int = make([]int, 5, 10)
+
+fmt.Println(len(mySlice))
+fmt.Println(cap(mySlice))
+```
+
+- Dizinin bir parçasını almak istersek klasik dizi söz dizimini kullanabiliriz.
+
+```go
+nums := [5]int{1, 2, 3, 4, 5}
+someNums := nums[2:4] // bellekte kapasitesi 5 olacak şekilde yer ayırır.
+fmt.Println(reflect.TypeOf(someNums))
+fmt.Println(someNums)
+```
+
+```
+[]int [3, 4]
+```
+
+- Dinamik diziye eleman eklemek için `append()` kullanırız.
+  Ekleme yapılacak diziyi ve elemanları alır.
+
+```go
+var arr []int = make([]int, 3, 10)
+newArr := append(arr, 5, 2, 7, 12)
+
+fmt.Println(newArr)
+```
+
+```
+[0 0 0 5 2 7 12]
+```
+
+## Map
+
+- Bildiğimiz anahtar değer çifti tutan veri tipi.
+
+```go
+// var userInfo map[string]string şeklinde tanımlarsak
+// başlangıç için bellek ayırma yapamaz.
+// slice'dan farklı olarak başlangıç boyutu vermeye gerek yok.
+var userInfo map[string]string = make(map[string]string)
+userInfo["name"] = "Enes"
+userInfo["surname"] = "Başpınar"
+fmt.Println(userInfo)
+
+userInfo2 := map[string]string{
+  "name": "Cem",
+  "surname": "Yılmaz",
+}
+fmt.Println(userInfo2)
+```
+
+```
+map[name:Enes surname:Başpınar] map[name:Cem surname:Yılmaz]
+```
+
+- Bir anahtarın olup olmadığını kontrol etmek istersek exception
+  fırlatmayacağı için farklı bir yol kullanmamız gerekir. Döndürdüğü
+  ikinci değer işlemin başarılı olup olmadığını belirtir.
+
+```go
+userInfo := map[string]string{
+  "name":    "Cem",
+  "surname": "Yılmaz",
+}
+
+city, ok := userInfo["city"]
+fmt.Println("value:", city)
+fmt.Println("ok", ok)
+
+// yukarıdaki case'i if ile birleştirip
+// bir anahtar mevcutsa bir işlem yapmak istersek:
+if city, ok := userInfo["city"]; ok {
+  fmt.Printf("%s live in %s", userInfo["name"], city)
+}
+```
+
+```
+value: ok false
+```
+
+- Herhangi bir anahtarı silmek istersek `delete()` kullanabiliriz.
+
+```go
+userInfo := map[string]string{
+	"name":    "Cem",
+	"surname": "Yılmaz",
+}
+
+delete(userInfo, "surname")
+
+fmt.Println(userInfo)
+```
+
+```
+map[name:Cem]
+```
+
+## Paket
+
+- Kendi paketimizi de oluşturabiliriz.
+
+```go
+package utils
+
+func Add(nums ...int) int  {
+  total := 0
+
+  for _, num := range nums {
+    total += num
+  }
+
+  return total
+}
+```
+
+```go
+package main
+
+import (
+  "fmt"
+  "project-folder/utils"
+  // math "{workspaceFolderName}/utils" : importa isim verebiliriz
+)
+
+func main()  {
+  utils.Add()
+}
+```
+
+## Unit Testing
+
+- Test dosyasının ismi test edilen dosyanın sonuna `_test` eklenmiş
+  halidir. Bu iki dosya aynı dizinde olmalıdır.
+
+```go
+package utils
+
+import (
+	"testing"
+)
+
+func TestAverage(t *testing.T) {
+	expected := 4
+	actual := Average(3, 2)
+
+	if actual != expected {
+		t.Errorf("Add function does not add up: Expected: %d, Actual: %d", expected, actual)
+	}
+}
+```
+
+```go
+package utils
+
+func Average(nums ...int) int {
+	total := 0
+
+	for _, num := range nums {
+		total += num
+	}
+
+	return total
+}
+```
+
+## Diğer
+
+- Paketlerin dökümantasyonlarını görmek için `go doc fmt` yazabiliriz.
+  Özel fonksiyon dökümantasyonu için `go doc fmt.Println`.
+
+```go
+func Fprint(w io.Writer, a ...any) (n int, err error)
+func Fprintf(w io.Writer, format string, a ...any) (n int, err error)
+func Fprintln(w io.Writer, a ...any) (n int, err error)
+func Print(a ...any) (n int, err error)
+func Printf(format string, a ...any) (n int, err error)
+func Println(a ...any) (n int, err error)
+func Sprint(a ...any) string
+func Sprintf(format string, a ...any) string
+func Sprintln(a ...any) string
+...
+```
+
+## Kaynaklar
+
+- [Frontend Masters: Go for JS Developer](https://frontendmasters.com/courses/go-for-js-devs/)

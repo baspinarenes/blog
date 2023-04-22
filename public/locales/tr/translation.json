@@ -6,21 +6,31 @@
     "copyright_2": "Just have fun and learn."
   },
   "navigation": {
-    "homepage": "Home",
+    "homepage": "Anasayfa",
     "blog": "Blog",
     "snippets": "Snippets",
-    "about": "About"
+    "about": "Hakkımda"
+  },
+  "layout": {
+    "other-articles": "Serideki Diğer Yazılar",
+    "content": "İçerik Tablosu"
   },
   "homepage": {
     "title": "Enes Başpınar",
     "job": "Software Developer at Trendyol",
-    "description": "Kendimden çok kısa bahsetmem gerekirse, araştırma yapmaktan ve bir şeyler öğrenmekten keyif duyan birisiyim. Öğrendiklerimi aktarmayı seviyorum ve bunun tezahürü olarak bloguma nacizane yazılar yazmaya çalışıyorum. Motivasyonum; tekdüze ve sıkıcı blog yazılarından insanları kurtarmak. Okuduğum çoğu yazıdan sonra çığlık atasım geliyor ve isyanımı buradan haykırıyorum. Yandaki emojinin sebebi de bu. Gelecek yazılarda buluşalım!",
+    "description": "Araştırma yapmaktan ve bir şeyler öğrenmekten keyif duyan birisiyim. Öğrendiklerimi aktarmayı seviyorum ve bunun tezahürü olarak aldığım notlardan blog yazıyorum. Temel motivasyonum, tekdüze ve sıkıcı blog yazılarından insanları kurtarmak. Okuduğum çoğu yazıdan sonra çığlık atasım geliyor ve isyanımı yandaki gifteki gibi haykırıyorum. Yazılarda buluşalım!",
     "popular-repos": "Popüler Repolarım",
     "popular-articles": "Revaçtaki Yazılarım"
   },
   "blog": {
     "title": "Blog",
-    "description": "İlk yazımı Mayıs 2020 de yazmıştım ancak sonrasında çok yazmadım. Bitirip beğenmediğim ve sildiğim de oldu. Ama yeniden döndüm. Yazılarımı resmiliğin sıkıcılığından uzak tutmaya çabalıyorum ve hafif goygoy ile süslüyorum. Okuyucuyla birlikte sorgulayarak ilerleyebilecek şekilde kurgulamayı seviyorum ve kafanızda oluşbilecek soruları cevaplamaya çalışıyorum. Okursanız feedback vermeyi unutmayın."
+    "description": "İlk yazımı Mayıs 2020 de yazmıştım. O zamandan bu yana çok yazı yazdım ama standartlarıma uymadığı için çoğunu sildim. Yazılarımı resmiliğin sıkıcılığından uzak tutmaya çabalıyorum ve hafif goygoy ile süslüyorum. Okuyucuyla birlikte sorgulayarak ilerleyeceğim şekilde kurgulamayı seviyorum. Kafanızda oluşabilecek soruları öngörüp cevaplamaya çalışıyorum. Feedbacklerinizi bana Twitter'dan iletebilirsiniz.",
+    "category": {
+      "backend": "Backend",
+      "frontend": "Frontend",
+      "life": "Hayatın İçinden",
+      "other-programming-things": "Diğer Programlama Konuları"
+    }
   },
   "about": {
     "title": "About"

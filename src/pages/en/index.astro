@@ -1,0 +1,49 @@
+---
+import { changeLanguage } from "i18next";
+import HomepageListing from "../../components/HomepageListing.astro";
+import ListingCard from "../../components/ListingCard.astro";
+import Profile from "../../components/Profile.astro";
+import Layout from "../../layouts/Layout.astro";
+import { getCollaborationRepositories, getTopFiveRepositories } from "../../utils/github";
+
+changeLanguage("en");
+
+const topFiveRepositories = await getTopFiveRepositories();
+// const topFiveRepositories: any = [];
+const collaborationRepositories = await getCollaborationRepositories();
+---
+
+<Layout>
+  <main>
+    <Profile />
+    <HomepageListing titleKey="homepage.popular-repos">
+      {
+        collaborationRepositories.map((repo: Repository) => (
+          <ListingCard
+            type="repo"
+            title={repo.name}
+            description={repo.description}
+            status="CONTRIBUTER"
+            score={repo.startCount}
+            url={repo.url}
+          />
+        ))
+      }
+      {
+        topFiveRepositories.map((repo: Repository) => (
+          <ListingCard
+            type="repo"
+            title={repo.name}
+            description={repo.description}
+            status="OWNER"
+            score={repo.startCount}
+            url={repo.url}
+          />
+        ))
+      }
+    </HomepageListing>
+    <!-- <HomepageListing titleKey="homepage.popular-articles">
+      <div class="mx-6">Coming soon!</div>
+    </HomepageListing> -->
+  </main>
+</Layout>

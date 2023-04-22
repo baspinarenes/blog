@@ -1,0 +1,26 @@
+---
+import { CollectionEntry, getCollection } from "astro:content";
+import { changeLanguage } from "i18next";
+import ArticleLayout from "../../../layouts/ArticleLayout.astro";
+
+changeLanguage("en");
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog-en");
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: post,
+  }));
+}
+type Props = CollectionEntry<"blog-en">;
+const post = Astro.props;
+const { Content, headings, remarkPluginFrontmatter } = await post.render();
+---
+
+<ArticleLayout
+  {...post.data}
+  minutesRead={remarkPluginFrontmatter.minutesRead}
+  headings={headings}
+>
+  <Content />
+</ArticleLayout>

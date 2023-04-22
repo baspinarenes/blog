@@ -1,0 +1,671 @@
+---
+title: "Kıssadan React [Yaşayan Yazı]"
+description: "React hakkında tuttuğum kısa notlar."
+pubDate: 2022-12-12
+slug: short-notes-react
+draft: true
+heroImage: "/images/heroImages/react.png"
+tags:
+  - framework
+otherParts:
+  - text: "React"
+    slug: "/blog/kissadan-react"
+  - text: "Golang"
+    slug: "/blog/kissadan-golang"
+---
+
+<MessageBox type="warning">
+  **Yaşayan Yazı**, bir yerimden uydurduğum bir terimdir ve ileriki dönemde içeriği zenginleşecek ama şu anki haliyle de
+  faydalı olabilecek yazıları belirtir.
+</MessageBox>
+
+Yeni React dökümantasyonunun çıkmasıyla birlikte baştan takip etmek istedim. Dolayısıyla sıfırdan öğrenen birisine yardımcı olacak kilit noktaları az ve öz paylaşıyor olacağım.
+
+### Genel
+
+- React'ın "Strict Mode"u development esnasında her komponent fonksiyonunu iki kez çağırır ve Pure olmayan komponentleri yakalamanızı sağlar.
+- Animasyon ve ekranın yenilenmesi gibi işlemler **side effect** olarak adlandırılırlar. Renderlama anında değil yanında meydana gelen şeylerdir.
+- Uygulama başladığında yalnızca bir kez çalıştırılacak kod komponent dışına koyulabilir.
+
+```javascript
+if (typeof window !== "undefined") {
+  checkAuthToken();
+  loadDataFromLocalStorage();
+}
+
+function App() {
+  // ...
+}
+```
+
+### Rendering
+
+- React komponentler esasen render edilmek üzere HTML döndüren fonksiyonlardır. Aslında HTML gibi dursa da JSX dediğimiz ve HTML çok benzeyen bir uzantı kullanır. Kendisi de JS olduğundan kodların elementlerle kullanılmasını kolaylaştırır. Nihayetinde kendisi de HTML'e çevrilir.
+
+```javascript
+function MyButton() {
+  return <button>I'm a button</button>;
+}
+
+export default function MyApp() {
+  return (
+    <div>
+      <h1 className="heading-1">Welcome to my app</h1>
+      <MyButton />
+    </div>
+  );
+}
+```
+
+- Tek bir element/komponent döndürmesi gerekir. Eğer iç içe olmaması gereken bir şeyler varsa etrafına `<div>` ya da `<>` sarabiliriz.
+
+```javascript
+<div>
+  <CustomElement />
+  <div />
+</div>
+```
+
+- Child komponenti yoksa her zaman kapanan etiket (closing tag) ile yazmalıyız.
+
+```javascript
+<CustomElement />
+<div />
+```
+
+- Birden fazla element return edilemez. Bunları `<div>...</div>` ya da `<>...</>` etrafına sarmalıyız. İkincisinin adı **Fragment** olarak geçer ve HTML'e ekstra bir element eklemeden bu işi görür. Sebebi ise bir fonksiyonun array olmadığı takdirde birden fazla sonuç döndürememesidir.
+
+```javascript
+<div>
+  <CustomElement />
+  <div />
+</div>
+```
+
+- JavaScript değişkenleri ve ifadelerini (expression) JSX'de süslü parantez ile kullanabiliriz.
+
+```javascript
+const user = {
+  name: "Hedy Lamarr",
+  imageUrl: "https://i.imgur.com/yXOvdOSs.jpg",
+  imageSize: 90,
+};
+
+export default function Profile() {
+  return (
+    <>
+      <h1>{user.name}</h1>
+      <img
+        className="avatar"
+        src={user.imageUrl}
+        alt={`Photo of ${user.name}`}
+        style={{
+          width: user.imageSize,
+          height: user.imageSize,
+        }}
+      />
+    </>
+  );
+}
+```
+
+- Koşullu render için 3 farklı yaklaşım uygulayabiliriz. `false`, `null` ve `undefined` değerleri JSX'de gözardı edilir.
+
+```javascript
+let content;
+
+if (isLoggedIn) {
+  content = <AdminPanel />;
+} else {
+  content = <LoginForm />;
+}
+return <div>{content}</div>;
+```
+
+```javascript
+<div>{isLoggedIn ? <AdminPanel /> : <LoginForm />}</div>
+```
+
+```javascript
+<div>{isLoggedIn && <AdminPanel />}</div>
+```
+
+- Koşullu render yapmak istersek `condition ? result1 : result2` , `condition && result` şeklinde kısaltma ya da `if` koşulunu kullanabiliriz.
+
+```javascript
+if (isPacked) {
+  return <li className="item">{name} ✔</li>;
+}
+
+return <li className="item">{name}</li>;
+```
+
+```javascript
+return <li className="item">{isPacked ? name + " ✔" : name}</li>;
+```
+
+```javascript
+return (
+  <li className="item">
+    {name} {isPacked && "✔"}
+  </li>
+);
+```
+
+- Listeleri render etmek istersek array metodlarıyla ürettiğimiz JSX element
+  element listesi kullanabiliriz. Burda dikkat edilmesi gereken listedeki
+  değişikliklere adapte olabilmesi için elementlere `key` özelliği iletilmelidir.
+  Aksi halde indeks değerleri kullanır ve elemanların sıraları değişirse ya da
+  içlerinden birisi silinirse doğru şeyleri render edemez.
+
+<MessageBox type="info">
+  `key` olarak uuid üreten bir kütüphane yada apiden dönen id değerini kullanabilirsiniz. Aksi halde şu hatayı
+  alırsınız: 'Warning: Each child in a list should have a unique “key” prop.'
+</MessageBox>
+
+<MessageBox type="info">
+  `key` özelliğine her seferinde rastgele değer üreten bir metod verilirse (örneğin Math.random) DOM'a her seferinde
+  yeniden render edilir.
+</MessageBox>
+
+```javascript
+const products = [
+  { title: "Cabbage", id: 1 },
+  { title: "Garlic", id: 2 },
+  { title: "Apple", id: 3 },
+];
+
+const listItems = products.map((product) => <li key={product.id}>{product.title}</li>);
+
+return <ul>{listItems}</ul>;
+```
+
+- Normal davranışta React değişen state ile birlikte ilgili tüm işlemler bittikten sonra DOM'u günceller. O kodun arkasından state değişikliğiyle gelecek yeni DOM'a erişmemiz gerekirse `flushSync` metodunu kullanabiliriz.
+
+```javascript
+import { useState, useRef } from "react";
+import { flushSync } from "react-dom";
+
+export default function TodoList() {
+  const listRef = useRef(null);
+  const [todos, setTodos] = useState(initialTodos);
+
+  function handleAdd() {
+    flushSync(() => {
+      setTodos([...todos, { id: nextId++, text: text }]);
+    });
+
+    listRef.current.lastChild; // can access new todo dom element
+  }
+
+  return (
+    <>
+      <button onClick={handleAdd}>Add</button>
+      <input
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      />
+      <ul ref={listRef}>
+        {todos.map((todo) => (
+          <li key={todo.id}>{todo.text}</li>
+        ))}
+      </ul>
+    </>
+  );
+}
+```
+
+### Event Handler
+
+- Olaylara tepki gösterecel fonksiyonlarımızın ismini elementlere iletebiliriz. Çağrı parantezlerini eklerseniz render edilirken fonksiyon tek sefer çağrılır. Varsayılan olarak fonksiyona `Event` nesnesi geçilir ancak ekstra veri göndermek istersek **arrow function** kullanabiliriz.
+
+```javascript
+function MyButton() {
+  function handleClick() {
+    alert("You clicked me!");
+  }
+
+  return (
+    // <button onClick={(e) => handleClick(e)}>
+    <button onClick={handleClick}>Click me</button>
+  );
+}
+```
+
+- Fonksiyon çağrılırsa rendering esnasında çalıştırılır.
+
+```javascript
+<button onClick={handleClick()}>
+```
+
+- Elementlerin beklediği event props isimlerinde `on`, handler isimlerinde `handle` ile başlamak yaygındır. Örn: `onMouseEnter={handleMouseEnter}`
+- Event propagation komponentlerde de geçerlidir. Örnekte önce button sonra div `onClick` metodu çağrılır. `onScroll` harici tüm olaylar yukarıya yayılır. Engellemek için `e.stopPropagation()` kullanılır.
+
+```javascript
+export default function Toolbar() {
+  return (
+    <div
+      className="Toolbar"
+      onClick={() => {
+        alert("You clicked on the toolbar!");
+      }}
+    >
+      <button
+        onClick={() => {
+          e.stopPropagation();
+          alert("Playing!");
+        }}
+      >
+        Play Movie
+      </button>
+    </div>
+  );
+}
+```
+
+- Formun `onSubmit` olayı gibi bazı olaylar varsayılan tarayıcı davranışına sahiptir ve sizin kodunuzdan sonra çalıştırır. Bunu engellemek için `e.preventDefault` kullanabiliriz.
+- Event handler'ları yukarıdan aşağıya doğru (capturing) çalıştırmak istersek `onClick` yerine `onClickCapture` kullanımını yapabiliriz.
+
+```javascript
+<div
+  onClick={() => {
+    alert("Call 1");
+  }}
+>
+  <div
+    onClickCapture={() => {
+      alert("Call 2");
+    }}
+  >
+    <div
+      onClickCapture={() => {
+        alert("Call 3");
+      }}
+    >
+      Click!
+    </div>
+  </div>
+</div>
+```
+
+```
+Call 2
+Call 3
+Call 1
+```
+
+### Props
+
+- Bileşenden bileşene veri aktarmak için `props` kullanırız. Klasik fonksiyona parametre geçme mantığı.
+
+```javascript
+function Avatar({ person, size = 100 }) {
+  // ...
+}
+
+function Profile() {
+  return (
+    <div className="card">
+      <Avatar
+        person="Enes"
+        size={80}
+      />
+    </div>
+  );
+}
+```
+
+- Children elementleri props'un `children` özelliğinden okuyabiliriz.
+
+```javascript
+function Heading({ children }) {
+  return <div className="heading">{children}</div>;
+}
+
+export default function Text() {
+  return <Heading>Hello</Heading>;
+}
+```
+
+### State
+
+- Zamanla değişebilen ve ekranın güncellenmesine yol açacak değerler için **state** değişkenlerini kullanırız. Bi nevi komponent bazlı bellektir. Render'lar arasında değeri korunur.
+- State komponentin DOM'daki yeriyle ilişkilendirilir. State'in rerender'lar esnasında korunmasını istiyorsanız, DOM ağacının yenisiyle 'eşleşmesi' gerekir. Eğer aynı konumda render olan komponentlerde state'i sıfırlamak istersek farklı `key` parametresi verebiliriz.
+- React'da state tanımlamak için `useState` hook'u kullanılır.
+
+<MessageBox type="info">
+  React'da `use` ile başlayan fonksiyonlara `hook` diyoruz ve esasen React'ın özelliklerini kullanabilmemize yarıyorlar.
+  Komponentlerin root'unda kullanılabilirler. Koşul ya da döngü içine kullanmamalıyız. Gerekiyorsa yeni bir bileşen
+  oluşturabiliriz.
+</MessageBox>
+
+```javascript
+import { useState } from "react";
+
+function MyButton() {
+  // count: mevcut değer
+  // setCount: değeri güncelleyecek fonksiyon
+  // 0: ilk değer
+  const [count, setCount] = useState(0);
+
+  function handleClick() {
+    setCount(count + 1);
+  }
+
+  return <button onClick={handleClick}>Clicked {count} times</button>;
+}
+```
+
+- State setter çağırıldıktan sonra rerender tetiklenir ve yeni değer kullanılır.
+- React Hook'ların değerlerini çağrılma sırasına göre anlar. Arka arkaya tanımladığımız state değerleri dizide tutulur ve okunacağı zamanda indeksi birer arttırarak okur. Bu sebeptendir ki sadece komponentin root'unda tanımlanmalıdır.
+- Obje tutuyorsak spread kullanmayı unutmamalıyız.
+
+```javascript
+const [person, setPerson] = useState({
+  name: "Niki de Saint Phalle",
+  artwork: {
+    title: "Blue Nana",
+    city: "Hamburg",
+    image: "https://i.imgur.com/Sd1AgUOm.jpg",
+  },
+});
+
+function handleTitleChange(e) {
+  setPerson({
+    ...person,
+    artwork: {
+      ...person.artwork,
+      title: e.target.value,
+    },
+  });
+}
+```
+
+- State güncelleme metodu çalıştığı anda değeri yenilemez. Örnekte üç kez çağırılan setNumber metoduyla birlikte son değerin 3 olmasını bekleyebiliriz ancak öyle olmaz. Her bir setter çalıştığında state değeri mevcuttaki değer yani 0'dır. Metod çalışmayı bitirdikten sonra rerender olur ve state değeri güncellenir. Komponent context'deki değeri elde etmek istersek parametre olarak güncel değeri alan **updater** fonksiyon verebiliriz.
+
+```javascript
+import { useState } from "react";
+
+export default function Counter() {
+  const [number, setNumber] = useState(0);
+
+  return (
+    <>
+      <h1>{number}</h1>
+      <button
+        onClick={() => {
+          setNumber(number + 1); // setNumber(0 + 1)
+          setNumber(number + 1); // setNumber(0 + 1)
+          setNumber(number + 1); // setNumber(0 + 1)
+          // yeni değer sonraki rerender'da 1 olur.
+        }}
+      >
+        +3
+      </button>
+      <button
+        onClick={() => {
+          setNumber((number) => number + 1); // setNumber(0 + 1)
+          setNumber((number) => number + 1); // setNumber(1 + 1)
+          setNumber((number) => number + 1); // setNumber(2 + 1)
+          // yeni değer sonraki rerender'da 3 olur.
+        }}
+      >
+        +3
+      </button>
+    </>
+  );
+}
+```
+
+- Karmaşık state'leri yönetmek çok karmaşık olabilir. React'ın `useReducer` hook'u ile reducer oluşturup kullanılabiliriz. Esasen alınan aksiyonlar sonunda yapılacak state değişikliklerini tanımlamamızı sağlar.
+
+```javascript title="TaskApp.tsx"
+import AddTask from "./AddTask.js";
+import TaskList from "./TaskList.js";
+import { useTasksReducer } from "./tasksReducer.js";
+
+export default function TaskApp() {
+  const [tasks, dispatch] = useTasksReducer();
+
+  function handleAddTask(text) {
+    dispatch({
+      type: "added",
+      id: nextId++,
+      text: text,
+    });
+  }
+
+  function handleChangeTask(task) {
+    dispatch({
+      type: "changed",
+      task: task,
+    });
+  }
+
+  function handleDeleteTask(taskId) {
+    dispatch({
+      type: "deleted",
+      id: taskId,
+    });
+  }
+
+  return {
+    // ...
+  };
+}
+```
+
+```javascript title="tasksReducer.js"
+import { useReducer } from "react";
+
+function tasksReducer(tasks, action) {
+  switch (action.type) {
+    case "added": {
+      return [
+        ...tasks,
+        {
+          id: action.id,
+          text: action.text,
+          done: false,
+        },
+      ];
+    }
+    case "changed": {
+      return tasks.map((t) => {
+        if (t.id === action.task.id) {
+          return action.task;
+        } else {
+          return t;
+        }
+      });
+    }
+    case "deleted": {
+      return tasks.filter((t) => t.id !== action.id);
+    }
+    default: {
+      throw Error("Unknown action: " + action.type);
+    }
+  }
+}
+
+const initialTasks = [
+  { id: 0, text: "Visit Kafka Museum", done: true },
+  { id: 1, text: "Watch a puppet show", done: false },
+  { id: 2, text: "Lennon Wall pic", done: false },
+];
+
+const useTasksReducer = () => useReducer(tasksReducer, initialTasks);
+
+export { tasksReducer, useTasksReducer };
+```
+
+### Ref
+
+- Referans tanımlamak için `useRef` hook'u kullanabiliriz. Değeri render'lar sırasında korur ancak rerender'a sebep olmaz. Event handler içerisinde kullanılabilir. Belirli bir event yoksa **Effect** ihtiyacı olabilir.
+
+```javascript
+import { useRef } from "react";
+
+export default function Counter() {
+  let count = useRef(0);
+
+  function handleClick() {
+    count.current = count.current + 1;
+    alert("You clicked " + count.current + " times!");
+  }
+
+  return <button onClick={handleClick}>Click me!</button>;
+}
+```
+
+- Elementlere verilen ref rendering esnasında çalıştırılan komponent gövdesinde olmamalıdır.
+
+```javascript
+function VideoPlayer({ src, isPlaying }) {
+  const ref = useRef(null);
+
+  if (isPlaying) {
+    ref.current.play();
+  } else {
+    ref.current.pause();
+  }
+
+  return (
+    <video
+      ref={ref}
+      src={src}
+      loop
+      playsInline
+    />
+  );
+}
+```
+
+- Ref'leri map içerisinde kullanamayacağımızdan ötürü ref callback kullanmalıyız.
+
+```javascript
+import { useRef } from "react";
+
+export default function CatFriends() {
+  const itemsRef = useRef(new Map());
+
+  return (
+    <ul>
+      {catList.map((cat) => (
+        <li
+          key={cat.id}
+          ref={(node) => {
+            if (node) {
+              itemsRef.current.set(cat.id, node);
+            } else {
+              itemsRef.current.delete(cat.id);
+            }
+          }}
+        >
+          ...
+        </li>
+      ))}
+    </ul>
+  );
+}
+```
+
+- DOM elementlerini manipüle etmek istersek `ref` parametresini kullanabiliriz.
+
+```javascript
+import { useRef } from "react";
+
+export default function Form() {
+  const inputRef = useRef(null);
+
+  function handleClick() {
+    inputRef.current.focus();
+  }
+
+  return (
+    <>
+      <input ref={inputRef} />
+      <button onClick={handleClick}>Focus the input</button>
+    </>
+  );
+}
+```
+
+- Komponente ilettiğimiz ref otomatik olarak DOM'a eklenmez. Bunun için `forwardRef` API'sinin kullanılması gerekir.
+
+```javascript
+import { forwardRef, useRef } from "react";
+
+const MyInput = forwardRef((props, ref) => {
+  return (
+    <input
+      {...props}
+      ref={ref}
+    />
+  );
+});
+
+export default function Form() {
+  const inputRef = useRef(null);
+
+  return <MyInput ref={inputRef} />;
+}
+```
+
+### Context
+
+- Props'ları komponentler arasında 100 kat aşağıya indirmek yerine bir context tanımlayıp `useContext` hook'u yardımıyla okuyabiliriz.
+
+```javascript title="Section.jsx"
+import { LevelContextProvider } from "./LevelContext.js";
+
+export default function Section({ level, children }) {
+  return (
+    <section className="section">
+      <LevelContextProvider value={level}>{children}</LevelContextProvider>
+    </section>
+  );
+}
+```
+
+```javascript title="Heading.jsx"
+import { useLevelContext } from "./LevelContext";
+
+export default function Heading({ children }) {
+  const level = useLevelContext();
+
+  // ...
+}
+```
+
+```javascript title="LevelContext.jsx"
+import { createContext, useContext } from "react";
+
+const LevelContext = createContext(1);
+const LevelContextProvider = LevelContext.Provider;
+const useLevelContext = () => useContext(LevelContext);
+
+export { LevelContextProvider, useLevelContext };
+```
+
+### Effect
+
+- Komponentlerin harici sistemlerle senkronize edilmesi için rendering sonrasında kod çalıştırmak için kullanılır. React harici bir komponentin yönetilmesi, sunucu bağlantısının kurulması analitik log'u gönderilmesi vs. Render'ın sebep olduğu yan etkileri gerçekleştirmek için kullanılır. Render'dan sonra çalışır. `useEffect` metodu kullanılır.
+
+```javascript
+useEffect(() => {
+  // run after every render
+});
+useEffect(() => {
+  // run after every render when dependency changed (will compare with Object.is)
+}, [someCompVariable, someProps, someState]);
+useEffect(() => {
+  // run on mount (appears on the screen for the first time)
+
+  return () => {
+    // run on before each effect runs and unmount
+  };
+}, []);
+```
+
+- Sunucuda yani server-side rendering esnasında çalışmaz.

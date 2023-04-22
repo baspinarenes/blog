@@ -1,16 +1,17 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import javascriptImage from "../assets/tech-images/javascript.png";
+import javascriptImage from "../../public/images/heroImages/javascript.png";
+import reactImage from "../../public/images/heroImages/react.png";
 import FormattedDate from "./FormattedDate.astro";
 
 interface Props {
   category: string;
-  snippet: CollectionEntry<"snippets">;
+  snippet: CollectionEntry<"snippets-tr">;
 }
 
 const categoryImages: Record<string, string> = {
   javascript: javascriptImage.src,
-  react: javascriptImage.src,
+  react: reactImage.src,
 };
 
 const { category, snippet } = Astro.props;

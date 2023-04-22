@@ -1,0 +1,43 @@
+---
+import { getCollection } from "astro:content";
+import { changeLanguage, t } from "i18next";
+import ArticleSummary from "../../../components/ArticleSummary.astro";
+import Layout from "../../../layouts/Layout.astro";
+import { capitalize } from "../../../utils/common";
+import { categorize } from "../../../utils/posts";
+
+changeLanguage("en");
+
+const posts = await getCollection("blog-en");
+const undraftedPosts = posts.filter((post) => !post.data.draft);
+const categorizedPosts = categorize(undraftedPosts);
+---
+
+<Layout>
+  <main>
+    <div class="flex flex-col gap-1 mb-10">
+      <h1>{t("blog.title")}</h1>
+      <p class="text-justify mt-3">
+        {t("blog.description")}
+      </p>
+    </div>
+    <div class="flex flex-col -mx-6 gap-8">
+      {
+        Object.keys(categorizedPosts).map((category) => (
+          <div>
+            <h2 class="mb-2 mt-4 px-6">{capitalize(category)}</h2>
+            <section>
+              <div class="flex flex-col">
+                {categorizedPosts[category]
+                  .sort((a: any, b: any) => b.data.pubDate!.valueOf() - a.data.pubDate!.valueOf())
+                  .map((post: any) => (
+                    <ArticleSummary post={post} />
+                  ))}
+              </div>
+            </section>
+          </div>
+        ))
+      }
+    </div>
+  </main>
+</Layout>

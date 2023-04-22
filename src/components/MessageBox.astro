@@ -10,7 +10,7 @@ const { type } = Astro.props;
 
 <div
   class:list={[
-    "p-5 flex flex-col items-center gap-2 mb-8 text-justify md:text-start sm:flex-row sm:gap-4 md:rounded-md",
+    "p-5 flex flex-col gap-2 mb-8 text-justify md:text-start sm:flex-row sm:gap-4 md:rounded-md -mx-6 md:mx-0",
     {
       "bg-yellow": type === "warning",
       "bg-[rgba(220,38,38,0.5)]": type === "danger",
@@ -19,7 +19,7 @@ const { type } = Astro.props;
   ]}
 >
   <Icon name={type} />
-  <div>
+  <div class="flex flex-col justify-center">
     <slot />
   </div>
 </div>

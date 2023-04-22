@@ -11,16 +11,26 @@
     "snippets": "Snippets",
     "about": "About"
   },
+  "layout": {
+    "other-articles": "Articles of This Series",
+    "table-of-content": "Table of Content"
+  },
   "homepage": {
     "title": "Enes Başpınar",
     "job": "Software Developer at Trendyol",
-    "description": "Kendimden çok kısa bahsetmem gerekirse, araştırma yapmaktan ve bir şeyler öğrenmekten keyif duyan birisiyim. Öğrendiklerimi aktarmayı seviyorum ve bunun tezahürü olarak bloguma nacizane yazılar yazmaya çalışıyorum. Motivasyonum; tekdüze ve sıkıcı blog yazılarından insanları kurtarmak. Okuduğum çoğu yazıdan sonra çığlık atasım geliyor ve isyanımı buradan haykırıyorum. Yandaki emojinin sebebi de bu. Gelecek yazılarda buluşalım!",
-    "popular-repos": "Popüler Repolarım",
-    "popular-articles": "Revaçtaki Yazılarım"
+    "description": "I have always enjoyed doing research and learning new things. I also love sharing what I learn, and I write articles based on notes I take from various resources. My motivation is to rescue people from monotonous and boring blogs. After reading most articles, I feel like screaming and I shout out my frustration here just like the gif. Let's meet in my articles!",
+    "popular-repos": "Popular Repos",
+    "popular-articles": "Popular Articles"
   },
   "blog": {
     "title": "Blog",
-    "description": "İlk yazımı Mayıs 2020 de yazmıştım ancak sonrasında çok yazmadım. Bitirip beğenmediğim ve sildiğim de oldu. Ama yeniden döndüm. Yazılarımı resmiliğin sıkıcılığından uzak tutmaya çabalıyorum ve hafif goygoy ile süslüyorum. Okuyucuyla birlikte sorgulayarak ilerleyebilecek şekilde kurgulamayı seviyorum ve kafanızda oluşbilecek soruları cevaplamaya çalışıyorum. Okursanız feedback vermeyi unutmayın."
+    "description": "I wrote my first article in May 2020. Since then, I have written many articles but I have deleted most of them because they didn't meet my standards. I try to keep my writings away from formality. I'm trying to answer any possible questions you might have. You can give me your feedback on Twitter. I hope you learn and have fun.",
+    "category": {
+      "backend": "Backend",
+      "frontend": "Frontend",
+      "life": "Life",
+      "other-programming-things": "Other Programming Things"
+    }
   },
   "about": {
     "title": "About"

@@ -58,13 +58,17 @@ export default defineConfig({
   site: "https://example.com",
   integrations: [
     AutoImport({
-      imports: ["./src/components/MessageBox.astro", "./src/components/Seperator.astro"],
+      imports: [
+        "./src/components/MessageBox.astro",
+        "./src/components/Seperator.astro",
+        "./src/components/Image.astro",
+      ],
     }),
     astroI18next(),
     mdx(),
     sitemap(),
     tailwind(),
-    image(),
+    image({ serviceEntryPoint: "@astrojs/image/sharp" }),
   ],
   experimental: {
     assets: true,

@@ -2,7 +2,7 @@ import { Octokit } from "octokit";
 import { COLLABORATION_REPOS, GITHUB_USERNAME, POPULAR_REPO_SHOW_COUNT } from "../../src/consts";
 
 const octokit = new Octokit({
-  auth: process.env.GITHUB_AUTH_TOKEN,
+  auth: import.meta.env.GITHUB_AUTH_TOKEN,
 });
 
 export async function getRepository(repoName: string) {

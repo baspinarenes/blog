@@ -1,0 +1,44 @@
+---
+import { getCollection } from "astro:content";
+import { changeLanguage, t } from "i18next";
+import SnippetSummary from "../../../components/SnippetSummary.astro";
+import Layout from "../../../layouts/Layout.astro";
+import { capitalize } from "../../../utils/common";
+import { categorize } from "../../../utils/posts";
+
+changeLanguage("en");
+
+const snippets = await getCollection("snippets-en");
+const undraftedSnippets = snippets.filter((snippet) => !snippet.data.draft);
+const categorizedSnippets = categorize(undraftedSnippets);
+---
+
+<Layout>
+  <main>
+    <div class="flex flex-col gap-1 mb-10">
+      <h1>{t("snippets.title")}</h1>
+      <p class="text-justify mt-3">Coming soon!</p>
+    </div>
+    <div class="flex flex-col gap-8">
+      {
+        Object.keys(categorizedSnippets).map((category) => (
+          <div>
+            <h2 class="mb-8 mt-4">{capitalize(category)}</h2>
+            <section>
+              <div class="grid grid-cols-2 md:grid-cols-3 gap-x-3 gap-y-2 sm:gap-6">
+                {categorizedSnippets[category]
+                  .sort((a: any, b: any) => b.data.pubDate!.valueOf() - a.data.pubDate!.valueOf())
+                  .map((snippet: any) => (
+                    <SnippetSummary
+                      category={category}
+                      snippet={snippet}
+                    />
+                  ))}
+              </div>
+            </section>
+          </div>
+        ))
+      }
+    </div>
+  </main>
+</Layout>

@@ -2,14 +2,15 @@
 import { Image } from "@astrojs/image/components";
 import "@fontsource/jetbrains-mono";
 import type { CollectionEntry } from "astro:content";
-import i18next from "i18next";
+import { t } from "i18next";
 import avatarImage from "../assets/avatar.webp";
+import FormattedDate from "../components/FormattedDate.astro";
 import SideMenu from "../components/SideMenu.astro";
 import { PROFILE } from "../consts";
 import type { Heading } from "../models/interfaces/common";
 import Layout from "./Layout.astro";
 
-type Props = CollectionEntry<"blog">["data"] | { headings: Heading[] };
+type Props = CollectionEntry<"blog-tr">["data"] | { headings: Heading[] };
 
 const dateOptions: object = {
   year: "numeric",
@@ -36,7 +37,7 @@ const {
   <main class="flex relative">
     <article class="relative w-full">
       <div class="flex flex-col mb-12">
-        <h1 class="mb-5 flex flex-col">
+        <h1>
           <span class="text-md md:text-xl font-normal">{supTitle}</span>
           {title}
         </h1>
@@ -52,12 +53,12 @@ const {
             />
             <div class="flex justify-between w-full flex-col md:flex-row">
               <div class="text-sm">
-                {PROFILE.NAME} / {
-                  new Date(pubDate).toLocaleDateString(i18next.language ? "tr-TR" : "en-US", dateOptions)
-                }
-                {minutesRead ? `/ ${minutesRead}` : ""}
+                {PROFILE.NAME} / <FormattedDate date={pubDate} />
               </div>
-              {tags && <div class="text-sm">#{tags.join(" #")}</div>}
+              <div class="flex text-sm gap-1">
+                {minutesRead ? `${minutesRead}` : ""}
+                {tags && <div>• #{tags.join(", #")}</div>}
+              </div>
             </div>
           </div>
         </div>
@@ -78,7 +79,7 @@ const {
     {
       otherParts && (
         <SideMenu
-          titleKey="Serideki Yazıları"
+          titleKey={t("layout.other-articles")}
           direction="left"
           headings={otherParts}
         />
@@ -87,7 +88,7 @@ const {
     {
       !disableSideMenu && headings && (
         <SideMenu
-          titleKey="İçerik"
+          titleKey={t("layout.table-of-content")}
           direction="right"
           headings={headings}
         />
@@ -124,6 +125,10 @@ const {
 
           content: "";
         }
+      }
+
+      ul {
+        @apply ml-6;
       }
     }
 

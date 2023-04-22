@@ -3,7 +3,7 @@ import { Icon } from "astro-icon";
 
 interface Props {
   type: "repo" | "article";
-  status: "writer" | "owner" | "contributor";
+  status: "WRITER" | "OWNER" | "CONTRIBUTER";
   title: string;
   description: string;
   score: number;
@@ -16,17 +16,17 @@ const { type, title, status, description, score, url } = Astro.props;
 <a
   href={url}
   target="_blank"
-  class="flex flex-col px-6 py-3 gap-1 col-span-1"
+  class="flex flex-col px-6 py-3 gap-1 col-span-1 rounded-lg hover:bg-gray-75"
 >
-  <div class="flex justify-between text-primary text-md">
-    <p class="uppercase">{status}</p>
+  <div class="flex justify-between text-primary">
+    <p>{status}</p>
     <div class="flex items-center align-middle">
       {score}
       <Icon name={type === "article" ? "ic:baseline-people-alt" : "ic:round-star"} />
     </div>
   </div>
-  <h4>{title}</h4>
-  <p>{description}</p>
+  <span class="text-lg text-black font-medium leading-tight">{title}</span>
+  <p class="text-sm">{description ?? "Description not available."}</p>
 </a>
 
 <style lang="scss">

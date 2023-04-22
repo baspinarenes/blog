@@ -1,0 +1,35 @@
+---
+import { Icon } from "astro-icon";
+import i18next from "i18next";
+
+const getIconNameByLang: Record<string, string> = {
+  tr: "emojione:flag-for-turkey",
+  en: "emojione:flag-for-us-outlying-islands",
+};
+---
+
+<button
+  id="changeLanguageButton"
+  class="block rounded-lg p-1 transition-all bg-gray-200 hover:bg-gray-300"
+>
+  <Icon name={getIconNameByLang[i18next.language]} />
+</button>
+
+<script type="module">
+  const changeLanguageButtonEl = document.querySelector("#changeLanguageButton");
+
+  changeLanguageButtonEl.addEventListener("click", () => {
+    const isEnglishPage = window.location.pathname.startsWith("/en");
+
+    location = isEnglishPage
+      ? window.location.href.replace("/en", "")
+      : window.location.origin + "/en" + window.location.pathname;
+  });
+</script>
+
+<style lang="scss">
+  [astro-icon] {
+    width: 24px;
+    height: 24px;
+  }
+</style>
