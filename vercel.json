@@ -1,27 +1,8 @@
 {
   "redirects": [
     {
-      "source": "/:path*",
-      "destination": "/blog",
-      "has": [
-        {
-          "type": "header",
-          "key": "x-vercel-error",
-          "value": "NOT_FOUND"
-        }
-      ],
-      "permanent": false
-    },
-    {
-      "source": "/en/:path*",
+      "source": "/en/blog/fuat-sezgin",
       "destination": "/en/blog",
-      "has": [
-        {
-          "type": "header",
-          "key": "x-vercel-error",
-          "value": "NOT_FOUND"
-        }
-      ],
       "permanent": false
     }
   ]

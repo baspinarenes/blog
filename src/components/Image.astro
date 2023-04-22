@@ -7,7 +7,7 @@ interface Props extends HTMLImageElement {
   float: "" | "left" | "right";
 }
 
-const { src, alt = "", reference, fluid = true, float = "" } = Astro.props;
+const { src, alt = "", reference, fluid = true, float = "", noRounded = false } = Astro.props;
 ---
 
 <div
@@ -23,14 +23,23 @@ const { src, alt = "", reference, fluid = true, float = "" } = Astro.props;
   <img
     src={src}
     alt={alt}
-    class="w-full md:rounded-lg"
+    class:list={[
+      "w-full",
+      {
+        "md:rounded-lg": !noRounded,
+      },
+    ]}
   />
-  <a
-    href={reference}
-    class="absolute bottom-0 right-0 bg-[#fff] hover:bg-gray-300 hover:brightness-100 rounded-tl-full overflow-hidden pt-3 pl-3 pb-1 pr-1 text-black"
-  >
-    <Icon name="ic:baseline-link" />
-  </a>
+  {
+    reference ? (
+      <a
+        href={reference}
+        class="absolute bottom-0 right-0 bg-[#fff] hover:bg-gray-300 hover:brightness-100 rounded-tl-full overflow-hidden pt-3 pl-3 pb-1 pr-1 text-black"
+      >
+        <Icon name="ic:baseline-link" />
+      </a>
+    ) : null
+  }
 </div>
 
 <style lang="scss">
