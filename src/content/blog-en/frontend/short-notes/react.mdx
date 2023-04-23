@@ -1,6 +1,6 @@
 ---
-title: "Kıssadan Hisse: React"
-description: "React'ın kilit noktalarına dair kısa notlar."
+title: "Short Notes: React"
+description: "Short notes with examples on the key points of React."
 pubDate: 2022-12-12
 slug: react-short-notes
 draft: false
@@ -16,16 +16,16 @@ otherParts:
 ---
 
 <MessageBox type="warning">
-  **Yaşayan Yazı**, bir yerimden uydurduğum bir terimdir ve ileriki dönemde içeriği zenginleşebilecek ama şu anki
-  haliyle de faydalı olabilecek yazıları belirtir.
+  **Living Article** is a term I coined that refers to a piece of writing which can be useful right now, but also has
+  the potential to be enriched with additional content in the future.
 </MessageBox>
 
-Geçenlerde yeni React dökümantasyonuna baştan sona göz atmaya karar vermiştim. Bu esnada aldığım ve framework'e dair anahtar noktaları kısa notlarımı örneklerle paylaşacağım.
+I recently went through the new React documentation and took notes on the important parts. I will share these with you along with examples.
 
-### Genel
+### Common
 
-- React'ın "Strict Mode"u development esnasında her komponent fonksiyonunu iki kez çağırır ve Pure olmayan komponentleri yakalamanızı sağlar. Render sayısını hesaplarken buna dikkat edin.
-- Uygulama başladığında yalnızca bir kez çalıştırılacak kod komponent dışına koyulabilir.
+- **Strict Mode** of React calls each component function twice during development and helps you catch impure components. Keep this in mind when counting render times.
+- Code that runs only once at the start of the application can be placed outside of the `App` component.
 
 ```javascript showLineNumbers
 if (typeof window !== "undefined") {
@@ -40,7 +40,7 @@ function App() {
 
 ### Rendering
 
-- **Komponent**, renderlanacak HTML elementleri döndüren fonksiyondur. İşin aslına bakarsak HTML gibi duran ancak **JSX** dediğimiz bir dil uzantısıdır. Kendisi de JavaScript olduğundan JavaScript'in elementlerle kullanılmasını kolaylaştırır. Nihayetinde kendisi de HTML'e çevrilir.
+- **Component** is a function that return HTML elements. They use a syntax extension called **JSX** that looks like HTML but is actually JavaScript. Since it's still JavaScript, it makes working with elements in JS easier. Ultimately, JSX is also transpiled into HTML.
 
 ```javascript showLineNumbers
 function MyButton() {
@@ -57,22 +57,24 @@ export default function MyApp() {
 }
 ```
 
-- Bir komponent içerisine öğe almayacaksa kapanan etiket (closing tag) ile yazılmalıdır.
+- If there is no child item, always use the closing tag.
 
 ```javascript showLineNumbers
 <CustomElement />
+// not <CustomElement></CustomElement>
 ```
 
-- Birden fazla element return edilemez. Bunları `<div>...</div>` ya da `<>...</>` etrafına sarmalıyız. İkincisinin adı **Fragment** olarak geçer ve HTML'e ekstra bir element eklemeden bu işi görür. Sebebi ise bir fonksiyonun array olmadığı takdirde birden fazla sonuç döndürememesidir.
+- We can't return multiple elements in a component. We need to wrap them with `<div></div>` or `<></>` which is called a **fragment**. Second one avoids adding an extra element to the HTML. This is because a function can't return more than one value.
 
 ```javascript showLineNumbers
-<div>
-  <CustomElement />
-  <div />
-</div>
+<>
+  <Header />
+  <Main />
+  <Footer />
+</>
 ```
 
-- JavaScript değişkenleri ve ifadeleri (expression) JSX'de süslü parantez içinde kullanılabilir.
+- We can use JavaScript variables and expressions in JSX with curly braces.
 
 ```javascript showLineNumbers
 const user = {
@@ -99,7 +101,30 @@ export default function Profile() {
 }
 ```
 
-- Koşullu render için 3 farklı yaklaşım uygulayabiliriz. Koşullardan dönen `false`, `null` ve `undefined` değerleri JSX'de gözardı edilir.
+- We can use three different approaches for conditional rendering. `false`, `null`, and `undefined` values are ignored in JSX.
+
+```javascript showLineNumbers
+// first way
+let content;
+
+if (isLoggedIn) {
+  content = <AdminPanel />;
+} else {
+  content = <LoginForm />;
+}
+return <div>{content}</div>;
+
+// second way
+<div>{isLoggedIn ? <AdminPanel /> : <LoginForm />}</div>
+
+// third way
+<div>
+  {isLoggedIn && <AdminPanel />}
+  {!isLoggedIn && <LoginForm />}
+</div>
+```
+
+- We can use three different approaches for conditional rendering. `false`, `null` and `undefined` values returned from conditions are ignored in JSX.
 
 ```javascript showLineNumbers
 // first way: if statement
@@ -120,16 +145,16 @@ return (
 );
 ```
 
-- Birden fazla elementi render etmek için JSX array'leri kullanabiliriz. Array değiştiğinde React'ın doğru öğeleri render etmesi için her bir öğeye `key` prop vermeliyiz.
+- We can use JSX arrays to render multiple elements. Just make sure to give each element a `key` attribute to ensure that React renders the correct elements even if the array changes.
 
 <MessageBox type="info">
-  Değerlerin key özelliği aynı olursa, bir uyarı mesajı alırsınız: "Warning: Each child in a list should have a unique
-  'key' prop.".
+  If the key property of the values is the same, you will receive a warning message: "Warning: Each child in a list
+  should have a unique 'key' prop.".
 </MessageBox>
 
 <MessageBox type="warning">
-  Anahtar değiştiğinde komponent değişmemişse bile **rerender** edilir. Bu nedenle, Math.random gibi her çağrıldığında
-  farklı bir değer üreten bir fonksiyon kullanmamalısınız.
+  Even if the component does not change, it is rerendered when the key changes. Therefore, if you get the value from a
+  function that produces a different value each time, such as Math.random, you will cause unnecessary renders.
 </MessageBox>
 
 ```javascript showLineNumbers
@@ -144,7 +169,7 @@ const listItems = products.map((product) => <li key={product.id}>{product.title}
 return <ul>{listItems}</ul>;
 ```
 
-- React state değiştikten sonra kod bloğu tamamlandığında DOM'u günceller. State'in değiştiği satırın ardından yeni DOM'a erişmemiz gerekirse `flushSync` metodunu kullanabiliriz.
+- In React, the DOM is updated after the code block completes when the state changes. If we need to access the new DOM immediately after a state change, we can use the `flushSync` method.
 
 ```javascript showLineNumbers
 import { useState, useRef } from "react";
@@ -181,11 +206,11 @@ export default function TodoList() {
 
 ### Event Handler
 
-- Kullanıcı bir olay tetiklediğinde çalışacak fonksiyona **event handler** denir. Bu fonksiyonları props olarak iletebiliriz. Varsayılan olarak fonksiyona `Event` nesnesi geçilir. Ekstra veri göndermek istersek **arrow function** kullanabiliriz.
+- **Event handler** is a function that will be executed when a user triggers an event. We can pass these functions as props to component. By default, the `Event` object is passed to the function. If we want to send extra data, we can use an arrow function.
 
 <MessageBox type="warning">
-  Göreceğiniz üzere fonksiyonun referansını iletiyoruz. Eğer `onClick={handleClick()}` gibi fonksiyonu çağırmış
-  olsaydık, event bağımsız her render'da tetiklenirdi.
+  As you can see, we are passing the reference of the function. If we had written `onClick={handleClick()}`, it would
+  only have been triggered during every render.
 </MessageBox>
 
 ```javascript showLineNumbers
@@ -201,8 +226,8 @@ function MyButton() {
 }
 ```
 
-- Event props isimlerinin başına `on`, handler isimlerinin başına ise `handle` konulması yaygın bir kullanımdır. Örn: `onMouseEnter={handleMouseEnter}`
-- Event propagation komponentlerde de geçerlidir. Örneğe bakacak olursak, önce button sonra div `onClick` metodu çağrılır. `onScroll` harici tüm olaylar yukarıya yayılır. Bunu engellemek için `e.stopPropagation()` kullanılır.
+- It's common to start naming with `on` for event props and `handle` for handler. For example: `onMouseEnter={handleMouseEnter}`.
+- Event propagation is also works with components. Looking at the example code, first the button's `onClick` and then div's `onClick` is called. All events except `onScroll` propagate upwards. To prevent this, `e.stopPropagation()` is used.
 
 ```javascript showLineNumbers
 export default function Toolbar() {
@@ -226,8 +251,8 @@ export default function Toolbar() {
 }
 ```
 
-- Formun `onSubmit` olayı gibi bazı olaylar varsayılan tarayıcı davranışına sahiptir ve sizin kodunuzdan sonra çalıştırır. Bunu engellemek için `e.preventDefault` kullanabiliriz.
-- Event handler'ları yukarıdan aşağıya doğru (capturing) çalıştırmak istersek olayların capture versiyonlarını kullanabiliriz.
+- Some events, such as the `onSubmit` event of a form element, have default browser behavior and will execute their own code after your code. To prevent this, we can use `e.preventDefault`.
+- To execute event handlers from top to bottom (**capturing**), we can use `onClickCapture` instead of `onClick`.
 
 ```javascript showLineNumbers
 <div
@@ -259,7 +284,7 @@ Call 1
 
 ### Props
 
-- Bileşenden bileşene veri aktarmak için `props` kullanırız. Klasik fonksiyona parametre geçme mantığı.
+- We use **props** to pass data to a component. It's the same logic as passing params to a function.
 
 ```javascript showLineNumbers
 function Avatar({ person, size = 100 }) {
@@ -278,7 +303,7 @@ function Profile() {
 }
 ```
 
-- Children elementleri props'un `children` özelliğinden okuyabiliriz.
+- We can get children elements from the `children` props.
 
 ```javascript showLineNumbers
 function Heading({ children }) {
@@ -292,14 +317,14 @@ export default function Text() {
 
 ### State
 
-- Zamanla değişebilen ve ekranın güncellenmesine yol açacak değerler için **state** değişkenlerini kullanırız. Bi nevi komponent bazlı bellektir. Klasik değişkenlerden farklı olarak render esnasında değeri korunur.
-- State, komponentin DOM'daki yeriyle ilişkilendirilir. Aynı konumda render olan komponentlerde state'ini sıfırlamak istersek `key` parametresini güncelleyebiliriz.
-- State tanımlamak için `useState` hook'u kullanılır.
+- We use **state** for values that can change over time and cause the screen to be updated. It is like a component-based memory. The difference from classic variables is that value is preserved between renders.
+- State is associated with the location of the component in the DOM. Otherwise, it is preserve its own value. If we want to reset the state, we can change the `key` parameter.
+- To define state in React, we use the `useState` hook.
 
 <MessageBox type="info">
-  React'da `use` ile başlayan fonksiyonlara `hook` diyoruz ve esasen React'ın özelliklerini kullanabilmemize yarıyorlar.
-  Komponentlerin root'unda kullanılabilirler. Koşul ya da döngü içine kullanmamalıyız. Gerekiyorsa yeni bir bileşen
-  oluşturabiliriz.
+  Functions that start with "use" are called **hooks** in React. They essentially allow us to access React's features.
+  They can only be used in the top scope of components and should not be used inside conditions or loops. If necessary,
+  we can create a new component.
 </MessageBox>
 
 ```javascript showLineNumbers
@@ -319,9 +344,9 @@ function MyButton() {
 }
 ```
 
-- After the state setter is called, the rerender is triggered when the code block is executed.
-- React Hook'ların değerlerini çağrılma sırasına göre anlar. Arka arkaya tanımladığımız state değerleri dizide tutulur ve okunacağı zamanda indeksi birer arttırarak okur. Bu sebeptendir ki sadece komponentin root'unda tanımlanmalıdır.
-- State değeri obje ise güncellerken spread operatörünü kullanmalıyız.
+- State setter çağırıldıktan sonra kod bloğu tamamlandığında rerender tetiklenir.
+- React states are stored in an array and should only be defined at the root of the component. They are read the value in the order they are called. That's why they should only be defined at the root of the component.
+- We should use the spread operator when updating it.
 
 ```javascript showLineNumbers
 const [person, setPerson] = useState({
@@ -344,7 +369,7 @@ function handleTitleChange(e) {
 }
 ```
 
-- Setter metodu çalıştığı anda state değeri yenilenmez. Örneğe bakarsak üç kez çağırılan setNumber metoduyla birlikte son değerin 3 olmasını bekleriz ancak yanılırız. Her setter çalıştığında state değeri render başında okunan değer yani 0 olacaktır. onClick bloğu çalışmayı tamamladıktan sonra rerender tetiklenir ve state değeri güncellenir. Komponent'in bellekteki değerini anlık elde etmek istersek **updater** fonksiyonu kullanabiliriz.
+- The state value doesn't change immediately when we call the setter method. So, if we call the setNumber method three times, we won't get the final value of 3. Instead, each time the setter is called, the state value remains as the value read at the start of render (in this case 0). The state value is updated in memory only after the onClick block executed and a render is triggered. To access the current value of the component in memory, we can use the updater function.
 
 ```javascript showLineNumbers
 import { useState } from "react";
@@ -360,7 +385,7 @@ export default function Counter() {
           setCount(count + 1); // setCount(0 + 1)
           setCount(count + 1); // setCount(0 + 1)
           setCount(count + 1); // setCount(0 + 1)
-          // yeni değer sonraki rerender'da 1 olur.
+          // the value will be 1 in the next render.
         }}
       >
         +3
@@ -370,7 +395,7 @@ export default function Counter() {
           setCount((count) => count + 1); // setCount(0 + 1)
           setCount((count) => count + 1); // setCount(1 + 1)
           setCount((count) => count + 1); // setCount(2 + 1)
-          // yeni değer sonraki rerender'da 3 olur.
+          // the value will be 3 in the next render.
         }}
       >
         +3
@@ -382,7 +407,7 @@ export default function Counter() {
 
 ### Reducer
 
-- Karmaşık state'leri yönetmekte zorlanabiliriz. Reducer yapısı, aksiyon bazlı bir state update mekanizması kurar. Reducer tanımlamak için `useReducer` hook'unu kullanabiliriz.
+- We may have difficulty managing complex states. **Reducer** establishes an action-based state update mechanism. We can use the `useReducer` hook to define a reducer.
 
 ```javascript showLineNumbers title="tasksReducer.js"
 import { useReducer } from "react";
@@ -466,7 +491,7 @@ export default function TaskApp() {
 
 ### Ref
 
-- **Ref**, HTML elementlerine erişebilmek için kullanılılır dolayısıyla querySelector ile uğraşmaya gerek kalmaz. Referans tanımlamak için `useRef` hook'u kullanabiliriz.
+- **Ref** is used to access HTML elements, so there is no need to deal with `querySelector`. We can use the `useRef` hook to define a reference.
 
 ```javascript showLineNumbers
 import { useRef } from "react";
@@ -487,7 +512,7 @@ export default function Form() {
 }
 ```
 
-- DOM rendering esnasında erişilemez olduğu için ref değeri komponent gövdesinde okunamaz ve değiştirilemez. Yalnızca render sonrasında çalışacağından emin olduğumuz `useEffect` ve **event handler** içerisinde erişilebilir.
+- The ref value cannot be read or modified in the component body because it is inaccessible during DOM rendering. It can only be accessed inside `useEffect` and **event handler** that we are sure will run after rendering.
 
 ```javascript showLineNumbers
 function VideoPlayer({ src, isPlaying }) {
@@ -520,7 +545,7 @@ function VideoPlayer({ src, isPlaying }) {
 }
 ```
 
-- Renderlar esnasında değeri korunduğu için değişken saklamak için de kullanılabilir. State'den farklı olarak değeri değiştiğinde rerender tetiklemez.
+- It can also be used to store a value because it is preserved during renders. Unlike state, it does not trigger a rerender when the value changes.
 
 ```javascript showLineNumbers
 import { useRef } from "react";
@@ -542,7 +567,7 @@ export default function Counter() {
 }
 ```
 
-- Ref'leri map içerisinde kullanamayacağımızdan ötürü ref callback kullanmalıyız.
+- We can use a single reference to keep track of the references of multiple elements. However, when an element is deleted, it also needs to be removed from this reference. We can use a **ref callback** for this.
 
 ```javascript showLineNumbers
 import { useRef } from "react";
@@ -571,7 +596,7 @@ export default function CatFriends() {
 }
 ```
 
-- Bir komponentin içerisindeki HTML elemente de ref atamak isteyebiliriz. Props olarak geçtiğimiz ref otomatik olarak DOM'a eklenmez. Bunun için `forwardRef` kullanılmamız gerekir.
+- We may want to assign a ref to an HTML element inside a component. The ref we passed as a prop is not automatically added to the DOM. To pass this, we need to use `forwardRef`.
 
 ```javascript showLineNumbers
 import { forwardRef, useRef } from "react";
@@ -594,24 +619,23 @@ export default function Form() {
 
 ### Context
 
-- Komponentler arasında veri paylaşımını kolaylaştıran ve komponentler arası props olarak iletmeyi engelleyen yapıya **context** denir.
-- Props'ları komponentler arasında 100 kat aşağıya indirmek yerine bir context tanımlayıp `useContext` hook'u yardımıyla okuyabiliriz.
+- **Context**, komponentler arasında veri paylaşımını kolaylaştıran bir yapıdır. Props'ları komponentler arasında 100 kat aşağıya indirmek yerine bir context tanımlayıp `useContext` hook'u yardımıyla okuyabiliriz.
 
 ```javascript showLineNumbers title="src/LanguageContext.tsx"
 import React, { createContext, useContext, useState } from "react";
 
-// İlk olarak context oluşturulur.
+// firstly we create context
 const LanguageContext = createContext();
 
-// Provider içerisindeki elemanların context'e erişebilmesini sağlar.
+// the provider allows to access context for children
 const LanguageProvider = ({ children }) => {
   const [language, setLanguage] = useState("en");
 
-  // value props context'in sunacağı değerleri tutar.
+  // value props store the provided context's values
   return <LanguageContext.Provider value={{ language, setLanguage }}>{children}</LanguageContext.Provider>;
 };
 
-// useContext hook'u context'in anlık değerlerini okur.
+// we can read the values with useContext hook
 const useLanguageContext = () => useContext(LanguageContext);
 
 export { LanguageProvider, useLanguageContext };
@@ -666,24 +690,24 @@ export const Navbar = () => {
 
 ### Effect
 
-- Render'ın meydana getirdiği yan etkileri gerçekleştirmek için kullanılır. Örneğin sayfa yüklendiğinde analitik verisi kaydetmek ya da chat uygulamasında sunucuyla bağlantı kurmak için kullanabiliriz. Bunun için `useEffect` hook'u kullanılır.
+- It is used to perform side effects caused by rendering. For example, we can use it to save analytic data when the page is loaded or to establish a connection with the server in a chat application. We use the useEffect hook.
 
 ```javascript showLineNumbers
 useEffect(() => {
-  // her render'dan sonra çalışır
+  // run after every render
 });
 
 useEffect(() => {
-  // bağımlılık array'indeki değerlerin sebep olduğu renderlarda çalışır (Object.is ile kontrol edilir)
+  // run after every render when dependency changed (will compare with Object.is)
 }, [someCompVariable, someProps, someState]);
 
 useEffect(() => {
-  // yalnızca ilk renderdan sonra çalışır
+  // run on mount (appears on the screen for the first time)
 
   return () => {
-    // komponent dom'dan siliniyorsa çalışır
+    // run on unmount
   };
 }, []);
 ```
 
-- Server-side rendering esnasında çalışmaz.
+- It doesn't work during server-side.

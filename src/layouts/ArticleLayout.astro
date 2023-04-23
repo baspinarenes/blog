@@ -117,7 +117,7 @@ const {
     }
 
     ul {
-      @apply mb-8;
+      @apply mb-8 flex flex-col gap-2;
 
       li {
         &::before {
@@ -142,11 +142,11 @@ const {
     }
 
     code:not([data-language]) {
-      @apply rounded-md text-sm p-1 text-orange;
+      @apply rounded-md text-sm p-1 text-[#1d4ed8];
     }
 
     pre:not([data-language]) {
-      @apply bg-black text-gray-500 -mt-[27px] mb-6 px-6 pb-6 border-gray-700 overflow-x-scroll text-sm grid  md:rounded-b-lg;
+      @apply bg-black text-gray-500 -mt-[27px] mb-6 px-6 pb-6 border-gray-700 overflow-x-scroll text-sm grid  md:rounded-b-lg -mx-6 md:mx-0;
 
       &:before {
         @apply block text-xs font-bold mb-2 uppercase font-mono;
@@ -160,7 +160,7 @@ const {
     }
 
     div[data-rehype-pretty-code-fragment] {
-      @apply mb-6 overflow-hidden md:rounded-md;
+      @apply mb-6 -mx-6 overflow-hidden md:mx-0 md:rounded-md;
 
       pre {
         @apply py-6 overflow-x-scroll grid text-sm;
@@ -223,7 +223,7 @@ const {
     }
 
     div[data-rehype-pretty-code-title] {
-      @apply bg-black text-gray-400 px-4 py-2 border-b border-gray-700;
+      @apply text-sm bg-black text-gray-400 px-4 py-2 border-b border-gray-700;
 
       & + pre {
         background-color: #101828 !important;
