@@ -1,109 +1,150 @@
 ---
 title: "Short Notes: Golang"
-description: "Golang çalışırken tuttuğum kısa notlar."
+description: "Short notes with examples on the key points of Golang."
 pubDate: 2022-10-11
 slug: short-notes-golang
-draft: true
+draft: false
 heroImage: "/images/heroImages/golang.png"
 tags:
   - golang
   - live-article
 otherParts:
   - text: "React"
-    slug: "/kissadan-react"
+    slug: "/short-notes-react"
   - text: "Golang"
-    slug: "/kissadan-golang"
+    slug: "/short-notes-golang"
 ---
 
 <MessageBox type="warning">
-  **Yaşayan Yazı**, bir yerimden uydurduğum bir terimdir ve ileriki dönemde içeriği zenginleşecek ama şu anki haliyle de
-  faydalı olabilecek yazıları belirtir.
+  **Living Article** is a term I coined that refers to a piece of writing which can be useful right now, but also has
+  the potential to be enriched with additional content in the future.
 </MessageBox>
 
-## Golang Nedir?
+## Basic
 
-Golang, C gibi ama daha basit, hızlıca derlenebilen, multithread bir dildir.
-Daha çok mikroservis uygulamalarında kullanılır.
+- Golang is a programming language that is similar to C but is easier to work with, compiles faster, and provides support for multithreads. It is mostly used in microservice applications.
+- You can use `go doc fmt` to see the doc for a package and `go doc fmt.Println` to see the doc for a method.
 
-## Temel Dosya İçeriği
+```go showLineNumbers
+func Fprint(w io.Writer, a ...any) (n int, err error)
+func Fprintf(w io.Writer, format string, a ...any) (n int, err error)
+func Fprintln(w io.Writer, a ...any) (n int, err error)
+func Print(a ...any) (n int, err error)
+func Printf(format string, a ...any) (n int, err error)
+func Println(a ...any) (n int, err error)
+func Sprint(a ...any) string
+func Sprintf(format string, a ...any) string
+func Sprintln(a ...any) string
+...
+```
 
-- Basit bir Golang dosyasının yapısı (kodu çalıştırmak için `go run main.go`):
+## Hello World
 
-```go
-// kod organizasyonu paketler ile sağlanır.
-// aynı klasör içinde bulunan dosyalarda paket ismi aynı olmalıdır.
+- The structure of the simplest Golang file is as follows (use `go run main.go` to run the code):
+
+```go showLineNumbers
+// the organization of files is provided by packages.
+// files located in the same folder must have the same package.
 package main
 
-// kütüphaneler klasik şekilde dahil edilir.
 import "fmt"
 
-// programın giriş noktasıdır.
-// her pakette bir main fonksiyonu olabilir.
+// the main function is the entry point of the program.
+// there can be a main function in each package.
 func main() {
   fmt.Println("Hello World")
 }
 ```
 
-## Yazdırma Biçimleri
+## Print Methods
 
-- Farklı yazdırma fonksiyonlarına sahiptir. `Print` ile başlayanlar
-  stdout'a yani konsola çıktı verir. `Fprint` olanlar dosya ve tarayıcı
-  gibi dış bir kaynağa, `Sprint` olanlar ise çıktıyı **character buffer**'da
-  saklar.
+- There are various printing functions. Those starting with `Print` go to the console and return the number of bytes. Those with `Fprint` go to an external source like a file or a browser. Those with `Sprint` store the output in a character buffer, essentially converting it to a variable.
 
-```go
+```go showLineNumbers
 package main
 
 import "fmt"
 
 func main(){
-  // Printler metnin byte sayısını döndürür.
   fmt.Println("Hello!")
   fmt.Print("Hello!\n")
-  fmt.Printf("Hi! My name is %s. I have lived in %s for %d years. They say the weather is amazing, which is %t", "Enes", "Bursa", 23, true)
+  fmt.Printf("Hi! My name is %s. I have lived in %s for %d years. They say the weather is amazing, which is %t", "Enes", "Istanbul", 23, true)
 
-  // "Hello Enes!" metni döndürür ama çıktı vermez.
+  // returns "Hello Enes!" but doesn't print to console.
   result := fmt.Sprintf("Hello %s!", "Enes")
 }
 ```
 
-## Tipler
+## Variables
 
-- Veri tipleri şunlardır:
+- The data types are as follows:
   - Integer: **int**, **int8**, **int16**, **int32**, **int64**, **uint**, **uint8**, **uint16**, **uint32**, **uint64**
   - Float: **float32**, **float64**
   - String: **string**
   - Boolean: **bool**
   - Null: **nil**
-- Bir değerin tipini görmek istersek `reflect.TypeOf()` kullanabiliriz.
+- When defining variables, we can proceed in multiple ways. We can either give the variable a type or let Golang infer it.
 
-```go
-fmt.Println(reflect.TypeOf("Enes")) // => string
+```go showLineNumbers
+// first way
+count := 10
+// second way
+var age = 21
+// third way
+var minute int = 60
+// fourth way
+const MAX_COUNT = 10
+// fifth way
+var city string
+city = "Istanbul"
 ```
 
-- Tür adlarıyla aynı fonksiyonları convert için kullanabiliriz.
+- We can use `reflect.TypeOf()` to see the type of a variable.
 
-## Değişkenler
+```go showLineNumbers
+stringVar := "string"
+intVar := 10
+floatVar := 1.2
+boolVar := false
+arrayVar := []string{"foo", "bar", "baz"}
+objectVar := map[string]int{"apple": 23, "tomato": 13}
+nilVar := nil
 
-- Değişken farklı çeşitlerde tanımlanır.
-
-```go
-var text string = "Text"
-var text2 = "Text2" // tip için çıkarım (inference) yapabilir.
-var text3 string // type vermek zorundayız.
-text3 = "Text3"
-var text4, text5 = "Text4", "Text5"
-
-// var keywordüne gerek kalmadan değişkeni tanımlar
-// ve tipini çıkarır. fonksiyon dışında kullanılamaz.
-text6 := "Text6" // eğer değer olmasaydı nil atanırdı.
+fmt.Println(reflect.TypeOf(stringVar))
+fmt.Println(reflect.TypeOf(intVar))
+fmt.Println(reflect.TypeOf(floatVar))
+fmt.Println(reflect.TypeOf(boolVar))
+fmt.Println(reflect.TypeOf(arrayVar))
+fmt.Println(reflect.TypeOf(objectVar))
+fmt.Println(reflect.TypeOf(nilVar))
 ```
 
-## Koşul Yapıları
+```
+string
+int
+float64
+bool
+[]string
+map[string]int
+```
 
-- `if-else` yapısı parantezsizdir.
+- In Golang, there are methods with the same name for variable type conversions.
 
-```go
+```go showLineNumbers
+floatNumber := 5.2
+intNumber := int(floatNumber)
+fmt.Println(intNumber)
+```
+
+```
+5
+```
+
+## Conditional Statements and Loops
+
+- In the `if-else` statement, unlike in JavaScript, parentheses are not used.
+
+```go showLineNumbers
 if num > 50 {
   // ...
 } else if num > 20 {
@@ -113,35 +154,32 @@ if num > 50 {
 }
 ```
 
-- Eğer bir fonksiyonun değerine göre işlem yapcaksak
-  farklı bir sözdizimi daha mevcut.
+- There is a special syntax to execute a code when the function runs without errors.
 
-```go
-// err değişkeni sadece bu blok içinden erişilebilir.
+```go showLineNumbers
+// the 'err' variable can only be accessed within this block.
 if err := someFunction(); err != nil {
   fmt.Println(err.Error())
 }
 ```
 
-- `switch` yapısının iki kullanımı vardır. Değişkenin eşitliğini kontrol
-  edeceksek değişkeni verebiliriz. Aksi takdirde atlayabiliriz. Eğer
-  altındaki `case` ile ilerletmek istersek `fallthrough` kullanabiliriz.
+- There are two uses of the `switch` statement. If we want to advance to the next case, we can use `fallthrough`.
 
-```go
-var variable string
+```go showLineNumbers
+// first way
+var status string = "ERROR"
 
-switch variable {
-  case "...":
+switch status {
+  case "WARN":
     // ...
-  case "...":
+  case "ERROR":
     // ...
   default:
     // ...
 }
 
-//=================
-
-var num string
+// second way
+var num int = 25
 
 switch {
   case num < 50:
@@ -153,27 +191,19 @@ switch {
 }
 ```
 
-- `for` yapısının da farklı kullanımları mevcut. `while` için ayrı
-  bir yapı söz konusu değildir.
+- There are different usages of the for loop structure. Golang does not have a built-in while loop structure.
 
-```go
+```go showLineNumbers
 for i := 1; i <= 100; i++ {
   fmt.Println(i)
 }
-
-i := 0
-for i <= 100 {
-	fmt.Println(i)
-	// This will behave like a while loop
-	i += 1
-}
 ```
 
-## Fonksiyon
+## Function
 
-- Fonksiyonda tipleri verirken TypeScript'ten farklı olarak iki nokta kullanmayız.
+- We use the `func` keyword to define a function. Unlike TypeScript, we don't use a colon when defining the parameter or return type.
 
-```go
+```go showLineNumbers
 package main
 
 import (
@@ -182,50 +212,43 @@ import (
 )
 
 func main() {
-	fmt.Println(getAgeByYear(1999))
+  fmt.Println(getAgeByYear(1999))
 }
 
 func getAgeByYear(yearOfBirth int) int {
-	return time.Now().Year() - yearOfBirth
+  return time.Now().Year() - yearOfBirth
 }
 ```
 
-- Birden fazla değer döndürebiliriz.
+- We can return multiple values in functions.
 
-```go
-func blaBla() (int, int)  {
+```go showLineNumbers
+func getNumArray() (int, int)  {
   return 4, 5
 }
 ```
 
-- Ve hatta döndüreceğimiz değerleri otomatik değişkene atayıp dönmesini sağlayabiliriz.
+- We can use the `...` operator to collect a variable number of arguments as a collection. These functions are called **variadic functions**.
 
-```go
-func getAgeByYear(yearOfBirth int) (age int) {
-	age = time.Now().Year() - yearOfBirth
-	return
-}
-```
+<MessageBox type="warning">
+  The range keyword returns the index and the element. We use '_' because we won't use the index, otherwise we get an
+  'unused variable' error.
+</MessageBox>
 
-- Belirsiz sayıda argümanı koleksiyon olarak almak istersek `...` operatörünü kullanabiliriz.
-  Bu fonksiyonlara **variadic function** denir.
-
-```go
+```go showLineNumbers
 func printNames(names ...string) {
-	for _, name := range names {
-		fmt.Println(name)
-	}
+  for _, name := range names {
+    fmt.Println(name)
+  }
 }
 ```
 
 ## Array
 
-- Dizi tanımlarken boyutu sabit, elemanları ise tek tip olmalıdır.
-  Dikkat etmek gereken şey tip tanımının içerisinde bulunmasıdır. Yani
-  `[5]int != [4]int`. Eğer girdiğimiz eleman kadar boyut alsın istersek
-  yine `...` operatörünü kullanabiliriz.
+- Arrays must have either a fixed size or a size specified at initialization.
+  Ex, `[5]int != [4]int`. We can also use the `...` operator if we want the size to be automatically calculated.
 
-```go
+```go showLineNumbers
 var nums [5]int
 fmt.Println(nums)
 
@@ -241,15 +264,17 @@ fmt.Println(" - type: ", reflect.TypeOf(names2))
 ```
 
 ```
-[0 0 0 0 0] [2.2 3.8] [Ali Veli ] [Ali Veli Ahmet] - type: [3]string
+[0 0 0 0 0]
+[2.2 3.8]
+[Ali Veli ]
+[Ali Veli Ahmet] - type: [3]string
 ```
 
-- Dizilerin elemanlarını iterate etmek istersek `range` kullanabiliriz.
+- We can use `range` to iterate over the elements of arrays.
 
-```go
+```go showLineNumbers
 nums := [5]int{1, 2, 3, 4, 5}
 
-// indexi göz ardı edeceksek '_' kullanabiliriz.
 for _, num := range nums {
   fmt.Print(num)
 }
@@ -259,51 +284,66 @@ for _, num := range nums {
 12345
 ```
 
-```go
+- We can also use `range` to iterate over string values. However, it returns the byte value instead of the character. Therefore, we need to convert it to string.
+
+```go showLineNumbers
 var mySentence = "Sentence"
 
 for index, letter := range mySentence {
-  // letter byte değerini döner. harfi almak için stringe çeviririz.
-  fmt.Println("Index:", index, "Letter:", string(letter))
+	fmt.Println("Index:", index, "Byte:", letter, "Letter:", string(letter))
 }
 ```
 
 ```
-Index: 0 Letter: S Index: 1 Letter: e Index: 2 Letter: n Index: 3 Letter: t Index: 4 Letter: e Index: 5 Letter: n
-Index: 6 Letter: c Index: 7 Letter: e
-
+Index: 0 Byte: 83  Letter: S
+Index: 1 Byte: 101 Letter: e
+Index: 2 Byte: 110 Letter: n
+Index: 3 Byte: 116 Letter: t
+Index: 4 Byte: 101 Letter: e
+Index: 5 Byte: 110 Letter: n
+Index: 6 Byte: 99  Letter: c
+Index: 7 Byte: 101 Letter: e
 ```
 
-- Sabit boyut demişken dinamik tanımı da bilmek isteriz. `map(type, len, cap)`,
-  slice, map ve channel türünden nesne oluşturur ve bellekte yer ayırır.
+- Dynamic-sized arrays can be defined. `make(type, len, cap)` is used to create objects of type `slice`, `map`, or `channel`.
 
-```go
-// var mySlice []int dersek bu hataya sebep olur. çünkü bellekte
-// ayıracağı boyutu bilemez. map ilk eleman dizinin tipidir.
-// ikincisi başlangıç boyutudur. üçüncüsü ise maksimum kapasitedir.
+<MessageBox type="warning">
+  If we use the expression `var mySlice []int` without initializing, it will cause an error because it cannot know the
+  size it needs to allocate in memory.
+</MessageBox>
+
+```go showLineNumbers
+// first param: item type
+// second param: starting size
+// third param: max capacity
 var mySlice []int = make([]int, 5, 10)
 
 fmt.Println(len(mySlice))
 fmt.Println(cap(mySlice))
 ```
 
-- Dizinin bir parçasını almak istersek klasik dizi söz dizimini kullanabiliriz.
+```
+5
+10
+```
 
-```go
+- To slice an array, we use the syntax of two colons.
+
+```go showLineNumbers
 nums := [5]int{1, 2, 3, 4, 5}
-someNums := nums[2:4] // bellekte kapasitesi 5 olacak şekilde yer ayırır.
+someNums := nums[2:4]
 fmt.Println(reflect.TypeOf(someNums))
 fmt.Println(someNums)
 ```
 
 ```
-[]int [3, 4]
+[]int
+[3, 4]
 ```
 
-- Dinamik diziye eleman eklemek için `append()` kullanırız.
-  Ekleme yapılacak diziyi ve elemanları alır.
+- To add an element to a dynamic array, we use the built-in `append()` method. It takes the array and new elements.
 
-```go
+```go showLineNumbers
 var arr []int = make([]int, 3, 10)
 newArr := append(arr, 5, 2, 7, 12)
 
@@ -316,63 +356,69 @@ fmt.Println(newArr)
 
 ## Map
 
-- Bildiğimiz anahtar değer çifti tutan veri tipi.
+- It is a data type that holds key-value pairs, similar to objects in JavaScript. We can define it in three different ways.
 
-```go
-// var userInfo map[string]string şeklinde tanımlarsak
-// başlangıç için bellek ayırma yapamaz.
-// slice'dan farklı olarak başlangıç boyutu vermeye gerek yok.
-var userInfo map[string]string = make(map[string]string)
-userInfo["name"] = "Enes"
-userInfo["surname"] = "Başpınar"
-fmt.Println(userInfo)
-
-userInfo2 := map[string]string{
+```go showLineNumbers
+// first way
+userInfo1 := map[string]string{
   "name": "Cem",
   "surname": "Yılmaz",
 }
+fmt.Println(userInfo1)
+
+// second way
+userInfo2 := map[string]string{}
+userInfo2["name"] = "Cem"
+userInfo2["surname"] = "Yılmaz"
 fmt.Println(userInfo2)
+
+// third way
+var userInfo3 map[string]string = make(map[string]string)
+userInfo3["name"] = "Cem"
+userInfo3["surname"] = "Yılmaz"
+fmt.Println(userInfo3)
 ```
 
 ```
-map[name:Enes surname:Başpınar] map[name:Cem surname:Yılmaz]
+map[name:Cem surname:Yılmaz]
+map[name:Cem surname:Yılmaz]
+map[name:Cem surname:Yılmaz]
 ```
 
-- Bir anahtarın olup olmadığını kontrol etmek istersek exception
-  fırlatmayacağı için farklı bir yol kullanmamız gerekir. Döndürdüğü
-  ikinci değer işlemin başarılı olup olmadığını belirtir.
+- Functions and objects usually return two values. The second value indicates whether the operation was successful or not and can also be used to check if a key exists in an object.
 
-```go
+```go showLineNumbers
 userInfo := map[string]string{
   "name":    "Cem",
   "surname": "Yılmaz",
 }
 
-city, ok := userInfo["city"]
+city, hasCityKey := userInfo["city"]
 fmt.Println("value:", city)
-fmt.Println("ok", ok)
+fmt.Println("hasCityKey:", hasCityKey)
 
-// yukarıdaki case'i if ile birleştirip
-// bir anahtar mevcutsa bir işlem yapmak istersek:
-if city, ok := userInfo["city"]; ok {
+// if we want to execute a code only when the key is exist
+userInfo["city"] = "Istanbul"
+if city, hasCityKey := userInfo["city"]; hasCityKey {
   fmt.Printf("%s live in %s", userInfo["name"], city)
 }
 ```
 
 ```
-value: ok false
+value:
+hasCityKey: false
+Cem live in Istanbul
 ```
 
-- Herhangi bir anahtarı silmek istersek `delete()` kullanabiliriz.
+- To remove a key from map, we can use `delete()`.
 
-```go
+```go showLineNumbers
 userInfo := map[string]string{
-	"name":    "Cem",
-	"surname": "Yılmaz",
+  "name":    "Cem",
+  "surname": "Yılmaz",
 }
 
 delete(userInfo, "surname")
-
 fmt.Println(userInfo)
 ```
 
@@ -380,11 +426,11 @@ fmt.Println(userInfo)
 map[name:Cem]
 ```
 
-## Paket
+## Package
 
-- Kendi paketimizi de oluşturabiliriz.
+- We can create our own package.
 
-```go
+```go showLineNumbers title="utils/common.go"
 package utils
 
 func Add(nums ...int) int  {
@@ -398,26 +444,43 @@ func Add(nums ...int) int  {
 }
 ```
 
-```go
+```go showLineNumbers title="main.go"
 package main
 
 import (
   "fmt"
-  "project-folder/utils"
-  // math "{workspaceFolderName}/utils" : importa isim verebiliriz
+  "{workspaceFolderName}/utils"
 )
 
 func main()  {
-  utils.Add()
+  utils.Add(2, 21)
 }
 ```
 
+<MessageBox type="info">
+  We can give a name to an import using the `math "{workspaceFolderName}/utils"` syntax. Otherwise, it is accessible
+  with the package name.
+</MessageBox>
+
 ## Unit Testing
 
-- Test dosyasının ismi test edilen dosyanın sonuna `_test` eklenmiş
-  halidir. Bu iki dosya aynı dizinde olmalıdır.
+- Tests of files should be located in the same directory and named with a suffix of `_test` added to the original file name.
 
-```go
+```go showLineNumbers title="utils.go"
+package utils
+
+func Average(nums ...int) int {
+  total := 0
+
+	for _, num := range nums {
+    total += num
+	}
+
+	return total
+}
+```
+
+```go showLineNumbers title="utils_test.go"
 package utils
 
 import (
@@ -425,47 +488,19 @@ import (
 )
 
 func TestAverage(t *testing.T) {
-	expected := 4
-	actual := Average(3, 2)
+  expected := 4
+  actual := Average(3, 2)
 
-	if actual != expected {
-		t.Errorf("Add function does not add up: Expected: %d, Actual: %d", expected, actual)
-	}
+  if actual != expected {
+    t.Errorf(
+      "Add function does not add up: Expected: %d, Actual: %d",
+      expected,
+      actual
+    )
+  }
 }
 ```
 
-```go
-package utils
-
-func Average(nums ...int) int {
-	total := 0
-
-	for _, num := range nums {
-		total += num
-	}
-
-	return total
-}
-```
-
-## Diğer
-
-- Paketlerin dökümantasyonlarını görmek için `go doc fmt` yazabiliriz.
-  Özel fonksiyon dökümantasyonu için `go doc fmt.Println`.
-
-```go
-func Fprint(w io.Writer, a ...any) (n int, err error)
-func Fprintf(w io.Writer, format string, a ...any) (n int, err error)
-func Fprintln(w io.Writer, a ...any) (n int, err error)
-func Print(a ...any) (n int, err error)
-func Printf(format string, a ...any) (n int, err error)
-func Println(a ...any) (n int, err error)
-func Sprint(a ...any) string
-func Sprintf(format string, a ...any) string
-func Sprintln(a ...any) string
-...
-```
-
-## Kaynaklar
+## Resources
 
 - [Frontend Masters: Go for JS Developer](https://frontendmasters.com/courses/go-for-js-devs/)

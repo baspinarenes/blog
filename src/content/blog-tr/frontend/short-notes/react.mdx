@@ -2,7 +2,7 @@
 title: "Kıssadan Hisse: React"
 description: "React'ın kilit noktalarına dair kısa notlar."
 pubDate: 2022-12-12
-slug: react-short-notes
+slug: short-notes-react
 draft: false
 heroImage: "/images/heroImages/react.png"
 tags:
@@ -10,9 +10,9 @@ tags:
   - live-article
 otherParts:
   - text: "React"
-    slug: "/react-short-notes"
+    slug: "/short-notes-react"
   - text: "Golang"
-    slug: "/golang-short-notes"
+    slug: "/short-notes-golang"
 ---
 
 <MessageBox type="warning">
@@ -22,7 +22,7 @@ otherParts:
 
 Geçenlerde yeni React dökümantasyonuna baştan sona göz atmaya karar vermiştim. Bu esnada aldığım ve framework'e dair anahtar noktaları kısa notlarımı örneklerle paylaşacağım.
 
-### Genel
+## Genel
 
 - React'ın "Strict Mode"u development esnasında her komponent fonksiyonunu iki kez çağırır ve Pure olmayan komponentleri yakalamanızı sağlar. Render sayısını hesaplarken buna dikkat edin.
 - Uygulama başladığında yalnızca bir kez çalıştırılacak kod komponent dışına koyulabilir.
@@ -38,7 +38,7 @@ function App() {
 }
 ```
 
-### Rendering
+## Rendering
 
 - **Komponent**, renderlanacak HTML elementleri döndüren fonksiyondur. İşin aslına bakarsak HTML gibi duran ancak **JSX** dediğimiz bir dil uzantısıdır. Kendisi de JavaScript olduğundan JavaScript'in elementlerle kullanılmasını kolaylaştırır. Nihayetinde kendisi de HTML'e çevrilir.
 
@@ -179,7 +179,7 @@ export default function TodoList() {
 }
 ```
 
-### Event Handler
+## Event Handler
 
 - Kullanıcı bir olay tetiklediğinde çalışacak fonksiyona **event handler** denir. Bu fonksiyonları props olarak iletebiliriz. Varsayılan olarak fonksiyona `Event` nesnesi geçilir. Ekstra veri göndermek istersek **arrow function** kullanabiliriz.
 
@@ -257,7 +257,7 @@ Call 3
 Call 1
 ```
 
-### Props
+## Props
 
 - Bileşenden bileşene veri aktarmak için `props` kullanırız. Klasik fonksiyona parametre geçme mantığı.
 
@@ -290,7 +290,7 @@ export default function Text() {
 }
 ```
 
-### State
+## State
 
 - Zamanla değişebilen ve ekranın güncellenmesine yol açacak değerler için **state** değişkenlerini kullanırız. Bi nevi komponent bazlı bellektir. Klasik değişkenlerden farklı olarak render esnasında değeri korunur.
 - State, komponentin DOM'daki yeriyle ilişkilendirilir. Aynı konumda render olan komponentlerde state'ini sıfırlamak istersek `key` parametresini güncelleyebiliriz.
@@ -380,7 +380,7 @@ export default function Counter() {
 }
 ```
 
-### Reducer
+## Reducer
 
 - Karmaşık state'leri yönetmekte zorlanabiliriz. Reducer yapısı, aksiyon bazlı bir state update mekanizması kurar. Reducer tanımlamak için `useReducer` hook'unu kullanabiliriz.
 
@@ -464,7 +464,7 @@ export default function TaskApp() {
 }
 ```
 
-### Ref
+## Ref
 
 - **Ref**, HTML elementlerine erişebilmek için kullanılılır dolayısıyla querySelector ile uğraşmaya gerek kalmaz. Referans tanımlamak için `useRef` hook'u kullanabiliriz.
 
@@ -592,7 +592,7 @@ export default function Form() {
 }
 ```
 
-### Context
+## Context
 
 - Komponentler arasında veri paylaşımını kolaylaştıran ve komponentler arası props olarak iletmeyi engelleyen yapıya **context** denir.
 - Props'ları komponentler arasında 100 kat aşağıya indirmek yerine bir context tanımlayıp `useContext` hook'u yardımıyla okuyabiliriz.
@@ -664,7 +664,7 @@ export const Navbar = () => {
 };
 ```
 
-### Effect
+## Effect
 
 - Render'ın meydana getirdiği yan etkileri gerçekleştirmek için kullanılır. Örneğin sayfa yüklendiğinde analitik verisi kaydetmek ya da chat uygulamasında sunucuyla bağlantı kurmak için kullanabiliriz. Bunun için `useEffect` hook'u kullanılır.
 

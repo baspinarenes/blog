@@ -10,7 +10,7 @@ const { type } = Astro.props;
 
 <div
   class:list={[
-    "p-5 flex flex-col gap-2 mb-8 text-justify md:text-start sm:flex-row sm:gap-4 md:rounded-md -mx-6 md:mx-0",
+    "p-5 flex flex-col gap-2 items-center md:items-start mb-8 sm:flex-row sm:gap-4 md:rounded-md -mx-6 md:mx-0",
     {
       "bg-yellow": type === "warning",
       "bg-[rgba(220,38,38,0.5)]": type === "danger",

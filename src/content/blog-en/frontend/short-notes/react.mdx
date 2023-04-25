@@ -2,7 +2,7 @@
 title: "Short Notes: React"
 description: "Short notes with examples on the key points of React."
 pubDate: 2022-12-12
-slug: react-short-notes
+slug: short-notes-react
 draft: false
 heroImage: "/images/heroImages/react.png"
 tags:
@@ -10,9 +10,9 @@ tags:
   - live-article
 otherParts:
   - text: "React"
-    slug: "/react-short-notes"
+    slug: "/short-notes-react"
   - text: "Golang"
-    slug: "/golang-short-notes"
+    slug: "/short-notes-golang"
 ---
 
 <MessageBox type="warning">
@@ -22,7 +22,7 @@ otherParts:
 
 I recently went through the new React documentation and took notes on the important parts. I will share these with you along with examples.
 
-### Common
+## Common
 
 - **Strict Mode** of React calls each component function twice during development and helps you catch impure components. Keep this in mind when counting render times.
 - Code that runs only once at the start of the application can be placed outside of the `App` component.
@@ -38,7 +38,7 @@ function App() {
 }
 ```
 
-### Rendering
+## Rendering
 
 - **Component** is a function that return HTML elements. They use a syntax extension called **JSX** that looks like HTML but is actually JavaScript. Since it's still JavaScript, it makes working with elements in JS easier. Ultimately, JSX is also transpiled into HTML.
 
@@ -204,7 +204,7 @@ export default function TodoList() {
 }
 ```
 
-### Event Handler
+## Event Handler
 
 - **Event handler** is a function that will be executed when a user triggers an event. We can pass these functions as props to component. By default, the `Event` object is passed to the function. If we want to send extra data, we can use an arrow function.
 
@@ -282,7 +282,7 @@ Call 3
 Call 1
 ```
 
-### Props
+## Props
 
 - We use **props** to pass data to a component. It's the same logic as passing params to a function.
 
@@ -315,7 +315,7 @@ export default function Text() {
 }
 ```
 
-### State
+## State
 
 - We use **state** for values that can change over time and cause the screen to be updated. It is like a component-based memory. The difference from classic variables is that value is preserved between renders.
 - State is associated with the location of the component in the DOM. Otherwise, it is preserve its own value. If we want to reset the state, we can change the `key` parameter.
@@ -405,7 +405,7 @@ export default function Counter() {
 }
 ```
 
-### Reducer
+## Reducer
 
 - We may have difficulty managing complex states. **Reducer** establishes an action-based state update mechanism. We can use the `useReducer` hook to define a reducer.
 
@@ -489,7 +489,7 @@ export default function TaskApp() {
 }
 ```
 
-### Ref
+## Ref
 
 - **Ref** is used to access HTML elements, so there is no need to deal with `querySelector`. We can use the `useRef` hook to define a reference.
 
@@ -617,7 +617,7 @@ export default function Form() {
 }
 ```
 
-### Context
+## Context
 
 - **Context**, komponentler arasında veri paylaşımını kolaylaştıran bir yapıdır. Props'ları komponentler arasında 100 kat aşağıya indirmek yerine bir context tanımlayıp `useContext` hook'u yardımıyla okuyabiliriz.
 
@@ -688,7 +688,7 @@ export const Navbar = () => {
 };
 ```
 
-### Effect
+## Effect
 
 - It is used to perform side effects caused by rendering. For example, we can use it to save analytic data when the page is loaded or to establish a connection with the server in a chat application. We use the useEffect hook.
 
