@@ -8,7 +8,7 @@ export interface Props {
 const { date } = Astro.props;
 ---
 
-<time datetime={date.toISOString()}>
+<time datetime={date.toISOString()} class="text-sm">
   {
     date.toLocaleDateString(i18next.language === "tr" ? "tr-TR" : "en-us", {
       year: "numeric",

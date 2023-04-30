@@ -10,8 +10,8 @@ interface Props {
 }
 
 const categoryImages: Record<string, string> = {
-  javascript: javascriptImage.src,
-  react: reactImage.src,
+  javascript: (javascriptImage as any).src,
+  react: (reactImage as any).src,
 };
 
 const { category, snippet } = Astro.props;
@@ -27,8 +27,8 @@ const { category, snippet } = Astro.props;
   >
   </div>
   <div class="px-6 py-4 flex flex-col items-center w-full border-x border-b rounded-b-lg">
-    <span class="font-medium text-center leading-5 mb-2">{snippet.data.title}</span>
+    <span class="font-medium text-center leading-5 mb-1">{snippet.data.title}</span>
     <FormattedDate date={snippet.data.pubDate} />
-    <span class="text-sm mt-2">#{snippet.data.subCategory}</span>
+    <!-- <span class="text-sm mt-2">#{snippet.data.subCategory}</span> -->
   </div>
 </a>

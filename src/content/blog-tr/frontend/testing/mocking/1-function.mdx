@@ -3,8 +3,8 @@ title: "Test Test Diye Nice Nice: Mocklama (1) - Fonksiyon"
 description: "Fonksiyonları test ederken bağımlı oldukları fonksiyonları nasıl mocklayabileceğimizi görelim."
 pubDate: 2022-10-20
 slug: testing-mocking-1-function
-draft: true
-heroImage: "/images/heroImages/jest.png"
+draft: false
+heroImage: "/images/articles/frontend/testing/heroImage.jpeg"
 tags:
   - jest
   - testing-library
@@ -55,7 +55,11 @@ yapılır, bankaya istek atılır, işlem gerçekleşir, sipariş iptal edilir v
 paranın geri yatması beklenir. Ve bu süreç binlerce kez tekrarlanır. Ortaya
 büyük bir kaos çıkar.
 
-![](/src/assets/articles/frontend/test-test-diye-nice-nice/mocklama/1-fonksiyon/002.png)
+<Image
+  src="/images/articles/frontend/testing/mocking/1-function/001.png"
+  alt=""
+  noRounded
+/>
 
 İşlemi gerçekleştiren kodu test etmeyi beklerken aynı zamanda Checkout API'sini ve hatta banka
 API'sini de test eder vaziyete geliriz. Testlerin odağını kaybetmemesi prensibi
@@ -63,7 +67,12 @@ gereği API'den sahte bir cevap geldiğini varsaysaydık yalnızca kendi
 fonksiyonumuzu test edebilirdik. Arkamızda laf edecek sinirli bir satıcı ve
 bankacı güruhu da bırakmazdık.
 
-![](/src/assets/articles/frontend/test-test-diye-nice-nice/mocklama/1-fonksiyon/003.png)
+<Image
+  src="/images/articles/frontend/testing/mocking/1-function/002.png"
+  alt=""
+  noRounded
+/>
+
 
 Buradan konumuza bağlamak gerekirse; verileri, foksiyonları ve bilimum yazılım
 araçlarının yerine konulmuş taklidine **mock** denir.
@@ -842,7 +851,12 @@ PASS  playground.test.ts
 
 Test yazmak ve özellikle fonksiyon mocklamak bu alana yeni başlayan insanları zorlayabiliyor. Bu sebeple yeni bir seri başlatmak istedim. Geri bildirimlerinizi bekliyorum. Bitirirken de konuya dair yaptığım bir caps'i paylaşmak istiyorum.
 
-![](/src/assets/articles/frontend/test-test-diye-nice-nice/mocklama/1-fonksiyon/004.png)
+<Image
+  src="/images/articles/frontend/testing/mocking/1-function/003.png"
+  alt=""
+  noRounded
+/>
+
 
 Yazı burada biter. Sağlıcakla kalın.
 
