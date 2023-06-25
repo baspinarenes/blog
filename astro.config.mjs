@@ -67,7 +67,11 @@ export default defineConfig({
     astroI18next(),
     mdx(),
     sitemap(),
-    tailwind(),
+    tailwind({
+      config: {
+        applyBaseStyles: false
+      }
+    }),
     image({ serviceEntryPoint: "@astrojs/image/sharp" }),
   ],
   experimental: {

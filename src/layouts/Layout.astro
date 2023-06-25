@@ -2,6 +2,7 @@
 import i18next, { t } from "i18next";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
+import '../styles/base.scss';
 ---
 
 <!DOCTYPE html>
@@ -34,37 +35,3 @@ import Header from "../components/Header.astro";
     <Footer />
   </body>
 </html>
-
-<style is:global>
-  html {
-    @apply text-gray-600 scroll-smooth;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4 {
-    @apply text-black;
-  }
-
-  h1 {
-    @apply text-display-md md:text-display-lg font-bold md:leading-none mb-6;
-  }
-
-  h2 {
-    @apply text-display-sm md:text-display-md leading-snug font-semibold mb-6 mt-12 md:mt-16;
-  }
-
-  h3 {
-    @apply text-xl md:text-display-xs font-semibold mt-10 md:mt-14 mb-4;
-  }
-
-  h4 {
-    @apply text-xl font-normal leading-none;
-  }
-
-  b,
-  strong {
-    @apply text-black font-semibold;
-  }
-</style>
