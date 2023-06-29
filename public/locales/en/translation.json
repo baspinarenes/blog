@@ -1,7 +1,7 @@
 {
   "site": {
     "title": "Enes Başpınar's Blog",
-    "description": "Blablablabla",
+    "description": "A weird software blog.",
     "copyright_1": " © No rights are reserved.",
     "copyright_2": "Just have fun and learn."
   },
@@ -18,7 +18,7 @@
   "homepage": {
     "title": "Enes Başpınar",
     "job": "Software Developer at Trendyol",
-    "description": "I have always enjoyed doing research and learning new things. I also love sharing what I learn, and I write articles based on notes I take from various resources. My motivation is to rescue people from monotonous and boring blogs. After reading most articles, I feel like screaming and I shout out my frustration here just like the gif. Let's meet in my articles!",
+    "description": "I enjoy doing research and learning things. I love to tell what I have learned and I write content for my blog with a different style. After most of the articles I read, I feel like screaming like my avatar. My main motivation is to save people from monotonous and boring blog posts. Let's meet in the articles!",
     "popular-repos": "Popular Repos",
     "popular-articles": "Popular Articles"
   },

@@ -1,7 +1,7 @@
 {
   "site": {
     "title": "Enes Başpınar's Blog",
-    "description": "Blablablabla",
+    "description": "Abidik gubidik yazılım blogu.",
     "copyright_1": " © No rights are reserved.",
     "copyright_2": "Just have fun and learn."
   },
@@ -18,7 +18,7 @@
   "homepage": {
     "title": "Enes Başpınar",
     "job": "Software Developer at Trendyol",
-    "description": "Araştırma yapmaktan ve bir şeyler öğrenmekten keyif duyan birisiyim. Öğrendiklerimi aktarmayı seviyorum ve bunun tezahürü olarak aldığım notlardan blog yazıyorum. Temel motivasyonum, tekdüze ve sıkıcı blog yazılarından insanları kurtarmak. Okuduğum çoğu yazıdan sonra çığlık atasım geliyor ve isyanımı yandaki gifteki gibi haykırıyorum. Yazılarda buluşalım!",
+    "description": "Araştırma yapmaktan ve bir şeyler öğrenmekten keyif duyuyorum. Öğrendiklerimi aktarmayı seviyorum ve bunun tezahürü olarak bloguma farklı bir tarzla içerik üretiyorum. Okuduğum çoğu yazıdan sonra çığlık atasım geliyor ve isyanımı avatarım gibi haykırıyorum. Temel motivasyonum, tekdüze ve sıkıcı blog yazılarından insanları kurtarmak. Yazılarda buluşalım!",
     "popular-repos": "Popüler Repolarım",
     "popular-articles": "Revaçtaki Yazılarım"
   },
