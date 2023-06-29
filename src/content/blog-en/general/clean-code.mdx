@@ -1,0 +1,159 @@
+---
+title: "Notlarla Clean Code"
+description: ""
+pubDate: 2023-06-17
+slug: "notes/clean-code"
+draft: true
+---
+
+## Chapter 1: Clean Code
+
+İyi kod önemlidir. 1980'lerin sonunda çok popüler bir şirket vardı. Zaman ilerledikçe uygulama yavaşlamaya başladı, bug'lar çözülemiyordu. Açılma süresi uzadı ve çökmeler arttı. Ve şirket kısa süre sonra iflas etti. Uygulamayı geliştiren ekipten birinin yıllar sonra itiraf ettiği üzere ürün piyasaya sürülmek üzere acele edilmiş ve ortaya karmaşık bir kod çıkmış. Yeni özellikler eklendikçe yönetemez hale gelmişler. Yani şirketi batıran şey kötü yazılmış koddur.
+
+Hızlı iş yapmak için hızlı kod yazarız ancak sonrasında ayağımıza bağ olur. Dağınık kod üzerinde çalıştığınızda ne kadar yavaşladığınızı düşünün. Alınmayan önlemler sonucunda işler zamanla düzeltilemeyecek noktaya gelir. Kötü kodun sebebi sizi hızlı iş yapmaya iten proje yöneticileri değil, sizsiniz. Doktorlar ameliyatı hızlı yapmaları için el yıkamadan işe başlamalarını söyleyen hastalara itibar etmezler. Çünkü işin sonunda enfeksiyon riski vardır  ve doktor bunu hastadan daha iyi bilir.
+
+Temiz kodun tanımlayan üstatların üzerinde durdukları bazı noktalar şu şekildedir:
+- Basit olmalıdır. Bug'ların gizlenmesi zorlaştırmalı ve bakımını kolaylaştırmalıdır. 
+- Zarif olmalıdır ve okuyana keyif vermelidir.
+- Okuyana "Burada ne yapılmış?" diye düşündürmemeli, amacı anlaşılacak şekilde düzyazı gibi okunabilir olmalıdır.
+- Tek bir işi iyi şekilde yapmalıdır. 
+- Bir işi yapmak için birçok yol yerine tek bir yol sağlamalıdır. Sağladığı API minimal olmalıdır.
+- Anlamlı isimlendirmeler barındırmalıdır.
+- Diğer kodlara bağımlılığı minimum olmalıdır.
+
+Hepimiz kodumuzu teslim aldığımızdan biraz daha temiz şekilde teslim etmeliyiz. Büyük bir şey olması gerekmez. Bir değişkenin adını daha iyi olacak şekilde değiştirin veya bir fonksiyonu parçalara ayırın.
+
+## Chapter 2: Meaningful Names
+
+İsimler yazılımın her yerindedir; değişkenleri, fonksiyonları, argümanları, sınıfları ve paketleri isimlendiririz. Dolayısıyla yeterli zaman ayırmak önemlidir. Bu isimler, ilgili varlığın neden var olduğunu ve ne işe yaradığını herkesin aynı anlamı çıkaracağı biçimde seçilmelidir. Aşağıdaki örnekte `d` geliştiren kişi için anlaşılır olsa da çok genel bir isimdir. `elapsedTimeInDays`, `daysSinceModification` ve `fileAgeInDays` ise herkes için anlaşılırdır.
+
+```java
+// yanlış
+int d = 10; // ???
+
+// doğru
+int elapsedTimeInDays = 10; // gün cinsinden geçen süre
+int daysSinceCreation = 10; // oluşturulduktan bu yana geçen gün sayısı
+int fileAgeInDays = 10; // gün cinsinden dosya yaşı
+```
+
+Editörde aratıldığında kolayca bulunabilecek isimler vermekte önemlidir. Örneğin haftalık çalışma günü sayısını tutan değişkeni `days` şeklinde isimlendirmek yerine `workDaysPerWeek` diye spesifikleştirirsek bulmamız kolaylaşır.
+
+Fonksiyonları içerdiği kod parçasının gerçekleştirdiği eyleme göre isimlendirmeliyiz. Aynı şekilde döngülerdeki öğeleri tutan değişkenleri `x`, `y` şeklinde harflerle isimlendirmek yerinde anlamlı isimler verebiliriz. 
+
+```java
+// yanlış
+public List<int[]> getThem() {
+  List<int[]> list1 = new ArrayList<int[]>();
+
+  for (int[] x : theList) {
+    if (x[0] == 4) {
+      list1.add(x);
+    }
+  }
+  
+  return list1;
+}
+
+// doğru
+public List<int[]> getFlaggedCells() {
+
+     List<int[]> flaggedCells = new ArrayList<int[]>();
+
+     for (int[] cell : gameBoard)
+      if (cell[STATUS_VALUE] == FLAGGED)
+        flaggedCells.add(cell);
+      return flaggedCells;
+}
+```
+
+Eskiden değişken isimlerinde özel kodlamalar yapılıyordu. Bu örnek eski dillerde type olmadığı için ismin başına koydumuğuz kodlamalarda (**Hungarian Notation**) karşımızda çıkıyordu, örneğin `bIsBusy`. Bir diğer durum ise geçmişten gelen alışkanlıklarla **interface** isimlerinin başına `I` koymaktı, örneğin `IProduct`.
+
+<MessageBox type="info">
+  Kişisel olarak `I` koymanın hem dikkat dağıtıcı olduğunu hem de iğrenç gözüktüğünü düşünüyorum :)
+</MessageBox>
+
+```java
+// yanlış
+boolean bIsBusy;
+interface IProduct {}
+
+// doğru
+boolean isBusy
+interface Product {}
+```
+
+Sınıf isimleri, isim ya da isim tamlaması olmalıdır. `Manager`, `Processor`, `Data` veya `Info` gibi kelimeler içermemelidir.
+
+```java
+// yanlış
+class ProductData {}
+class ProductInfo {}
+
+// doğru
+class Product {}
+```
+
+Fonksiyon isimleri fiil veya fiil öbeği ile başlamalıdır. Bir değer ayarlıyorsak `set`, değerini okumak istiyorsak `get` kullanabiliriz. Boolean değer döndürüyorsa `is` ile başlayabilir.
+
+```java
+// yanlış
+public int age() {}
+public boolean fly() {}
+public boolean posted() {}
+
+// doğru
+public int calculateAge() {}
+public boolean canFly() {}
+public boolean isPosted() {}
+```
+
+Uygulama genelinde aynı konseptlerde aynı isimleri tercih edin. Örneğin birden fazla sınıfınızda veri çekmek için fonksiyon varsa bunları `fetch`, `get`, `retrieve` diye farklı farklı isimlendirmek yerine hepsine aynı ismi verin. Ancak aynı kelimeyi birden fazla konseptte kullanmayın. Sayıları toplayan fonksiyona `add` diyorsanız diziye eleman ekleyen metoda `add` demeyin de `insert` ya da `append` deyin.
+
+Değişken isimlerini bağlamları içinde değerlendirin. `street`, `houseNumber` ve `city` ile birlikte kullanıldığında `state` bizim için bir anlam ifade eder ancak tek başına kafa karıştırıcıdır.
+
+```java
+// yanlış
+String state = "Montana";
+
+// doğru
+String stateOfHomeAdress = ""
+String companyAdressState = ""
+```
+
+## Chapter 3: Functions
+
+## Chapter 4: Comments
+
+## Chapter 5: Formatting
+
+## Chapter 6: Objects And Data Structures
+
+## Chapter 7: Error Handling
+
+## Chapter 8: Boundaries
+
+## Chapter 9: Unit Tests
+
+## Chapter 10: Classes
+
+## Chapter 11: Systems
+
+## Chapter 12: Emergence
+
+## Chapter 13: Concurrency
+
+## Chapter 14: Successive Refinement
+
+## Chapter 15: JUnit Internals
+
+## Chapter 16: Refactoring SerialDate
+
+## Chapter 17: Smells And Heuristics
+
+
+<Seperator />
+
+XXXXX
+
+Sağlıcakla kalın.

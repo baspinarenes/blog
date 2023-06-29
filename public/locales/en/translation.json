@@ -26,10 +26,11 @@
     "title": "Blog",
     "description": "I wrote my first article in May 2020. Since then, I have written many articles but I have deleted most of them because they didn't meet my standards. I try to keep my writings away from formality. I'm trying to answer any possible questions you might have. You can give me your feedback on Twitter. I hope you learn and have fun.",
     "category": {
+      "general": "General",
       "backend": "Backend",
       "frontend": "Frontend",
-      "life": "Life",
-      "other-programming-things": "Other Programming Things"
+      "fullstack": "Fullstack",
+      "life": "Life"
     }
   },
   "about": {

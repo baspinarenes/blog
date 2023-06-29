@@ -26,10 +26,11 @@
     "title": "Blog",
     "description": "İlk yazımı Mayıs 2020 de yazmıştım. O zamandan bu yana çok yazı yazdım ama standartlarıma uymadığı için çoğunu sildim. Yazılarımı resmiliğin sıkıcılığından uzak tutmaya çabalıyorum ve hafif goygoy ile süslüyorum. Okuyucuyla birlikte sorgulayarak ilerleyeceğim şekilde kurgulamayı seviyorum. Kafanızda oluşabilecek soruları öngörüp cevaplamaya çalışıyorum. Feedbacklerinizi bana Twitter'dan iletebilirsiniz. Umarım öğrenir ve eğlenirsiniz.",
     "category": {
+      "general": "Genel",
       "backend": "Backend",
       "frontend": "Frontend",
-      "life": "Hayatın İçinden",
-      "other-programming-things": "Diğer Programlama Konuları"
+      "fullstack": "Fullstack",
+      "life": "Hayatın İçinden"
     }
   },
   "about": {

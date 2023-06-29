@@ -1,0 +1,248 @@
+---
+title: "Design Principles: Single Level of Abstraction"
+description: "Let's take a look to understand the Single Level of Abstraction and its benefits for improved code readability and maintainability."
+pubDate: 2023-06-29
+slug: "programming-principle/single-level-of-abstraction"
+draft: false
+tags:
+  - principle
+  - clean-code
+---
+
+**Single Level of Abstraction (SLA)** is a programming principle that emphasizes the importance of having expressions at the same level of abstraction within a function, aiming to enhance readability. It allows us to decompose functions at a micro level.
+
+<MessageBox type="info">
+In other articles related to this topic, they often jump into examples without explaining what abstraction level means. Fortunately, we won't skip the most important point.
+</MessageBox>
+
+## What is Abstraction Level?
+
+Every function performs an action, which often includes sub-actions. The level of these sub-actions indicates the abstraction level. That's essentially what it is.
+
+Let's illustrate this with an example of a coffee machine.
+
+<Image
+  src="/images/articles/general/single-level-of-abstraction-principle/001-en.png"
+  alt=""
+/>
+
+If we want to buy a coffee from a machine, we put the money in, choose the type we want, wait for it to be prepared, and take it. These steps are at the first level of abstraction because they are the basic steps for this case.
+
+These user interactions trigger other actions in the background. During the coffee preparation phase, the machine takes the cup, adds coffee, pours hot water, and shuffles. These steps are at the second level of abstraction (the sub-actions of the money insertion are the same way). The person who wants to get coffee doesn't need to see how the cup will come or how the coffee will be stirred. However, if the machine doesn't put the cup, then it controls the cup retrieval stage.
+
+Functions work in a similar way. Dummy code that violates the Single Level of Abstraction principle is as follows.
+
+```java showLineNumbers
+getCoffee() {
+    checkMoney();      // abstraction level 2
+    addToBallance();   // abstraction level 2
+    chooseCoffeType(); // abstraction level 1
+    getGlass();        // abstraction level 2
+    putCoffee();       // abstraction level 2
+    putWater();        // abstraction level 2
+    shuffleGlass();    // abstraction level 2
+    giveCoffee();      // abstraction level 1
+}
+```
+
+We need to refactor the code to add additional abstraction, and the final code would be as follows:
+
+```java showLineNumbers
+getCoffee() {
+    getMoney();        // abstraction level 1
+    chooseCoffeType(); // abstraction level 1
+    prepareCoffee();   // abstraction level 1
+    giveCoffee();      // abstraction level 1
+}
+```
+
+## Code Examples
+
+`calculateSum` follows the SLA principle and contains expressions at the same level of abstraction. The reason for its compliance is that it only includes details related to the calculation of the sum. We define a variable to hold the calculation result, add the other numbers to it, and return it. Therefore, each line is at the same abstraction level.
+
+```java showLineNumbers
+public int calculateSum(int[] numbers) {
+  int sum = 0;
+
+  for (int num : numbers) {
+   sum += num;
+  }
+
+  return sum;
+}
+```
+
+The `validateUser()` function, on the other hand, contains different abstraction levels. `isValidEmail` is at the second level of abstraction. The main purpose of the function is to check if the user is valid. However, when looking at the code, we also see the details of the validation process and error handling, indicating the presence of multiple abstraction levels. To compare their readability, take a closer look at the `validateUser()` function.
+
+```java showLineNumbers
+public boolean validateUser(User user) {
+  if (user.getName().isEmpty()) {
+    System.out.println("Name cannot be empty.");
+    return false;
+  }
+
+  if (user.getEmail().isEmpty()) {
+    System.out.println("Email cannot be empty.");
+    return false;
+  }
+
+  if (!isValidEmail(user.getEmail())) {
+    System.out.println("Invalid email format.");
+    return false;
+  }
+
+  if (user.getPassword().isEmpty()) {
+    System.out.println("Password cannot be empty.");
+    return false;
+  }
+
+  if (user.getPassword().length() < 8) {
+    System.out.println("Password must be at least 8 characters long.");
+    return false;
+  }
+
+  return true;
+}
+```
+
+The refactored version of `validateUser` according to SLA is as follows:
+
+```java showLineNumbers
+public boolean validateUser(User user) {
+  if (!hasValidName(user)) { // name validation details abstracted
+    logError("Invalid name"); // logging details abstracted
+    return false;
+  }
+
+  if (!hasValidEmail(user)) { // email validation details abstracted
+    logError("Invalid email"); // logging details abstracted
+    return false;
+  }
+
+  if (!hasValidPassword(user)) { // şifre validation details abstracted
+    logError("Invalid password"); // logging details abstracted
+    return false;
+  }
+
+  return true
+}
+```
+
+Despite the increase in code lines with the new functions, pay attention to how easily it can be read. Imagine you are a developer working with this code, and you are checking if there is age verification:
+
+- You examine the function.
+- You quickly see the validation steps and notice that age verification is missing.
+- If necessary, you create a validation function for age verification and integrate it into the code.
+
+It's done. While checking this, you don't care about the details of name, password or email validation.
+
+## Practice
+
+Assume you have a function that calculates the total price of a product list, and take a minute to analyze why it violates the SLA principle. Try to refactor it yourself following the principle of **No Pain, No Gain (NPNG)**.
+
+```java showLineNumbers
+public int calculateTotalCartPrice(CartItem[] cartItems) {
+  int totalPrice = 0;
+
+  for (CartItem cartItem : cartItems) {
+    totalPrice += cartItem.getPrice();
+
+    if (cartItem.isTaxable()) {
+      totalPrice += cartItem.getPrice() * 0.18;
+    }
+
+    if (cartItem.getCategory().equals("Electronics")) {
+      if (cartItem.getPrice() > 500) {
+        totalPrice -= 50;
+      }
+    }
+  }
+
+  return totalPrice;
+}
+```
+
+We can see that it adds the product price, then adds the product tax, and finally deducts the discount if exist. Our code consists of three parts. Let's refactor step by step:
+
+- The logic for calculating the product price within the loop in `calculateTotalCartPrice` is at a different level of abstraction compared to the rest of the code. Let's extract it into a separate function.
+
+<MessageBox type="info">
+If a function contains a loop, it is likely to violate the Single Level of Abstraction principle.
+</MessageBox>
+
+```java showLineNumbers
+public int calculateTotalCartPrice(CartItem[] cartItems) {
+  int totalPrice = 0;
+
+  for (CartItem cartItem : cartItems) {
+    totalPrice += calculateCartItemPrice(cartItem);
+  }
+
+  return totalPrice;
+}
+
+private int calculateCartItemPrice(CartItem cartItem) {
+  int cartItemPrice = cartItem.getPrice();       // abstraction level 1
+
+  if (cartItem.isTaxable()) {
+    cartItemPrice += cartItem.getPrice() * 0.18; // abstraction level 2
+  }
+
+  if (cartItem.getCategory().equals("Electronics")) { 
+    if (cartItem.getPrice() > 500) {             // abstraction level 2
+      cartItemPrice -= 50;
+    }
+  }
+
+  return cartItemPrice;
+}
+```
+
+- We have successfully refactored the `calculateTotalCartPrice` function, but the new function still has different levels of abstraction. When looking at this code, you would want to see how the price is calculated but you don't want to see how the tax is calculated or how the discount is determined.
+
+
+```java showLineNumbers
+public int calculateTotalCartPrice(CartItem[] cartItems) {
+  int totalPrice = 0;
+
+  for (CartItem cartItem : cartItems) {
+    totalPrice += calculateCartItemPrice(cartItem);
+  }
+
+  return totalPrice;
+}
+
+private int calculateCartItemPrice(CartItem cartItem) {
+  int cartItemPrice = cartItem.getPrice();
+
+  if (cartItem.isTaxable()) {
+    cartItemPrice += calculateTax(cartItem.getPrice());
+  }
+
+  if (isElectronicItem(cartItem)) {
+    cartItemPrice -= calculateDiscount(cartItem.getPrice());
+  }
+
+  return cartItemPrice;
+}
+
+private int isElectronicItem(CartItem cartItem) {
+  return cartItem.getCategory().equals("Electronics");
+}
+
+private int calculateTax(int price) {
+  return price * 0.18;
+}
+
+private int calculateDiscount(int price) {
+  return price > 500 ? 50 : 0;
+}
+```
+
+Through refactoring, we obtain a concise and readable code.
+
+<Seperator />
+
+**Single Level of Abstraction** is a principle that enhances code readability by removing details. Use it and let others use it.
+
+Stay healthy.

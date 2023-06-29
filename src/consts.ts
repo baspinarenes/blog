@@ -10,4 +10,4 @@ export const SOCIAL_LINK = {
 export const PROFILE = {
   NAME: "Enes Başpınar",
 };
-export const BLOG_CATEGORIES = ["backend", "frontend", "life", "other-programming-things"];
+export const BLOG_CATEGORIES = ["general", "backend", "frontend", "fullstack", "life"];

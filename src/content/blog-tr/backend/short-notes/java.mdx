@@ -1,0 +1,163 @@
+---
+title: "Kıssadan Hisse: Java"
+description: ""
+pubDate: 2022-10-11
+slug: short-notes/java
+draft: true
+heroImage: "/images/heroImages/golang.png"
+tags:
+  - java
+  - live-article
+otherParts:
+  - text: "React"
+    slug: "/short-notes-react"
+  - text: "Golang"
+    slug: "/short-notes-golang"
+---
+
+<MessageBox type="warning">
+  **Yaşayan Yazı**, bir yerimden uydurduğum bir terimdir ve ileriki dönemde içeriği zenginleşebilecek ama şu anki
+  haliyle de faydalı olabilecek yazıları belirtir.
+</MessageBox>
+
+## Temel
+
+- Her uygulama `class` tanımıyla başlar ve `main` metodu içerir. Ve sınıf adı dosya adıyla aynı olmalı.
+- **JVM (Java Virtual Machine)**, bilgisayarın Java programını çalıştırmasını sağlayan soyut makinedir. Java programını çalıştırdığınızda, Java compiler önce Java kodunuzu bayt koduna derler. Ardından, JVM bayt kodunu virtual machine koduna (CPU'nun doğrudan yürüttüğü talimatlar kümesi) çevirir. Java kodu JVM bağımlıdır yani platforma uygun JVM olduğu takdirde her yerde çalışır.
+- **JRE (Java Runtime Environment)**; class kütüohaneleri, JVM ve uygulamaları çalıştırmak için gerekli bileşenleri sağlayan yazılım paketidir.
+- **JDK (Java Development Kit)**; uygulama geliştirmek için gereklilikleri (compiler, debugger vs) barındıran yazılım geliştirme kitidir.
+
+## Hello World
+
+```java HelloWorld.class
+class HelloWorld {
+  public static void main(String[] args) {
+    System.out.println("Hello, World!");
+  }
+}
+```
+
+## Variables
+
+```java
+int speedLimit = 80;
+int speedLimit2;
+speedLimit2 = 80;
+boolean flag2 = true;
+double b = 2.5;
+float b = 2.5F;
+char c = 'F';
+String str1 = "Java Programming";
+```
+
+## Console
+
+```java
+System.out.print("Hello, World!");
+System.out.println("Hello, World!");
+System.out.println("Age: " + 24);
+```
+
+- Kullanıcıdan veri almak için Scanner objesi kullanılabilir:
+
+```java
+import java.util.Scanner;
+
+class Input {
+  public static void main(String[] args) {
+  	
+    Scanner input = new Scanner(System.in);
+  	
+    // Getting float input
+    System.out.print("Enter float: ");
+    float myFloat = input.nextFloat();
+    System.out.println("Float entered = " + myFloat);
+  	
+    // Getting double input
+    System.out.print("Enter double: ");
+    double myDouble = input.nextDouble();
+    System.out.println("Double entered = " + myDouble);
+  	
+    // Getting String input
+    System.out.print("Enter text: ");
+    String myString = input.next();
+    System.out.println("Text entered = " + myString);
+  }
+}
+```
+
+## Conditions
+
+```java
+class Main {
+  public static void main(String[] args) {
+
+    int number = 0;
+
+    // checks if number is greater than 0
+    if (number > 0) {
+      System.out.println("The number is positive.");
+    }
+
+    // checks if number is less than 0
+    else if (number < 0) {
+      System.out.println("The number is negative.");
+    }
+    
+    // if both condition is false
+    else {
+      System.out.println("The number is 0.");
+    }
+  }
+}
+```
+- If koşulunun kısaltılmışı olan **ternary** operator kullanılabilir.
+
+```java
+import java.util.Scanner;
+
+class Main {
+  public static void main(String[] args) {    
+    double marks = 42.9;
+    String result = (marks > 40) ? "pass" : "fail";
+    System.out.println("You " + result + " the exam.");
+  }
+}
+```
+
+- Switch yapısı da mevcuttur.
+
+```java
+class Main {
+  public static void main(String[] args) {
+
+    int expression = 2;
+
+    // switch statement to check size
+    switch (expression) {
+      case 1:
+        System.out.println("Case 1");
+
+        // matching case
+      case 2:
+        System.out.println("Case 2");
+
+      case 3:
+        System.out.println("Case 3");
+
+      default:
+        System.out.println("Default case");
+    }
+  }
+}
+```
+
+## OOP
+
+- Nesnenin spesifik bir sınıftan oluşturulduğunu kontrol eder:
+
+```java
+String name = "Programiz";
+boolean result1 = name instanceof String;
+System.out.println("name is an instance of String: " + result1);
+```
