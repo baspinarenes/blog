@@ -42,7 +42,7 @@ const {
           <span class="text-md md:text-xl font-normal">{supTitle}</span>
           {title}
         </h1>
-        <div class="flex items-center">
+        <div class="flex items-center mb-12 md:mb-0">
           <div class="flex items-center gap-2 w-full">
             <Image
               src={avatarImage}
@@ -128,7 +128,13 @@ const {
       }
 
       ul {
-        @apply ml-6 mt-2;
+        @apply ml-6 my-2;
+      }
+    }
+
+    div {
+      ul {
+        @apply mt-3 gap-px;
       }
     }
 

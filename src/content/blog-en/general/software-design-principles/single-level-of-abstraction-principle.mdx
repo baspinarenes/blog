@@ -1,15 +1,15 @@
 ---
-title: "Design Principles: Single Level of Abstraction"
+title: "Software Design Principles: Single Level of Abstraction"
 description: "Let's take a look to understand the Single Level of Abstraction and its benefits for improved code readability and maintainability."
 pubDate: 2023-06-29
-slug: "programming-principle/single-level-of-abstraction"
-draft: true
+slug: "software-design-principle/single-level-of-abstraction"
+draft: false
 tags:
   - principle
   - clean-code
 ---
 
-**Single Level of Abstraction (SLA)** is a programming principle that emphasizes the importance of having expressions at the same level of abstraction within a function, aiming to enhance readability. It allows us to decompose functions at a micro level.
+**Single Level of Abstraction (SLA)** is a software design principle that emphasizes the importance of having expressions at the same level of abstraction within a function, aiming to enhance readability. It also ensures that it conforms to the **Single Responsibility (SR)** principle.
 
 <MessageBox type="info">
 In other articles related to this topic, they often jump into examples without explaining what abstraction level means. Fortunately, we won't skip the most important point.
@@ -22,43 +22,43 @@ Every function performs an action, which often includes sub-actions. The level o
 Let's illustrate this with an example of a coffee machine.
 
 <Image
-  src="/images/articles/general/single-level-of-abstraction-principle/001-en.png"
+  src="/images/articles/general/software-design-principle/single-level-of-abstraction/001-en.png"
   alt=""
 />
 
 If we want to buy a coffee from a machine, we put the money in, choose the type we want, wait for it to be prepared, and take it. These steps are at the first level of abstraction because they are the basic steps for this case.
 
-These user interactions trigger other actions in the background. During the coffee preparation phase, the machine takes the cup, adds coffee, pours hot water, and shuffles. These steps are at the second level of abstraction (the sub-actions of the money insertion are the same way). The person who wants to get coffee doesn't need to see how the cup will come or how the coffee will be stirred. However, if the machine doesn't put the cup, then it controls the cup retrieval stage.
+These user interactions trigger other actions in the background. During the coffee preparation phase, the machine takes the cup, adds coffee, pours hot water, and shuffles. These steps are at the second level of abstraction (the sub-actions of the money insertion are the same way). They are actions that the user who wants to buy coffee should not focus on. It would be an unnecessary detail if you put the cup in the machine or stir the coffee yourself. But if there is no cup in the machine, then you need to check the relevant functionality.
 
-Functions work in a similar way. Dummy code that violates the Single Level of Abstraction principle is as follows.
+Let's see the instruction sequence dummy code that violates the principle.
 
 ```java showLineNumbers
 getCoffee() {
-    checkMoney();      // abstraction level 2
-    addToBallance();   // abstraction level 2
-    chooseCoffeType(); // abstraction level 1
-    getGlass();        // abstraction level 2
-    putCoffee();       // abstraction level 2
-    putWater();        // abstraction level 2
-    shuffleGlass();    // abstraction level 2
-    giveCoffee();      // abstraction level 1
+  checkMoney();      // abstraction lvl 2
+  addToBallance();   // abstraction lvl 2
+  chooseCoffeType(); // abstraction lvl 1
+  getGlass();        // abstraction lvl 2
+  putCoffee();       // abstraction lvl 2
+  putWater();        // abstraction lvl 2
+  shuffleGlass();    // abstraction lvl 2
+  giveCoffee();      // abstraction lvl 1
 }
 ```
 
-We need to refactor the code to add additional abstraction, and the final code would be as follows:
+We don't add the balance ourselves or check the money, right? So this is abstracted from the user. Let's refactor the code to add extra abstraction.
 
 ```java showLineNumbers
 getCoffee() {
-    getMoney();        // abstraction level 1
-    chooseCoffeType(); // abstraction level 1
-    prepareCoffee();   // abstraction level 1
-    giveCoffee();      // abstraction level 1
+  getMoney();        // abstraction lvl 1
+  chooseCoffeType(); // abstraction lvl 1
+  prepareCoffee();   // abstraction lvl 1
+  giveCoffee();      // abstraction lvl 1
 }
 ```
 
 ## Code Examples
 
-`calculateSum` follows the SLA principle and contains expressions at the same level of abstraction. The reason for its compliance is that it only includes details related to the calculation of the sum. We define a variable to hold the calculation result, add the other numbers to it, and return it. Therefore, each line is at the same abstraction level.
+`calculateSum()` conforms to the SLA principle, only including the details of calculating the sum. It defines a variable that holds the calculation result, adds the other numbers to it and returns it.
 
 ```java showLineNumbers
 public int calculateSum(int[] numbers) {
@@ -72,7 +72,7 @@ public int calculateSum(int[] numbers) {
 }
 ```
 
-The `validateUser()` function, on the other hand, contains different abstraction levels. `isValidEmail` is at the second level of abstraction. The main purpose of the function is to check if the user is valid. However, when looking at the code, we also see the details of the validation process and error handling, indicating the presence of multiple abstraction levels. To compare their readability, take a closer look at the `validateUser()` function.
+But `validateUser()` contains different abstraction levels. `isValidEmail()` is at the second level of abstraction. The main purpose of the function is to check if the user is valid. However, when looking at the code, we also see the details of the validation process and error handling, indicating the presence of multiple abstraction levels. To compare their readability, take a closer look at the `validateUser()` function.
 
 ```java showLineNumbers
 public boolean validateUser(User user) {
@@ -105,7 +105,7 @@ public boolean validateUser(User user) {
 }
 ```
 
-The refactored version of `validateUser` according to SLA is as follows:
+The refactored version of `validateUser()` is as follows.
 
 ```java showLineNumbers
 public boolean validateUser(User user) {
@@ -128,13 +128,12 @@ public boolean validateUser(User user) {
 }
 ```
 
-Despite the increase in code lines with the new functions, pay attention to how easily it can be read. Imagine you are a developer working with this code, and you are checking if there is age verification:
-
+Even if the amount of code increases with new functions, pay attention to how easy it is to read and how easy it is to maintain. For example, imagine you are checking for age verification in the validation phase:
 - You examine the function.
 - You quickly see the validation steps and notice that age verification is missing.
 - If necessary, you create a validation function for age verification and integrate it into the code.
 
-It's done. While checking this, you don't care about the details of name, password or email validation.
+It's done. Since the abstraction is very sharp, you don't need to go through hundreds of lines of code to see which code verifies age by extracting password and email verification details.
 
 ## Practice
 
@@ -162,12 +161,12 @@ public int calculateTotalCartPrice(CartItem[] cartItems) {
 }
 ```
 
-We can see that it adds the product price, then adds the product tax, and finally deducts the discount if exist. Our code consists of three parts. Let's refactor step by step:
+When we examine the function, we can see that it adds the product price to the total amount, adds the product tax to it and finally deducts the discount amount if available. We can split the code into three parts. Let's refactor it step by step:
 
-- The logic for calculating the product price within the loop in `calculateTotalCartPrice` is at a different level of abstraction compared to the rest of the code. Let's extract it into a separate function.
+- The logic for calculating the product price within the loop in `calculateTotalCartPrice()` is at a different level of abstraction than the rest of the code. Let's extract it into a separate function.
 
-<MessageBox type="info">
-If a function contains a loop, it is likely to violate the Single Level of Abstraction principle.
+<MessageBox type="warning">
+If a function contains a loop, it probably contains a piece of code that violates the Single Level of Abstraction.
 </MessageBox>
 
 ```java showLineNumbers
@@ -198,8 +197,16 @@ private int calculateCartItemPrice(CartItem cartItem) {
 }
 ```
 
-- We have successfully refactored the `calculateTotalCartPrice` function, but the new function still has different levels of abstraction. When looking at this code, you would want to see how the price is calculated but you don't want to see how the tax is calculated or how the discount is determined.
+- We have successfully refactored the `calculateTotalCartPrice()` function, but the new function still has different levels of abstraction. The main action of this function is to return the price of the product, but the calculation of tax and discount are sub-actions.
 
+<MessageBox type="warning">
+If you use an verb when voicing what your code does, there is a piece of code that you need to extract to the function. Let's look at the example above:
+
+- Get product price (this action is already the reason for creating this function)
+- Calculate tax (must be extracted to function)
+- Calculate discount (must be extracted to function)
+- Return finally price (this action is already the reason for creating this function)
+</MessageBox>
 
 ```java showLineNumbers
 public int calculateTotalCartPrice(CartItem[] cartItems) {
@@ -239,10 +246,10 @@ private int calculateDiscount(int price) {
 }
 ```
 
-Through refactoring, we obtain a concise and readable code.
+As a result of the refactor, we get a clean code and the blessings of future generations.
 
 <Seperator />
 
-**Single Level of Abstraction** is a principle that enhances code readability by removing details. Use it and let others use it.
+We want to write our code in a way that minimizes bugs and can be easily flexed in the future. Principles like **Single Level of Abstraction** also encourage writing clean code by refining the details.
 
 Stay healthy.
