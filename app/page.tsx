@@ -7,7 +7,6 @@ import Avatar from "../components/avatar";
 import MoreStories from "../components/more-stories";
 
 import { getAllPosts } from "@/lib/api";
-import { CMS_NAME, CMS_URL } from "@/lib/constants";
 
 function Intro() {
   return (
@@ -23,11 +22,7 @@ function Intro() {
         >
           Next.js
         </a>{" "}
-        and{" "}
-        <a href={CMS_URL} className="underline hover:text-success duration-200 transition-colors">
-          {CMS_NAME}
-        </a>
-        .
+        and .
       </h2>
     </section>
   );
@@ -80,19 +75,21 @@ export default async function Page() {
   const morePosts = allPosts.slice(1);
 
   return (
-    <div className="container mx-auto px-5">
-      <Intro />
-      {heroPost && (
-        <HeroPost
-          title={heroPost.title}
-          coverImage={heroPost.coverImage}
-          date={heroPost.date}
-          author={heroPost.author}
-          slug={heroPost.slug}
-          excerpt={heroPost.excerpt}
-        />
-      )}
-      <MoreStories morePosts={morePosts} />
-    </div>
+    <div className="container mx-auto">Still in production due to the blogger's laziness...</div>
+
+    // <div className="container mx-auto px-5">
+    //   <Intro />
+    //   {heroPost && (
+    //     <HeroPost
+    //       title={heroPost.title}
+    //       coverImage={heroPost.coverImage}
+    //       date={heroPost.date}
+    //       author={heroPost.author}
+    //       slug={heroPost.slug}
+    //       excerpt={heroPost.excerpt}
+    //     />
+    //   )}
+    //   <MoreStories morePosts={morePosts} />
+    // </div>
   );
 }
