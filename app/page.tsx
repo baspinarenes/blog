@@ -6,7 +6,7 @@ import CoverImage from "../components/cover-image";
 import Avatar from "../components/avatar";
 import MoreStories from "../components/more-stories";
 
-import { getAllPosts } from "@/lib/api";
+import { getAllPosts } from "@/lib/utils/api";
 
 function Intro() {
   return (

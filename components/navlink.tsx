@@ -6,16 +6,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export const Navlink: React.FC<NavlinkProps> = (props) => {
-  const { href, icon, label, external = false, onClick } = props;
+  const { href, icon, children, rounded = false, external = false, onClick } = props;
 
   const pathname = usePathname();
-  let isActive = false;
+  let isActive = href === "/" ? pathname === "/" : pathname.includes(href);
 
-  if (pathname?.length > 0 && !external) {
-    const splittedPathname = pathname.split("/");
-    const currentPathname = splittedPathname[1] ?? "";
-    isActive = currentPathname === href.split("/")[1];
-  }
+  // if (pathname?.length > 0 && !external) {
+  //   const splittedPathname = pathname.split("/");
+  //   const currentPathname = splittedPathname[1] ?? "";
+  //   isActive = currentPathname === href.split("/")[1];
+  // }
 
   const LinkComponent = external ? "a" : Link;
 
@@ -25,13 +25,14 @@ export const Navlink: React.FC<NavlinkProps> = (props) => {
       href={href}
       onClick={onClick}
       className={cn(
-        "flex items-center justify-between rounded-lg p-2 transition delay-50 duration-150",
-        isActive ? "bg-black text-white" : "hover:bg-gray-200"
+        "flex items-center justify-between p-2 transition delay-50 duration-150",
+        isActive ? "bg-black text-white" : "hover:bg-gray-200",
+        rounded ? "rounded-lg" : "rounded-none"
       )}
     >
       <div className="flex items-center w-full gap-2">
         {icon}
-        <span className={cn("text-sm flex-grow", isActive && "text-white")}>{label}</span>
+        <span className={cn("text-sm flex-grow", isActive && "text-white")}>{children}</span>
         {external && <ArrowUpRightIcon size={16} className="ml-auto" />}
       </div>
     </LinkComponent>
@@ -40,8 +41,9 @@ export const Navlink: React.FC<NavlinkProps> = (props) => {
 
 export type NavlinkProps = {
   href: string;
-  label: string;
+  children: React.ReactNode;
   external?: boolean;
-  icon: React.ReactNode;
+  rounded?: boolean;
+  icon?: React.ReactNode;
   onClick?: (event: React.MouseEvent) => void;
 };

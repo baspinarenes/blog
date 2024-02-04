@@ -64,14 +64,14 @@ export const NAVIGATIONS = [
     icon: MousePointer2Icon,
   },
   {
-    label: "Articles",
-    href: "/article",
-    icon: PenLineIcon,
-  },
-  {
     label: "Stack",
     href: "/stack",
     icon: HammerIcon,
+  },
+  {
+    label: "Articles",
+    href: "/article",
+    icon: PenLineIcon,
   },
   {
     label: "Book Reviews",

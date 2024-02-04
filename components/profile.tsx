@@ -1,4 +1,4 @@
-import { AUTHOR } from "@/lib/constants";
+import { AUTHOR } from "@/lib/utils/constants";
 
 export const Profile: React.FC<ProfileProps> = (props) => {
   const {} = props;
