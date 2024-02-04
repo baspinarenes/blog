@@ -7,7 +7,7 @@ export const ContentItem: React.FC<ContentItemProps> = (props) => {
     <Navlink href={`/${type}/${index}`} rounded>
       <div className="flex flex-col gap-1 px-3">
         <h3 className="text-sm font-medium">{title}</h3>
-        <p className="text-sm text-slate-500">{description}</p>
+        <span className="text-sm text-slate-500">{description}</span>
       </div>
     </Navlink>
   );
