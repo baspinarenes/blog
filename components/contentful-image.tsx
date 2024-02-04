@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ContentfulImageProps } from "../lib/models/contentful";
+import { ContentfulImageProps } from "../lib/models";
 import { contentfulLoader } from "../lib/utils/image-loaders";
 
 export default function ContentfulImage(props: ContentfulImageProps) {

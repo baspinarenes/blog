@@ -1,10 +1,10 @@
 import { Navlink } from "./navlink";
 
 export const ContentItem: React.FC<ContentItemProps> = (props) => {
-  const { title, type, index, description } = props;
+  const { title, slug, type, description } = props;
 
   return (
-    <Navlink href={`/${type}/${index}`} rounded>
+    <Navlink href={`/${type}/${slug}`} rounded>
       <div className="flex flex-col gap-1 px-3">
         <h3 className="text-sm font-medium">{title}</h3>
         <span className="text-sm text-slate-500">{description}</span>
@@ -15,7 +15,7 @@ export const ContentItem: React.FC<ContentItemProps> = (props) => {
 
 export type ContentItemProps = {
   title: string;
-  type: string;
+  slug: string;
+  type: "snippet" | "thought" | "book-review" | "article";
   description: string;
-  index: number;
 };

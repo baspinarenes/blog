@@ -1,5 +1,26 @@
-export default async function Page() {
+import { PostHeader } from "@/components/post-header";
+import { fetchBookReview, fetchBookReviews } from "@/lib/contentful/book-review";
+import { draftMode } from "next/headers";
+import { notFound } from "next/navigation";
+
+export async function generateStaticParams() {
+  const bookReviews = await fetchBookReviews({ preview: false });
+  return bookReviews.map((s) => ({ slug: s.slug }));
+}
+
+async function fetchData(slug: string) {
+  const bookReview = await fetchBookReview({ slug, preview: draftMode().isEnabled });
+  if (!bookReview) notFound();
+  return { bookReview };
+}
+
+export default async function Page({ params }: { params: { slug: string } }) {
+  const { slug } = params;
+  const { bookReview } = await fetchData(slug);
+
   return (
-    <div className="container mx-auto">Still in production due to the blogger's laziness...</div>
+    <div className="container mx-auto">
+      <PostHeader title={bookReview.title} date={bookReview.createdAt} />
+    </div>
   );
 }

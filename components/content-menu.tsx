@@ -1,9 +1,8 @@
-import { capitalize } from "@/lib/common";
 import { ContentItem } from "./content-item";
 import { NAVIGATIONS } from "@/lib/utils/constants";
 
 export const ContentMenu: React.FC<ContentMenuProps> = (props) => {
-  const { type } = props;
+  const { type, list } = props;
   const navigation = NAVIGATIONS.find((nav) => nav.href === `/${type}`);
 
   return (
@@ -12,13 +11,13 @@ export const ContentMenu: React.FC<ContentMenuProps> = (props) => {
         <h2 className="text-sm font-semibold tracking-tight">{navigation?.label}</h2>
       </div>
       <div className="flex flex-col gap-1 p-3">
-        {Array.from(Array(10).keys()).map((_, index) => (
+        {list?.map((data, index) => (
           <ContentItem
             key={index}
-            title="Dummy title"
-            description="January 04, 2024"
+            title={data.title}
+            description={data.description}
+            slug={data.slug}
             type={type}
-            index={index}
           />
         ))}
       </div>
@@ -28,4 +27,9 @@ export const ContentMenu: React.FC<ContentMenuProps> = (props) => {
 
 export type ContentMenuProps = {
   type: "snippet" | "thought" | "book-review" | "article";
+  list?: Array<{
+    title: string;
+    description: string;
+    slug: string;
+  }>;
 };

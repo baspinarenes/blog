@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 import { SideMenu } from "@/components/side-menu";
 import { MenuContent } from "@/components/menu-content";
 import { DESCRIPTION, TITLE } from "@/lib/utils/constants";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/common";
 import { Open_Sans } from "next/font/google";
 
 export const metadata = {

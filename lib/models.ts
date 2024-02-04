@@ -1,3 +1,5 @@
+import * as Contentful from "contentful";
+
 export type ContentfulImageProps = {
   src: string;
   width?: number;
