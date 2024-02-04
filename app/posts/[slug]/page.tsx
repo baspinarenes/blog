@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { draftMode } from "next/headers";
 
-import MoreStories from "../../more-stories";
-import Avatar from "../../avatar";
-import Date from "../../date";
-import CoverImage from "../../cover-image";
+import MoreStories from "../../../components/more-stories";
+import Avatar from "../../../components/avatar";
+import Date from "../../../components/date";
+import CoverImage from "../../../components/cover-image";
 
 import { Markdown } from "@/lib/markdown";
 import { getAllPosts, getPostAndMorePosts } from "@/lib/api";
@@ -17,11 +17,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function PostPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default async function PostPage({ params }: { params: { slug: string } }) {
   const { isEnabled } = draftMode();
   const { post, morePosts } = await getPostAndMorePosts(params.slug, isEnabled);
 
@@ -38,18 +34,14 @@ export default async function PostPage({
           {post.title}
         </h1>
         <div className="hidden md:block md:mb-12">
-          {post.author && (
-            <Avatar name={post.author.name} picture={post.author.picture} />
-          )}
+          {post.author && <Avatar name={post.author.name} picture={post.author.picture} />}
         </div>
         <div className="mb-8 md:mb-16 sm:mx-0">
           <CoverImage title={post.title} url={post.coverImage.url} />
         </div>
         <div className="max-w-2xl mx-auto">
           <div className="block md:hidden mb-6">
-            {post.author && (
-              <Avatar name={post.author.name} picture={post.author.picture} />
-            )}
+            {post.author && <Avatar name={post.author.name} picture={post.author.picture} />}
           </div>
           <div className="mb-6 text-lg">
             <Date dateString={post.date} />
