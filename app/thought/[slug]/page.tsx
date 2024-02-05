@@ -1,4 +1,5 @@
 import { PostHeader } from "@/components/post-header";
+import { RichText } from "@/components/rich-text";
 import { fetchThought, fetchThoughts } from "@/lib/contentful/thought";
 import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
@@ -9,18 +10,19 @@ export async function generateStaticParams() {
 }
 
 async function fetchData(slug: string) {
-  const snippet = await fetchThought({ slug, preview: draftMode().isEnabled });
-  if (!snippet) notFound();
-  return { snippet };
+  const thought = await fetchThought({ slug, preview: draftMode().isEnabled });
+  if (!thought) notFound();
+  return { thought };
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const { slug } = params;
-  const { snippet } = await fetchData(slug);
+  const { thought } = await fetchData(slug);
 
   return (
     <div className="container mx-auto">
-      <PostHeader title={snippet.title} date={snippet.createdAt} />
+      <PostHeader title={thought.title} createdAt={thought.createdAt} />
+      <RichText document={thought.body} />
     </div>
   );
 }

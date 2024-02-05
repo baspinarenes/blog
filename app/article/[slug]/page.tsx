@@ -1,13 +1,8 @@
-import Link from "next/link";
 import { draftMode } from "next/headers";
-import MoreStories from "../../../components/more-stories";
-import Avatar from "../../../components/avatar";
-import Date from "../../../components/date";
-import CoverImage from "../../../components/cover-image";
-import { Markdown } from "@/lib/markdown";
 import { notFound } from "next/navigation";
 import { fetchArticle, fetchArticles } from "@/lib/contentful/article";
 import { PostHeader } from "@/components/post-header";
+import { RichText } from "@/components/rich-text";
 
 export async function generateStaticParams() {
   const articles = await fetchArticles({ preview: false });
@@ -26,7 +21,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <div className="container mx-auto">
-      <PostHeader title={article.title} date={article.createdAt} />
+      <PostHeader title={article.title} createdAt={article.createdAt} />
+      <RichText document={article.body} />
     </div>
   );
 }

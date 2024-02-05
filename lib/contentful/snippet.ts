@@ -10,6 +10,7 @@ export type Snippet = {
   slug: string;
   createdAt: Date;
   body: RichTextDocument | null;
+  tags: string[];
 };
 
 export function parseContentfulSnippet(snippetEntry?: SnippetEntry): Snippet | null {
@@ -22,6 +23,7 @@ export function parseContentfulSnippet(snippetEntry?: SnippetEntry): Snippet | n
     slug: snippetEntry.fields.slug,
     body: snippetEntry.fields.content || null,
     createdAt: new Date(snippetEntry.sys.createdAt),
+    tags: snippetEntry.metadata?.tags?.map((tag) => tag.sys.id) ?? [],
   };
 }
 

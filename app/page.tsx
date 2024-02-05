@@ -12,8 +12,7 @@ export default async function Page() {
         I studied image processing in college, and that was my graduation project. But then, I
         totally changed my path. I jumped into web development, even though I didn't know much. I
         joined to a bootcamp, got a job, and now I've decided to continue my blog. It will include
-        book reviews, thoughts, and developer stuff. Join me as I share my thoughts on technique and
-        life.
+        book reviews, thoughts, and developer stuff. Join my world!
       </p>
       <HomeSection type="article" />
       <HomeSection type="book-review" />

@@ -3,23 +3,29 @@ import { SideMenu } from "@/components/side-menu";
 import { MenuContent } from "@/components/menu-content";
 import { DESCRIPTION, TITLE } from "@/lib/utils/constants";
 import { cn } from "@/lib/utils/common";
-import { Open_Sans } from "next/font/google";
+import { JetBrains_Mono, Open_Sans } from "next/font/google";
 
 export const metadata = {
   title: TITLE,
   description: DESCRIPTION,
 };
 
-const font = Open_Sans({
+const openSans = Open_Sans({
   subsets: ["latin"],
+  variable: "--font-sans",
   display: "swap",
-  variable: "--font-roboto-mono",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
+  display: "swap",
 });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={font.variable}>
-      <body className={cn("hidden lg:flex h-screen max-h-screen", font.className)}>
+    <html lang="en" className={`${openSans.variable} ${jetbrainsMono.variable}`}>
+      <body className={cn("hidden lg:flex h-screen max-h-screen", openSans.className)}>
         <SideMenu>
           <MenuContent />
         </SideMenu>

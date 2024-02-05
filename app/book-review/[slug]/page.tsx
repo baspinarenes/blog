@@ -1,4 +1,5 @@
 import { PostHeader } from "@/components/post-header";
+import { RichText } from "@/components/rich-text";
 import { fetchBookReview, fetchBookReviews } from "@/lib/contentful/book-review";
 import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
@@ -20,7 +21,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <div className="container mx-auto">
-      <PostHeader title={bookReview.title} date={bookReview.createdAt} />
+      <PostHeader title={bookReview.title} createdAt={bookReview.createdAt} />
+      <RichText document={bookReview.body} />
     </div>
   );
 }

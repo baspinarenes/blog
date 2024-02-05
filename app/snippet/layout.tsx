@@ -23,6 +23,7 @@ export default async function SnippetLayout({ children }: { children: React.Reac
           description: generateDescription(s),
           slug: s.slug,
           title: s.title,
+          tags: s.tags,
         }))}
       />
       {children}

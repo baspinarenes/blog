@@ -16,3 +16,5 @@ export function formatDate(date: Date) {
     day: "numeric",
   });
 }
+
+export const dasherize = (text: string) => String(text).replace(/ +/g, "-").toLowerCase();

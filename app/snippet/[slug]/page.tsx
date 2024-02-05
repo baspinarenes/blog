@@ -1,4 +1,5 @@
 import { PostHeader } from "@/components/post-header";
+import { RichText } from "@/components/rich-text";
 import { fetchSnippet, fetchSnippets } from "@/lib/contentful/snippet";
 import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
@@ -9,7 +10,8 @@ export async function generateStaticParams() {
 }
 
 async function fetchData(slug: string) {
-  const snippet = await fetchSnippet({ slug, preview: false });
+  const snippet = await fetchSnippet({ slug, preview: draftMode().isEnabled });
+
   if (!snippet) notFound();
   return { snippet };
 }
@@ -20,7 +22,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <div className="container mx-auto">
-      <PostHeader title={snippet.title} date={snippet.createdAt} />
+      <PostHeader {...snippet} />
+      <RichText document={snippet.body} />
     </div>
   );
 }

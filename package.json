@@ -21,6 +21,8 @@
     "contentful": "^10.6.21",
     "contentful-import": "^9.0.4",
     "date-fns": "2.30.0",
+    "framer-motion": "^11.0.3",
+    "highlight.js": "^11.9.0",
     "lucide-react": "^0.321.0",
     "next": "latest",
     "postcss": "8.4.31",
@@ -32,6 +34,7 @@
     "typescript": "^5.1.6"
   },
   "devDependencies": {
-    "cf-content-types-generator": "^2.14.0"
+    "cf-content-types-generator": "^2.14.0",
+    "postcss-import": "^16.0.0"
   }
 }

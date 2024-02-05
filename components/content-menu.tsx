@@ -6,7 +6,7 @@ export const ContentMenu: React.FC<ContentMenuProps> = (props) => {
   const navigation = NAVIGATIONS.find((nav) => nav.href === `/${type}`);
 
   return (
-    <aside className="flex flex-col lg:border-r lg:w-96 bg-zinc-50 flex-shrink-0 overflow-y-auto">
+    <aside className="flex flex-col lg:border-r lg:w-80 bg-zinc-50 flex-shrink-0 overflow-y-auto">
       <div className="sticky top-0 z-10 border-b bg-zinc-50 px-5 py-4">
         <h2 className="text-sm font-semibold tracking-tight">{navigation?.label}</h2>
       </div>
@@ -17,6 +17,7 @@ export const ContentMenu: React.FC<ContentMenuProps> = (props) => {
             title={data.title}
             description={data.description}
             slug={data.slug}
+            tag={data.tags ? data.tags[0] : ""}
             type={type}
           />
         ))}
@@ -31,5 +32,6 @@ export type ContentMenuProps = {
     title: string;
     description: string;
     slug: string;
+    tags?: string[];
   }>;
 };

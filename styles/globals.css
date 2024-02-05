@@ -1,3 +1,5 @@
+@import "highlight.js/styles/panda-syntax-light.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -100,10 +102,34 @@
   p {
     @apply mb-6;
   }
+
+  pre {
+    @apply flex flex-col gap-2 font-mono overflow-x-auto break-normal rounded-b-lg border-x border-b border-gray-200 bg-white p-3 text-left text-xs leading-5;
+    counter-reset: linecounter;
+
+    code {
+      @apply leading-4 whitespace-nowrap;
+      counter-increment: linecounter;
+
+      &::before {
+        @apply text-slate-400 mr-6 text-right left-0;
+        content: counter(linecounter);
+        counter-increment: linecounter 1;
+      }
+    }
+  }
+
+  code {
+    @apply font-mono whitespace-pre-wrap;
+  }
 }
 
 @layer components {
   .container {
-    @apply px-8 pt-24 pb-16 max-w-4xl mx-auto;
+    @apply px-8 pt-16 pb-16 max-w-4xl mx-auto;
+  }
+
+  .inline-code {
+    @apply font-mono text-pink-500 px-1 text-sm font-semibold;
   }
 }
