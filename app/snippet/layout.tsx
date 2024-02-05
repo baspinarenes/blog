@@ -16,7 +16,7 @@ export default async function SnippetLayout({ children }: { children: React.Reac
   };
 
   return (
-    <section className="flex w-full">
+    <section className="flex w-full h-full">
       <ContentMenu
         type="snippet"
         list={snippets?.map((s) => ({

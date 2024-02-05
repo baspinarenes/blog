@@ -3,7 +3,8 @@ import { AUTHOR } from "@/lib/utils/constants";
 
 export default async function Page() {
   return (
-    <div className="container">
+    <div className="container mx-auto">
+      <h1 className="mb-8">Home</h1>
       <p>
         I'm {AUTHOR.name}, {AUTHOR.age} yrs, a software engineer at{" "}
         <span className="text-orange-500">Trendyol</span>, live in Türkiye.

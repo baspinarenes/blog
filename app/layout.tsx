@@ -29,10 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SideMenu>
           <MenuContent />
         </SideMenu>
-        {children}
-        {/* <div className="w-full px-7 py-24 overflow-y-scroll">
-          <main className="mx-auto max-w-[48rem]">{children}</main>
-        </div> */}
+        <main className="w-full overflow-y-auto">{children}</main>
       </body>
     </html>
   );

@@ -16,7 +16,7 @@ export default async function ThoughtLayout({ children }: { children: React.Reac
   };
 
   return (
-    <section className="flex w-full">
+    <section className="flex w-full h-full">
       <ContentMenu
         type="thought"
         list={thoughts?.map((s: Thought) => ({

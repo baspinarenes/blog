@@ -1,6 +1,7 @@
 export type ContentfulImageProps = {
   src: string;
   width?: number;
+  height?: number;
   quality?: number;
   [key: string]: any; // For other props that might be passed
 };

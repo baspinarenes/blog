@@ -2,6 +2,7 @@ import { Options, documentToReactComponents } from "@contentful/rich-text-react-
 import { BLOCKS, INLINES, MARKS, Document as RichTextDocument } from "@contentful/rich-text-types";
 import { CodeBlock } from "./code-block";
 import { dasherize } from "@/lib/utils/common";
+import ContentfulImage from "./contentful-image";
 
 const options: Options = {
   renderMark: {
@@ -38,7 +39,7 @@ const options: Options = {
         </h3>
       );
     },
-    [BLOCKS.PARAGRAPH]: (_, children) => <div className="mb-4 leading-7 last:mb-0">{children}</div>,
+    [BLOCKS.PARAGRAPH]: (_, children) => <div className="mb-4 leading-6 last:mb-0">{children}</div>,
     [BLOCKS.UL_LIST]: (_, children) => (
       <ul className="mb-4 flex list-disc flex-col gap-0.5 pl-6">{children}</ul>
     ),
@@ -62,6 +63,7 @@ const options: Options = {
     [BLOCKS.EMBEDDED_ENTRY]: (node) => {
       const type = node.data.target.sys.contentType.sys.id;
       const fields = node.data.target.fields;
+      console.log("asdas");
 
       switch (type) {
         case "codeBlock": {
@@ -70,6 +72,27 @@ const options: Options = {
         default:
           return null;
       }
+    },
+    [BLOCKS.EMBEDDED_ASSET]: (node) => {
+      const { url, details } = node.data.target.fields.file;
+      const { title, description } = node.data.target.fields;
+
+      return (
+        <figure className="mb-6 flex flex-col gap-2 overflow-hidden rounded-xl">
+          <ContentfulImage
+            src={url}
+            width={details.image.width > 600 ? 600 : details.image.width}
+            height={details.image.height > 400 ? 400 : details.image.height}
+            quality={100}
+            alt={description || title}
+          />
+          {description && (
+            <figcaption className="break-all text-center text-xs font-light text-gray-500">
+              {description}
+            </figcaption>
+          )}
+        </figure>
+      );
     },
   },
 };

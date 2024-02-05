@@ -16,7 +16,7 @@ export default async function BookReviewLayout({ children }: { children: React.R
   };
 
   return (
-    <section className="flex w-full">
+    <section className="flex w-full h-full">
       <ContentMenu
         type="book-review"
         list={bookReviews?.map((s: BookReview) => ({
