@@ -21,7 +21,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <div className="container mx-auto">
-      <PostHeader title={bookReview.title} createdAt={bookReview.createdAt} />
+      <PostHeader {...bookReview} />
       <RichText document={bookReview.body} />
     </div>
   );

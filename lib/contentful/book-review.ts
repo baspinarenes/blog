@@ -10,6 +10,7 @@ export type BookReview = {
   slug: string;
   createdAt: Date;
   body: RichTextDocument | null;
+  tags: string[];
 };
 
 export function parseContentfulBookReview(bookReviewEntry?: BookReviewEntry): BookReview | null {
@@ -22,6 +23,7 @@ export function parseContentfulBookReview(bookReviewEntry?: BookReviewEntry): Bo
     slug: bookReviewEntry.fields.slug,
     body: bookReviewEntry.fields.content || null,
     createdAt: new Date(bookReviewEntry.sys.createdAt),
+    tags: bookReviewEntry.metadata?.tags?.map((tag) => tag.sys.id) ?? [],
   };
 }
 

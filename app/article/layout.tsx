@@ -23,6 +23,7 @@ export default async function ArticleLayout({ children }: { children: React.Reac
           title: s.title,
           description: generateDescription(s),
           slug: s.slug,
+          tags: s.tags,
         }))}
       />
       {children}

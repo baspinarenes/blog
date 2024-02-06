@@ -1,7 +1,7 @@
 import type { ChainModifiers, Entry, EntryFieldTypes, EntrySkeletonType, LocaleCode } from "contentful";
 import type { TypeAuthorSkeleton } from "./TypeAuthor";
 
-export interface TypeArticleFields {
+export interface TypeWritingFields {
     title: EntryFieldTypes.Symbol;
     slug: EntryFieldTypes.Symbol;
     content: EntryFieldTypes.RichText;
@@ -11,5 +11,5 @@ export interface TypeArticleFields {
     author: EntryFieldTypes.EntryLink<TypeAuthorSkeleton>;
 }
 
-export type TypeArticleSkeleton = EntrySkeletonType<TypeArticleFields, "article">;
-export type TypeArticle<Modifiers extends ChainModifiers, Locales extends LocaleCode> = Entry<TypeArticleSkeleton, Modifiers, Locales>;
+export type TypeWritingSkeleton = EntrySkeletonType<TypeWritingFields, "writing">;
+export type TypeWriting<Modifiers extends ChainModifiers, Locales extends LocaleCode> = Entry<TypeWritingSkeleton, Modifiers, Locales>;

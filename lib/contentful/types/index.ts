@@ -5,3 +5,4 @@ export type { TypeCodeBlock, TypeCodeBlockFields, TypeCodeBlockSkeleton } from "
 export type { TypeJourneyItem, TypeJourneyItemFields, TypeJourneyItemSkeleton } from "./TypeJourneyItem";
 export type { TypeSnippet, TypeSnippetFields, TypeSnippetSkeleton } from "./TypeSnippet";
 export type { TypeThought, TypeThoughtFields, TypeThoughtSkeleton } from "./TypeThought";
+export type { TypeWriting, TypeWritingFields, TypeWritingSkeleton } from "./TypeWriting";

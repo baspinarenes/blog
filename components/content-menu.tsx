@@ -1,3 +1,4 @@
+import { ContentfulItemTypes } from "@/lib/models";
 import { ContentItem } from "./content-item";
 import { NAVIGATIONS } from "@/lib/utils/constants";
 
@@ -27,7 +28,7 @@ export const ContentMenu: React.FC<ContentMenuProps> = (props) => {
 };
 
 export type ContentMenuProps = {
-  type: "snippet" | "thought" | "book-review" | "article";
+  type: ContentfulItemTypes;
   list?: Array<{
     title: string;
     description: string;

@@ -10,6 +10,7 @@ export type Article = {
   slug: string;
   createdAt: Date;
   body: RichTextDocument | null;
+  tags: string[];
 };
 
 export function parseContentfulArticle(articleEntry?: ArticleEntry): Article | null {
@@ -22,6 +23,7 @@ export function parseContentfulArticle(articleEntry?: ArticleEntry): Article | n
     slug: articleEntry.fields.slug,
     body: articleEntry.fields.content || null,
     createdAt: new Date(articleEntry.sys.createdAt),
+    tags: articleEntry.metadata?.tags?.map((tag) => tag.sys.id) ?? [],
   };
 }
 

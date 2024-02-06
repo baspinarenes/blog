@@ -7,6 +7,8 @@ import {
   LinkedinIcon,
   MessageCircleIcon,
   MousePointer2Icon,
+  NotebookPenIcon,
+  NotebookTextIcon,
   PenLineIcon,
   TwitterIcon,
   YoutubeIcon,
@@ -68,6 +70,11 @@ export const NAVIGATIONS = [
     label: "Articles",
     href: "/article",
     icon: PenLineIcon,
+  },
+  {
+    label: "Writings",
+    href: "/writing",
+    icon: NotebookTextIcon,
   },
   {
     label: "Book Reviews",

@@ -126,11 +126,24 @@
 
 @layer components {
   .container {
-    @apply px-8 pt-16 pb-16 max-w-4xl mx-auto;
+    @apply px-8 pt-16 pb-16 max-w-4xl mx-auto overflow-y-auto no-scrollbar;
   }
 
   .inline-code {
     @apply font-mono text-pink-500 px-1 text-sm font-semibold;
   }
 
+}
+
+@layer utilities {
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }

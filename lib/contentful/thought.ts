@@ -10,6 +10,7 @@ export type Thought = {
   slug: string;
   createdAt: Date;
   body: RichTextDocument | null;
+  tags: string[];
 };
 
 export function parseContentfulThought(thoughtEntry?: ThoughtEntry): Thought | null {
@@ -22,6 +23,7 @@ export function parseContentfulThought(thoughtEntry?: ThoughtEntry): Thought | n
     slug: thoughtEntry.fields.slug,
     body: thoughtEntry.fields.content || null,
     createdAt: new Date(thoughtEntry.sys.createdAt),
+    tags: thoughtEntry.metadata?.tags?.map((tag) => tag.sys.id) ?? [],
   };
 }
 

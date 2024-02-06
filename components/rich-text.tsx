@@ -3,6 +3,10 @@ import { BLOCKS, INLINES, MARKS, Document as RichTextDocument } from "@contentfu
 import { CodeBlock } from "./code-block";
 import { dasherize } from "@/lib/utils/common";
 import ContentfulImage from "./contentful-image";
+import { AlertCircleIcon, InfoIcon, Link2Icon, SkullIcon } from "lucide-react";
+import { Separator } from "./ui/separator";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
+import { Link } from "./link";
 
 const options: Options = {
   renderMark: {
@@ -11,6 +15,7 @@ const options: Options = {
     [MARKS.CODE]: (text) => <code className="inline-code">{text}</code>,
   },
   renderNode: {
+    [BLOCKS.HR]: () => <Separator className="my-10" />,
     [BLOCKS.HEADING_2]: (_, children) => {
       const id = dasherize(children as string);
       const url = `h2-${id}`;
@@ -63,37 +68,65 @@ const options: Options = {
     [BLOCKS.EMBEDDED_ENTRY]: (node) => {
       const type = node.data.target.sys.contentType.sys.id;
       const fields = node.data.target.fields;
-      console.log("asdas");
 
       switch (type) {
         case "codeBlock": {
           return <CodeBlock title={fields.title} language={fields.language} code={fields.code} />;
+        }
+        case "messageBox": {
+          const options = {
+            info: {
+              textColor: "text-blue-600",
+              borderColor: "border-blue-600",
+              icon: InfoIcon,
+            },
+            warning: {
+              textColor: "text-yellow-600",
+              borderColor: "border-yellow-600",
+              icon: AlertCircleIcon,
+            },
+            danger: {
+              textColor: "text-red-600",
+              borderColor: "border-red-600",
+              icon: SkullIcon,
+            },
+          }[fields.type as string]!;
+
+          return (
+            <Card className={options.borderColor}>
+              <CardContent className={`${options.textColor} inline-flex gap-4 p-4`}>
+                <options.icon className={`inline-block flex-shrink-0`} />
+                <p className="m-0 inline-block">{fields.content}</p>
+              </CardContent>
+            </Card>
+          );
         }
         default:
           return null;
       }
     },
     [BLOCKS.EMBEDDED_ASSET]: (node) => {
-      const { url, details } = node.data.target.fields.file;
-      const { title, description } = node.data.target.fields;
+      const { description, file } = node.data.target.fields;
+      const { url, details } = file;
 
       return (
-        <figure className="mb-6 flex flex-col gap-2 overflow-hidden rounded-xl">
+        <figure className="my-10 flex flex-col justify-center items-center gap-2 overflow-hidden rounded-xl">
           <ContentfulImage
             src={url}
-            width={details.image.width > 600 ? 600 : details.image.width}
-            height={details.image.height > 400 ? 400 : details.image.height}
+            width={details.image.width}
+            height={details.image.height}
             quality={100}
-            alt={description || title}
+            className="w-full"
           />
           {description && (
             <figcaption className="break-all text-center text-xs font-light text-gray-500">
-              {description}
+              <a href={description}>{description}</a>
             </figcaption>
           )}
         </figure>
       );
     },
+    [INLINES.HYPERLINK]: (node, children) => <Link href={node.data.uri}>{children}</Link>,
   },
 };
 

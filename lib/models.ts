@@ -14,3 +14,5 @@ export enum PageType {
   UNDEFINED,
   SNIPPET,
 }
+
+export type ContentfulItemTypes = "snippet" | "thought" | "book-review" | "article" | "writing";
