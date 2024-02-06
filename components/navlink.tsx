@@ -10,13 +10,6 @@ export const Navlink: React.FC<NavlinkProps> = (props) => {
 
   const pathname = usePathname();
   let isActive = href === "/" ? pathname === "/" : pathname.includes(href);
-
-  // if (pathname?.length > 0 && !external) {
-  //   const splittedPathname = pathname.split("/");
-  //   const currentPathname = splittedPathname[1] ?? "";
-  //   isActive = currentPathname === href.split("/")[1];
-  // }
-
   const LinkComponent = external ? "a" : Link;
 
   return (

@@ -1,7 +1,68 @@
-import { HomeSection } from "@/components/home-section";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { fetchArticles } from "@/lib/contentful/article";
+import { fetchBookReviews } from "@/lib/contentful/book-review";
+import { fetchSnippets } from "@/lib/contentful/snippet";
+import { fetchThoughts } from "@/lib/contentful/thought";
+import { fetchWritings } from "@/lib/contentful/writing";
+import { capitalize, generateYearArray } from "@/lib/utils/common";
 import { AUTHOR } from "@/lib/utils/constants";
+import { draftMode } from "next/headers";
+import Link from "next/link";
+
+async function fetchData() {
+  const [writings, articles, bookReviews, snippets, thoughts] = await Promise.all([
+    fetchWritings({ preview: draftMode().isEnabled }),
+    fetchArticles({ preview: draftMode().isEnabled }),
+    fetchBookReviews({ preview: draftMode().isEnabled }),
+    fetchSnippets({ preview: draftMode().isEnabled }),
+    fetchThoughts({ preview: draftMode().isEnabled }),
+  ]);
+
+  const entityRecords: Record<string, any[]> = {
+    writings,
+    articles,
+    "book-reviews": bookReviews,
+    snippets,
+    thoughts,
+  };
+
+  const data = generateYearArray().reduce(
+    (
+      acc: Record<number, Record<string, { title: string; slug: string; date: Date }[]>>,
+      year: number
+    ) => {
+      acc[year] = {};
+
+      ["snippet", "thought", "book-review", "article", "writing"].map((type) => {
+        const entityItems = entityRecords[`${type}s`]
+          .filter((item) => item.createdAt.getFullYear() === year)
+          .map((item) => ({
+            title: item.title,
+            slug: item.slug,
+            date: item.createdAt,
+          }));
+
+        entityItems.length > 0 && (acc[year][type] = entityItems);
+      });
+
+      return acc;
+    },
+    {}
+  );
+
+  return { data };
+}
 
 export default async function Page() {
+  const { data } = await fetchData();
+
   return (
     <div className="container mx-auto">
       <h1 className="mb-8">Home</h1>
@@ -15,9 +76,79 @@ export default async function Page() {
         joined to a bootcamp, got a job, and now I've decided to continue my blog. It will include
         book reviews, thoughts, and developer stuff. Join my world!
       </p>
-      <HomeSection type="article" />
-      <HomeSection type="book-review" />
-      <HomeSection type="thought" />
+
+      <h2 className="mt-12 mb-8">My Sharing</h2>
+
+      <Table className="font-medium text-gray-500">
+        <TableHeader>
+          <TableRow className="hover:bg-transparent text-sm">
+            <TableHead className="w-[100px]">Year</TableHead>
+            <TableHead>Type</TableHead>
+            <TableHead>Date</TableHead>
+            <TableHead>Title</TableHead>
+            <TableHead className="text-center">Views</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {Object.keys(data).map((year: string) =>
+            Object.entries(data[Number(year)]).map(([type, items], i) =>
+              items.map((item, j) => (
+                <TableRow className="h-14 hover:bg-transparent">
+                  <TableCell className="font-medium">{i + j === 0 ? year : ""}</TableCell>
+                  <TableCell>{j === 0 ? capitalize(type) : ""}</TableCell>
+                  <TableCell>{`${item.date.getDate().toString().padStart(2, "0")}/${item.date
+                    .getUTCMonth()
+                    .toString()
+                    .padStart(2, "0")}`}</TableCell>
+                  <TableCell>
+                    <Link
+                      href={`${type}/${item.slug}`}
+                      className="text-blue-600 link break-words inline-flex"
+                    >
+                      {item.title}
+                    </Link>
+                  </TableCell>
+                  <TableCell className="text-center">?</TableCell>
+                </TableRow>
+              ))
+            )
+          )}
+        </TableBody>
+      </Table>
     </div>
   );
+}
+
+// return (
+//   <TableRow className="h-14 hover:bg-transparent">
+//     <TableCell className="font-medium">{2023}</TableCell>
+//     <TableCell></TableCell>
+//     <TableCell></TableCell>
+//     <TableCell></TableCell>
+//     <TableCell className="text-right"></TableCell>
+//   </TableRow>
+// );
+
+{
+  /* <TableRow className="h-14 hover:bg-transparent">
+            <TableCell className="font-medium">2023</TableCell>
+            <TableCell>05/10</TableCell>
+            <TableCell>Almanya'dan Hollanda'ya taşındım</TableCell>
+            <TableCell>Article</TableCell>
+            <TableCell className="text-right">50.256</TableCell>
+          </TableRow>
+          <TableRow className="h-14 hover:bg-transparent">
+            <TableCell className="font-medium border-t border-t-white"></TableCell>
+            <TableCell>05/10</TableCell>
+            <TableCell>Almanya'dan Hollanda'ya taşındım</TableCell>
+            <TableCell>Writing</TableCell>
+            <TableCell className="text-right">50.256</TableCell>
+          </TableRow>
+          <TableRow className="h-14 hover:bg-transparent">
+            <TableCell className="font-medium border-t border-t-white"></TableCell>
+            <TableCell>05/10</TableCell>
+            <TableCell>Almanya'dan Hollanda'ya taşındım</TableCell>
+            <TableCell>Book Review</TableCell>
+            <TableCell className="text-right">50.256</TableCell>
+          </TableRow> */
 }
