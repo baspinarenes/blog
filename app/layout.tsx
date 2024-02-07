@@ -4,6 +4,7 @@ import { MenuContent } from "@/components/menu-content";
 import { DESCRIPTION, TITLE } from "@/lib/utils/constants";
 import { cn } from "@/lib/utils/common";
 import { JetBrains_Mono, Open_Sans } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata = {
   title: TITLE,
@@ -29,7 +30,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SideMenu>
           <MenuContent />
         </SideMenu>
-        <main className="w-full overflow-y-auto">{children}</main>
+        <main className="w-full overflow-y-auto">
+          {children}
+          <SpeedInsights />
+        </main>
       </body>
     </html>
   );
