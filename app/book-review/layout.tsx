@@ -1,10 +1,11 @@
 import { ContentMenu } from "@/components/content-menu";
-import { BookReview, fetchBookReviews } from "@/lib/contentful/book-review";
+import { BookReview } from "@/lib/contentful/book-review";
+import api from "@/lib/contentful/api";
 import { formatDate } from "@/lib/utils/common";
 import { draftMode } from "next/headers";
 
 async function fetchData() {
-  const bookReviews = await fetchBookReviews({ preview: draftMode().isEnabled });
+  const bookReviews = await api["book-review"].fetchAll({ preview: draftMode().isEnabled });
   return { bookReviews };
 }
 

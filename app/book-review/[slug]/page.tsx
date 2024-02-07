@@ -1,16 +1,16 @@
 import { PostHeader } from "@/components/post-header";
 import { RichText } from "@/components/rich-text";
-import { fetchBookReview, fetchBookReviews } from "@/lib/contentful/book-review";
+import api from "@/lib/contentful/api";
 import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
-  const bookReviews = await fetchBookReviews({ preview: false });
+  const bookReviews = await api["book-review"].fetchAll({ preview: false });
   return bookReviews.map((s) => ({ slug: s.slug }));
 }
 
 async function fetchData(slug: string) {
-  const bookReview = await fetchBookReview({ slug, preview: draftMode().isEnabled });
+  const bookReview = await api["book-review"].fetch({ slug, preview: draftMode().isEnabled });
   if (!bookReview) notFound();
   return { bookReview };
 }

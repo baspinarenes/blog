@@ -1,16 +1,16 @@
 import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
-import { fetchArticle, fetchArticles } from "@/lib/contentful/article";
+import api from "@/lib/contentful/api";
 import { PostHeader } from "@/components/post-header";
 import { RichText } from "@/components/rich-text";
 
 export async function generateStaticParams() {
-  const articles = await fetchArticles({ preview: false });
+  const articles = await api["article"].fetchAll({ preview: false });
   return articles.map((s) => ({ slug: s.slug }));
 }
 
 async function fetchData(slug: string) {
-  const article = await fetchArticle({ slug, preview: draftMode().isEnabled });
+  const article = await api["article"].fetch({ slug, preview: draftMode().isEnabled });
   if (!article) notFound();
   return { article };
 }

@@ -16,3 +16,11 @@ export enum PageType {
 }
 
 export type ContentfulItemTypes = "snippet" | "thought" | "book-review" | "article" | "writing";
+
+export enum ContentfulEntity {
+  ARTICLE = "article",
+  WRITING = "writing",
+  BOOK_REVIEW = "book-review",
+  THOUGHT = "thought",
+  SNIPPET = "snippet",
+}

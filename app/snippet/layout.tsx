@@ -1,10 +1,11 @@
 import { ContentMenu } from "@/components/content-menu";
-import { Snippet, fetchSnippets } from "@/lib/contentful/snippet";
+import api from "@/lib/contentful/api";
+import { Snippet } from "@/lib/contentful/snippet";
 import { formatDate } from "@/lib/utils/common";
 import { draftMode } from "next/headers";
 
 async function fetchData() {
-  const snippets = await fetchSnippets({ preview: draftMode().isEnabled });
+  const snippets = await api["snippet"].fetchAll({ preview: draftMode().isEnabled });
   return { snippets };
 }
 

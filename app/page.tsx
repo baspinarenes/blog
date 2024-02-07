@@ -6,11 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { fetchArticles } from "@/lib/contentful/article";
-import { fetchBookReviews } from "@/lib/contentful/book-review";
-import { fetchSnippets } from "@/lib/contentful/snippet";
-import { fetchThoughts } from "@/lib/contentful/thought";
-import { fetchWritings } from "@/lib/contentful/writing";
+import api from "@/lib/contentful/api";
 import { capitalize, cn, generateYearArray } from "@/lib/utils/common";
 import { AUTHOR } from "@/lib/utils/constants";
 import { draftMode } from "next/headers";
@@ -18,11 +14,11 @@ import Link from "next/link";
 
 async function fetchData() {
   const [writings, articles, bookReviews, snippets, thoughts] = await Promise.all([
-    fetchWritings({ preview: draftMode().isEnabled }),
-    fetchArticles({ preview: draftMode().isEnabled }),
-    fetchBookReviews({ preview: draftMode().isEnabled }),
-    fetchSnippets({ preview: draftMode().isEnabled }),
-    fetchThoughts({ preview: draftMode().isEnabled }),
+    api["writing"].fetchAll({ preview: draftMode().isEnabled }),
+    api["article"].fetchAll({ preview: draftMode().isEnabled }),
+    api["book-review"].fetchAll({ preview: draftMode().isEnabled }),
+    api["snippet"].fetchAll({ preview: draftMode().isEnabled }),
+    api["thought"].fetchAll({ preview: draftMode().isEnabled }),
   ]);
 
   const entityRecords: Record<string, any[]> = {

@@ -1,10 +1,11 @@
 import { ContentMenu } from "@/components/content-menu";
-import { Article, fetchArticles } from "@/lib/contentful/article";
+import { Article } from "@/lib/contentful/article";
+import api from "@/lib/contentful/api";
 import { formatDate } from "@/lib/utils/common";
 import { draftMode } from "next/headers";
 
 async function fetchData() {
-  const articles = await fetchArticles({ preview: draftMode().isEnabled });
+  const articles = await api["article"].fetchAll({ preview: draftMode().isEnabled });
   return { articles };
 }
 

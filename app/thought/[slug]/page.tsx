@@ -1,16 +1,16 @@
 import { PostHeader } from "@/components/post-header";
 import { RichText } from "@/components/rich-text";
-import { fetchThought, fetchThoughts } from "@/lib/contentful/thought";
+import api from "@/lib/contentful/api";
 import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
-  const thoughts = await fetchThoughts({ preview: false });
+  const thoughts = await api["thought"].fetchAll({ preview: false });
   return thoughts.map((s) => ({ slug: s.slug }));
 }
 
 async function fetchData(slug: string) {
-  const thought = await fetchThought({ slug, preview: draftMode().isEnabled });
+  const thought = await api["thought"].fetch({ slug, preview: draftMode().isEnabled });
   if (!thought) notFound();
   return { thought };
 }

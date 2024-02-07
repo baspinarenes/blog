@@ -1,16 +1,16 @@
 import { PostHeader } from "@/components/post-header";
 import { RichText } from "@/components/rich-text";
-import { fetchSnippet, fetchSnippets } from "@/lib/contentful/snippet";
+import api from "@/lib/contentful/api";
 import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
-  const snippets = await fetchSnippets({ preview: false });
+  const snippets = await api["snippet"].fetchAll({ preview: false });
   return snippets.map((s) => ({ slug: s.slug }));
 }
 
 async function fetchData(slug: string) {
-  const snippet = await fetchSnippet({ slug, preview: draftMode().isEnabled });
+  const snippet = await api["snippet"].fetch({ slug, preview: draftMode().isEnabled });
 
   if (!snippet) notFound();
   return { snippet };

@@ -1,10 +1,11 @@
 import { ContentMenu } from "@/components/content-menu";
-import { Thought, fetchThoughts } from "@/lib/contentful/thought";
+import api from "@/lib/contentful/api";
+import { Thought } from "@/lib/contentful/thought";
 import { formatDate } from "@/lib/utils/common";
 import { draftMode } from "next/headers";
 
 async function fetchData() {
-  const thoughts = await fetchThoughts({ preview: draftMode().isEnabled });
+  const thoughts = await api["thought"].fetchAll({ preview: draftMode().isEnabled });
   return { thoughts };
 }
 

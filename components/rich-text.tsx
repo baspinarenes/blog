@@ -7,7 +7,7 @@ import { AlertCircleIcon, InfoIcon, Link2Icon, SkullIcon } from "lucide-react";
 import { Separator } from "./ui/separator";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
 import { Link } from "./link";
-import { Table, TableCell, TableHead, TableRow } from "./ui/table";
+import { Table, TableBody, TableCell, TableHead, TableRow } from "./ui/table";
 
 const options: Options = {
   renderMark: {
@@ -18,7 +18,11 @@ const options: Options = {
   renderNode: {
     [BLOCKS.HR]: () => <Separator className="my-10" />,
     [BLOCKS.TABLE]: (a, children) => {
-      return <Table className="font-medium text-gray-500">{children}</Table>;
+      return (
+        <Table className="font-medium text-gray-500">
+          <TableBody>{children}</TableBody>
+        </Table>
+      );
     },
     [BLOCKS.TABLE_CELL]: (_, children) => <TableCell>{children}</TableCell>,
     [BLOCKS.TABLE_ROW]: (_, children) => (
@@ -127,7 +131,7 @@ const options: Options = {
             width={details.image.width}
             height={details.image.height}
             quality={100}
-            className="w-full overflow-hidden rounded-xl"
+            className="w-full overflow-hidden rounded-xl animate-reveal border border-gray-200"
           />
           {description && (
             <figcaption className="break-all text-center text-xs font-light text-gray-500">
