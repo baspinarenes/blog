@@ -7,6 +7,7 @@ import { AlertCircleIcon, InfoIcon, Link2Icon, SkullIcon } from "lucide-react";
 import { Separator } from "./ui/separator";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
 import { Link } from "./link";
+import { Table, TableCell, TableHead, TableRow } from "./ui/table";
 
 const options: Options = {
   renderMark: {
@@ -16,13 +17,23 @@ const options: Options = {
   },
   renderNode: {
     [BLOCKS.HR]: () => <Separator className="my-10" />,
+    [BLOCKS.TABLE]: (a, children) => {
+      return <Table className="font-medium text-gray-500">{children}</Table>;
+    },
+    [BLOCKS.TABLE_CELL]: (_, children) => <TableCell>{children}</TableCell>,
+    [BLOCKS.TABLE_ROW]: (_, children) => (
+      <TableRow className="hover:bg-transparent text-sm">{children}</TableRow>
+    ),
+    [BLOCKS.TABLE_HEADER_CELL]: (_, children) => {
+      return <TableHead className="text-sm">{children}</TableHead>;
+    },
     [BLOCKS.HEADING_2]: (_, children) => {
       const id = dasherize(children as string);
       const url = `h2-${id}`;
       return (
         <h2
           id={url}
-          className="group relative mb-2 mt-6 w-fit cursor-pointer before:absolute before:-left-4 hover:before:content-['#']"
+          className="group relative mb-8 mt-6 w-fit cursor-pointer before:absolute before:-left-4 hover:before:content-['#']"
         >
           <a href={`#${url}`} className="group-hover:underline group-hover:underline-offset-4">
             {children}
