@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
   const { type, slug } = await request.json();
 
   Object.values(slug).forEach((slug) => {
-    revalidatePath(`/${type}/[slug]`, "layout");
+    revalidatePath(`/`, "layout");
   });
 
   return NextResponse.json({ revalidated: true, now: Date.now() });

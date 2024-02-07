@@ -11,7 +11,7 @@ import { fetchBookReviews } from "@/lib/contentful/book-review";
 import { fetchSnippets } from "@/lib/contentful/snippet";
 import { fetchThoughts } from "@/lib/contentful/thought";
 import { fetchWritings } from "@/lib/contentful/writing";
-import { capitalize, generateYearArray } from "@/lib/utils/common";
+import { capitalize, cn, generateYearArray } from "@/lib/utils/common";
 import { AUTHOR } from "@/lib/utils/constants";
 import { draftMode } from "next/headers";
 import Link from "next/link";
@@ -77,7 +77,7 @@ export default async function Page() {
         book reviews, thoughts, and developer stuff. Join my world!
       </p>
 
-      <h2 className="mt-12 mb-8">My Sharing</h2>
+      <h2 className="mt-12 mb-8">My Things</h2>
 
       <Table className="font-medium text-gray-500">
         <TableHeader>
@@ -92,25 +92,36 @@ export default async function Page() {
         <TableBody>
           {Object.keys(data).map((year: string) =>
             Object.entries(data[Number(year)]).map(([type, items], i) =>
-              items.map((item, j) => (
-                <TableRow className="h-14 hover:bg-transparent">
-                  <TableCell className="font-medium">{i + j === 0 ? year : ""}</TableCell>
-                  <TableCell>{j === 0 ? capitalize(type) : ""}</TableCell>
-                  <TableCell>{`${item.date.getDate().toString().padStart(2, "0")}/${item.date
-                    .getUTCMonth()
-                    .toString()
-                    .padStart(2, "0")}`}</TableCell>
-                  <TableCell>
-                    <Link
-                      href={`${type}/${item.slug}`}
-                      className="text-blue-600 link break-words inline-flex"
+              items.map((item, j) => {
+                const isYearAlreadyWrited = i + j !== 0;
+                const isTypeAlreadyWrited = j !== 0;
+
+                return (
+                  <TableRow className="h-14 hover:bg-transparent">
+                    <TableCell
+                      className={cn("font-medium", isYearAlreadyWrited && "border-t border-white")}
                     >
-                      {item.title}
-                    </Link>
-                  </TableCell>
-                  <TableCell className="text-center">?</TableCell>
-                </TableRow>
-              ))
+                      {!isYearAlreadyWrited ? year : ""}
+                    </TableCell>
+                    <TableCell className={cn(isTypeAlreadyWrited && "border-t border-white")}>
+                      {!isTypeAlreadyWrited ? capitalize(type) : ""}
+                    </TableCell>
+                    <TableCell>{`${item.date.getDate().toString().padStart(2, "0")}/${item.date
+                      .getUTCMonth()
+                      .toString()
+                      .padStart(2, "0")}`}</TableCell>
+                    <TableCell>
+                      <Link
+                        href={`${type}/${item.slug}`}
+                        className="text-blue-600 link break-words inline-flex"
+                      >
+                        {item.title}
+                      </Link>
+                    </TableCell>
+                    <TableCell className="text-center">?</TableCell>
+                  </TableRow>
+                );
+              })
             )
           )}
         </TableBody>
