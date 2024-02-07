@@ -9,8 +9,10 @@ export const MenuContent: React.FC<MenuContentProps> = (props) => {
     <div className="w-full p-3 flex flex-col gap-6">
       <Profile />
       <Navigations />
-      <hr className="m-0 mt-auto" />
+      <div className="mt-auto" />
       <Socials />
+      <hr className="mt-0 -mb-3" />
+      <span className="text-center text-[10px] text-slate-400">Inspired by onur.dev</span>
     </div>
   );
 };

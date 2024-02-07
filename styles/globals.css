@@ -112,9 +112,9 @@
       counter-increment: linecounter;
 
       &::before {
-        @apply text-slate-400 mr-6 text-right left-0;
+        @apply text-slate-400 mr-4 text-right left-0;
         content: counter(linecounter);
-        counter-increment: linecounter 1;
+        counter-increment: linecounter 0;
       }
     }
   }
