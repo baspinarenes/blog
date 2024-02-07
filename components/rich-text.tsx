@@ -110,13 +110,13 @@ const options: Options = {
       const { url, details } = file;
 
       return (
-        <figure className="my-10 flex flex-col justify-center items-center gap-2 overflow-hidden rounded-xl">
+        <figure className="my-10 flex flex-col justify-center items-center gap-2">
           <ContentfulImage
             src={url}
             width={details.image.width}
             height={details.image.height}
             quality={100}
-            className="w-full"
+            className="w-full overflow-hidden rounded-xl"
           />
           {description && (
             <figcaption className="break-all text-center text-xs font-light text-gray-500">

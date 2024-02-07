@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 
 export async function POST(request: NextRequest) {
   const requestHeaders = new Headers(request.headers);
@@ -9,7 +9,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: "Invalid secret" }, { status: 401 });
   }
 
-  revalidateTag("posts");
+  const { type, slug } = await request.json();
+
+  Object.values(slug).forEach((slug) => {
+    revalidatePath(`/${type}/[slug]`, "layout");
+  });
 
   return NextResponse.json({ revalidated: true, now: Date.now() });
 }
