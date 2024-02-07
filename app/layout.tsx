@@ -5,6 +5,7 @@ import { DESCRIPTION, TITLE } from "@/lib/utils/constants";
 import { cn } from "@/lib/utils/common";
 import { JetBrains_Mono, Open_Sans } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata = {
   title: TITLE,
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="w-full overflow-y-auto">
           {children}
           <SpeedInsights />
+          <Analytics />
         </main>
       </body>
     </html>
