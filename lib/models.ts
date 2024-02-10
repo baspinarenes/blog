@@ -24,3 +24,5 @@ export enum ContentfulEntity {
   THOUGHT = "thought",
   SNIPPET = "snippet",
 }
+
+export type Language = "*" | "en" | "tr";

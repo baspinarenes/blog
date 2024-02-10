@@ -63,15 +63,11 @@ export default async function Page() {
     <div className="container mx-auto">
       <h1 className="mb-8">Home</h1>
       <p>
-        I'm {AUTHOR.name}, {AUTHOR.age} yrs, a software engineer at{" "}
-        <span className="text-orange-500">Trendyol</span>, live in Türkiye.
+        I'm {AUTHOR.name}, {AUTHOR.age} yrs, a software engineer at Trendyol, live in Türkiye. I
+        enjoy researching and learning new things. I like to tell others about what I've learned and
+        that's why I keep the blog. I feel like screaming when I read monotonous and same content
+        articles and that's why I try to do different things.
       </p>
-      {/* <p>
-        I studied image processing in college, and that was my graduation project. But then, I
-        totally changed my path. I jumped into web development, even though I didn't know much. I
-        joined to a bootcamp, got a job, and now I've decided to continue my blog. It will include
-        book reviews, thoughts, and developer stuff. Join my world!
-      </p> */}
 
       <h2 className="mt-12 mb-8">My Things</h2>
 
