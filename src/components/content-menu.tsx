@@ -9,7 +9,7 @@ export const ContentMenu: React.FC<ContentMenuProps> = (props) => {
   return (
     <aside className="flex flex-col lg:border-r lg:w-80 bg-zinc-50 flex-shrink-0 overflow-y-auto">
       <div className="sticky top-0 z-10 border-b bg-zinc-50 px-5 py-4">
-        <h2 className="text-sm font-semibold tracking-tight">{navigation?.label}</h2>
+        <h2 className="text-sm font-semibold tracking-tight">{navigation?.id}</h2>
       </div>
       <div className="flex flex-col gap-1 p-3">
         {list?.map((data, index) => (

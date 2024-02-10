@@ -1,3 +1,5 @@
+import { locales } from "@/config";
+
 export type ContentfulImageProps = {
   src: string;
   width?: number;
@@ -25,4 +27,12 @@ export enum ContentfulEntity {
   SNIPPET = "snippet",
 }
 
-export type Language = "*" | "en" | "tr";
+export type EntitySummary = {
+  title: string;
+  slug: string;
+  date: Date;
+};
+
+export type EntityByYear = Record<number, Record<string, EntitySummary[]>>;
+
+export type Language = (typeof locales)[number];

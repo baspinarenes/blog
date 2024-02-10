@@ -52,42 +52,42 @@ export const AUTHOR = {
 
 export const NAVIGATIONS = [
   {
-    label: "Home",
+    id: "home",
     href: "/",
     icon: LayoutGridIcon,
   },
   {
-    label: "Journey",
+    id: "journey",
     href: "/journey",
     icon: MousePointer2Icon,
   },
   {
-    label: "Stack",
+    id: "stack",
     href: "/stack",
     icon: HammerIcon,
   },
   {
-    label: "Articles",
+    id: "articles",
     href: "/article",
     icon: PenLineIcon,
   },
   {
-    label: "Writings",
+    id: "writings",
     href: "/writing",
     icon: NotebookTextIcon,
   },
   {
-    label: "Book Reviews",
+    id: "book-reviews",
     href: "/book-review",
     icon: GanttChartSquareIcon,
   },
   {
-    label: "Thoughts",
+    id: "thoughts",
     href: "/thought",
     icon: MessageCircleIcon,
   },
   {
-    label: "Snippets",
+    id: "snippets",
     href: "/snippet",
     icon: ChevronRightSquareIcon,
   },

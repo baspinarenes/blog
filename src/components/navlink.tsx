@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils/common";
 import { ArrowUpRightIcon } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSelectedLayoutSegment, useSelectedLayoutSegments } from "next/navigation";
 
 export const Navlink: React.FC<NavlinkProps> = (props) => {
   const { href, icon, children, rounded = false, external = false, onClick } = props;

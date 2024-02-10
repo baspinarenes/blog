@@ -1,0 +1,23 @@
+{
+  "menu": {
+    "home": "Anasayfa",
+    "journey": "Hikayem",
+    "stack": "Kullandığım Araçlar",
+    "articles": "Makalelerim",
+    "writings": "Yazılarım",
+    "book-reviews": "Kitap Yorumlarım",
+    "thoughts": "Düşüncelerim",
+    "snippets": "Snippet'larım"
+  },
+  "home": {
+    "title": "Anasayfa",
+    "description": "Selam! Ben {name}, {age} yaşındayım. Trendyol'da 2 yıldır Software Engineer olarak çalışıyorum. Araştırmaktan ve yeni şeyler öğrenmekten hoşlanıyorum. Öğrendiklerimi başkalarına anlatmayı seviyorum ve bu yüzden blog tutuyorum. Monoton ve aynı içerikli yazılar okuduğumda çığlık atasım geliyor ve insanları sıkıcılıktan kurtarmak için farklı şeyler yapmaya çalışıyorum."
+  },
+  "not-found": {
+    "description": "Dur yolcu! Bastığın linkleri valid diyerek geçme, tanı. Düşün altında yatan garip bug'ları."
+  },
+  "LocaleSwitcher": {
+    "label": "Change language",
+    "locale": "{locale, select, tr {Turkish} en {English} other {Unknown}}"
+  }
+}
