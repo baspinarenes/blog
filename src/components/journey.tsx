@@ -1,4 +1,4 @@
-import { JourneyItem } from "@/lib/contentful/journey";
+import { JourneyItem } from "@/lib/contentful/model";
 import { RichText } from "./rich-text";
 import { PlusIcon } from "lucide-react";
 

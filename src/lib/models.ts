@@ -17,12 +17,28 @@ export enum PageType {
   SNIPPET,
 }
 
-export type ContentfulItemTypes = "snippet" | "thought" | "book-review" | "article" | "writing";
+export type ContentfulItemType =
+  | "journeyItem"
+  | "snippet"
+  | "thought"
+  | "bookReview"
+  | "article"
+  | "writing"
+  | "staticPage";
+
+export type LayoutProps = {
+  children: React.ReactNode;
+  params: { locale: Language; slug: string };
+};
+
+export type PageProps = {
+  params: { locale: Language; slug: string };
+};
 
 export enum ContentfulEntity {
   ARTICLE = "article",
   WRITING = "writing",
-  BOOK_REVIEW = "book-review",
+  BOOK_REVIEW = "bookReview",
   THOUGHT = "thought",
   SNIPPET = "snippet",
 }

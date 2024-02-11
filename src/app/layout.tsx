@@ -1,9 +1,5 @@
-import { ReactNode } from "react";
+import { LayoutProps } from "@/lib/models";
 
-type Props = {
-  children: ReactNode;
-};
-
-export default function RootLayout({ children }: Props) {
+export default function RootLayout({ children }: LayoutProps) {
   return children;
 }

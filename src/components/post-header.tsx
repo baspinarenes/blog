@@ -1,13 +1,14 @@
-import { formatDate } from "@/lib/utils/common";
+import { Language } from "@/lib/models";
+import { Date } from "./date";
 
 export const PostHeader: React.FC<PostHeaderProps> = (props) => {
-  const { title, createdAt, tags = [] } = props;
+  const { title, createdAt, locale, tags = [] } = props;
 
   return (
     <div className="flex flex-col gap-3 mb-8">
       <h1>{title}</h1>
       <div className="flex gap-3 text-gray-400 font-light text-sm">
-        <time dateTime={createdAt.toString()}>{formatDate(createdAt)}</time>
+        <Date date={createdAt} locale={locale} />
         {tags.length > 0 && (
           <div className="flex gap-2">
             •{" "}
@@ -26,5 +27,6 @@ export const PostHeader: React.FC<PostHeaderProps> = (props) => {
 export type PostHeaderProps = {
   title: string;
   createdAt: Date;
+  locale: Language;
   tags?: string[];
 };

@@ -3,11 +3,10 @@ import { BLOCKS, INLINES, MARKS, Document as RichTextDocument } from "@contentfu
 import { CodeBlock } from "./code-block";
 import { dasherize } from "@/lib/utils/common";
 import ContentfulImage from "./contentful-image";
-import { AlertCircleIcon, InfoIcon, Link2Icon, SkullIcon } from "lucide-react";
 import { Separator } from "./ui/separator";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
 import { Link } from "./link";
 import { Table, TableBody, TableCell, TableHead, TableRow } from "./ui/table";
+import { MessageBox } from "./message-box";
 
 const options: Options = {
   renderMark: {
@@ -37,7 +36,7 @@ const options: Options = {
       return (
         <h2
           id={url}
-          className="group relative mb-8 mt-6 w-fit cursor-pointer before:absolute before:-left-4 hover:before:content-['#']"
+          className="group relative text-2xl mb-4 mt-6 w-fit cursor-pointer before:absolute before:-left-4 hover:before:content-['#']"
         >
           <a href={`#${url}`} className="group-hover:underline group-hover:underline-offset-4">
             {children}
@@ -61,7 +60,7 @@ const options: Options = {
     },
     [BLOCKS.PARAGRAPH]: (_, children) => <div className="mb-4 leading-6 last:mb-0">{children}</div>,
     [BLOCKS.UL_LIST]: (_, children) => (
-      <ul className="mb-4 flex list-disc flex-col gap-0.5 pl-6">{children}</ul>
+      <ul className="mb-4 flex list-disc flex-col gap-2 pl-6">{children}</ul>
     ),
     [BLOCKS.OL_LIST]: (_, children) => (
       <ol className="mb-4 flex list-inside list-[decimal-leading-zero] flex-col gap-2">
@@ -89,32 +88,7 @@ const options: Options = {
           return <CodeBlock title={fields.title} language={fields.language} code={fields.code} />;
         }
         case "messageBox": {
-          const options = {
-            info: {
-              textColor: "text-blue-600",
-              borderColor: "border-blue-600",
-              icon: InfoIcon,
-            },
-            warning: {
-              textColor: "text-yellow-600",
-              borderColor: "border-yellow-600",
-              icon: AlertCircleIcon,
-            },
-            danger: {
-              textColor: "text-red-600",
-              borderColor: "border-red-600",
-              icon: SkullIcon,
-            },
-          }[fields.type as string]!;
-
-          return (
-            <Card className={options.borderColor}>
-              <CardContent className={`${options.textColor} inline-flex gap-4 p-4`}>
-                <options.icon className={`inline-block flex-shrink-0`} />
-                <p className="m-0 inline-block">{fields.content}</p>
-              </CardContent>
-            </Card>
-          );
+          return <MessageBox type={fields.type} content={fields.content} />;
         }
         default:
           return null;

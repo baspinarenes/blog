@@ -1,19 +1,33 @@
 {
-  "menu": {
+  "Common": {
+    "not-found": {
+      "title": "404",
+      "description": "Görüntülemek için farklı bir içerik seç"
+    },
+    "not-available-in-this-language": "Amacım Türkçe kaynakları arttırmak olsa da nedendir bilinmez bu yazının Türkçesini yazmayı unutmuşum ve umarım yakın zamanda farkederim. Yayınladığımda Twitter'dan duyuracağım.",
+    "choose-a-content": "Görüntülemek için bir içerik seç"
+  },
+  "Navigations": {
     "home": "Anasayfa",
     "journey": "Hikayem",
-    "stack": "Kullandığım Araçlar",
-    "articles": "Makalelerim",
-    "writings": "Yazılarım",
-    "book-reviews": "Kitap Yorumlarım",
-    "thoughts": "Düşüncelerim",
-    "snippets": "Snippet'larım"
+    "tool": "Kullandığım Araçlar",
+    "article": "Makalelerim",
+    "writing": "Yazılarım",
+    "bookReview": "Kitap Yorumlarım",
+    "thought": "Düşüncelerim",
+    "snippet": "Snippet'larım"
   },
-  "home": {
+  "HomePage": {
     "title": "Anasayfa",
     "description": "Selam! Ben {name}, {age} yaşındayım. Trendyol'da 2 yıldır Software Engineer olarak çalışıyorum. Araştırmaktan ve yeni şeyler öğrenmekten hoşlanıyorum. Öğrendiklerimi başkalarına anlatmayı seviyorum ve bu yüzden blog tutuyorum. Monoton ve aynı içerikli yazılar okuduğumda çığlık atasım geliyor ve insanları sıkıcılıktan kurtarmak için farklı şeyler yapmaya çalışıyorum."
   },
-  "not-found": {
+  "JourneyPage": {
+    "title": "Hikayem"
+  },
+  "ToolsPage": {
+    "title": "Kullandığım Araçlar"
+  },
+  "LocaleNotFound": {
     "description": "Dur yolcu! Bastığın linkleri valid diyerek geçme, tanı. Düşün altında yatan garip bug'ları."
   },
   "LocaleSwitcher": {

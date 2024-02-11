@@ -2,8 +2,8 @@ import { NAVIGATIONS } from "@/lib/utils/constants";
 import { Navlink } from "./navlink";
 import { useTranslations } from "next-intl";
 
-export const Navigations: React.FC<NavigationsProps> = (props) => {
-  const t = useTranslations("menu");
+export const Navigations: React.FC<NavigationsProps> = () => {
+  const t = useTranslations("Navigations");
 
   return (
     <div className="flex flex-col gap-1">

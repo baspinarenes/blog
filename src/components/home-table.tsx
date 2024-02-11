@@ -8,12 +8,14 @@ import {
 } from "@/components/ui/table";
 import { capitalize, cn, generateYearArray } from "@/lib/utils/common";
 import Link from "next/link";
-import api from "@/lib/contentful/api";
-import { draftMode } from "next/headers";
-import { EntityByYear } from "@/lib/models";
+import { EntityByYear, Language } from "@/lib/models";
+import contentfulFetcher from "@/lib/contentful/contentful-fetcher";
+import { Article, BookReview, Snippet, Thought, Writing } from "@/lib/contentful/model";
+import { useLocale } from "next-intl";
 
-export const HomeTable: React.FC<HomeTableProps> = async (props) => {
-  const data = await fetchData();
+export const HomeTable: React.FC<HomeTableProps> = async () => {
+  const locale = useLocale();
+  const data = await fetchData(locale as Language);
 
   return (
     <Table className="font-medium text-gray-500">
@@ -68,19 +70,19 @@ export const HomeTable: React.FC<HomeTableProps> = async (props) => {
 
 export type HomeTableProps = {};
 
-async function fetchData(): Promise<EntityByYear> {
+async function fetchData(locale: Language): Promise<EntityByYear> {
   const [writings, articles, bookReviews, snippets, thoughts] = await Promise.all([
-    api["writing"].fetchAll({ preview: draftMode().isEnabled }),
-    api["article"].fetchAll({ preview: draftMode().isEnabled }),
-    api["book-review"].fetchAll({ preview: draftMode().isEnabled }),
-    api["snippet"].fetchAll({ preview: draftMode().isEnabled }),
-    api["thought"].fetchAll({ preview: draftMode().isEnabled }),
+    contentfulFetcher<Writing>("writing", { all: true, locale }),
+    contentfulFetcher<Article>("article", { all: true, locale }),
+    contentfulFetcher<BookReview>("bookReview", { all: true, locale }),
+    contentfulFetcher<Snippet>("snippet", { all: true, locale }),
+    contentfulFetcher<Thought>("thought", { all: true, locale }),
   ]);
 
   const entityRecords: Record<string, any[]> = {
     writings,
     articles,
-    "book-reviews": bookReviews,
+    bookReviews: bookReviews,
     snippets,
     thoughts,
   };
@@ -92,7 +94,7 @@ async function fetchData(): Promise<EntityByYear> {
     ) => {
       acc[year] = {};
 
-      ["snippet", "thought", "book-review", "article", "writing"].map((type) => {
+      ["snippet", "thought", "bookReview", "article", "writing"].map((type) => {
         const entityItems = entityRecords[`${type}s`]
           .filter((item) => item.createdAt.getFullYear() === year)
           .map((item) => ({

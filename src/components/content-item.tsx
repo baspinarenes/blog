@@ -1,4 +1,4 @@
-import { ContentfulItemTypes } from "@/lib/models";
+import { ContentfulItemType } from "@/lib/models";
 import { Navlink } from "./navlink";
 
 export const ContentItem: React.FC<ContentItemProps> = (props) => {
@@ -20,6 +20,6 @@ export type ContentItemProps = {
   title: string;
   slug: string;
   tag: string;
-  type: ContentfulItemTypes;
+  type: ContentfulItemType;
   description: string;
 };

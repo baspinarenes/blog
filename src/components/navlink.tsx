@@ -9,7 +9,10 @@ export const Navlink: React.FC<NavlinkProps> = (props) => {
   const { href, icon, children, rounded = false, external = false, onClick } = props;
 
   const pathname = usePathname();
-  let isActive = href === "/" ? pathname === "/" : pathname.includes(href);
+  const pathnameButRemovedLocale = pathname.replace(/\/[a-z]{2}/, "/");
+
+  let isActive =
+    href === "/" ? pathnameButRemovedLocale === "/" : pathnameButRemovedLocale.includes(href);
   const LinkComponent = external ? "a" : Link;
 
   return (

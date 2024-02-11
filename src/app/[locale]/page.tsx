@@ -1,11 +1,11 @@
 import { AUTHOR } from "@/lib/utils/constants";
-import { unstable_setRequestLocale } from "next-intl/server";
 import { useTranslations } from "next-intl";
 import { HomeTable } from "@/components/home-table";
+import { unstable_setRequestLocale } from "next-intl/server";
 
 export default function HomePage({ params: { locale } }: HomePageProps) {
   unstable_setRequestLocale(locale);
-  const t = useTranslations("home");
+  const t = useTranslations("HomePage");
 
   return (
     <div className="container mx-auto">

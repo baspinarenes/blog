@@ -19,7 +19,7 @@ export const Link: React.FC<MenuContentProps> = (props) => {
         className="text-blue-600 link break-words inline-flex"
       >
         {children}
-        <ArrowUpRightIcon size={20} />
+        <ArrowUpRightIcon size={18} />
       </a>
     );
   }
