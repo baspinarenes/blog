@@ -24,16 +24,18 @@ export const EntityMenu: React.FC<EntityMenuProps> = async ({ type, locale }) =>
         <h2 className="text-sm font-semibold tracking-tight">{t(navigation?.id)}</h2>
       </div>
       <div className="flex flex-col gap-1 p-3">
-        {entities.map((entity, index) => (
-          <ContentItem
-            key={index}
-            title={entity.title}
-            description={generateDescription(entity)}
-            slug={entity.slug}
-            tag={entity.tags ? entity.tags[0] : ""}
-            type={type}
-          />
-        ))}
+        {entities
+          .filter((e) => e.title)
+          .map((entity, index) => (
+            <ContentItem
+              key={index}
+              title={entity.title}
+              description={generateDescription(entity)}
+              slug={entity.slug}
+              tag={entity.tags ? entity.tags[0] : ""}
+              type={type}
+            />
+          ))}
       </div>
     </aside>
   );
