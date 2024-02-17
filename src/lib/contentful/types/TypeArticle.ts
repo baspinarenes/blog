@@ -7,8 +7,9 @@ export interface TypeArticleFields {
     content: EntryFieldTypes.RichText;
     excerpt: EntryFieldTypes.Symbol;
     coverImage?: EntryFieldTypes.AssetLink;
-    date: EntryFieldTypes.Date;
+    date?: EntryFieldTypes.Date;
     author: EntryFieldTypes.EntryLink<TypeAuthorSkeleton>;
+    deneme?: EntryFieldTypes.Text;
 }
 
 export type TypeArticleSkeleton = EntrySkeletonType<TypeArticleFields, "article">;

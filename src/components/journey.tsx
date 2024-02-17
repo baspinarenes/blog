@@ -1,5 +1,5 @@
 import { JourneyItem } from "@/lib/contentful/model";
-import { RichText } from "./rich-text";
+import { RichTextContent } from "./rich-text-content";
 import { PlusIcon } from "lucide-react";
 
 export const Journey: React.FC<JourneyProps> = (props) => {
@@ -21,7 +21,7 @@ export const Journey: React.FC<JourneyProps> = (props) => {
                 </span>
                 <div className="leading-1">
                   <h3 className="leading-6 text-base">{ji.title}</h3>
-                  <RichText document={ji.content} />
+                  <RichTextContent document={ji.content} />
                 </div>
               </li>
             ))}

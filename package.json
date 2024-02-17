@@ -4,7 +4,7 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "types:contentful": "export $(cat .env.local | awk '!/^\\s*#/' | awk '!/^\\s*$/'); cf-content-types-generator --spaceId $CONTENTFUL_SPACE_ID --token $CONTENTFUL_MANAGEMENT_TOKEN -o lib/contentful/types -X"
+    "types:contentful": "export $(cat .env.local | awk '!/^\\s*#/' | awk '!/^\\s*$/'); cf-content-types-generator --spaceId $CONTENTFUL_SPACE_ID --token $CONTENTFUL_MANAGEMENT_TOKEN -o src/lib/contentful/types -X"
   },
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^15.17.1",
@@ -39,6 +39,8 @@
     "react-cookie": "^7.0.2",
     "react-dom": "^18.2.0",
     "react-i18next": "^14.0.5",
+    "react-markdown": "^9.0.1",
+    "remark-code-title": "^0.2.5",
     "tailwind-merge": "^2.2.1",
     "tailwindcss": "^3.3.3",
     "tailwindcss-animate": "^1.0.7",

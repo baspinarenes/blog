@@ -24,9 +24,7 @@ const options: Options = {
       );
     },
     [BLOCKS.TABLE_CELL]: (_, children) => <TableCell>{children}</TableCell>,
-    [BLOCKS.TABLE_ROW]: (_, children) => (
-      <TableRow className="hover:bg-transparent text-sm">{children}</TableRow>
-    ),
+    [BLOCKS.TABLE_ROW]: (_, children) => <TableRow className="hover:bg-transparent text-sm">{children}</TableRow>,
     [BLOCKS.TABLE_HEADER_CELL]: (_, children) => {
       return <TableHead className="text-sm">{children}</TableHead>;
     },
@@ -59,13 +57,9 @@ const options: Options = {
       );
     },
     [BLOCKS.PARAGRAPH]: (_, children) => <div className="mb-4 leading-6 last:mb-0">{children}</div>,
-    [BLOCKS.UL_LIST]: (_, children) => (
-      <ul className="mb-4 flex list-disc flex-col gap-2 pl-6">{children}</ul>
-    ),
+    [BLOCKS.UL_LIST]: (_, children) => <ul className="mb-4 flex list-disc flex-col gap-2 pl-6">{children}</ul>,
     [BLOCKS.OL_LIST]: (_, children) => (
-      <ol className="mb-4 flex list-inside list-[decimal-leading-zero] flex-col gap-2">
-        {children}
-      </ol>
+      <ol className="mb-4 flex list-inside list-[decimal-leading-zero] flex-col gap-2">{children}</ol>
     ),
     [BLOCKS.LIST_ITEM]: (_, children) => <li>{children}</li>,
     [BLOCKS.QUOTE]: (_, children) => (
@@ -119,12 +113,12 @@ const options: Options = {
   },
 };
 
-export const RichText: React.FC<RichTextProps> = (props) => {
+export const RichTextContent: React.FC<RichTextContentProps> = (props) => {
   const { document } = props;
   if (!document) return null;
   return documentToReactComponents(document, options);
 };
 
-export type RichTextProps = {
+export type RichTextContentProps = {
   document: RichTextDocument | null;
 };

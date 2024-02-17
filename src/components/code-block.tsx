@@ -4,14 +4,10 @@ import { useState } from "react";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import hljs from "highlight.js";
-import { PageType } from "@/lib/models";
-import { usePageType } from "@/lib/hooks/use-page-type";
 
 export const CodeBlock: React.FC<CodeBlockProps> = ({ title, language, code }) => {
   const [copied, setCopied] = useState(false);
   const codeLines = code.trim().split("\n");
-  const pageType = usePageType();
-  const hideTitle = [PageType.SNIPPET].some((type) => pageType === type);
 
   const onCopy = () => {
     setCopied(true);
@@ -20,23 +16,17 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({ title, language, code }) =
   };
 
   return (
-    <div className="mb-8">
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-t-lg border border-gray-200 bg-gray-50 py-1.5 pl-4 pr-2">
+    <div className="border-x border border-gray-200 rounded-lg overflow-hidden mb-6">
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-t-lg border-b border-gray-200 bg-gray-50 py-1.5 pl-4 pr-2">
         <div className="flex items-center gap-4">
           <span className="inline-flex items-center gap-1.5">
             <span className="h-4 w-4 rounded-full bg-gray-200" />
             <span className="h-4 w-4 rounded-full bg-gray-200" />
             <span className="h-4 w-4 rounded-full bg-gray-200" />
           </span>
-          {!hideTitle && <p className="m-0 text-sm font-medium select-none">{title}</p>}
+          <p className="m-0 text-xs font-medium select-none">{title}</p>
         </div>
-        <Button
-          variant="outline"
-          size="sm"
-          className="rounded-lg"
-          disabled={copied}
-          onClick={onCopy}
-        >
+        <Button variant="outline" size="sm" className="rounded-lg" disabled={copied} onClick={onCopy}>
           <LazyMotion features={domAnimation}>
             <m.span
               key={copied ? "copied" : "copy"}
@@ -88,13 +78,10 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({ title, language, code }) =
           </LazyMotion>
         </Button>
       </div>
-      <div className="overflow-x-auto mb-4">
+      <div className="overflow-x-auto">
         <pre>
           {codeLines.map((code) => (
-            <code
-              key={code}
-              dangerouslySetInnerHTML={{ __html: hljs.highlight(code, { language }).value }}
-            />
+            <code key={code} dangerouslySetInnerHTML={{ __html: hljs.highlight(code, { language }).value }} />
           ))}
         </pre>
       </div>

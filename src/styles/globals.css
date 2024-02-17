@@ -104,8 +104,12 @@
   }
 
   pre {
-    @apply flex flex-col gap-2 font-mono overflow-x-auto break-normal rounded-b-lg border-x border-b border-gray-200 bg-white p-3 text-left text-xs leading-5;
+    @apply flex flex-col gap-2 font-mono overflow-x-auto break-normal rounded-b-lg bg-white text-left text-xs leading-5;
     counter-reset: linecounter;
+
+    pre {
+      @apply p-3
+    }
 
     code {
       @apply leading-4 whitespace-nowrap;

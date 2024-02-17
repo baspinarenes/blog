@@ -7,73 +7,55 @@ import {
   TypeThoughtSkeleton,
   TypeWritingSkeleton,
 } from "./types";
-import {
-  Article,
-  BookReview,
-  ContentImage,
-  JourneyItem,
-  Snippet,
-  StaticPage,
-  Thought,
-  Writing,
-} from "./model";
-import { TypeStaticPageSkeleton } from "../../../lib/contentful/types";
+import { Article, BookReview, ContentImage, JourneyItem, Snippet, StaticPage, Thought, Writing } from "./model";
+import { TypeStaticPageSkeleton } from "@/lib/contentful/types";
 
-export function parseContentfulSnippet(
-  snippetEntry: Entry<TypeSnippetSkeleton, undefined, string>
-): Snippet {
+export function parseContentfulSnippet(snippetEntry: Entry<TypeSnippetSkeleton, undefined, string>): Snippet {
   return {
     title: snippetEntry.fields.title || "",
     slug: snippetEntry.fields.slug,
-    body: snippetEntry.fields.content || null,
+    content: snippetEntry.fields.content || null,
+    context: snippetEntry.fields.context || null,
     createdAt: new Date(snippetEntry.sys.createdAt),
     tags: snippetEntry.metadata?.tags?.map((tag) => tag.sys.id) ?? [],
   };
 }
 
-export function parseContentfulThought(
-  entry: Entry<TypeThoughtSkeleton, undefined, string>
-): Thought {
+export function parseContentfulThought(entry: Entry<TypeThoughtSkeleton, undefined, string>): Thought {
   return {
     title: entry.fields.title || "",
     slug: entry.fields.slug,
-    body: entry.fields.content || null,
+    content: entry.fields.content || null,
     createdAt: new Date(entry.sys.createdAt),
     tags: entry.metadata?.tags?.map((tag) => tag.sys.id) ?? [],
   };
 }
 
-export function parseContentfulArticle(
-  entry: Entry<TypeArticleSkeleton, undefined, string>
-): Article {
+export function parseContentfulArticle(entry: Entry<TypeArticleSkeleton, undefined, string>): Article {
   return {
     title: entry.fields.title || "",
     slug: entry.fields.slug,
-    body: entry.fields.content || null,
+    content: entry.fields.content || null,
     createdAt: new Date(entry.sys.createdAt),
     tags: entry.metadata?.tags?.map((tag) => tag.sys.id) ?? [],
   };
 }
 
-export function parseContentfulBookReview(
-  entry: Entry<TypeBookReviewSkeleton, undefined, string>
-): BookReview {
+export function parseContentfulBookReview(entry: Entry<TypeBookReviewSkeleton, undefined, string>): BookReview {
   return {
     title: entry.fields.title || "",
     slug: entry.fields.slug,
-    body: entry.fields.content || null,
+    content: entry.fields.content || null,
     createdAt: new Date(entry.sys.createdAt),
     tags: entry.metadata?.tags?.map((tag) => tag.sys.id) ?? [],
   };
 }
 
-export function parseContentfulWriting(
-  entry: Entry<TypeWritingSkeleton, undefined, string>
-): Writing {
+export function parseContentfulWriting(entry: Entry<TypeWritingSkeleton, undefined, string>): Writing {
   return {
     title: entry.fields.title || "",
     slug: entry.fields.slug,
-    body: entry.fields.content || null,
+    content: entry.fields.content || null,
     createdAt: new Date(entry.sys.createdAt),
     tags: entry.metadata?.tags?.map((tag) => tag.sys.id) ?? [],
   };
@@ -98,9 +80,7 @@ export function parseContentfulJourneyItem(
   };
 }
 
-export function parseContentfulStaticPage(
-  staticPage: Entry<TypeStaticPageSkeleton, undefined, string>
-): StaticPage {
+export function parseContentfulStaticPage(staticPage: Entry<TypeStaticPageSkeleton, undefined, string>): StaticPage {
   return {
     title: staticPage.fields.title,
     content: staticPage.fields.content,

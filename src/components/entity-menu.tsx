@@ -7,7 +7,7 @@ import { formatDate } from "@/lib/utils/common";
 import { useTranslation } from "@/app/i18n";
 
 async function fetchData(type: ContentfulItemType, lng: Language) {
-  return contentfulFetcher<any>(type, { locale: lng, all: true, filterByBody: true });
+  return contentfulFetcher<any>(type, { locale: lng, all: true, filterByContent: true });
 }
 
 export const EntityMenu: React.FC<EntityMenuProps> = async ({ type, lng }) => {

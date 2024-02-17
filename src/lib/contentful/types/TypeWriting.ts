@@ -4,10 +4,10 @@ import type { TypeAuthorSkeleton } from "./TypeAuthor";
 export interface TypeWritingFields {
     title: EntryFieldTypes.Symbol;
     slug: EntryFieldTypes.Symbol;
-    content: EntryFieldTypes.RichText;
-    excerpt: EntryFieldTypes.Symbol;
+    content?: EntryFieldTypes.RichText;
+    excerpt?: EntryFieldTypes.Symbol;
     coverImage?: EntryFieldTypes.AssetLink;
-    date: EntryFieldTypes.Date;
+    date?: EntryFieldTypes.Date;
     author: EntryFieldTypes.EntryLink<TypeAuthorSkeleton>;
 }
 

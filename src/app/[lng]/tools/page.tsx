@@ -1,5 +1,5 @@
 import { useTranslation } from "@/app/i18n";
-import { RichText } from "@/components/rich-text";
+import { RichTextContent } from "@/components/rich-text-content";
 import contentfulFetcher from "@/lib/contentful/contentful-fetcher";
 import { StaticPage } from "@/lib/contentful/model";
 import { Language, PageProps } from "@/lib/models";
@@ -11,7 +11,7 @@ export default async function ToolsPage({ params: { lng } }: PageProps) {
   return (
     <div className="container mx-auto">
       <h1 className="mb-8">{t("title")}</h1>
-      <RichText document={content} />
+      <RichTextContent document={content} />
     </div>
   );
 }

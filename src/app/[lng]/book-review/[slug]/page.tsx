@@ -1,5 +1,5 @@
 import { PostHeader } from "@/components/post-header";
-import { RichText } from "@/components/rich-text";
+import { RichTextContent } from "@/components/rich-text-content";
 import contentfulFetcher from "@/lib/contentful/contentful-fetcher";
 import { BookReview } from "@/lib/contentful/model";
 import { PageProps } from "@/lib/models";
@@ -27,7 +27,7 @@ export default async function BookReviewPage({ params }: PageProps) {
   return (
     <div className="container mx-auto">
       <PostHeader {...bookReview} locale={params.lng} />
-      <RichText document={bookReview.body} />
+      <RichTextContent document={bookReview.content} />
     </div>
   );
 }

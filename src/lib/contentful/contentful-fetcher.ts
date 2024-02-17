@@ -18,18 +18,18 @@ import {
   TypeThoughtSkeleton,
   TypeWritingSkeleton,
 } from "./types";
-import { TypeStaticPageSkeleton } from "../../../lib/contentful/types";
+import { TypeStaticPageSkeleton } from "@/lib/contentful/types";
 
 type Options = {
   locale: Language;
   slug?: string;
   all?: boolean;
   orderWithDate?: boolean;
-  filterByBody?: boolean;
+  filterByContent?: boolean;
 };
 
 const filterEntity = (entity: any, options?: Options) => {
-  return entity && entity.fields.title && (!options?.filterByBody || entity.fields.content);
+  return entity && entity.fields.title && (!options?.filterByContent || entity.fields.context || entity.fields.content);
 };
 
 async function contentfulFetcher<T>(type: ContentfulItemType, options?: Options): Promise<T[]> {

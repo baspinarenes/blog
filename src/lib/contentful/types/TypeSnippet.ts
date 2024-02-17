@@ -5,6 +5,7 @@ export interface TypeSnippetFields {
     slug: EntryFieldTypes.Symbol;
     date: EntryFieldTypes.Date;
     content: EntryFieldTypes.RichText;
+    context?: EntryFieldTypes.Text;
 }
 
 export type TypeSnippetSkeleton = EntrySkeletonType<TypeSnippetFields, "snippet">;

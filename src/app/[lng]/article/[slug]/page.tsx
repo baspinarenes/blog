@@ -16,7 +16,7 @@ export default async function ArticlePage({ params }: PageProps) {
   return (
     <div className="container mx-auto">
       <PostHeader {...article} locale={params.lng} />
-      <PostContent document={article.body} lng={params.lng} />
+      <PostContent document={article.content} lng={params.lng} />
     </div>
   );
 }
