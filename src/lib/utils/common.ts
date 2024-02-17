@@ -1,7 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Language } from "../models";
-import { useLocale } from "next-intl";
 
 export function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);

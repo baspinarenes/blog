@@ -1,11 +1,11 @@
 import { Document } from "@contentful/rich-text-types";
 import { MessageBox } from "./message-box";
 import { RichText } from "./rich-text";
-import { getTranslations } from "next-intl/server";
+import { useTranslation } from "@/app/i18n";
+import { Language } from "@/lib/models";
 
-export const PostContent: React.FC<PostContentProps> = async (props) => {
-  const { document } = props;
-  const t = await getTranslations("Common");
+export const PostContent: React.FC<PostContentProps> = async ({ document, lng }) => {
+  const { t } = await useTranslation(lng, "common");
 
   if (!document) return <MessageBox type="danger" content={t("not-available-in-this-language")} />;
 
@@ -14,4 +14,5 @@ export const PostContent: React.FC<PostContentProps> = async (props) => {
 
 export type PostContentProps = {
   document: Document | null;
+  lng: Language;
 };

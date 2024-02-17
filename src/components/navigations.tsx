@@ -1,17 +1,19 @@
-import { NAVIGATIONS } from "@/lib/utils/constants";
+import { NAVIGATIONS } from "@/lib/constants";
 import { Navlink } from "./navlink";
-import { useTranslations } from "next-intl";
+import { useTranslation } from "@/app/i18n";
+import { Language } from "@/lib/models";
 
-export const Navigations: React.FC<NavigationsProps> = () => {
-  const t = useTranslations("Navigations");
+export const Navigations: React.FC<NavigationsProps> = async ({ lng }) => {
+  const { t } = await useTranslation(lng, "common");
 
   return (
     <div className="flex flex-col gap-1">
       {NAVIGATIONS.map((nav) => {
         const iconComponent = <nav.icon size={16} />;
+
         return (
-          <Navlink key={nav.href} href={nav.href} icon={iconComponent} rounded>
-            {t(nav.id)}
+          <Navlink key={`/${lng}${nav.href}`} href={nav.href} icon={iconComponent} rounded>
+            {t(`navigation.${nav.id}`)}
           </Navlink>
         );
       })}
@@ -19,4 +21,6 @@ export const Navigations: React.FC<NavigationsProps> = () => {
   );
 };
 
-export type NavigationsProps = {};
+export type NavigationsProps = {
+  lng: Language;
+};

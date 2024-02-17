@@ -1,4 +1,4 @@
-import { locales } from "@/config";
+import { languages } from "@/app/i18n/settings";
 
 export type ContentfulImageProps = {
   src: string;
@@ -28,11 +28,11 @@ export type ContentfulItemType =
 
 export type LayoutProps = {
   children: React.ReactNode;
-  params: { locale: Language; slug: string };
+  params: { lng: Language; slug: string };
 };
 
 export type PageProps = {
-  params: { locale: Language; slug: string };
+  params: { lng: Language; slug: string };
 };
 
 export enum ContentfulEntity {
@@ -51,4 +51,4 @@ export type EntitySummary = {
 
 export type EntityByYear = Record<number, Record<string, EntitySummary[]>>;
 
-export type Language = (typeof locales)[number];
+export type Language = (typeof languages)[number];

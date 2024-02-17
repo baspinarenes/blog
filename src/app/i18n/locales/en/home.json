@@ -1,0 +1,11 @@
+{
+  "title": "Home",
+  "description": "I'm {{name}}, {{age}} yrs, a software engineer at Trendyol, live in Türkiye. I enjoy researching and learning new things. I like to tell others about what I've learned and that's why I keep the blog. I feel like screaming when I read monotonous and same content articles and that's why I try to do different things.",
+  "table": {
+    "year": "Year",
+    "type": "Type",
+    "data": "Date",
+    "title": "Title",
+    "view": "Views"
+  }
+}

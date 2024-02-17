@@ -1,4 +1,4 @@
-import { AUTHOR } from "@/lib/utils/constants";
+import { AUTHOR } from "@/lib/constants";
 import { Navlink } from "./navlink";
 
 export const Socials: React.FC<SocialsProps> = (props) => {

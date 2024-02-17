@@ -1,8 +1,9 @@
+import { useTranslation } from "@/app/i18n";
+import { Language } from "@/lib/models";
 import { FileTextIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
 
-export const SelectContentInfo: React.FC<SelectContentInfoProps> = () => {
-  const t = useTranslations("Common");
+export const SelectContentInfo: React.FC<SelectContentInfoProps> = async ({ lng }) => {
+  const { t } = await useTranslation(lng, "common");
 
   return (
     <div className="flex flex-col gap-2 justify-center items-center h-full text-zinc-300">
@@ -12,4 +13,6 @@ export const SelectContentInfo: React.FC<SelectContentInfoProps> = () => {
   );
 };
 
-export type SelectContentInfoProps = {};
+export type SelectContentInfoProps = {
+  lng: Language;
+};
