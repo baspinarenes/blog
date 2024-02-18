@@ -17,7 +17,7 @@ export const HomeTable: React.FC<HomeTableProps> = async ({ lng }) => {
           <TableRow className="hover:bg-transparent text-sm">
             <TableHead className="w-[60px]">{t("table.year")}</TableHead>
             <TableHead className="w-[80px]">{t("table.type")}</TableHead>
-            <TableHead className="w-[60px]">{t("table.date")}</TableHead>
+            <TableHead className="w-[80px]">{t("table.date")}</TableHead>
             <TableHead>{t("table.title")}</TableHead>
             <TableHead className="text-center w-20">{t("table.view")}</TableHead>
           </TableRow>
@@ -40,10 +40,9 @@ export const HomeTable: React.FC<HomeTableProps> = async ({ lng }) => {
                       <TableCell className={cn(isTypeAlreadyWrited && "border-t border-white")}>
                         {!isTypeAlreadyWrited ? capitalize(type) : ""}
                       </TableCell>
-                      <TableCell>{`${item.date.getDate().toString().padStart(2, "0")}/${item.date
-                        .getUTCMonth()
-                        .toString()
-                        .padStart(2, "0")}`}</TableCell>
+                      <TableCell>{` ${item.date.toLocaleString(lng, {
+                        month: "short",
+                      })} ${item.date.getDate().toString().padStart(2, "0")}`}</TableCell>
                       <TableCell>
                         <Link href={`${type}/${item.slug}`} className="text-blue-600 link break-words inline-flex">
                           {item.title}

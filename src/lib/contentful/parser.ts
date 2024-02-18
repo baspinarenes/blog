@@ -34,6 +34,7 @@ export function parseContentfulArticle(entry: Entry<TypeArticleSkeleton, undefin
   return {
     title: entry.fields.title || "",
     slug: entry.fields.slug,
+    coverImage: entry.fields.coverImage,
     context: entry.fields.context,
     createdAt: new Date(entry.fields.date ? entry.fields.date : entry.sys.createdAt),
     tags: entry.metadata?.tags?.map((tag) => tag.sys.id) ?? [],

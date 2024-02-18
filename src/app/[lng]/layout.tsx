@@ -33,7 +33,7 @@ export function generateStaticParams() {
 
 export default function LocaleLayout({ children, params: { lng } }: LayoutProps) {
   return (
-    <html lang={lng} dir={dir(lng)} className={`${openSans.variable} ${jetbrainsMono.variable}`}>
+    <html lang={lng} dir={dir(lng)} className={`${openSans.variable} ${jetbrainsMono.variable} overflow-hidden`}>
       <body className={cn("hidden lg:flex h-screen max-h-screen", openSans.className)}>
         <SideMenu>
           <MenuContent lng={lng} />

@@ -26,6 +26,7 @@ export type Thought = {
 export type Article = {
   title: string;
   slug: string;
+  coverImage: any;
   createdAt: Date;
   context?: string;
   tags: string[];

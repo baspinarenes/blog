@@ -5,5 +5,5 @@ import { ContentfulImageProps } from "../lib/models";
 import { contentfulLoader } from "../lib/utils/image-loaders";
 
 export default function ContentfulImage(props: ContentfulImageProps) {
-  return <Image alt={props.alt} loading="eager" loader={contentfulLoader} {...props} />;
+  return <Image alt={props.alt} loading="eager" className="w-full mb-12" loader={contentfulLoader} {...props} />;
 }
