@@ -11,8 +11,7 @@ export type Snippet = {
   title: string;
   slug: string;
   createdAt: Date;
-  content: Document | null;
-  context: any;
+  context?: string;
   tags: string[];
 };
 
@@ -28,7 +27,7 @@ export type Article = {
   title: string;
   slug: string;
   createdAt: Date;
-  content: Document | null;
+  context?: string;
   tags: string[];
 };
 

@@ -10,7 +10,7 @@ export const Journey: React.FC<JourneyProps> = (props) => {
       {journey.map((j) => (
         <div key={j.year} className="flex gap-16">
           <h2>{j.year}</h2>
-          <ul>
+          <ul className="mb-0">
             {j.items.map((ji) => (
               <li
                 key={ji.title}

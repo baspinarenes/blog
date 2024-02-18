@@ -14,8 +14,7 @@ export function parseContentfulSnippet(snippetEntry: Entry<TypeSnippetSkeleton, 
   return {
     title: snippetEntry.fields.title || "",
     slug: snippetEntry.fields.slug,
-    content: snippetEntry.fields.content || null,
-    context: snippetEntry.fields.context || null,
+    context: snippetEntry.fields.context,
     createdAt: new Date(snippetEntry.sys.createdAt),
     tags: snippetEntry.metadata?.tags?.map((tag) => tag.sys.id) ?? [],
   };
@@ -35,7 +34,7 @@ export function parseContentfulArticle(entry: Entry<TypeArticleSkeleton, undefin
   return {
     title: entry.fields.title || "",
     slug: entry.fields.slug,
-    content: entry.fields.content || null,
+    context: entry.fields.context,
     createdAt: new Date(entry.sys.createdAt),
     tags: entry.metadata?.tags?.map((tag) => tag.sys.id) ?? [],
   };

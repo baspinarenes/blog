@@ -3,20 +3,38 @@
 import { useState } from "react";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import hljs from "highlight.js";
+import { twMerge } from "tailwind-merge";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { coy } from "react-syntax-highlighter/dist/esm/styles/prism";
 
-export const CodeBlock: React.FC<CodeBlockProps> = ({ title, language, code }) => {
+export const CodeBlock: React.FC<CodeBlockProps> = ({ title, language, code, className = "" }) => {
   const [copied, setCopied] = useState(false);
-  const codeLines = code.trim().split("\n");
 
   const onCopy = () => {
     setCopied(true);
-    navigator.clipboard.writeText(code);
+    let modifiedCode = code;
+
+    if (language === "bash") {
+      modifiedCode = code.split("").reduce((acc, char, index) => {
+        if (acc.at(-1) === "\\" && char === "\n") {
+          return acc + char;
+        }
+
+        if (char === "\n" && code.length - 1 !== index) {
+          return acc + " && ";
+        }
+
+        return acc + char;
+      }, "");
+      // modifiedCode = code.replaceAll("\n", " && ").slice(0, -4);
+    }
+
+    navigator.clipboard.writeText(modifiedCode);
     setTimeout(() => setCopied(false), 3000);
   };
 
   return (
-    <div className="border-x border border-gray-200 rounded-lg overflow-hidden mb-6">
+    <div className={twMerge("border-x border border-gray-200 rounded-lg overflow-hidden mb-6", className)}>
       <div className="flex flex-wrap items-center justify-between gap-2 rounded-t-lg border-b border-gray-200 bg-gray-50 py-1.5 pl-4 pr-2">
         <div className="flex items-center gap-4">
           <span className="inline-flex items-center gap-1.5">
@@ -79,11 +97,15 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({ title, language, code }) =
         </Button>
       </div>
       <div className="overflow-x-auto">
-        <pre>
-          {codeLines.map((code) => (
-            <code key={code} dangerouslySetInnerHTML={{ __html: hljs.highlight(code, { language }).value }} />
-          ))}
-        </pre>
+        <SyntaxHighlighter
+          language={language}
+          style={coy}
+          showLineNumbers={true}
+          customStyle={{ margin: 0, padding: 0 }}
+          lineNumberStyle={{ marginRight: 4, marginBottom: 1, minWidth: "auto" }}
+        >
+          {code.trim()}
+        </SyntaxHighlighter>
       </div>
     </div>
   );
@@ -93,4 +115,5 @@ export type CodeBlockProps = {
   title: string;
   language: string;
   code: string;
+  className?: string;
 };

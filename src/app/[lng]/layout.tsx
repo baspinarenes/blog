@@ -38,7 +38,7 @@ export default function LocaleLayout({ children, params: { lng } }: LayoutProps)
         <SideMenu>
           <MenuContent lng={lng} />
         </SideMenu>
-        <main className="w-full overflow-y-auto">
+        <main className="w-full overflow-hidden">
           {children}
           <SpeedInsights />
           <Analytics />

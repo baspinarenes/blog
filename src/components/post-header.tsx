@@ -7,7 +7,7 @@ export const PostHeader: React.FC<PostHeaderProps> = (props) => {
   return (
     <div className="flex flex-col gap-3 mb-8">
       <h1>{title}</h1>
-      <div className="flex gap-3 text-gray-400 font-light text-sm">
+      <div className="flex gap-3 text-gray-400 font-light text-sm -mt-12">
         <Date date={createdAt} locale={locale} />
         {tags.length > 0 && (
           <div className="flex gap-2">

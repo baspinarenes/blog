@@ -3,7 +3,7 @@ import { PostHeader } from "@/components/post-header";
 import contentfulFetcher from "@/lib/contentful/contentful-fetcher";
 import { PageProps } from "@/lib/models";
 import { Article } from "@/lib/contentful/model";
-import { PostContent } from "@/components/post-content";
+import { MarkdownContent } from "@/components/markdown-content";
 
 export async function generateStaticParams({ params: { lng } }: PageProps) {
   const articles = await contentfulFetcher<Article>("article", { locale: lng });
@@ -16,7 +16,8 @@ export default async function ArticlePage({ params }: PageProps) {
   return (
     <div className="container mx-auto">
       <PostHeader {...article} locale={params.lng} />
-      <PostContent document={article.content} lng={params.lng} />
+      {/* <PostContent document={article.contet} lng={params.lng} /> */}
+      <MarkdownContent>{article.context}</MarkdownContent>
     </div>
   );
 }

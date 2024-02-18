@@ -1,18 +1,52 @@
 import Markdown, { Components } from "react-markdown";
 import { CodeBlock } from "./code-block";
-import remarkCodeTitle from "remark-code-title";
 import { twMerge } from "tailwind-merge";
-import { MessageBox } from "./message-box";
+import rehypeHighlight from "rehype-highlight";
+import rehypePrism from "rehype-prism-plus";
+import { BugIcon } from "lucide-react";
+import { dasherize } from "@/lib/utils/common";
 
 const components: Partial<Components> = {
-  h2: ({ children }) => <h2 className="text-2xl font-semibold mb-4">{children}</h2>,
-  ul: ({ children }) => <ul className="mb-4 flex list-disc flex-col gap-2 pl-6">{children}</ul>,
+  h2: ({ children }) => {
+    const id = dasherize(children as string);
+    return (
+      <h2 id={id} className="group relative cursor-pointer before:absolute before:-left-4 hover:before:content-['#']">
+        <a href={`#${id}`} className="group-hover:underline group-hover:underline-offset-4">
+          {children}
+        </a>
+      </h2>
+    );
+  },
+  h3: ({ children }) => {
+    const id = dasherize(children as string);
+    return (
+      <h3 id={id} className="group relative cursor-pointer before:absolute before:-left-4 hover:before:content-['#']">
+        <a href={`#${id}`} className="group-hover:underline group-hover:underline-offset-4">
+          {children}
+        </a>
+      </h3>
+    );
+  },
   code: ({ children, className, node, ...rest }) => {
-    const match = /language-(\w+)/.exec(className || "");
+    let match = /language-(\w+)/.test(className || "");
+    const nodeInfo = node as any;
+    const meta = nodeInfo?.data?.meta;
+    const language = nodeInfo?.properties?.className?.[0]?.split("-")?.[1];
 
-    return match ? (
-      <CodeBlock title={(node as any)?.data?.meta ?? ""} language={"javascript"} code={children as any} />
-    ) : (
+    if (language === "result") {
+      return (
+        <code className={twMerge("code-result relative !pr-9")}>
+          {children}
+          <BugIcon size={20} className="absolute right-2 top-[10px] text-slate-400" />
+        </code>
+      );
+    }
+
+    if (match) {
+      return <CodeBlock className={className} title={meta ?? ""} language={language ?? "js"} code={children as any} />;
+    }
+
+    return (
       <code {...rest} className={twMerge(className, "inline-code")}>
         {children}
       </code>
@@ -22,7 +56,7 @@ const components: Partial<Components> = {
 
 export const MarkdownContent: React.FC<MarkdownContentProps> = ({ children }) => {
   return (
-    <Markdown components={components} remarkPlugins={[remarkCodeTitle]}>
+    <Markdown components={components} remarkPlugins={[rehypeHighlight, rehypePrism]} className="markdown">
       {children}
     </Markdown>
   );

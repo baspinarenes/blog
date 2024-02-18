@@ -10,7 +10,7 @@ import { MessageBox } from "./message-box";
 
 const options: Options = {
   renderMark: {
-    [MARKS.BOLD]: (text) => <span className="font-semibold text-black">{text}</span>,
+    [MARKS.BOLD]: (text) => <strong className="font-semibold text-black">{text}</strong>,
     [MARKS.ITALIC]: (text) => <span className="italic">{text}</span>,
     [MARKS.CODE]: (text) => <code className="inline-code">{text}</code>,
   },
@@ -57,7 +57,7 @@ const options: Options = {
       );
     },
     [BLOCKS.PARAGRAPH]: (_, children) => <div className="mb-4 leading-6 last:mb-0">{children}</div>,
-    [BLOCKS.UL_LIST]: (_, children) => <ul className="mb-4 flex list-disc flex-col gap-2 pl-6">{children}</ul>,
+    [BLOCKS.UL_LIST]: (_, children) => <ul>{children}</ul>,
     [BLOCKS.OL_LIST]: (_, children) => (
       <ol className="mb-4 flex list-inside list-[decimal-leading-zero] flex-col gap-2">{children}</ol>
     ),

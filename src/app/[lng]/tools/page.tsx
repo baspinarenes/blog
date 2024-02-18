@@ -10,7 +10,7 @@ export default async function ToolsPage({ params: { lng } }: PageProps) {
 
   return (
     <div className="container mx-auto">
-      <h1 className="mb-8">{t("title")}</h1>
+      <h1>{t("title")}</h1>
       <RichTextContent document={content} />
     </div>
   );

@@ -18,7 +18,7 @@ export const Profile: React.FC<ProfileProps> = (props) => {
         <span className="font-semibold tracking-tight">
           {AUTHOR.name} {AUTHOR.surname}
         </span>
-        <span className="text-gray-600 font-extralight">{AUTHOR.title}</span>
+        <span className="text-gray-600 font-extralight text-xs">{AUTHOR.title}</span>
       </div>
     </div>
   );

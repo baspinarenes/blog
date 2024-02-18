@@ -4,7 +4,6 @@ export interface TypeSnippetFields {
     title: EntryFieldTypes.Symbol;
     slug: EntryFieldTypes.Symbol;
     date: EntryFieldTypes.Date;
-    content: EntryFieldTypes.RichText;
     context?: EntryFieldTypes.Text;
 }
 

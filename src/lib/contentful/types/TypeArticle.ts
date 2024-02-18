@@ -4,12 +4,10 @@ import type { TypeAuthorSkeleton } from "./TypeAuthor";
 export interface TypeArticleFields {
     title: EntryFieldTypes.Symbol;
     slug: EntryFieldTypes.Symbol;
-    content: EntryFieldTypes.RichText;
-    excerpt: EntryFieldTypes.Symbol;
     coverImage?: EntryFieldTypes.AssetLink;
     date?: EntryFieldTypes.Date;
     author: EntryFieldTypes.EntryLink<TypeAuthorSkeleton>;
-    deneme?: EntryFieldTypes.Text;
+    context?: EntryFieldTypes.Text;
 }
 
 export type TypeArticleSkeleton = EntrySkeletonType<TypeArticleFields, "article">;
