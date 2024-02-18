@@ -10,13 +10,13 @@ import {
 import { Article, BookReview, ContentImage, JourneyItem, Snippet, StaticPage, Thought, Writing } from "./model";
 import { TypeStaticPageSkeleton } from "@/lib/contentful/types";
 
-export function parseContentfulSnippet(snippetEntry: Entry<TypeSnippetSkeleton, undefined, string>): Snippet {
+export function parseContentfulSnippet(entry: Entry<TypeSnippetSkeleton, undefined, string>): Snippet {
   return {
-    title: snippetEntry.fields.title || "",
-    slug: snippetEntry.fields.slug,
-    context: snippetEntry.fields.context,
-    createdAt: new Date(snippetEntry.sys.createdAt),
-    tags: snippetEntry.metadata?.tags?.map((tag) => tag.sys.id) ?? [],
+    title: entry.fields.title || "",
+    slug: entry.fields.slug,
+    context: entry.fields.context,
+    createdAt: new Date(entry.fields.date ? entry.fields.date : entry.sys.createdAt),
+    tags: entry.metadata?.tags?.map((tag) => tag.sys.id) ?? [],
   };
 }
 
@@ -25,7 +25,7 @@ export function parseContentfulThought(entry: Entry<TypeThoughtSkeleton, undefin
     title: entry.fields.title || "",
     slug: entry.fields.slug,
     content: entry.fields.content || null,
-    createdAt: new Date(entry.sys.createdAt),
+    createdAt: new Date(entry.fields.date ? entry.fields.date : entry.sys.createdAt),
     tags: entry.metadata?.tags?.map((tag) => tag.sys.id) ?? [],
   };
 }
@@ -35,7 +35,7 @@ export function parseContentfulArticle(entry: Entry<TypeArticleSkeleton, undefin
     title: entry.fields.title || "",
     slug: entry.fields.slug,
     context: entry.fields.context,
-    createdAt: new Date(entry.sys.createdAt),
+    createdAt: new Date(entry.fields.date ? entry.fields.date : entry.sys.createdAt),
     tags: entry.metadata?.tags?.map((tag) => tag.sys.id) ?? [],
   };
 }
@@ -45,7 +45,7 @@ export function parseContentfulBookReview(entry: Entry<TypeBookReviewSkeleton, u
     title: entry.fields.title || "",
     slug: entry.fields.slug,
     content: entry.fields.content || null,
-    createdAt: new Date(entry.sys.createdAt),
+    createdAt: new Date(entry.fields.date ? entry.fields.date : entry.sys.createdAt),
     tags: entry.metadata?.tags?.map((tag) => tag.sys.id) ?? [],
   };
 }
@@ -55,7 +55,7 @@ export function parseContentfulWriting(entry: Entry<TypeWritingSkeleton, undefin
     title: entry.fields.title || "",
     slug: entry.fields.slug,
     content: entry.fields.content || null,
-    createdAt: new Date(entry.sys.createdAt),
+    createdAt: new Date(entry.fields.date ? entry.fields.date : entry.sys.createdAt),
     tags: entry.metadata?.tags?.map((tag) => tag.sys.id) ?? [],
   };
 }

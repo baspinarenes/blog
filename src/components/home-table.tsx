@@ -23,35 +23,38 @@ export const HomeTable: React.FC<HomeTableProps> = async ({ lng }) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {Object.keys(data).map((year: string) =>
-            Object.entries(data[Number(year)]).map(([type, items], i) =>
-              items.map((item, j) => {
-                const isYearAlreadyWrited = i + j !== 0;
-                const isTypeAlreadyWrited = j !== 0;
+          {Object.keys(data)
+            .map(Number)
+            .sort((a, b) => b - a)
+            .map((year: number) =>
+              Object.entries(data[Number(year)]).map(([type, items], i) =>
+                items.map((item, j) => {
+                  const isYearAlreadyWrited = i + j !== 0;
+                  const isTypeAlreadyWrited = j !== 0;
 
-                return (
-                  <TableRow className="h-14 hover:bg-transparent">
-                    <TableCell className={cn("font-medium", isYearAlreadyWrited && "border-t border-white")}>
-                      {!isYearAlreadyWrited ? year : ""}
-                    </TableCell>
-                    <TableCell className={cn(isTypeAlreadyWrited && "border-t border-white")}>
-                      {!isTypeAlreadyWrited ? capitalize(type) : ""}
-                    </TableCell>
-                    <TableCell>{`${item.date.getDate().toString().padStart(2, "0")}/${item.date
-                      .getUTCMonth()
-                      .toString()
-                      .padStart(2, "0")}`}</TableCell>
-                    <TableCell>
-                      <Link href={`${type}/${item.slug}`} className="text-blue-600 link break-words inline-flex">
-                        {item.title}
-                      </Link>
-                    </TableCell>
-                    <TableCell className="text-center">?</TableCell>
-                  </TableRow>
-                );
-              })
-            )
-          )}
+                  return (
+                    <TableRow className="h-14 hover:bg-transparent">
+                      <TableCell className={cn("font-medium", isYearAlreadyWrited && "border-t border-white")}>
+                        {!isYearAlreadyWrited ? year : ""}
+                      </TableCell>
+                      <TableCell className={cn(isTypeAlreadyWrited && "border-t border-white")}>
+                        {!isTypeAlreadyWrited ? capitalize(type) : ""}
+                      </TableCell>
+                      <TableCell>{`${item.date.getDate().toString().padStart(2, "0")}/${item.date
+                        .getUTCMonth()
+                        .toString()
+                        .padStart(2, "0")}`}</TableCell>
+                      <TableCell>
+                        <Link href={`${type}/${item.slug}`} className="text-blue-600 link break-words inline-flex">
+                          {item.title}
+                        </Link>
+                      </TableCell>
+                      <TableCell className="text-center">?</TableCell>
+                    </TableRow>
+                  );
+                })
+              )
+            )}
         </TableBody>
       </Table>
       {/* <Table className="font-medium text-gray-500">

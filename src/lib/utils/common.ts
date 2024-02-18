@@ -21,4 +21,4 @@ export function formatDate(date: Date, locale: Language) {
 export const dasherize = (text: string) => String(text).replace(/ +/g, "-").toLowerCase();
 
 export const generateYearArray = () =>
-  Array.from({ length: new Date().getFullYear() - 2020 + 1 }, (_, index) => 2020 + index);
+  Array.from({ length: new Date().getFullYear() - 2020 + 1 }, (_, index) => 2020 + index).sort((a, b) => b - a);
