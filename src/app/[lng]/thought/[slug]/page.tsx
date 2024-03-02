@@ -24,9 +24,9 @@ export default async function Page({ params }: PageProps) {
   const { thought } = await fetchData(params);
 
   return (
-    <div className="container mx-auto">
+    <>
       <PostHeader {...thought} locale={params.lng} />
       <PostContent document={thought.content} lng={params.lng} />
-    </div>
+    </>
   );
 }

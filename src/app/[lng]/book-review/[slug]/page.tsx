@@ -25,9 +25,9 @@ export default async function BookReviewPage({ params }: PageProps) {
   const { bookReview } = await fetchData(params);
 
   return (
-    <div className="container mx-auto">
+    <>
       <PostHeader {...bookReview} locale={params.lng} />
       <RichTextContent document={bookReview.content} />
-    </div>
+    </>
   );
 }

@@ -99,8 +99,12 @@
     @apply mb-8 flex list-disc flex-col gap-2 pl-6;
   }
 
+  main {
+    @apply w-full overflow-y-auto;
+  }
+
   ::-webkit-scrollbar {
-    width: 12px;
+    width: 14px;
     height: 8px;
   }
 
@@ -118,45 +122,11 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
-
-  /* * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-  }
-
-  h2+h3 {
-    @apply !mt-0;
-  }
-
-  pre {
-    @apply flex flex-col gap-2 font-mono overflow-x-auto break-normal rounded-b-lg bg-white text-left text-xs leading-5;
-
-    pre {
-      @apply p-3
-    }
-
-    code {
-      @apply leading-6 whitespace-nowrap;
-
-      &::before {
-        @apply text-slate-400 mr-4 text-right left-0;
-      }
-    }
-  }
-
-  code {
-    @apply font-mono whitespace-pre-wrap;
-
-    font-family: "JetBrains Mono" !important;
-  } */
 }
 
 @layer components {
   .container {
-    @apply px-8 pt-16 pb-16 w-full max-w-4xl mx-auto;
+    @apply px-8 pt-16 pb-16 w-full max-w-4xl mx-auto min-h-screen relative;
   }
 
   .inline-code {
@@ -194,7 +164,7 @@
       }
 
       .code-result {
-        @apply w-full relative border border-gray-200 rounded-lg !py-3 -mt-8 mb-8 bg-gray-100 block z-50 font-mono text-xs;
+        @apply w-full relative border border-gray-200 rounded-lg !py-3 -mt-4 mb-8 bg-gray-100 block z-50 font-mono text-xs;
       }
     }
 

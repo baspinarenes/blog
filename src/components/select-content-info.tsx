@@ -6,7 +6,7 @@ export const SelectContentInfo: React.FC<SelectContentInfoProps> = async ({ lng 
   const { t } = await useTranslation(lng, "common");
 
   return (
-    <div className="flex flex-col gap-2 justify-center items-center h-full text-zinc-300">
+    <div className="absolute left-0 top-0 h-full w-full flex flex-col gap-2 justify-center items-center text-zinc-300">
       <FileTextIcon size={32} absoluteStrokeWidth />
       <span className="text-md">{t("choose-a-content")}</span>
     </div>

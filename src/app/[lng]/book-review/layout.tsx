@@ -3,9 +3,11 @@ import { LayoutProps } from "@/lib/models";
 
 export default async function BookReviewLayout({ children, params: { lng } }: LayoutProps) {
   return (
-    <section className="flex w-full h-full">
+    <section className="flex w-full h-full overflow-hidden">
       <EntityMenu type="bookReview" lng={lng} />
-      {children}
+      <main>
+        <div className="container">{children}</div>
+      </main>
     </section>
   );
 }

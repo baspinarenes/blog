@@ -9,10 +9,10 @@ export default async function JourneyPage({ params: { lng } }: PageProps) {
   const { t } = await useTranslation(lng, "journey");
 
   return (
-    <div className="container mx-auto">
+    <>
       <h1>{t("title")}</h1>
       <Journey journey={journeyItems} />
-    </div>
+    </>
   );
 }
 

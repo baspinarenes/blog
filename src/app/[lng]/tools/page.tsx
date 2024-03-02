@@ -9,10 +9,10 @@ export default async function ToolsPage({ params: { lng } }: PageProps) {
   const { t } = await useTranslation(lng, "tools");
 
   return (
-    <div className="container mx-auto">
+    <>
       <h1>{t("title")}</h1>
       <RichTextContent document={content} />
-    </div>
+    </>
   );
 }
 

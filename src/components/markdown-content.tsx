@@ -36,7 +36,7 @@ const components: Partial<Components> = {
     if (language === "result") {
       return (
         <code className={twMerge("code-result relative !pr-9")}>
-          {children}
+          <div className="text-ellipsis">{children}</div>
           <BugIcon size={20} className="absolute right-2 top-[10px] text-slate-400" />
         </code>
       );

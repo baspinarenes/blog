@@ -24,9 +24,9 @@ export default async function WritingPage({ params }: PageProps) {
   const { writing } = await fetchData(params);
 
   return (
-    <div className="container mx-auto">
+    <>
       <PostHeader {...writing} locale={params.lng} />
       <PostContent document={writing.content} lng={params.lng} />
-    </div>
+    </>
   );
 }

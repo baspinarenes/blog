@@ -27,10 +27,10 @@ export default async function SnippetPage({ params }: PageProps) {
   const { t } = await useTranslation(params.lng, "common");
 
   return (
-    <div className="container mx-auto">
+    <>
       <PostHeader {...snippet} locale={params.lng} />
       {!snippet.context && <MessageBox type="danger" content={t("not-available-in-this-language")} />}
       <MarkdownContent>{snippet.context}</MarkdownContent>
-    </div>
+    </>
   );
 }
