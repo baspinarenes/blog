@@ -40,6 +40,20 @@ export type BookReview = {
   tags: string[];
 };
 
+export type MovieReview = {
+  title: string;
+  slug: string;
+  coverImage: string;
+  createdAt: Date;
+  releasedAt: Date;
+  content: string;
+  myRating: {
+    story: number;
+    music: number;
+    visuality: number;
+  };
+};
+
 export type Writing = {
   title: string;
   slug: string;

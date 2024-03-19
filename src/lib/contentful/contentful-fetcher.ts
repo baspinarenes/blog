@@ -5,6 +5,7 @@ import {
   parseContentfulArticle,
   parseContentfulBookReview,
   parseContentfulJourneyItem,
+  parseContentfulMovieReview,
   parseContentfulSnippet,
   parseContentfulStaticPage,
   parseContentfulThought,
@@ -14,6 +15,7 @@ import {
   TypeArticleSkeleton,
   TypeBookReviewSkeleton,
   TypeJourneyItemSkeleton,
+  TypeMovieReviewSkeleton,
   TypeSnippetSkeleton,
   TypeThoughtSkeleton,
   TypeWritingSkeleton,
@@ -49,6 +51,10 @@ async function contentfulFetcher<T>(type: ContentfulItemType, options?: Options)
       return (result.items as Entry<TypeBookReviewSkeleton, undefined, string>[])
         .filter((e) => filterEntity(e, options))
         .map(parseContentfulBookReview) as T[];
+    case "movieReview":
+      return (result.items as Entry<TypeMovieReviewSkeleton, undefined, string>[])
+        .filter((e) => filterEntity(e, options))
+        .map(parseContentfulMovieReview) as T[];
     case "snippet":
       return (result.items as Entry<TypeSnippetSkeleton, undefined, string>[])
         .filter((e) => filterEntity(e, options))
@@ -68,7 +74,6 @@ async function contentfulFetcher<T>(type: ContentfulItemType, options?: Options)
     case "journeyItem":
       return (result.items as Entry<TypeJourneyItemSkeleton, undefined, string>[])
         .filter((e) => filterEntity(e, options))
-
         .map(parseContentfulJourneyItem) as T[];
     case "staticPage":
       return (result.items as Entry<TypeStaticPageSkeleton, undefined, string>[])

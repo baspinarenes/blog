@@ -22,6 +22,7 @@ export type ContentfulItemType =
   | "snippet"
   | "thought"
   | "bookReview"
+  | "movieReview"
   | "article"
   | "writing"
   | "staticPage";

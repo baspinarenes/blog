@@ -4,6 +4,7 @@ export type { TypeBookReview, TypeBookReviewFields, TypeBookReviewSkeleton } fro
 export type { TypeCodeBlock, TypeCodeBlockFields, TypeCodeBlockSkeleton } from "./TypeCodeBlock";
 export type { TypeJourneyItem, TypeJourneyItemFields, TypeJourneyItemSkeleton } from "./TypeJourneyItem";
 export type { TypeMessageBox, TypeMessageBoxFields, TypeMessageBoxSkeleton } from "./TypeMessageBox";
+export type { TypeMovieReview, TypeMovieReviewFields, TypeMovieReviewSkeleton } from "./TypeMovieReview";
 export type { TypeSnippet, TypeSnippetFields, TypeSnippetSkeleton } from "./TypeSnippet";
 export type { TypeStaticPage, TypeStaticPageFields, TypeStaticPageSkeleton } from "./TypeStaticPage";
 export type { TypeThought, TypeThoughtFields, TypeThoughtSkeleton } from "./TypeThought";

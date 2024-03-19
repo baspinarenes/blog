@@ -19,6 +19,8 @@ export const EntityMenu: React.FC<EntityMenuProps> = async ({ type, lng }) => {
     return formatDate(entity.createdAt, lng);
   };
 
+  const href = NAVIGATIONS.find((nav) => nav.id === type)?.href;
+
   return (
     <aside className="flex flex-col lg:border-r lg:w-80 bg-zinc-50 flex-shrink-0 overflow-y-auto">
       <div className="sticky top-0 z-10 border-b bg-zinc-50 px-5 py-4">
@@ -32,9 +34,8 @@ export const EntityMenu: React.FC<EntityMenuProps> = async ({ type, lng }) => {
               key={index}
               title={entity.title}
               description={generateDescription(entity)}
-              slug={entity.slug}
+              slug={href + "/" + entity.slug}
               tag={entity.tags ? entity.tags[0] : ""}
-              type={type}
             />
           ))}
       </div>

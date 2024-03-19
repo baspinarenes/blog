@@ -1,5 +1,6 @@
 import {
   ChevronRightSquareIcon,
+  FilmIcon,
   GanttChartSquareIcon,
   GithubIcon,
   HammerIcon,
@@ -72,23 +73,33 @@ export const NAVIGATIONS = [
     icon: PenLineIcon,
   },
   {
+    id: "snippet",
+    href: "/snippet",
+    icon: ChevronRightSquareIcon,
+  },
+  {
     id: "writing",
     href: "/writing",
     icon: NotebookTextIcon,
+    location: "tr"
   },
   {
     id: "bookReview",
     href: "/book-review",
     icon: GanttChartSquareIcon,
+    location: "tr"
+  },
+  {
+    id: "movieReview",
+    href: "/movie-review",
+    icon: FilmIcon,
+    location: "tr"
   },
   {
     id: "thought",
     href: "/thought",
     icon: MessageCircleIcon,
+    location: "tr"
   },
-  {
-    id: "snippet",
-    href: "/snippet",
-    icon: ChevronRightSquareIcon,
-  },
+ 
 ];

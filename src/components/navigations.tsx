@@ -8,7 +8,7 @@ export const Navigations: React.FC<NavigationsProps> = async ({ lng }) => {
 
   return (
     <div className="flex flex-col gap-1">
-      {NAVIGATIONS.map((nav) => {
+      {NAVIGATIONS.filter(nav => !nav.location || nav.location === lng ).map((nav) => {
         const iconComponent = <nav.icon size={16} />;
 
         return (
