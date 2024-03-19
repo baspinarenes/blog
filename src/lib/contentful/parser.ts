@@ -8,7 +8,17 @@ import {
   TypeThoughtSkeleton,
   TypeWritingSkeleton,
 } from "./types";
-import { Article, BookReview, ContentImage, JourneyItem, MovieReview, Snippet, StaticPage, Thought, Writing } from "./model";
+import {
+  Article,
+  BookReview,
+  ContentImage,
+  JourneyItem,
+  MovieReview,
+  Snippet,
+  StaticPage,
+  Thought,
+  Writing,
+} from "./model";
 import { TypeStaticPageSkeleton } from "@/lib/contentful/types";
 
 export function parseContentfulSnippet(entry: Entry<TypeSnippetSkeleton, undefined, string>): Snippet {
@@ -52,18 +62,19 @@ export function parseContentfulBookReview(entry: Entry<TypeBookReviewSkeleton, u
   };
 }
 
-export function parseContentfulMovieReview(entry: Entry<TypeMovieReviewSkeleton, undefined, string>): MovieReview { 
+export function parseContentfulMovieReview(entry: Entry<TypeMovieReviewSkeleton, undefined, string>): MovieReview {
   return {
     title: entry.fields.title || "",
     slug: entry.fields.slug,
     coverImage: entry.fields.coverImage!,
     createdAt: new Date(entry.sys.createdAt),
+    director: entry.fields.director || "",
+    category: entry.fields.category || "",
     releasedAt: new Date(entry.fields.releasedAt),
     content: entry.fields.content,
     myRating: entry.fields.myRating as MovieReview["myRating"],
   };
 }
-
 
 export function parseContentfulWriting(entry: Entry<TypeWritingSkeleton, undefined, string>): Writing {
   return {

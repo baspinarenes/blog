@@ -46,6 +46,8 @@ export type MovieReview = {
   coverImage: string;
   createdAt: Date;
   releasedAt: Date;
+  director: string;
+  category: string;
   content: string;
   myRating: {
     story: number;

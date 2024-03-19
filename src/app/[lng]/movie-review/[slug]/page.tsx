@@ -25,29 +25,27 @@ async function fetchData(params: PageProps["params"]) {
 }
 
 export default async function MovieReviewPage({ params }: PageProps) {
-  const {lng} = params;
+  const { lng } = params;
   const { movieReview } = await fetchData(params);
-  
+
   return (
     <>
-      <ContentfulImage
-        src={movieReview.coverImage}
-        alt=""
-        width={600}
-        height={400}
-        className="mb-8"
-      />
-      <PostHeader 
-        {...movieReview}
-        customDescription={
-          <div>
-            <div>Yayınlanma tarihi: {formatDate(movieReview.releasedAt, lng)}</div>
-            <div>İzleme tarihi: {formatDate(movieReview.createdAt, lng)}</div>
-            <div>Hikaye: {movieReview.myRating.story}/10 Görsellik: {movieReview.myRating.visuality}/10 Müzik: {movieReview.myRating.music}/10</div>
+      <div className="relative overflow-hidden rounded-2xl mb-8">
+        <ContentfulImage src={movieReview.coverImage} alt="" width={600} height={400} className="mb-0" />
+        <div className="text-yellow-300">
+          <div className="absolute left-0 top-0 px-4 py-1 bg-black rounded-br-2xl">
+            {formatDate(movieReview.releasedAt, lng)}
           </div>
-        }
-        locale={params.lng}
-      />
+          <div className="absolute right-0 top-0 px-4 py-1 bg-black rounded-bl-2xl">{movieReview.category}</div>
+          <div className="absolute right-0 bottom-0 px-4 py-1 bg-black rounded-tl-2xl">{movieReview.director}</div>
+          <div className="absolute left-0 bottom-0 flex flex-col items-end bg-black px-4 py-2 rounded-tr-2xl">
+            <span>Hikaye: {movieReview.myRating.story}/10</span>
+            <span>Görsellik: {movieReview.myRating.visuality}/10</span>
+            <span>Müzik: {movieReview.myRating.music}/10</span>
+          </div>
+        </div>
+      </div>
+      <PostHeader {...movieReview} locale={params.lng} />
       <MarkdownContent>{movieReview.content}</MarkdownContent>
     </>
   );

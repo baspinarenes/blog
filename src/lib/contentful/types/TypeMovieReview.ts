@@ -7,6 +7,8 @@ export interface TypeMovieReviewFields {
     coverImage?: EntryFieldTypes.Symbol;
     releasedAt: EntryFieldTypes.Date;
     content: EntryFieldTypes.Text;
+    director?: EntryFieldTypes.Symbol;
+    category?: EntryFieldTypes.Symbol;
 }
 
 export type TypeMovieReviewSkeleton = EntrySkeletonType<TypeMovieReviewFields, "movieReview">;
