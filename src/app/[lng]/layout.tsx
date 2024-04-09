@@ -50,6 +50,21 @@ export function generateStaticParams() {
 export default function LocaleLayout({ children, params: { lng } }: LayoutProps) {
   return (
     <html lang={lng} dir={dir(lng)} className={`${openSans.variable} ${jetbrainsMono.variable} overflow-hidden`}>
+      <div
+        className={cn("flex lg:hidden flex-col gap-8 h-screen w-screen items-center justify-center p-8 text-center")}
+      >
+        <img
+          alt="Profile img"
+          src="/images/scream.png"
+          width={128}
+          height={128}
+          loading="eager"
+          fetchPriority="high"
+          className="w-32 h-32 animate-scream"
+        />
+        Please use desktop. 90% of the information read on mobile is forgotten within 2 hours. Maybe not. Actually, I
+        was too lazy to code the mobile site. Come on, switch on your computer.
+      </div>
       <body className={cn("hidden lg:flex h-screen max-h-screen", openSans.className)}>
         <SideMenu>
           <MenuContent lng={lng} />

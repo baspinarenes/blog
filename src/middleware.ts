@@ -15,6 +15,7 @@ export function middleware(req: NextRequest) {
   }
 
   if (languages.some((l) => req.nextUrl.pathname.startsWith(`/${l}`))) {
+    req.cookies.set(cookieName, req.nextUrl.pathname.slice(1).split("/")[0]);
     return NextResponse.next();
   }
 

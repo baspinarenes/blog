@@ -3,12 +3,7 @@ const { fontFamily } = require("tailwindcss/defaultTheme");
 
 const config = {
   darkMode: ["class"],
-  content: [
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
-  ],
+  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
   prefix: "",
   theme: {
     extend: {
@@ -70,11 +65,16 @@ const config = {
           "10%": { opacity: "1", filter: "brightness(1.25) blur(10px)" },
           "100%": { opacity: "1", filter: "brightness(1) blur(0)", scale: "1" },
         },
+        scream: {
+          "0%, 100%": { transform: "rotateY(-30deg)" },
+          "50%": { transform: "rotate(10deg)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         reveal: "reveal 0.7s ease-in-out",
+        scream: "scream 3s linear infinite",
       },
     },
   },
