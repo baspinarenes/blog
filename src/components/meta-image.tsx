@@ -1,7 +1,8 @@
 import { SITE_URL } from "@/lib/constants";
+import { capitalize } from "@/lib/utils/common";
 
 export const MetaImage: React.FC<MetaImageProps> = (props) => {
-  const { category, title, description } = props;
+  const { title, description, logo, tags = [] } = props;
 
   return (
     <div
@@ -34,18 +35,46 @@ export const MetaImage: React.FC<MetaImageProps> = (props) => {
             flex: 1,
           }}
         >
-          <img
-            alt="Profile img"
-            src={`${SITE_URL}/images/scream.png`}
-            width={360}
-            height={360}
-            style={{
-              position: "absolute",
-              bottom: "-1px",
-              height: "280px",
-              width: "280px",
-            }}
-          />
+          {logo && (
+            <img
+              alt="Profile img"
+              src={logo}
+              style={{
+                height: "200px",
+                width: "200px",
+              }}
+            />
+          )}
+          {!logo && (
+            <img
+              alt="Profile img"
+              src={`${SITE_URL}/images/scream.png`}
+              width={360}
+              height={360}
+              style={{
+                position: "absolute",
+                bottom: "-1px",
+                height: "280px",
+                width: "280px",
+              }}
+            />
+          )}
+          {tags.length > 0 && (
+            <div
+              style={{
+                borderRadius: "8px",
+                color: "gray",
+                position: "absolute",
+                right: "24px",
+                bottom: "6px",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: "12px",
+              }}
+            >
+              {tags.map((t) => `#${t}`).join(", ")}
+            </div>
+          )}
         </div>
         <div
           style={{
@@ -59,19 +88,20 @@ export const MetaImage: React.FC<MetaImageProps> = (props) => {
           <div
             style={{
               display: "flex",
-              alignItems: "center",
+              alignItems: "flex-end",
               justifyContent: "space-between",
             }}
           >
-            <span
+            <div
               style={{
                 fontSize: "48px",
-                fontWeight: "bolder",
+                lineHeight: "1",
+                marginBottom: "12px",
+                fontFamily: "JetBrainsMono-Bold",
               }}
             >
-              {title}
-            </span>
-            <span>{category}</span>
+              {capitalize(title)}
+            </div>
           </div>
           <span
             style={{
@@ -89,7 +119,8 @@ export const MetaImage: React.FC<MetaImageProps> = (props) => {
 };
 
 export type MetaImageProps = {
-  category?: string;
   title: string;
   description: string;
+  tags?: string[];
+  logo?: string;
 };

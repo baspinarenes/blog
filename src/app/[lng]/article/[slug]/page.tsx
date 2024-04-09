@@ -16,13 +16,15 @@ export default async function ArticlePage({ params }: PageProps) {
 
   return (
     <>
-      {article.coverImage && <ContentfulImage
-        src={article.coverImage.fields.file.url}
-        alt={article.coverImage.title}
-        width={article.coverImage.fields.file.details.image.width}
-        height={article.coverImage.fields.file.details.image.height}
-        className="mb-8"
-      />}
+      {article.coverImage && (
+        <ContentfulImage
+          src={article.coverImage.fields.file.url}
+          alt={article.coverImage.title}
+          width={article.coverImage.fields.file.details.image.width}
+          height={article.coverImage.fields.file.details.image.height}
+          className="mb-8"
+        />
+      )}
       <PostHeader {...article} locale={params.lng} />
       <MarkdownContent>{article.context}</MarkdownContent>
     </>
