@@ -10,7 +10,7 @@ export const config = {
 };
 
 export function middleware(req: NextRequest) {
-  if (["/_next", "/images"].some((u) => req.nextUrl.pathname.startsWith(u))) {
+  if (["/_next", "/images", "/opengraph-image"].some((u) => req.nextUrl.pathname.startsWith(u))) {
     return NextResponse.next();
   }
 

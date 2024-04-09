@@ -1,7 +1,6 @@
 import ContentfulImage from "@/components/contentful-image";
 import { MarkdownContent } from "@/components/markdown-content";
 import { PostHeader } from "@/components/post-header";
-import { RichTextContent } from "@/components/rich-text-content";
 import contentfulFetcher from "@/lib/contentful/contentful-fetcher";
 import { MovieReview } from "@/lib/contentful/model";
 import { PageProps } from "@/lib/models";

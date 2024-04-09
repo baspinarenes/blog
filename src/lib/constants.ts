@@ -8,7 +8,6 @@ import {
   LinkedinIcon,
   MessageCircleIcon,
   MousePointer2Icon,
-  NotebookPenIcon,
   NotebookTextIcon,
   PenLineIcon,
   TwitterIcon,
@@ -16,8 +15,8 @@ import {
 } from "lucide-react";
 
 export const TITLE = "Enes Başpınar";
-export const DESCRIPTION = "Software Engineer, working at Trendyol";
-export const URL = "https://enesbaspinar.com";
+export const DESCRIPTION = "A person who blogs about software development, politics, books, thoughts.";
+export const SITE_URL = "https://enesbaspinar.com";
 export const AUTHOR = {
   name: "Enes",
   surname: "Başpınar",
@@ -81,25 +80,24 @@ export const NAVIGATIONS = [
     id: "writing",
     href: "/writing",
     icon: NotebookTextIcon,
-    location: "tr"
+    location: "tr",
   },
   {
     id: "bookReview",
     href: "/book-review",
     icon: GanttChartSquareIcon,
-    location: "tr"
+    location: "tr",
   },
   {
     id: "movieReview",
     href: "/movie-review",
     icon: FilmIcon,
-    location: "tr"
+    location: "tr",
   },
   {
     id: "thought",
     href: "/thought",
     icon: MessageCircleIcon,
-    location: "tr"
+    location: "tr",
   },
- 
 ];

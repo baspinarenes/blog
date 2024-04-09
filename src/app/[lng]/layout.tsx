@@ -1,6 +1,6 @@
 import { SideMenu } from "@/components/side-menu";
 import { MenuContent } from "@/components/menu-content";
-import { DESCRIPTION, TITLE } from "@/lib/constants";
+import { DESCRIPTION, SITE_URL, TITLE } from "@/lib/constants";
 import { cn } from "@/lib/utils/common";
 import { JetBrains_Mono, Open_Sans } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -11,8 +11,24 @@ import "@/styles/globals.css";
 import { languages } from "../i18n/settings";
 
 export const metadata = {
-  title: TITLE,
+  title: {
+    template: `%s — ${TITLE}`,
+    default: TITLE,
+  },
+  metadataBase: new URL(SITE_URL),
   description: DESCRIPTION,
+  openGraph: {
+    title: {
+      template: `%s — ${TITLE}`,
+      default: TITLE,
+    },
+    description: DESCRIPTION,
+    alt: TITLE,
+    type: "website",
+    url: "/",
+    siteName: TITLE,
+    locale: "en_IE",
+  },
 };
 
 const openSans = Open_Sans({
