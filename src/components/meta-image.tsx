@@ -80,8 +80,8 @@ export const MetaImage: React.FC<MetaImageProps> = (props) => {
           style={{
             display: "flex",
             flexDirection: "column",
-            padding: "36px",
-            gap: "12px",
+            padding: "40px 36px",
+            gap: "8px",
             borderTop: "2px solid #CED4DA",
           }}
         >
