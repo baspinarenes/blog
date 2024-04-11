@@ -3,6 +3,7 @@ import { TITLE } from "@/lib/constants";
 import { ContentfulGraphqlClient } from "@/lib/contentful/graphql-client";
 import { ContentfulEntity, PageProps } from "@/lib/models";
 import { getJetBrainsMonoBold, getJetBrainsMonoRegular } from "@/lib/utils/common";
+import { ta } from "date-fns/locale";
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
@@ -15,8 +16,8 @@ export const size = {
 export const contentType = "image/png";
 
 export default async function Image({ params }: PageProps) {
-  const entity = await ContentfulGraphqlClient.getEntryBySlug(ContentfulEntity.ARTICLE, params.slug, params.lng);
-  const logo = await ContentfulGraphqlClient.getAssetUrl(`logo-${entity.category.toLowerCase()}`);
+  const entity = await ContentfulGraphqlClient.getEntryBySlug(ContentfulEntity.MOVIE_REVIEW, params.slug, params.lng);
+  const logo = await ContentfulGraphqlClient.getAssetUrl(`logo-${ContentfulEntity.MOVIE_REVIEW}`);
 
   return new ImageResponse(
     <MetaImage tags={entity.tags} title={entity.title} description={entity.description} logo={logo} />,

@@ -8,6 +8,8 @@ export interface TypeArticleFields {
     date?: EntryFieldTypes.Date;
     author: EntryFieldTypes.EntryLink<TypeAuthorSkeleton>;
     context?: EntryFieldTypes.Text;
+    description: EntryFieldTypes.Symbol;
+    category: EntryFieldTypes.Symbol<"CI/CD" | "Gitlab">;
 }
 
 export type TypeArticleSkeleton = EntrySkeletonType<TypeArticleFields, "article">;

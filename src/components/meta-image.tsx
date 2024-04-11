@@ -37,7 +37,7 @@ export const MetaImage: React.FC<MetaImageProps> = (props) => {
         >
           {logo && (
             <img
-              alt="Profile img"
+              alt="Category logo"
               src={logo}
               style={{
                 height: "200px",
@@ -47,7 +47,7 @@ export const MetaImage: React.FC<MetaImageProps> = (props) => {
           )}
           {!logo && (
             <img
-              alt="Profile img"
+              alt="Scream img"
               src={`${SITE_URL}/images/scream.png`}
               width={360}
               height={360}

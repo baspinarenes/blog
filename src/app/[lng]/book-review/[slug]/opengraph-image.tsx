@@ -15,8 +15,8 @@ export const size = {
 export const contentType = "image/png";
 
 export default async function Image({ params }: PageProps) {
-  const entity = await ContentfulGraphqlClient.getEntryBySlug(ContentfulEntity.ARTICLE, params.slug, params.lng);
-  const logo = await ContentfulGraphqlClient.getAssetUrl(`logo-${entity.category.toLowerCase()}`);
+  const entity = await ContentfulGraphqlClient.getEntryBySlug(ContentfulEntity.BOOK_REVIEW, params.slug, params.lng);
+  const logo = await ContentfulGraphqlClient.getAssetUrl(`logo-${ContentfulEntity.BOOK_REVIEW}`);
 
   return new ImageResponse(
     <MetaImage tags={entity.tags} title={entity.title} description={entity.description} logo={logo} />,

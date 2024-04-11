@@ -5,6 +5,9 @@ export interface TypeSnippetFields {
     slug: EntryFieldTypes.Symbol;
     date: EntryFieldTypes.Date;
     context?: EntryFieldTypes.Text;
+    description: EntryFieldTypes.Symbol;
+    category: EntryFieldTypes.Symbol<"Bash" | "CSS" | "Gitlab" | "HTML" | "JavaScript" | "React" | "TypeScript">;
+    tags?: EntryFieldTypes.Array<EntryFieldTypes.Symbol>;
 }
 
 export type TypeSnippetSkeleton = EntrySkeletonType<TypeSnippetFields, "snippet">;

@@ -5,6 +5,7 @@ export interface TypeThoughtFields {
     slug: EntryFieldTypes.Symbol;
     date: EntryFieldTypes.Date;
     content: EntryFieldTypes.RichText;
+    description: EntryFieldTypes.Symbol;
 }
 
 export type TypeThoughtSkeleton = EntrySkeletonType<TypeThoughtFields, "thought">;

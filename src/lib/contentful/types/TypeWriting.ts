@@ -5,7 +5,7 @@ export interface TypeWritingFields {
     title: EntryFieldTypes.Symbol;
     slug: EntryFieldTypes.Symbol;
     content?: EntryFieldTypes.RichText;
-    excerpt?: EntryFieldTypes.Symbol;
+    description: EntryFieldTypes.Symbol;
     coverImage?: EntryFieldTypes.AssetLink;
     date?: EntryFieldTypes.Date;
     author: EntryFieldTypes.EntryLink<TypeAuthorSkeleton>;

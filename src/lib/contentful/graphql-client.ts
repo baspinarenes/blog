@@ -1,3 +1,5 @@
+import { ContentfulEntity } from "../models";
+
 export async function getAssetUrl(asset: string) {
   const query = `
   query assetCollectionQuery {
@@ -29,11 +31,14 @@ export class ContentfulGraphqlClient {
   constructor() {}
 
   static async fetch(method: "get" | "post", graphqlQuery: string) {
+    console.log("process.env.NODE_ENV", process.env.NODE_ENV);
+
     const response = await fetch(ContentfulGraphqlClient.baseUrl, {
       method: method,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${process.env.CONTENTFUL_ACCESS_TOKEN}`,
+        ...(process.env.NODE_ENV === "development" && { "X-Cache": "HIT" }),
       },
       body: JSON.stringify({ query: graphqlQuery }),
     });
@@ -42,6 +47,8 @@ export class ContentfulGraphqlClient {
   }
 
   static async getAssetUrl(asset: string) {
+    console.log("asset", asset);
+
     const query = `
       query {
         assetCollection(where:{
@@ -58,7 +65,7 @@ export class ContentfulGraphqlClient {
     return assetResponse.data.assetCollection.items[0].url;
   }
 
-  static async getEntryBySlug(contentType: string, slug: string, lng: string) {
+  static async getEntryBySlug(contentType: ContentfulEntity, slug: string, lng: string) {
     const query = `
       query {
         ${contentType}Collection(locale: "${lng}", where:{
@@ -68,11 +75,7 @@ export class ContentfulGraphqlClient {
             title
             description
             category
-            contentfulMetadata {
-              tags {
-                name
-              }
-            }
+            tags
           }
         }
       }

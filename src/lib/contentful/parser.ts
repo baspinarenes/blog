@@ -22,12 +22,14 @@ import {
 import { TypeStaticPageSkeleton } from "@/lib/contentful/types";
 
 export function parseContentfulSnippet(entry: Entry<TypeSnippetSkeleton, undefined, string>): Snippet {
+  console.log("entry", entry);
+
   return {
     title: entry.fields.title || "",
     slug: entry.fields.slug,
     context: entry.fields.context,
     createdAt: new Date(entry.fields.date ? entry.fields.date : entry.sys.createdAt),
-    tags: entry.metadata?.tags?.map((tag) => tag.sys.id) ?? [],
+    tags: entry.fields.tags ?? [],
   };
 }
 
@@ -37,7 +39,7 @@ export function parseContentfulThought(entry: Entry<TypeThoughtSkeleton, undefin
     slug: entry.fields.slug,
     content: entry.fields.content || null,
     createdAt: new Date(entry.fields.date ? entry.fields.date : entry.sys.createdAt),
-    tags: entry.metadata?.tags?.map((tag) => tag.sys.id) ?? [],
+    tags: [],
   };
 }
 
@@ -48,7 +50,7 @@ export function parseContentfulArticle(entry: Entry<TypeArticleSkeleton, undefin
     coverImage: entry.fields.coverImage,
     context: entry.fields.context,
     createdAt: new Date(entry.fields.date ? entry.fields.date : entry.sys.createdAt),
-    tags: entry.metadata?.tags?.map((tag) => tag.sys.id) ?? [],
+    tags: [],
   };
 }
 
@@ -58,7 +60,7 @@ export function parseContentfulBookReview(entry: Entry<TypeBookReviewSkeleton, u
     slug: entry.fields.slug,
     content: entry.fields.content || null,
     createdAt: new Date(entry.fields.date ? entry.fields.date : entry.sys.createdAt),
-    tags: entry.metadata?.tags?.map((tag) => tag.sys.id) ?? [],
+    tags: [],
   };
 }
 
@@ -82,7 +84,7 @@ export function parseContentfulWriting(entry: Entry<TypeWritingSkeleton, undefin
     slug: entry.fields.slug,
     content: entry.fields.content || null,
     createdAt: new Date(entry.fields.date ? entry.fields.date : entry.sys.createdAt),
-    tags: entry.metadata?.tags?.map((tag) => tag.sys.id) ?? [],
+    tags: [],
   };
 }
 

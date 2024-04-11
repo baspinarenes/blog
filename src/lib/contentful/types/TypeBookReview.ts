@@ -5,6 +5,7 @@ export interface TypeBookReviewFields {
     slug: EntryFieldTypes.Symbol;
     date: EntryFieldTypes.Date;
     content: EntryFieldTypes.RichText;
+    description: EntryFieldTypes.Symbol;
 }
 
 export type TypeBookReviewSkeleton = EntrySkeletonType<TypeBookReviewFields, "bookReview">;

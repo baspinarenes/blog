@@ -13,8 +13,6 @@ export const size = {
 export const contentType = "image/png";
 
 export default async function Image() {
-  console.log("SADASD");
-
   return new ImageResponse(<MetaImage title="Articles" description="My blog posts on every subject of software." />, {
     ...size,
     fonts: [

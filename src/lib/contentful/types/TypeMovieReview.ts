@@ -9,6 +9,7 @@ export interface TypeMovieReviewFields {
     content: EntryFieldTypes.Text;
     director?: EntryFieldTypes.Symbol;
     category?: EntryFieldTypes.Symbol;
+    description: EntryFieldTypes.Symbol;
 }
 
 export type TypeMovieReviewSkeleton = EntrySkeletonType<TypeMovieReviewFields, "movieReview">;
