@@ -22,8 +22,6 @@ import {
 import { TypeStaticPageSkeleton } from "@/lib/contentful/types";
 
 export function parseContentfulSnippet(entry: Entry<TypeSnippetSkeleton, undefined, string>): Snippet {
-  console.log("entry", entry);
-
   return {
     title: entry.fields.title || "",
     slug: entry.fields.slug,

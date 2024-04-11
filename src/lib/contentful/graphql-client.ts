@@ -31,8 +31,6 @@ export class ContentfulGraphqlClient {
   constructor() {}
 
   static async fetch(method: "get" | "post", graphqlQuery: string) {
-    console.log("process.env.NODE_ENV", process.env.NODE_ENV);
-
     const response = await fetch(ContentfulGraphqlClient.baseUrl, {
       method: method,
       headers: {
@@ -47,8 +45,6 @@ export class ContentfulGraphqlClient {
   }
 
   static async getAssetUrl(asset: string) {
-    console.log("asset", asset);
-
     const query = `
       query {
         assetCollection(where:{

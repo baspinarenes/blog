@@ -13,7 +13,6 @@ async function fetchData(type: ContentfulItemType, lng: Language) {
 export const EntityMenu: React.FC<EntityMenuProps> = async ({ type, lng }) => {
   const navigation = NAVIGATIONS.find((nav) => nav.id === type);
   const entities = await fetchData(type, lng);
-  console.log("entities", entities);
 
   const { t } = await useTranslation(lng, "common");
 
