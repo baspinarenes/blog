@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils/common";
+import { cn } from "@/lib/utils";
 import { ArrowUpRightIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useSelectedLayoutSegment, useSelectedLayoutSegments } from "next/navigation";
@@ -11,8 +11,7 @@ export const Navlink: React.FC<NavlinkProps> = (props) => {
   const pathname = usePathname();
   const pathnameButRemovedLocale = pathname.replace(/\/[a-z]{2}/, "/");
 
-  let isActive =
-    href === "/" ? pathnameButRemovedLocale === "/" : pathnameButRemovedLocale.includes(href);
+  let isActive = href === "/" ? pathnameButRemovedLocale === "/" : pathnameButRemovedLocale.includes(href);
   const LinkComponent = external ? "a" : Link;
 
   return (

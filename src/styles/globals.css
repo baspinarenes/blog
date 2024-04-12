@@ -100,7 +100,7 @@
   }
 
   main {
-    @apply w-full overflow-y-auto;
+    @apply w-full lg:overflow-y-auto;
   }
 
   ::-webkit-scrollbar {
@@ -122,11 +122,33 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
+
+  .default-scrollbar {
+    &::-webkit-scrollbar {
+      width: initial !important;
+      height: initial !important;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+      background: initial !important;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: initial !important;
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+      background: initial !important;
+    }
+  }
 }
 
 @layer components {
   .container {
-    @apply px-8 pt-16 pb-16 w-full min-h-screen max-w-4xl mx-auto relative;
+    @apply px-8 pt-6 lg:pt-16 pb-8 lg:pb-16 w-full min-h-screen max-w-4xl mx-auto relative;
   }
 
   .inline-code {
@@ -138,6 +160,11 @@
       @apply hidden;
     }
   }
+
+  /* Hide the scroll line of the drawer */
+  /* div[vaul-drawer] .bg-muted {
+    @apply hidden;
+  } */
 
   .markdown {
     >*:nth-child(1):is(h2) {

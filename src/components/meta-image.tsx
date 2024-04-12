@@ -1,5 +1,5 @@
 import { SITE_URL } from "@/lib/constants";
-import { capitalize } from "@/lib/utils/common";
+import { capitalize } from "@/lib/utils";
 
 export const MetaImage: React.FC<MetaImageProps> = (props) => {
   const { title, description, logo, tags } = props;

@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 import rehypeHighlight from "rehype-highlight";
 import rehypePrism from "rehype-prism-plus";
 import { BugIcon, QuoteIcon } from "lucide-react";
-import { dasherize } from "@/lib/utils/common";
+import { dasherize } from "@/lib/utils";
 import NextImage from "next/image";
 import { contentfulLoader } from "@/lib/utils/image-loaders";
 

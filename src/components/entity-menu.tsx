@@ -3,7 +3,7 @@ import { ContentItem } from "./content-item";
 import { NAVIGATIONS } from "@/lib/constants";
 import contentfulFetcher from "@/lib/contentful/contentful-fetcher";
 
-import { formatDate } from "@/lib/utils/common";
+import { formatDate } from "@/lib/utils";
 import { useTranslation } from "@/app/i18n";
 
 async function fetchData(type: ContentfulItemType, lng: Language) {

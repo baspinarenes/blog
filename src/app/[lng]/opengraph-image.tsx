@@ -1,6 +1,6 @@
 import { MetaImage } from "@/components/meta-image";
 import { DESCRIPTION, TITLE } from "@/lib/constants";
-import { getJetBrainsMonoBold, getJetBrainsMonoRegular } from "@/lib/utils/common";
+import { getJetBrainsMonoBold, getJetBrainsMonoRegular } from "@/lib/utils";
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";

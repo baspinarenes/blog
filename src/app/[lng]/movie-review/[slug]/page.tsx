@@ -5,7 +5,7 @@ import contentfulFetcher from "@/lib/contentful/contentful-fetcher";
 import { ContentfulGraphqlClient } from "@/lib/contentful/graphql-client";
 import { MovieReview } from "@/lib/contentful/model";
 import { PageProps } from "@/lib/models";
-import { formatDate } from "@/lib/utils/common";
+import { formatDate } from "@/lib/utils";
 
 import { notFound } from "next/navigation";
 

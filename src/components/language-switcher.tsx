@@ -1,7 +1,6 @@
 "use client";
 
 import { Language } from "@/lib/models";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "./ui/button";
 import { LanguagesIcon } from "lucide-react";
@@ -26,13 +25,20 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ lng }) => {
   return (
     <div className="flex items-center gap-2">
       <Button
-        className="w-full bg-center bg-cover bg-no-repeat"
+        className="hidden lg:block w-full bg-center bg-cover bg-no-repeat"
         style={{
           backgroundImage: `url("/images/flags/${lng}.png")`,
         }}
         onClick={handleLanguageChange}
       />
-      <LanguagesIcon size={20} />
+      <Button
+        className="block lg:hidden w-28 h-9 bg-center bg-cover bg-no-repeat"
+        style={{
+          backgroundImage: `url("/images/flags/small/${lng}.png")`,
+        }}
+        onClick={handleLanguageChange}
+      />
+      <LanguagesIcon size={20} className="hidden lg:block" />
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { capitalize, cn, generateYearArray } from "@/lib/utils/common";
+import { capitalize, cn, generateYearArray } from "@/lib/utils";
 import Link from "next/link";
 import { EntityByYear, Language } from "@/lib/models";
 import contentfulFetcher from "@/lib/contentful/contentful-fetcher";
@@ -11,63 +11,21 @@ export const HomeTable: React.FC<HomeTableProps> = async ({ lng }) => {
   const { t } = await useTranslation(lng, "home");
 
   return (
-    <>
-      <Table className="font-medium text-gray-500 mb-12">
-        <TableHeader>
-          <TableRow className="hover:bg-transparent text-sm">
-            <TableHead className="w-[60px]">{t("table.year")}</TableHead>
-            <TableHead className="w-[80px]">{t("table.type")}</TableHead>
-            <TableHead className="w-[80px]">{t("table.date")}</TableHead>
-            <TableHead>{t("table.title")}</TableHead>
-            <TableHead className="text-center w-20">{t("table.view")}</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {Object.keys(data)
-            .map(Number)
-            .sort((a, b) => b - a)
-            .map((year: number) =>
-              Object.entries(data[Number(year)]).map(([type, items], i) =>
-                items.map((item, j) => {
-                  const isYearAlreadyWrited = i + j !== 0;
-                  const isTypeAlreadyWrited = j !== 0;
-
-                  return (
-                    <TableRow className="h-14 hover:bg-transparent">
-                      <TableCell className={cn("font-medium", isYearAlreadyWrited && "border-t border-white")}>
-                        {!isYearAlreadyWrited ? year : ""}
-                      </TableCell>
-                      <TableCell className={cn(isTypeAlreadyWrited && "border-t border-white")}>
-                        {!isTypeAlreadyWrited ? capitalize(type) : ""}
-                      </TableCell>
-                      <TableCell>{` ${item.date.toLocaleString(lng, {
-                        month: "short",
-                      })} ${item.date.getDate().toString().padStart(2, "0")}`}</TableCell>
-                      <TableCell>
-                        <Link href={`${type}/${item.slug}`} className="text-blue-600 link break-words inline-flex">
-                          {item.title}
-                        </Link>
-                      </TableCell>
-                      <TableCell className="text-center">?</TableCell>
-                    </TableRow>
-                  );
-                })
-              )
-            )}
-        </TableBody>
-      </Table>
-      {/* <Table className="font-medium text-gray-500">
-        <TableHeader>
-          <TableRow className="hover:bg-transparent text-sm">
-            <TableHead>{t("table.title")}</TableHead>
-            <TableHead className="text-center w-20">{t("table.view")}</TableHead>
-            <TableHead className="w-[60px]">{t("table.date")}</TableHead>
-            <TableHead className="w-[80px]">{t("table.type")}</TableHead>
-            <TableHead className="w-[60px]">{t("table.year")}</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {Object.keys(data).map((year: string) =>
+    <Table className="hidden lg:block font-medium text-gray-500 mb-12">
+      <TableHeader>
+        <TableRow className="hover:bg-transparent text-sm">
+          <TableHead className="w-[60px]">{t("table.year")}</TableHead>
+          <TableHead className="w-[80px]">{t("table.type")}</TableHead>
+          <TableHead className="w-[80px]">{t("table.date")}</TableHead>
+          <TableHead>{t("table.title")}</TableHead>
+          <TableHead className="text-center w-20">{t("table.view")}</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {Object.keys(data)
+          .map(Number)
+          .sort((a, b) => b - a)
+          .map((year: number) =>
             Object.entries(data[Number(year)]).map(([type, items], i) =>
               items.map((item, j) => {
                 const isYearAlreadyWrited = i + j !== 0;
@@ -75,31 +33,28 @@ export const HomeTable: React.FC<HomeTableProps> = async ({ lng }) => {
 
                 return (
                   <TableRow className="h-14 hover:bg-transparent">
+                    <TableCell className={cn("font-medium", isYearAlreadyWrited && "border-t border-white")}>
+                      {!isYearAlreadyWrited ? year : ""}
+                    </TableCell>
+                    <TableCell className={cn(isTypeAlreadyWrited && "border-t border-white")}>
+                      {!isTypeAlreadyWrited ? capitalize(type) : ""}
+                    </TableCell>
+                    <TableCell>{` ${item.date.toLocaleString(lng, {
+                      month: "short",
+                    })} ${item.date.getDate().toString().padStart(2, "0")}`}</TableCell>
                     <TableCell>
                       <Link href={`${type}/${item.slug}`} className="text-blue-600 link break-words inline-flex">
                         {item.title}
                       </Link>
                     </TableCell>
                     <TableCell className="text-center">?</TableCell>
-                    <TableCell>{`${item.date.getDate().toString().padStart(2, "0")}/${item.date
-                      .getUTCMonth()
-                      .toString()
-                      .padStart(2, "0")}`}</TableCell>
-
-                    <TableCell className={cn(isTypeAlreadyWrited && "border-t border-white")}>
-                      {!isTypeAlreadyWrited ? capitalize(type) : ""}
-                    </TableCell>
-                    <TableCell className={cn("font-medium", isYearAlreadyWrited && "border-t border-white")}>
-                      {!isYearAlreadyWrited ? year : ""}
-                    </TableCell>
                   </TableRow>
                 );
               })
             )
           )}
-        </TableBody>
-      </Table> */}
-    </>
+      </TableBody>
+    </Table>
   );
 };
 

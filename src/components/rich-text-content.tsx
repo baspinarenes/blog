@@ -1,7 +1,7 @@
 import { Options, documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { BLOCKS, INLINES, MARKS, Document as RichTextDocument } from "@contentful/rich-text-types";
 import { CodeBlock } from "./code-block";
-import { dasherize } from "@/lib/utils/common";
+import { dasherize } from "@/lib/utils";
 import ContentfulImage from "./contentful-image";
 import { Separator } from "./ui/separator";
 import { Link } from "./link";

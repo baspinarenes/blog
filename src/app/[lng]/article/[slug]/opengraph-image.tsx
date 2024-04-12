@@ -2,7 +2,7 @@ import { MetaImage } from "@/components/meta-image";
 import { TITLE } from "@/lib/constants";
 import { ContentfulGraphqlClient } from "@/lib/contentful/graphql-client";
 import { ContentfulEntity, PageProps } from "@/lib/models";
-import { getJetBrainsMonoBold, getJetBrainsMonoRegular } from "@/lib/utils/common";
+import { getJetBrainsMonoBold, getJetBrainsMonoRegular } from "@/lib/utils";
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";

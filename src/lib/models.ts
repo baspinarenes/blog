@@ -51,6 +51,6 @@ export type EntitySummary = {
   date: Date;
 };
 
-export type EntityByYear = Record<number, Record<string, EntitySummary[]>>;
+export type EntityByYear = Record<string, Record<string, EntitySummary[]>>;
 
 export type Language = (typeof languages)[number];
