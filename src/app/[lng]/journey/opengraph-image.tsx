@@ -1,5 +1,7 @@
+import { useTranslation } from "@/app/i18n";
 import { MetaImage } from "@/components/meta-image";
-import { DESCRIPTION, TITLE } from "@/lib/constants";
+import { TITLE } from "@/lib/constants";
+import { PageProps } from "@/lib/models";
 import { getJetBrainsMonoBold, getJetBrainsMonoRegular } from "@/lib/utils";
 import { ImageResponse } from "next/og";
 
@@ -12,8 +14,10 @@ export const size = {
 
 export const contentType = "image/png";
 
-export default async function Image() {
-  return new ImageResponse(<MetaImage title="Journey" description="It's what I've been doing all my life." />, {
+export default async function Image({ params: { lng } }: PageProps) {
+  const { t } = await useTranslation(lng, "journey");
+
+  return new ImageResponse(<MetaImage title="Journey" description={t("description")} />, {
     ...size,
     fonts: [
       {

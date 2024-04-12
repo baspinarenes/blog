@@ -1,5 +1,7 @@
+import { useTranslation } from "@/app/i18n";
 import { MetaImage } from "@/components/meta-image";
-import { DESCRIPTION, TITLE } from "@/lib/constants";
+import { TITLE } from "@/lib/constants";
+import { PageProps } from "@/lib/models";
 import { getJetBrainsMonoBold, getJetBrainsMonoRegular } from "@/lib/utils";
 import { ImageResponse } from "next/og";
 
@@ -12,25 +14,24 @@ export const size = {
 
 export const contentType = "image/png";
 
-export default async function Image() {
-  return new ImageResponse(
-    <MetaImage title="Tools" description="Softwares that I use in daily life while developing." />,
-    {
-      ...size,
-      fonts: [
-        {
-          name: "JetBrainsMono-Bold",
-          data: await getJetBrainsMonoBold(),
-          style: "normal",
-          weight: 600,
-        },
-        {
-          name: "JetBrainsMono-Regular",
-          data: await getJetBrainsMonoRegular(),
-          style: "normal",
-          weight: 400,
-        },
-      ],
-    }
-  );
+export default async function Image({ params: { lng } }: PageProps) {
+  const { t } = await useTranslation(lng, "tools");
+
+  return new ImageResponse(<MetaImage title="Tools" description={t("description")} />, {
+    ...size,
+    fonts: [
+      {
+        name: "JetBrainsMono-Bold",
+        data: await getJetBrainsMonoBold(),
+        style: "normal",
+        weight: 600,
+      },
+      {
+        name: "JetBrainsMono-Regular",
+        data: await getJetBrainsMonoRegular(),
+        style: "normal",
+        weight: 400,
+      },
+    ],
+  });
 }
