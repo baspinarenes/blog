@@ -156,6 +156,10 @@
       @apply mb-4;
     }
 
+    iframe {
+      @apply overflow-hidden rounded-2xl w-full h-full aspect-video;
+    }
+
     pre {
       @apply !m-0 !font-mono text-sm;
 

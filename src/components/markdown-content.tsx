@@ -55,7 +55,7 @@ const components: Partial<Components> = {
     );
   },
   img: ({ src, alt }) => {
-    if (src?.includes("video")) {
+    if (src?.search(/\bvideo\b/) !== -1) {
       return (
         <iframe
           src={src}
@@ -67,13 +67,17 @@ const components: Partial<Components> = {
       );
     }
 
-    return <img src={src} alt={alt} />;
+    return <img src={src} alt={alt} className="w-full" />;
   },
   code: ({ children, className, node, ...rest }) => {
     let match = /language-(\w+)/.test(className || "");
     const nodeInfo = node as any;
     const meta = nodeInfo?.data?.meta;
     const language = nodeInfo?.properties?.className?.[0]?.split("-")?.[1];
+
+    if (language === "video") {
+      return <div className="w-full" dangerouslySetInnerHTML={{ __html: children!.toString() }}></div>;
+    }
 
     if (language === "result") {
       return (

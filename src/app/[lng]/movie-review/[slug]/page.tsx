@@ -30,7 +30,7 @@ export default async function MovieReviewPage({ params }: PageProps) {
   return (
     <>
       <div className="relative overflow-hidden rounded-2xl mb-8">
-        <ContentfulImage src={movieReview.coverImage} alt="" width={600} height={400} className="mb-0" />
+        <ContentfulImage src={movieReview.coverImage} alt="" width={600} height={400} className="mb-0 h-full" />
         <div className="text-yellow-300">
           <div className="absolute left-0 top-0 px-4 py-1 bg-black rounded-br-2xl">
             {formatDate(movieReview.releasedAt, lng)}

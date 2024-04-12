@@ -36,7 +36,7 @@ export class ContentfulGraphqlClient {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${process.env.CONTENTFUL_ACCESS_TOKEN}`,
-        ...(process.env.NODE_ENV === "development" && { "X-Cache": "HIT" }),
+        ...(process.env.NODE_ENV === "development" && { "X-Cache": "MISS" }),
       },
       body: JSON.stringify({ query: graphqlQuery }),
     });
