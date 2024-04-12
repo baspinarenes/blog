@@ -2,7 +2,7 @@ import { SITE_URL } from "@/lib/constants";
 import { capitalize } from "@/lib/utils/common";
 
 export const MetaImage: React.FC<MetaImageProps> = (props) => {
-  const { title, description, logo, tags = [] } = props;
+  const { title, description, logo, tags } = props;
 
   return (
     <div
@@ -59,7 +59,7 @@ export const MetaImage: React.FC<MetaImageProps> = (props) => {
               }}
             />
           )}
-          {tags.length > 0 && (
+          {tags && tags.length > 0 && (
             <div
               style={{
                 borderRadius: "8px",
@@ -70,6 +70,7 @@ export const MetaImage: React.FC<MetaImageProps> = (props) => {
                 alignItems: "center",
                 justifyContent: "center",
                 marginBottom: "12px",
+                fontSize: "20px",
               }}
             >
               {tags.map((t) => `#${t}`).join(", ")}
