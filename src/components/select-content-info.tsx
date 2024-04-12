@@ -8,7 +8,7 @@ export const SelectContentInfo: React.FC<SelectContentInfoProps> = async ({ lng 
   return (
     <div className="absolute left-0 top-0 h-full w-full hidden lg:flex flex-col gap-2 justify-center items-center text-zinc-300">
       <FileTextIcon size={32} absoluteStrokeWidth />
-      <span className="text-md">{t("choose-a-content")}</span>
+      <span className="text-base">{t("choose-a-content")}</span>
     </div>
   );
 };

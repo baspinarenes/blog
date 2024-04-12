@@ -20,7 +20,7 @@ export const EntitiesForMobile: React.FC<EntitiesForMobileProps> = async (props)
           <li className="flex flex-col gap-1">
             <Link
               href={`${type}/${entity.slug}`}
-              className="text-blue-600 text-md link break-words inline-flex text-pretty leading-6"
+              className="text-blue-600 text-base link break-words inline-flex text-pretty leading-6"
             >
               {entity.title}
             </Link>
