@@ -5,13 +5,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "./ui/button";
 import { LanguagesIcon } from "lucide-react";
-import { cookieName, languages } from "@/app/i18n/settings";
+import { lngCookieName, languages } from "@/app/i18n/settings";
 import { useCookies } from "react-cookie";
 import { useRouter } from "next/navigation";
 
 export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ lng }) => {
   const pathname = usePathname();
-  const [_, setCookie] = useCookies([cookieName]);
+  const [_, setCookie] = useCookies([lngCookieName]);
   const router = useRouter();
 
   const handleLanguageChange = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -19,7 +19,7 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ lng }) => {
     const currentLocaleIndex = languages.indexOf(lng);
     const nextLanguage = languages[currentLocaleIndex + 1] ?? languages[0];
     const redirectedPathname = pathname.replace(/\/\w{2}($|(?=\/))/, `/${nextLanguage}`);
-    setCookie(cookieName, nextLanguage, { path: "/" });
+    setCookie(lngCookieName, nextLanguage, { path: "/" });
     router.push(redirectedPathname);
   };
 

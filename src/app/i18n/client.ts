@@ -12,7 +12,7 @@ import {
 import { useCookies } from "react-cookie";
 import resourcesToBackend from "i18next-resources-to-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
-import { getOptions, languages, cookieName } from "./settings";
+import { getOptions, languages, lngCookieName } from "./settings";
 
 const runsOnServerSide = typeof window === "undefined";
 
@@ -34,7 +34,7 @@ export function useTranslation<Ns extends FlatNamespace, KPrefix extends KeyPref
   ns?: Ns,
   options?: UseTranslationOptions<KPrefix>
 ): UseTranslationResponse<FallbackNs<Ns>, KPrefix> {
-  const [cookies, setCookie] = useCookies([cookieName]);
+  const [cookies, setCookie] = useCookies([lngCookieName]);
   const translation = rawUseTranslation(ns, options);
   const { i18n } = translation;
 
@@ -55,7 +55,7 @@ export function useTranslation<Ns extends FlatNamespace, KPrefix extends KeyPref
 
     useEffect(() => {
       if (cookies.i18next === lng) return;
-      setCookie(cookieName, lng, { path: "/" });
+      setCookie(lngCookieName, lng, { path: "/" });
     }, [lng, cookies.i18next]);
   }
   return translation;
