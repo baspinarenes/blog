@@ -2,6 +2,7 @@ import ContentfulImage from "@/components/contentful-image";
 import { MarkdownContent } from "@/components/markdown-content";
 import { PostHeader } from "@/components/post-header";
 import contentfulFetcher from "@/lib/contentful/contentful-fetcher";
+import { ContentfulGraphqlClient } from "@/lib/contentful/graphql-client";
 import { MovieReview } from "@/lib/contentful/model";
 import { PageProps } from "@/lib/models";
 import { formatDate } from "@/lib/utils/common";
@@ -26,11 +27,12 @@ async function fetchData(params: PageProps["params"]) {
 export default async function MovieReviewPage({ params }: PageProps) {
   const { lng } = params;
   const { movieReview } = await fetchData(params);
+  const coverImage = await ContentfulGraphqlClient.getAssetUrl(`poster-${movieReview.slug}`);
 
   return (
     <>
       <div className="relative overflow-hidden rounded-2xl mb-8">
-        <ContentfulImage src={movieReview.coverImage} alt="" width={600} height={400} className="mb-0 h-full" />
+        <ContentfulImage src={coverImage} alt="" width={1920} height={1080} className="mb-0 h-full" />
         <div className="text-yellow-300">
           <div className="absolute left-0 top-0 px-4 py-1 bg-black rounded-br-2xl">
             {formatDate(movieReview.releasedAt, lng)}

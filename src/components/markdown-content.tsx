@@ -5,6 +5,8 @@ import rehypeHighlight from "rehype-highlight";
 import rehypePrism from "rehype-prism-plus";
 import { BugIcon, QuoteIcon } from "lucide-react";
 import { dasherize } from "@/lib/utils/common";
+import NextImage from "next/image";
+import { contentfulLoader } from "@/lib/utils/image-loaders";
 
 const components: Partial<Components> = {
   h2: ({ children }) => {
@@ -54,12 +56,12 @@ const components: Partial<Components> = {
       </blockquote>
     );
   },
-  img: ({ src, alt }) => {
-    if (src?.search(/\bvideo\b/) !== -1) {
+  img: (props) => {
+    if (props.src?.search(/\bvideo\b/) !== -1) {
       return (
         <iframe
-          src={src}
-          title={alt}
+          src={props.src}
+          title={props.alt}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
           className="w-full aspect-[1920/1080] rounded-2xl"
@@ -67,7 +69,7 @@ const components: Partial<Components> = {
       );
     }
 
-    return <img src={src} alt={alt} className="w-full" />;
+    return <img src={props.src} alt={props.alt} className="w-full" />;
   },
   code: ({ children, className, node, ...rest }) => {
     let match = /language-(\w+)/.test(className || "");

@@ -13,7 +13,7 @@ export default function ContentfulImage(props: ContentfulImageProps) {
       priority
       alt={props.alt}
       loading="eager"
-      className={twMerge("w-full mb-12 rounded-2xl", props.className)}
+      className={twMerge("mb-12 rounded-2xl w-full aspect-video", props.className)}
       loader={contentfulLoader}
       {...otherProps}
     />
