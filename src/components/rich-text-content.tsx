@@ -7,6 +7,7 @@ import { Separator } from "./ui/separator";
 import { Link } from "./link";
 import { Table, TableBody, TableCell, TableHead, TableRow } from "./ui/table";
 import { MessageBox } from "./message-box";
+import { Children } from "react";
 
 const options: Options = {
   renderMark: {
@@ -29,7 +30,7 @@ const options: Options = {
       return <TableHead className="text-sm">{children}</TableHead>;
     },
     [BLOCKS.HEADING_2]: (_, children) => {
-      const id = dasherize(children as string);
+      const id = dasherize((Children.toArray(children).at(0) as any).props.children as string);
       const url = `h2-${id}`;
       return (
         <h2
@@ -93,7 +94,7 @@ const options: Options = {
       const { url, details } = file;
 
       return (
-        <figure className="my-10 flex flex-col justify-center items-center gap-2">
+        <figure className="my-4 lg:my-10 flex flex-col justify-center items-center gap-2">
           <ContentfulImage
             src={url}
             width={details.image.width}

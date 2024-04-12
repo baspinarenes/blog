@@ -7,8 +7,8 @@ export const Navigations: React.FC<NavigationsProps> = async ({ lng }) => {
   const { t } = await useTranslation(lng, "common");
 
   return (
-    <div className="flex flex-col gap-1">
-      {NAVIGATIONS.filter(nav => !nav.location || nav.location === lng ).map((nav) => {
+    <div className="flex flex-col gap-2 lg:gap-1">
+      {NAVIGATIONS.filter((nav) => !nav.location || nav.location === lng).map((nav) => {
         const iconComponent = <nav.icon size={16} />;
 
         return (

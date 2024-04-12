@@ -5,9 +5,9 @@ export const PostHeader: React.FC<PostHeaderProps> = (props) => {
   const { title, createdAt, locale, customDescription = null, tags = [] } = props;
 
   return (
-    <div className="flex flex-col gap-3 mb-8">
+    <div className="flex flex-col mb-6">
       <h1>{title}</h1>
-      <div className="flex gap-3 text-gray-400 font-light text-sm -mt-12">
+      <div className="flex gap-3 text-gray-400 font-light text-sm -mt-4 lg:-mt-8">
         {customDescription}
         {!customDescription && createdAt && <Date date={createdAt} locale={locale} />}
         {!customDescription && tags.length > 0 && (

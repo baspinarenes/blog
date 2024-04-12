@@ -23,16 +23,16 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ lng }) => {
   };
 
   return (
-    <div className="flex items-center gap-2">
-      <Button
+    <div className="flex items-center gap-2 ml-auto">
+      <button
         className="hidden lg:block w-full bg-center bg-cover bg-no-repeat"
         style={{
           backgroundImage: `url("/images/flags/${lng}.png")`,
         }}
         onClick={handleLanguageChange}
       />
-      <Button
-        className="block lg:hidden w-28 h-9 bg-center bg-cover bg-no-repeat"
+      <button
+        className="block lg:hidden w-9 h-9 bg-center bg-cover bg-no-repeat rounded-full"
         style={{
           backgroundImage: `url("/images/flags/small/${lng}.png")`,
         }}

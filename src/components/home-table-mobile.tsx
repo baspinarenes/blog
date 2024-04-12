@@ -17,21 +17,21 @@ export const HomeTableMobile: React.FC<HomeTableMobileProps> = async ({ lng }) =
         )
         .map((category) => (
           <div>
-            <h2 className="text-2xl mb-4 text-balance capitalize">{t(`navigation.${category}`)}</h2>
+            <h2 className="text-xl mb-4 text-balance capitalize">{t(`navigation.${category}`)}</h2>
             <div>
               {Object.keys(data[category])
                 .filter((year: string) => data[category][year].length)
                 .map((year: string) => (
                   <ul className="list-none p-0 flex flex-col gap-4">
                     {data[category][year].map((item) => (
-                      <li className="flex flex-col">
+                      <li className="flex flex-col gap-1">
                         <Link
                           href={`${category}/${item.slug}`}
-                          className="text-blue-600 mb-2 text-lg link break-words inline-flex text-pretty leading-6"
+                          className="text-blue-600 text-md link break-words inline-flex text-pretty leading-6"
                         >
                           {item.title}
                         </Link>
-                        <div className="flex gap-2 text-sm">
+                        <div className="flex gap-1 text-xs">
                           <time>
                             {item.date.getDate().toString().padStart(2, "0")}{" "}
                             {` ${item.date.toLocaleString(lng, {
@@ -39,8 +39,8 @@ export const HomeTableMobile: React.FC<HomeTableMobileProps> = async ({ lng }) =
                             })} `}
                             {item.date.getFullYear()}
                           </time>
-                          <span>-</span>
-                          <span>??? View</span>
+                          {/* <span>-</span> */}
+                          {/* <span>??? View</span> */}
                         </div>
                       </li>
                     ))}
