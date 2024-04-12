@@ -71,7 +71,6 @@ export class ContentfulGraphqlClient {
             title
             description
             category
-            tags
           }
         }
       }

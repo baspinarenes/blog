@@ -40,7 +40,7 @@ export enum ContentfulEntity {
   ARTICLE = "article",
   WRITING = "writing",
   BOOK_REVIEW = "bookReview",
-  MOVIE_REVIEW = "moviewReview",
+  MOVIE_REVIEW = "movieReview",
   THOUGHT = "thought",
   SNIPPET = "snippet",
 }
