@@ -17,7 +17,7 @@ export default async function HomePage({ params: { lng } }: PageProps) {
           height={128}
           loading="eager"
           fetchPriority="high"
-          className="w-32 h-32 mx-auto mb-8 animate-scream"
+          className="block lg:hidden w-32 h-32 mx-auto mb-8 animate-scream"
         />
         <h1 className="hidden lg:block">{t("title")}</h1>
         <p className="text-justify">{t("description", { name: AUTHOR.name, age: AUTHOR.age })}</p>
