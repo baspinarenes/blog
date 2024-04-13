@@ -10,8 +10,8 @@ export const MobileHamburgerMenu: React.FC<MobileHamburgerMenuProps> = (props) =
   return (
     <Drawer>
       <DrawerTrigger>
-        <Button className="px-1 py-2" size="icon">
-          <MenuIcon size={20} />
+        <Button className="px-1 py-2" size="icon" variant="ghost">
+          <MenuIcon size={16} />
         </Button>
       </DrawerTrigger>
       <DrawerContent className="max-h-[80vh]">

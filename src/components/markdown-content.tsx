@@ -100,9 +100,7 @@ const components: Partial<Components> = {
       </code>
     );
   },
-  hr: () => (
-    <hr className="my-8 border-0 h-0 border-t border-b border-t-[rgba(0, 0, 0, 0.1)] border-b-[rgba(255, 255, 255, 0.3)]" />
-  ),
+  hr: () => <hr className="my-8 border-0 h-0 border-t border-t-[rgba(0, 0, 0, 0.1)]" />,
 };
 
 export const MarkdownContent: React.FC<MarkdownContentProps> = ({ children }) => {

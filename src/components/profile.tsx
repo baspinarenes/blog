@@ -1,10 +1,11 @@
 import { AUTHOR } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
 export const Profile: React.FC<ProfileProps> = (props) => {
-  const {} = props;
+  const { centered } = props;
 
   return (
-    <div className="flex gap-2 p-2">
+    <div className={cn("flex gap-2 p-2", centered && "justify-center mt-8")}>
       <img
         alt="Profile img"
         src="/images/scream.png"
@@ -24,4 +25,6 @@ export const Profile: React.FC<ProfileProps> = (props) => {
   );
 };
 
-export type ProfileProps = {};
+export type ProfileProps = {
+  centered: boolean;
+};

@@ -1,17 +1,17 @@
 "use client";
 
 import { Language } from "@/lib/models";
-import { usePathname } from "next/navigation";
 import { Button } from "./ui/button";
 import { LanguagesIcon } from "lucide-react";
-import { lngCookieName, languages } from "@/app/i18n/settings";
+import { FlagButton } from "./flag-button";
+import { usePathname, useRouter } from "next/navigation";
+import { languages, lngCookieName } from "@/app/i18n/settings";
 import { useCookies } from "react-cookie";
-import { useRouter } from "next/navigation";
 
 export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ lng }) => {
   const pathname = usePathname();
-  const [_, setCookie] = useCookies([lngCookieName]);
   const router = useRouter();
+  const [_, setCookie] = useCookies([lngCookieName]);
 
   const handleLanguageChange = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -24,21 +24,14 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ lng }) => {
 
   return (
     <div className="flex items-center gap-2 ml-auto">
-      <button
-        className="hidden lg:block w-full bg-center bg-cover bg-no-repeat"
-        style={{
-          backgroundImage: `url("/images/flags/${lng}.png")`,
-        }}
-        onClick={handleLanguageChange}
-      />
-      <button
-        className="block lg:hidden w-9 h-9 bg-center bg-cover bg-no-repeat rounded-full"
-        style={{
-          backgroundImage: `url("/images/flags/small/${lng}.png")`,
-        }}
-        onClick={handleLanguageChange}
-      />
+      {/* Desktop */}
+      <FlagButton lng={lng} handleLanguageChange={handleLanguageChange} />
       <LanguagesIcon size={20} className="hidden lg:block" />
+
+      {/* Mobile */}
+      <Button variant="ghost" onClick={handleLanguageChange} size="icon">
+        <LanguagesIcon size={16} />
+      </Button>
     </div>
   );
 };

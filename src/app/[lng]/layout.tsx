@@ -59,7 +59,7 @@ export default function LocaleLayout({ children, params: { lng } }: LayoutProps)
         <SideMenu>
           <MenuContent lng={lng} />
         </SideMenu>
-        <div className="flex lg:hidden px-6 lg:px-4 py-5">
+        <div className="flex lg:hidden h-12 p-3 border-b items-center">
           <MobileHamburgerMenu lng={lng} />
           <LanguageSwitcher lng={lng} />
         </div>

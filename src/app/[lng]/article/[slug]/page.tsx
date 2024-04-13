@@ -5,6 +5,7 @@ import { PageProps } from "@/lib/models";
 import { Article } from "@/lib/contentful/model";
 import { MarkdownContent } from "@/components/markdown-content";
 import ContentfulImage from "@/components/contentful-image";
+import { Profile } from "@/components/profile";
 
 export async function generateStaticParams({ params: { lng } }: PageProps) {
   const articles = await contentfulFetcher<Article>("article", { locale: lng });
@@ -27,6 +28,7 @@ export default async function ArticlePage({ params }: PageProps) {
       )}
       <PostHeader {...article} locale={params.lng} />
       <MarkdownContent>{article.context}</MarkdownContent>
+      <Profile centered />
     </>
   );
 }

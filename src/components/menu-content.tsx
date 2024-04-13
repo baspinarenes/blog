@@ -7,7 +7,7 @@ import { Copyright } from "./copyright";
 
 export const MenuContent: React.FC<MenuContentProps> = ({ lng }) => {
   return (
-    <div className="w-full p-3 flex flex-col gap-6 overflow-y-auto default-scrollbar">
+    <div className="w-full p-3 flex flex-col gap-6 overflow-y-auto no-scrollbar">
       <Profile />
       <Navigations lng={lng} />
       <div className="hidden lg:block mt-auto" />
