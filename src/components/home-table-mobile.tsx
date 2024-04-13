@@ -61,7 +61,7 @@ async function fetchData(locale: Language): Promise<EntityByYear> {
   const [writings, articles, bookReviews, snippets, thoughts] = await Promise.all([
     contentfulFetcher<Writing>("writing", { all: true, filterByContent: true, orderWithDate: true, locale }),
     contentfulFetcher<Article>("article", { all: true, filterByContent: true, orderWithDate: true, locale }),
-    contentfulFetcher<BookReview>("bookReview", { all: true, filterByContent: true, orderWithDate: true, locale }),
+    contentfulFetcher<BookReview>("book-review", { all: true, filterByContent: true, orderWithDate: true, locale }),
     contentfulFetcher<Snippet>("snippet", { all: true, filterByContent: true, orderWithDate: true, locale }),
     contentfulFetcher<Thought>("thought", { all: true, filterByContent: true, orderWithDate: true, locale }),
   ]);

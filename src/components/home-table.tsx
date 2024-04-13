@@ -66,7 +66,7 @@ async function fetchData(locale: Language): Promise<EntityByYear> {
   const [writings, articles, bookReviews, snippets, thoughts] = await Promise.all([
     contentfulFetcher<Writing>("writing", { all: true, filterByContent: true, orderWithDate: true, locale }),
     contentfulFetcher<Article>("article", { all: true, filterByContent: true, orderWithDate: true, locale }),
-    contentfulFetcher<BookReview>("bookReview", { all: true, filterByContent: true, orderWithDate: true, locale }),
+    contentfulFetcher<BookReview>("book-review", { all: true, filterByContent: true, orderWithDate: true, locale }),
     contentfulFetcher<Snippet>("snippet", { all: true, filterByContent: true, orderWithDate: true, locale }),
     contentfulFetcher<Thought>("thought", { all: true, filterByContent: true, orderWithDate: true, locale }),
   ]);
@@ -74,7 +74,7 @@ async function fetchData(locale: Language): Promise<EntityByYear> {
   const entityRecords: Record<string, any[]> = {
     writings,
     articles,
-    bookReviews: bookReviews,
+    "book-reviews": bookReviews,
     snippets,
     thoughts,
   };
@@ -83,7 +83,7 @@ async function fetchData(locale: Language): Promise<EntityByYear> {
     (acc: Record<number, Record<string, { title: string; slug: string; date: Date }[]>>, year: number) => {
       acc[year] = {};
 
-      ["snippet", "thought", "bookReview", "article", "writing"].map((type) => {
+      ["snippet", "thought", "book-review", "article", "writing"].map((type) => {
         const entityItems = entityRecords[`${type}s`]
           .filter((item) => item.createdAt.getFullYear() === year)
           .map((item) => ({

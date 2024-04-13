@@ -6,17 +6,19 @@ import { Article } from "@/lib/contentful/model";
 import { MarkdownContent } from "@/components/markdown-content";
 import ContentfulImage from "@/components/contentful-image";
 import { Profile } from "@/components/profile";
+import { PageHeader } from "@/components/page-header";
 
 export async function generateStaticParams({ params: { lng } }: PageProps) {
   const articles = await contentfulFetcher<Article>("article", { locale: lng });
   return articles.map((a) => ({ slug: a.slug }));
 }
 
-export default async function ArticlePage({ params }: PageProps) {
-  const { article } = await fetchData(params);
+export default async function ArticlePage({ params: { lng, slug } }: PageProps) {
+  const { article } = await fetchData({ lng, slug });
 
   return (
     <>
+      <PageHeader lng={lng} />
       {article.coverImage && (
         <ContentfulImage
           src={article.coverImage.fields.file.url}
@@ -26,9 +28,11 @@ export default async function ArticlePage({ params }: PageProps) {
           className="mb-8"
         />
       )}
-      <PostHeader {...article} locale={params.lng} />
+      <PostHeader {...article} locale={lng} />
       <MarkdownContent>{article.context}</MarkdownContent>
-      <Profile centered />
+      <div className="lg:hidden">
+        <Profile noPadding />
+      </div>
     </>
   );
 }

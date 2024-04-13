@@ -18,6 +18,7 @@ export function middleware(req: NextRequest) {
     const lng = getLanguage(req);
     const url = new URL(`/${lng}`, req.url);
     const response = NextResponse.redirect(url);
+    response.headers.set("x-pathname", url.pathname);
     response.cookies.set(lngCookieName, lng);
     return response;
   }
@@ -26,6 +27,7 @@ export function middleware(req: NextRequest) {
     const lng = getLanguage(req);
     const url = new URL(`/${getLanguage(req)}${req.nextUrl.pathname}`, req.url);
     const response = NextResponse.redirect(url);
+    response.headers.set("x-pathname", url.pathname);
     response.cookies.set(lngCookieName, lng);
     return response;
   }
@@ -36,6 +38,7 @@ export function middleware(req: NextRequest) {
   ) {
     const url = new URL(`/en`, req.url);
     const response = NextResponse.redirect(url);
+    response.headers.set("x-pathname", url.pathname);
     response.cookies.set(lngCookieName, "en");
     return response;
   }
@@ -43,6 +46,7 @@ export function middleware(req: NextRequest) {
   if (languages.some((l) => req.nextUrl.pathname.startsWith(`/${l}`))) {
     const lng = req.nextUrl.pathname.slice(1).split("/")[0];
     const response = NextResponse.next();
+    response.headers.set("x-pathname", req.nextUrl.pathname);
     response.cookies.set(lngCookieName, lng);
     return response;
   }

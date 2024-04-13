@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Language } from "../models";
+import { headers } from "next/headers";
 
 export function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -18,7 +19,13 @@ export function formatDate(date: Date, locale: Language) {
   });
 }
 
-export const dasherize = (text: string) => String(text).replace(/ +/g, "-").toLowerCase();
+export const dasherize = (text: string) => text.replace(/ +/g, "-").toLowerCase();
+export const undasherize = (text: string) => {
+  return text
+    .split(/-+/g)
+    .map((word) => capitalize(word))
+    .join(" ");
+};
 
 export const generateYearArray = () =>
   Array.from({ length: new Date().getFullYear() - 2020 + 1 }, (_, index) => 2020 + index).sort((a, b) => b - a);

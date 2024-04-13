@@ -1,5 +1,6 @@
 import ContentfulImage from "@/components/contentful-image";
 import { MarkdownContent } from "@/components/markdown-content";
+import { PageHeader } from "@/components/page-header";
 import { PostHeader } from "@/components/post-header";
 import contentfulFetcher from "@/lib/contentful/contentful-fetcher";
 import { ContentfulGraphqlClient } from "@/lib/contentful/graphql-client";
@@ -10,12 +11,12 @@ import { formatDate } from "@/lib/utils";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams({ params: { lng } }: PageProps) {
-  const movieReviews = await contentfulFetcher<MovieReview>("movieReview", { all: true, locale: lng });
+  const movieReviews = await contentfulFetcher<MovieReview>("movie-review", { all: true, locale: lng });
   return movieReviews.map((b) => ({ slug: b.slug }));
 }
 
 async function fetchData(params: PageProps["params"]) {
-  const movieReviews = await contentfulFetcher<MovieReview>("movieReview", {
+  const movieReviews = await contentfulFetcher<MovieReview>("movie-review", {
     slug: params.slug,
     locale: params.lng,
   });
@@ -31,6 +32,7 @@ export default async function MovieReviewPage({ params }: PageProps) {
 
   return (
     <>
+      <PageHeader lng={lng} />
       <div className="relative overflow-hidden rounded-2xl mb-8">
         <ContentfulImage src={coverImage} alt="" width={1920} height={1080} className="mb-0 h-full" />
         <div className="text-yellow-300 text-[10px] lg:text-sm">

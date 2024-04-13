@@ -1,7 +1,9 @@
 import { useTranslation } from "@/app/i18n";
 import { MarkdownContent } from "@/components/markdown-content";
 import { MessageBox } from "@/components/message-box";
+import { PageHeader } from "@/components/page-header";
 import { PostHeader } from "@/components/post-header";
+import { Profile } from "@/components/profile";
 import contentfulFetcher from "@/lib/contentful/contentful-fetcher";
 import { Snippet } from "@/lib/contentful/model";
 import { PageProps } from "@/lib/models";
@@ -22,13 +24,14 @@ async function fetchData(params: PageProps["params"]) {
   return { snippet: snippets[0] };
 }
 
-export default async function SnippetPage({ params }: PageProps) {
-  const { snippet } = await fetchData(params);
-  const { t } = await useTranslation(params.lng, "common");
+export default async function SnippetPage({ params: { lng, slug } }: PageProps) {
+  const { snippet } = await fetchData({ lng, slug });
+  const { t } = await useTranslation(lng, "common");
 
   return (
     <>
-      <PostHeader {...snippet} locale={params.lng} />
+      <PageHeader lng={lng} />
+      <PostHeader {...snippet} locale={lng} />
       {!snippet.context && <MessageBox type="danger" content={t("not-available-in-this-language")} />}
       <MarkdownContent>{snippet.context}</MarkdownContent>
     </>

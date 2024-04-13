@@ -1,23 +1,21 @@
-import { useTranslation } from "@/app/i18n";
 import { Journey } from "@/components/journey";
+import { PageHeader } from "@/components/page-header";
 import contentfulFetcher from "@/lib/contentful/contentful-fetcher";
 import { JourneyItem } from "@/lib/contentful/model";
 import { Language, PageProps } from "@/lib/models";
 
 export default async function JourneyPage({ params: { lng } }: PageProps) {
   const { journeyItems } = await fetchData(lng);
-  const { t } = await useTranslation(lng, "journey");
-
   return (
-    <>
-      <h1>{t("title")}</h1>
+    <div>
+      <PageHeader lng={lng} />
       <Journey journey={journeyItems} />
-    </>
+    </div>
   );
 }
 
 async function fetchData(lng: Language) {
-  const journeyItems = await contentfulFetcher<JourneyItem>("journeyItem", {
+  const journeyItems = await contentfulFetcher<JourneyItem>("journey-item", {
     all: true,
     locale: lng,
   });

@@ -4,7 +4,9 @@
     "journey": "Journey",
     "tool": "Tools",
     "article": "Articles",
-    "snippet": "Snippets"
+    "snippet": "Snippets",
+    "movie-review": "Movie Reviews",
+    "book-review": "Book Reviews"
   },
   "not-found": {
     "title": "404",
@@ -12,5 +14,6 @@
     "lng": "Hey dude! What are you doing here? This is a dangerous area. Go away."
   },
   "not-available-in-this-language": "I haven't translated this article into English yet. You can wait until I do, or you can take this opportunity to learn Turkish! When I publish it, I'll announce it on Twitter.",
-  "choose-a-content": "Choose a content to view it"
+  "choose-a-content": "Choose a content to view it",
+  "no-content": "No content found"
 }

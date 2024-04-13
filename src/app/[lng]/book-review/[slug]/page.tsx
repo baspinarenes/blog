@@ -7,12 +7,12 @@ import { PageProps } from "@/lib/models";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams({ params: { lng } }: PageProps) {
-  const bookReviews = await contentfulFetcher<BookReview>("bookReview", { all: true, locale: lng });
+  const bookReviews = await contentfulFetcher<BookReview>("book-review", { all: true, locale: lng });
   return bookReviews.map((b) => ({ slug: b.slug }));
 }
 
 async function fetchData(params: PageProps["params"]) {
-  const bookReviews = await contentfulFetcher<BookReview>("bookReview", {
+  const bookReviews = await contentfulFetcher<BookReview>("book-review", {
     slug: params.slug,
     locale: params.lng,
   });

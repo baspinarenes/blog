@@ -24,7 +24,7 @@ export const MessageBox: React.FC<MessageBoxProps> = ({ type, content }) => {
     <Card className={options.borderColor}>
       <CardContent className={`${options.textColor} inline-flex gap-4 p-4`}>
         <options.icon className={`inline-block flex-shrink-0`} />
-        <p className="m-0 inline-block">{content}</p>
+        <p className="m-0 inline-block text-sm">{content}</p>
       </CardContent>
     </Card>
   );

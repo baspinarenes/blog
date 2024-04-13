@@ -3,5 +3,6 @@ module.exports = {
   images: {
     loader: "custom",
     formats: ["image/avif", "image/webp"],
+    minimumCacheTTL: 60,
   },
 };

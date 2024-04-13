@@ -47,11 +47,11 @@ async function contentfulFetcher<T>(type: ContentfulItemType, options?: Options)
   });
 
   switch (type) {
-    case "bookReview":
+    case "book-review":
       return (result.items as Entry<TypeBookReviewSkeleton, undefined, string>[])
         .filter((e) => filterEntity(e, options))
         .map(parseContentfulBookReview) as T[];
-    case "movieReview":
+    case "movie-review":
       return (result.items as Entry<TypeMovieReviewSkeleton, undefined, string>[])
         .filter((e) => filterEntity(e, options))
         .map(parseContentfulMovieReview) as T[];
@@ -71,11 +71,11 @@ async function contentfulFetcher<T>(type: ContentfulItemType, options?: Options)
       return (result.items as Entry<TypeArticleSkeleton, undefined, string>[])
         .filter((e) => filterEntity(e, options))
         .map(parseContentfulArticle) as T[];
-    case "journeyItem":
+    case "journey-item":
       return (result.items as Entry<TypeJourneyItemSkeleton, undefined, string>[])
         .filter((e) => filterEntity(e, options))
         .map(parseContentfulJourneyItem) as T[];
-    case "staticPage":
+    case "static-page":
       return (result.items as Entry<TypeStaticPageSkeleton, undefined, string>[])
         .filter((e) => filterEntity(e, options))
         .map(parseContentfulStaticPage) as T[];

@@ -18,14 +18,14 @@ export enum PageType {
 }
 
 export type ContentfulItemType =
-  | "journeyItem"
+  | "journey-item"
   | "snippet"
   | "thought"
-  | "bookReview"
-  | "movieReview"
+  | "book-review"
+  | "movie-review"
   | "article"
   | "writing"
-  | "staticPage";
+  | "static-page";
 
 export type LayoutProps = {
   children: React.ReactNode;
@@ -39,8 +39,8 @@ export type PageProps = {
 export enum ContentfulEntity {
   ARTICLE = "article",
   WRITING = "writing",
-  BOOK_REVIEW = "bookReview",
-  MOVIE_REVIEW = "movieReview",
+  BOOK_REVIEW = "book-review",
+  MOVIE_REVIEW = "movie-review",
   THOUGHT = "thought",
   SNIPPET = "snippet",
 }

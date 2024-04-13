@@ -6,7 +6,7 @@ export const PostHeader: React.FC<PostHeaderProps> = (props) => {
 
   return (
     <div className="flex flex-col mb-6">
-      <h1>{title}</h1>
+      <h1 className="text-pretty">{title}</h1>
       <div className="flex gap-3 text-gray-400 font-light text-sm -mt-4 lg:-mt-8">
         {customDescription}
         {!customDescription && createdAt && <Date date={createdAt} locale={locale} />}

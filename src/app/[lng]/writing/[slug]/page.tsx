@@ -4,6 +4,7 @@ import { PageProps } from "@/lib/models";
 import contentfulFetcher from "@/lib/contentful/contentful-fetcher";
 import { Writing } from "@/lib/contentful/model";
 import { PostContent } from "@/components/post-content";
+import { PageHeader } from "@/components/page-header";
 
 export async function generateStaticParams({ params: { lng } }: PageProps) {
   const writings = await contentfulFetcher<Writing>("writing", { locale: lng });
@@ -20,13 +21,14 @@ async function fetchData(params: PageProps["params"]) {
   return { writing: writings[0] };
 }
 
-export default async function WritingPage({ params }: PageProps) {
-  const { writing } = await fetchData(params);
+export default async function WritingPage({ params: { slug, lng } }: PageProps) {
+  const { writing } = await fetchData({ slug, lng });
 
   return (
     <>
-      <PostHeader {...writing} locale={params.lng} />
-      <PostContent document={writing.content} lng={params.lng} />
+      <PageHeader lng={lng} />
+      <PostHeader {...writing} locale={lng} />
+      <PostContent document={writing.content} lng={lng} />
     </>
   );
 }

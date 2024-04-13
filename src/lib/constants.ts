@@ -63,7 +63,7 @@ export const NAVIGATIONS = [
   },
   {
     id: "tool",
-    href: "/tools",
+    href: "/tool",
     icon: HammerIcon,
   },
   {
@@ -83,13 +83,13 @@ export const NAVIGATIONS = [
     location: "tr",
   },
   {
-    id: "bookReview",
+    id: "book-review",
     href: "/book-review",
     icon: GanttChartSquareIcon,
     location: "tr",
   },
   {
-    id: "movieReview",
+    id: "movie-review",
     href: "/movie-review",
     icon: FilmIcon,
     location: "tr",

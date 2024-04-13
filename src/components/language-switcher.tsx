@@ -29,7 +29,7 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ lng }) => {
       <LanguagesIcon size={20} className="hidden lg:block" />
 
       {/* Mobile */}
-      <Button variant="ghost" onClick={handleLanguageChange} size="icon">
+      <Button variant="ghost" onClick={handleLanguageChange} size="icon" className="lg:hidden">
         <LanguagesIcon size={16} />
       </Button>
     </div>

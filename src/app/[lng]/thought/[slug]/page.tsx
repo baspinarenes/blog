@@ -1,3 +1,4 @@
+import { PageHeader } from "@/components/page-header";
 import { PostContent } from "@/components/post-content";
 import { PostHeader } from "@/components/post-header";
 import contentfulFetcher from "@/lib/contentful/contentful-fetcher";
@@ -20,13 +21,14 @@ async function fetchData(params: PageProps["params"]) {
   return { thought: thoughts[0] };
 }
 
-export default async function Page({ params }: PageProps) {
-  const { thought } = await fetchData(params);
+export default async function Page({ params: { lng, slug } }: PageProps) {
+  const { thought } = await fetchData({ lng, slug });
 
   return (
     <>
-      <PostHeader {...thought} locale={params.lng} />
-      <PostContent document={thought.content} lng={params.lng} />
+      <PageHeader lng={lng} />
+      <PostHeader {...thought} locale={lng} />
+      <PostContent document={thought.content} lng={lng} />
     </>
   );
 }

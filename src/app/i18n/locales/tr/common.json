@@ -5,8 +5,8 @@
     "tool": "Kullandığım Araçlar",
     "article": "Makalelerim",
     "writing": "Yazılarım",
-    "bookReview": "Dümenden Kitap Yorumlarım",
-    "movieReview": "Dümenden Film Yorumlarım",
+    "book-review": "Dümenden Kitap Yorumlarım",
+    "movie-review": "Dümenden Film Yorumlarım",
     "thought": "Düşüncelerim",
     "snippet": "Snippet'larım"
   },
@@ -16,5 +16,6 @@
     "lng": "Dur yolcu! Bilmeden bastığın bu link, bir sayfanın unutulduğu yerdir."
   },
   "not-available-in-this-language": "Amacım Türkçe kaynakları arttırmak olsa da nedendir bilinmez bu yazının Türkçesini yazmayı unutmuşum ve umarım yakın zamanda farkederim. Yayınladığımda Twitter'dan duyuracağım.",
-  "choose-a-content": "Görüntülemek için bir içerik seç"
+  "choose-a-content": "Görüntülemek için bir içerik seç",
+  "no-content": "Henüz içerik yok"
 }

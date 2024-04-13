@@ -2,10 +2,10 @@ import { AUTHOR } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 export const Profile: React.FC<ProfileProps> = (props) => {
-  const { centered } = props;
+  const { centered = false, noPadding = false } = props;
 
   return (
-    <div className={cn("flex gap-2 p-2", centered && "justify-center mt-8")}>
+    <div className={cn("flex gap-2", !noPadding && "p-2", centered && "justify-center mt-8")}>
       <img
         alt="Profile img"
         src="/images/scream.png"
@@ -26,5 +26,6 @@ export const Profile: React.FC<ProfileProps> = (props) => {
 };
 
 export type ProfileProps = {
-  centered: boolean;
+  centered?: boolean;
+  noPadding?: boolean;
 };
