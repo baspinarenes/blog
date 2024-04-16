@@ -1,4 +1,5 @@
 import { ContentfulEntity } from "../models";
+import { capitalize, undasherize, undasherizeAsCamelcase } from "../utils";
 
 export async function getAssetUrl(asset: string) {
   const query = `
@@ -64,7 +65,7 @@ export class ContentfulGraphqlClient {
   static async getEntryBySlug(contentType: ContentfulEntity, slug: string, lng: string) {
     const query = `
       query {
-        ${contentType}Collection(locale: "${lng}", where:{
+        ${undasherizeAsCamelcase(contentType)}Collection(locale: "${lng}", where:{
           slug: "${slug}"
         }){
           items {
@@ -77,6 +78,6 @@ export class ContentfulGraphqlClient {
       `;
 
     const entryResponse = await ContentfulGraphqlClient.fetch("post", query);
-    return entryResponse.data[`${contentType}Collection`].items[0];
+    return entryResponse.data[`${undasherizeAsCamelcase(contentType)}Collection`].items[0];
   }
 }

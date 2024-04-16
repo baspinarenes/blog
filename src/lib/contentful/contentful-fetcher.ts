@@ -35,7 +35,7 @@ const filterEntity = (entity: any, options?: Options) => {
 };
 
 async function contentfulFetcher<T>(type: ContentfulItemType, options?: Options): Promise<T[]> {
-  const contentful = contentfulClient({ preview: false });
+  const contentful = contentfulClient({ preview: process.env.NODE_ENV !== "production" });
   const order = [options?.orderWithDate ? "-fields.date" : undefined, "fields.title"].filter(Boolean);
 
   const result = await contentful.getEntries({

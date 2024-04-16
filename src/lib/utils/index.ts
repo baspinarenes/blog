@@ -27,6 +27,13 @@ export const undasherize = (text: string) => {
     .join(" ");
 };
 
+export const undasherizeAsCamelcase = (text: string) => {
+  return text
+    .split(/-+/g)
+    .map((word, i) => (i !== 0 ? capitalize(word) : word))
+    .join("");
+};
+
 export const generateYearArray = () =>
   Array.from({ length: new Date().getFullYear() - 2020 + 1 }, (_, index) => 2020 + index).sort((a, b) => b - a);
 
