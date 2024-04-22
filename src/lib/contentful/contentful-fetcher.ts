@@ -50,27 +50,33 @@ async function contentfulFetcher<T>(type: ContentfulItemType, options?: Options)
     case "book-review":
       return (result.items as Entry<TypeBookReviewSkeleton, undefined, string>[])
         .filter((e) => filterEntity(e, options))
-        .map(parseContentfulBookReview) as T[];
+        .map(parseContentfulBookReview)
+        .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()) as T[];
     case "movie-review":
       return (result.items as Entry<TypeMovieReviewSkeleton, undefined, string>[])
         .filter((e) => filterEntity(e, options))
-        .map(parseContentfulMovieReview) as T[];
+        .map(parseContentfulMovieReview)
+        .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()) as T[];
     case "snippet":
       return (result.items as Entry<TypeSnippetSkeleton, undefined, string>[])
         .filter((e) => filterEntity(e, options))
-        .map(parseContentfulSnippet) as T[];
+        .map(parseContentfulSnippet)
+        .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()) as T[];
     case "thought":
       return (result.items as Entry<TypeThoughtSkeleton, undefined, string>[])
         .filter((e) => filterEntity(e, options))
-        .map(parseContentfulThought) as T[];
+        .map(parseContentfulThought)
+        .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()) as T[];
     case "writing":
       return (result.items as Entry<TypeWritingSkeleton, undefined, string>[])
         .filter((e) => filterEntity(e, options))
-        .map(parseContentfulWriting) as T[];
+        .map(parseContentfulWriting)
+        .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()) as T[];
     case "article":
       return (result.items as Entry<TypeArticleSkeleton, undefined, string>[])
         .filter((e) => filterEntity(e, options))
-        .map(parseContentfulArticle) as T[];
+        .map(parseContentfulArticle)
+        .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()) as T[];
     case "journey-item":
       return (result.items as Entry<TypeJourneyItemSkeleton, undefined, string>[])
         .filter((e) => filterEntity(e, options))
