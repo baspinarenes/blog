@@ -34,7 +34,7 @@ export const CopyButton: React.FC<CopyButtonProps> = (props) => {
     <Button
       variant="outline"
       size="sm"
-      className="rounded-md lg:rounded-lg h-6 lg:h-auto"
+      className="rounded-md lg:rounded-lg h-6 lg:h-8"
       disabled={copied}
       onClick={onCopy}
     >
@@ -43,7 +43,7 @@ export const CopyButton: React.FC<CopyButtonProps> = (props) => {
           key={copied ? "copied" : "copy"}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -2 }}
-          className="inline-flex w-9 lg:w-14 items-center justify-center gap-0.5"
+          className="inline-flex w-9 lg:w-12 items-center justify-center gap-0.5"
           transition={{ duration: 0.3 }}
         >
           {copied ? (

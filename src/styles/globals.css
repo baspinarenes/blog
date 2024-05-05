@@ -208,8 +208,16 @@
         @apply !py-3 px-4;
       }
 
+      &:has(+ pre .code-result) {
+        &>*:first-child {
+          border-bottom-left-radius: 0 !important;
+          border-bottom-right-radius: 0 !important;
+          margin-bottom: 15px !important;
+        }
+      }
+
       .code-result {
-        @apply w-full relative border border-gray-200 rounded-lg !py-3 -mt-4 mb-8 bg-gray-100 block z-50 font-mono text-xs;
+        @apply w-full relative rounded-t-none border border-gray-200 rounded-lg !py-3 -mt-4 mb-8 bg-gray-100 block z-50 font-mono text-xs;
       }
     }
 

@@ -6,7 +6,7 @@ export const NotFoundContent: React.FC<NotFoundContentProps> = async (props) => 
   const { t } = await useTranslation(lng, "common");
 
   return (
-    <div className="absolute left-0 top-0 h-full w-full flex flex-col gap-2 justify-center items-center  text-zinc-300">
+    <div className="absolute left-0 top-0 h-full w-full flex flex-col gap-2 justify-center text-center items-center px-12 text-zinc-300">
       <span className="font-mono text-6xl">{t("not-found.title")}</span>
       <span className="text-base">{t("not-found.description-2")}</span>
     </div>
