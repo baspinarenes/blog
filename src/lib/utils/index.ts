@@ -48,3 +48,17 @@ export const getJetBrainsMonoRegular = async () => {
   const font = await response.arrayBuffer();
   return font;
 };
+
+export const calculateReadingTime = (text: string = "") => {
+  const WORDS_PER_MINUTE = 200;
+  const regex = /\w+/g;
+
+  const wordCount = text.match(regex)?.length || 0;
+  const readingTimeMinute = Math.ceil(wordCount / WORDS_PER_MINUTE);
+  const readingTime = `${readingTimeMinute} min`;
+
+  return {
+    wordCount,
+    readingTime,
+  };
+};

@@ -16,10 +16,6 @@ export const EntityMenu: React.FC<EntityMenuProps> = async ({ type, lng }) => {
 
   const { t } = await useTranslation(lng, "common");
 
-  const generateDescription = (entity: any) => {
-    return formatDate(entity.createdAt, lng);
-  };
-
   const href = NAVIGATIONS.find((nav) => nav.id === type)?.href;
 
   return (
@@ -33,10 +29,12 @@ export const EntityMenu: React.FC<EntityMenuProps> = async ({ type, lng }) => {
           .map((entity, index) => (
             <ContentItem
               key={index}
+              lng={lng}
               title={entity.title}
-              description={generateDescription(entity)}
+              createdAt={entity.createdAt}
               slug={href + "/" + entity.slug}
               tag={entity.tags ? entity.tags[0] : ""}
+              readingTime={entity.readingTime}
             />
           ))}
       </div>

@@ -2,14 +2,19 @@ import { Language } from "@/lib/models";
 import { Date } from "./date";
 
 export const PostHeader: React.FC<PostHeaderProps> = (props) => {
-  const { title, createdAt, locale, customDescription = null, tags = [] } = props;
+  const { title, createdAt, locale, readingTime, customDescription = null, tags = [] } = props;
 
   return (
     <div className="flex flex-col mb-6">
       <h1 className="text-pretty">{title}</h1>
-      <div className="flex gap-3 text-gray-400 font-light text-sm -mt-4 lg:-mt-8">
+      <div className="flex gap-2 text-gray-400 font-light text-sm -mt-4 lg:-mt-8">
         {customDescription}
         {!customDescription && createdAt && <Date date={createdAt} locale={locale} />}
+        {!customDescription && readingTime && (
+          <div className="flex gap-2">
+            • <span className="text-sm text-gray-400 font-light">{readingTime}</span>
+          </div>
+        )}
         {!customDescription && tags.length > 0 && (
           <div className="flex gap-2">
             •{" "}
@@ -28,6 +33,7 @@ export const PostHeader: React.FC<PostHeaderProps> = (props) => {
 export type PostHeaderProps = {
   title: string;
   locale: Language;
+  readingTime?: string;
   createdAt?: Date;
   tags?: string[];
   customDescription?: React.ReactNode;

@@ -20,6 +20,7 @@ import {
   Writing,
 } from "./model";
 import { TypeStaticPageSkeleton } from "@/lib/contentful/types";
+import { calculateReadingTime } from "../utils";
 
 export function parseContentfulSnippet(entry: Entry<TypeSnippetSkeleton, undefined, string>): Snippet {
   return {
@@ -42,12 +43,15 @@ export function parseContentfulThought(entry: Entry<TypeThoughtSkeleton, undefin
 }
 
 export function parseContentfulArticle(entry: Entry<TypeArticleSkeleton, undefined, string>): Article {
+  const { readingTime } = calculateReadingTime(entry.fields.context);
+
   return {
     title: entry.fields.title || "",
     slug: entry.fields.slug,
     coverImage: entry.fields.coverImage,
     context: entry.fields.context,
     createdAt: new Date(entry.fields.date ? entry.fields.date : entry.sys.createdAt),
+    readingTime,
     tags: [],
   };
 }

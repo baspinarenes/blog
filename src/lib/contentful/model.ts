@@ -28,8 +28,9 @@ export type Article = {
   slug: string;
   coverImage: any;
   createdAt: Date;
-  context?: string;
   tags: string[];
+  readingTime: string;
+  context?: string;
 };
 
 export type BookReview = {
