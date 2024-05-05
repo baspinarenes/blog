@@ -11,9 +11,9 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({ title, language, code, cla
       <div className="flex flex-wrap items-center justify-between gap-2 rounded-t-lg border-b border-gray-200 bg-gray-50 py-1.5 pl-4 pr-2">
         <div className="flex items-center gap-4">
           <span className="inline-flex items-center gap-1.5">
-            <span className="h-4 w-4 rounded-full bg-gray-200" />
-            <span className="h-4 w-4 rounded-full bg-gray-200" />
-            <span className="h-4 w-4 rounded-full bg-gray-200" />
+            <span className="h-2.5 w-2.5 lg:h-4 lg:w-4 rounded-full bg-gray-200" />
+            <span className="h-2.5 w-2.5 lg:h-4 lg:w-4 rounded-full bg-gray-200" />
+            <span className="h-2.5 w-2.5 lg:h-4 lg:w-4 rounded-full bg-gray-200" />
           </span>
           <p className="m-0 text-xs font-medium select-none">{title}</p>
         </div>

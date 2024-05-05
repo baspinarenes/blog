@@ -13,7 +13,7 @@
   "not-found": {
     "title": "404",
     "description": "Görüntülemek için farklı bir içerik seç",
-    "lng": "Dur yolcu! Bilmeden bastığın bu link, bir sayfanın unutulduğu yerdir."
+    "description-2": "Dur yolcu! Bilmeden bastığın bu link, bir sayfanın unutulduğu yerdir."
   },
   "not-available-in-this-language": "Amacım Türkçe kaynakları arttırmak olsa da nedendir bilinmez bu yazının Türkçesini yazmayı unutmuşum ve umarım yakın zamanda farkederim. Yayınladığımda Twitter'dan duyuracağım.",
   "choose-a-content": "Görüntülemek için bir içerik seç",

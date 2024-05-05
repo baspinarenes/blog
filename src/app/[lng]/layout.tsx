@@ -1,7 +1,7 @@
 import { SideMenu } from "@/components/side-menu";
 import { MenuContent } from "@/components/menu-content";
 import { DESCRIPTION, SITE_URL, TITLE } from "@/lib/constants";
-import { cn, undasherize } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { JetBrains_Mono, Open_Sans } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
@@ -9,12 +9,7 @@ import { LayoutProps } from "@/lib/models";
 import { dir } from "i18next";
 import "@/styles/globals.css";
 import { languages } from "../i18n/settings";
-import { MobileHamburgerMenu } from "@/components/mobile-hamburger-menu";
-import { LanguageSwitcher } from "@/components/language-switcher";
-import { usePathname } from "next/navigation";
 import { headers } from "next/headers";
-import { BackButton } from "@/components/back-button";
-import { useTranslation } from "../i18n";
 
 export const metadata = {
   title: {
@@ -54,8 +49,6 @@ export function generateStaticParams() {
 }
 
 export default async function LocaleLayout({ children, params: { lng } }: LayoutProps) {
-  const pathname = headers().get("x-pathname")!;
-
   return (
     <html
       lang={lng}

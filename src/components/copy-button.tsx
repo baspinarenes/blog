@@ -31,20 +31,26 @@ export const CopyButton: React.FC<CopyButtonProps> = (props) => {
   };
 
   return (
-    <Button variant="outline" size="sm" className="rounded-lg" disabled={copied} onClick={onCopy}>
+    <Button
+      variant="outline"
+      size="sm"
+      className="rounded-md lg:rounded-lg h-6 lg:h-auto"
+      disabled={copied}
+      onClick={onCopy}
+    >
       <LazyMotion features={domAnimation}>
         <m.span
           key={copied ? "copied" : "copy"}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -2 }}
-          className="inline-flex w-14 items-center justify-center gap-0.5"
+          className="inline-flex w-9 lg:w-14 items-center justify-center gap-0.5"
           transition={{ duration: 0.3 }}
         >
           {copied ? (
             "Copied"
           ) : (
-            <span className="flex gap-2">
-              <CopyIcon size={14} />
+            <span className="flex items-center gap-2 text-[11px] lg:text-sm">
+              <CopyIcon size={14} className="w-2.5" />
               Copy
             </span>
           )}

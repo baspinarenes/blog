@@ -1,5 +1,13 @@
-import { ChooseContentPlaceholder } from "@/components/choose-content-placeholder";
+import { NotFoundContent } from "@/components/not-found";
+import { PageHeader } from "@/components/page-header";
 
 export default function NotFound() {
-  return <ChooseContentPlaceholder />;
+  return (
+    <main>
+      <div className="container">
+        <PageHeader lng="en" />
+        <NotFoundContent lng={"en"} />
+      </div>
+    </main>
+  );
 }
