@@ -10,9 +10,9 @@ export const Journey: React.FC<JourneyProps> = (props) => {
       {journey.map((j) => (
         <div key={j.year} className="flex flex-col lg:flex-row gap-4 lg:gap-16">
           <h2>{j.year}</h2>
-          <ul className="mb-0 mt-0.5 pl-2 lg:pl-0 gap-0">
+          <div className="mb-0 mt-0.5 pl-2 lg:pl-0 gap-0">
             {j.items.map((ji) => (
-              <li
+              <div
                 key={ji.title}
                 className="relative flex text-sm lg:pb-8 last:pb-0 before:w-px before:last:hidden before:top-0 before:left-[0.732rem] before:h-full before:bg-slate-200 before:absolute"
               >
@@ -23,9 +23,9 @@ export const Journey: React.FC<JourneyProps> = (props) => {
                   <h3 className="leading-6 text-base">{ji.title}</h3>
                   <RichTextContent document={ji.content} />
                 </div>
-              </li>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       ))}
     </div>

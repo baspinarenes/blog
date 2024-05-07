@@ -69,7 +69,23 @@ const components: Partial<Components> = {
       );
     }
 
-    return <img src={props.src} alt={props.alt} className="w-full" />;
+    const alt = props.alt?.includes("|") ? props.alt.split("|")[0] : props.alt;
+    const source = props.alt?.includes("|") ? props.alt.split("|")[1] : props.alt;
+
+    return (
+      <figure className="my-4 lg:my-10 flex flex-col justify-center items-center gap-2">
+        <img
+          src={props.src}
+          alt={alt}
+          className="w-full overflow-hidden rounded-xl animate-reveal border border-gray-200"
+        />
+        {source && (
+          <figcaption className="break-all text-center text-xs font-light text-gray-500">
+            <a href={source}>{source}</a>
+          </figcaption>
+        )}
+      </figure>
+    );
   },
   code: ({ children, className, node, ...rest }) => {
     let match = /language-(\w+)/.test(className || "");
@@ -101,6 +117,34 @@ const components: Partial<Components> = {
     );
   },
   hr: () => <hr className="my-8 border-0 h-0 border-t border-t-[rgba(0, 0, 0, 0.1)]" />,
+  ul: ({ children }) => (
+    <ul className="relative pl-0 flex flex-col gap-5 before:h-full before:w-px before:bg-gray-200/70 before:absolute before:left-[13px] before:top-0">
+      {children}
+    </ul>
+  ),
+  ol: ({ children }) => (
+    <ol className="pl-0 flex flex-col gap-5 before:h-full before:w-px before:bg-gray-200/70 before:absolute before:left-[13px] before:top-0">
+      {children}
+    </ol>
+  ),
+  li: ({ children }) => {
+    let title = "";
+    let description = children;
+
+    if (typeof children === "string" && children.includes(": ")) {
+      title = children.split(": ")[0];
+      description = children.split(": ")[1];
+    }
+
+    return (
+      <li className="flex gap-4 list-none">
+        <div className="flex flex-col gap-2 mt-[2px]">
+          {title && <div className="font-bold">{title}</div>}
+          <span>{description}</span>
+        </div>
+      </li>
+    );
+  },
 };
 
 export const MarkdownContent: React.FC<MarkdownContentProps> = ({ children }) => {
