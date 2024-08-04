@@ -1,0 +1,40 @@
+@mixin scroll-bar ($width, $height) {
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $height;
+  }
+  
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #4b5563;
+  }
+
+  scrollbar-color: #4b5563 #f1f1f1; 
+  overflow: auto;
+}
+
+@mixin max-lines($line-count, $breakType: word) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $line-count;
+  white-space: pre-wrap;
+
+  @if $breakType =="word" {
+    word-break: break-word;
+  }
+
+  @else if $breakType =="letter" {
+    word-break: break-all;
+  }
+
+  @else {
+    @error "Unknown break type #{$breakType}.";
+  }
+}

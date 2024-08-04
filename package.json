@@ -1,0 +1,49 @@
+{
+  "name": "blog",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.1",
+    "@radix-ui/react-separator": "^1.1.0",
+    "@radix-ui/react-slot": "^1.1.0",
+    "@tabler/icons-react": "^3.11.0",
+    "accept-language": "^3.0.18",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "i18next": "^23.12.2",
+    "i18next-browser-languagedetector": "^8.0.0",
+    "i18next-resources-to-backend": "^1.2.1",
+    "next": "14.2.5",
+    "react": "^18",
+    "react-cookie": "^7.2.0",
+    "react-dom": "^18",
+    "react-i18next": "^15.0.0",
+    "react-markdown": "^9.0.1",
+    "react-syntax-highlighter": "^15.5.0",
+    "rehype-highlight": "^7.0.0",
+    "rehype-prism-plus": "^2.0.0",
+    "sass": "^1.77.8",
+    "tailwind-merge": "^2.4.0",
+    "tailwindcss-animate": "^1.0.7",
+    "vaul": "^0.9.1",
+    "zustand": "^4.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/react-highlight": "^0.12.8",
+    "@types/react-syntax-highlighter": "^15.5.13",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.5",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}
