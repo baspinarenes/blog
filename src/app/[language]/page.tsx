@@ -1,11 +1,13 @@
-import { Logo } from "@/components/atoms/Logo";
-import { Paragraph } from "@/components/atoms/Paragraph";
-import { Title } from "@/components/atoms/Title";
-import { PostCardList } from "@/components/molecules/PostCardList";
-import { getAllPosts } from "@/lib/api";
-import type { PageProps } from "../../types/props";
+import React from "react";
 import { draftMode } from "next/headers";
-import { useTranslation } from "../i18n";
+import { PageProps } from "@/models";
+import { getAllPosts } from "@/libraries/api";
+import { useTranslation } from "@/i18n";
+import { Paragraph, Title } from "@/components/atoms";
+import { PostCardList } from "@/components/organisms/PostCardList";
+import { author } from "@/configs";
+import Image from "next/image";
+import screamLogo from "@/../public/scream.svg";
 
 export default async function Home({ params: { language } }: PageProps) {
   const { isEnabled } = draftMode();
@@ -16,24 +18,25 @@ export default async function Home({ params: { language } }: PageProps) {
   const { t } = await useTranslation(language, "home");
 
   return (
-    <main className="mt-6">
-      <Title level={1} className="hidden">
-        {t("home:title")}
-      </Title>
-      <Logo />
-      <Paragraph>
-        {/* Translation tasi */}
-        Selam! Ben Enes, 25 yaşındayım. Trendyol'da 2 yıldır Software Engineer
-        olarak çalışıyorum. Araştırmaktan ve yeni şeyler öğrenmekten
-        hoşlanıyorum. Öğrendiklerimi başkalarına anlatmayı seviyorum ve bu
-        yüzden blog tutuyorum. Monoton ve aynı içerikli yazılar okuduğumda
-        çığlık atasım geliyor ve insanları sıkıcılıktan kurtarmak için farklı
-        şeyler yapmaya çalışıyorum.
-      </Paragraph>
-      <Title level={2} className="mt-12">
-        {t("home:subTitle")}
-      </Title>
-      <PostCardList language={language} entries={allPosts} />
+    <main className="w-full pt-4 sm:py-12">
+      <div className="max-w-3xl mx-auto">
+        <Title level={1} className="hidden sm:block">
+          {t("title")}
+        </Title>
+        <Image
+          src={screamLogo}
+          alt="scream"
+          width={120}
+          height={120}
+          priority={true}
+          className="mx-auto mb-4 animate-scream mt-4 sm:hidden"
+        />
+        <Paragraph align="justify">{t("description", { ...author })}</Paragraph>
+        <Title level={2} className="mt-12 mb-8">
+          {t("subTitle")}
+        </Title>
+        <PostCardList language={language} entries={allPosts} />
+      </div>
     </main>
   );
 }

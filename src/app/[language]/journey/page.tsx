@@ -1,12 +1,13 @@
 import { Title } from "@/components/atoms";
-import { Journeys } from "@/components/molecules/Journeys";
-import { getJson } from "@/lib/api";
-import { JourneyGroup } from "@/types/journey";
-import type { PageProps } from "../../../types/props";
+import { Journeys } from "@/components/molecules";
+import { useTranslation } from "@/i18n";
+import { getJson } from "@/libraries/api";
+import { JourneyGroup, PageProps } from "@/models";
 import { draftMode } from "next/headers";
 
 export default async function Page({ params: { language } }: PageProps) {
   const { isEnabled } = draftMode();
+  const { t } = await useTranslation(language, "journey");
   const journeys = await getJson<JourneyGroup[]>({
     key: "journeys",
     language,
@@ -16,11 +17,13 @@ export default async function Page({ params: { language } }: PageProps) {
   const sortedJourneys = journeys.sort((a, b) => b.year - a.year);
 
   return (
-    <div className="mt-6">
-      <Title level={1} className="hidden">
-        Journey
-      </Title>
-      <Journeys journeyGroups={sortedJourneys} />
-    </div>
+    <main className="w-full mt-6 sm:mt-12">
+      <div className="max-w-3xl mx-auto">
+        <Title level={1} className="hidden sm:block">
+          {t("title")}
+        </Title>
+        <Journeys journeyGroups={sortedJourneys} />
+      </div>
+    </main>
   );
 }

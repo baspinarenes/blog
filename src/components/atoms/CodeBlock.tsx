@@ -1,12 +1,13 @@
 "use client";
 
 import { ClassAttributes, HTMLAttributes, type FC } from "react";
-import { Icon } from "./Icon";
 import { ExtraProps } from "react-markdown";
-import { CopyButton } from "./CopyButton";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { coy as theme } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { getSafe } from "@/lib/utils";
+import { Icon } from "./Icon";
+import { cn, getSafe, parseCodeBlockMeta } from "@/libraries/utils";
+import { CopyButton } from "../molecules";
+import { MessageBox } from "../molecules/MessageBox";
 
 export const CodeBlock: FC<CodeBlockProps> = ({
   children,
@@ -20,42 +21,71 @@ export const CodeBlock: FC<CodeBlockProps> = ({
     ""
   );
 
-  const code = (node as any).children[0].children[0].value.trim();
-  const fileName = "";
+  const code = getSafe(
+    () => (node as any).children[0].children[0].value.trim(),
+    ""
+  );
+  const { fileName } = parseCodeBlockMeta(node as any);
+
+  if (["info", "warning", "danger"].includes(language)) {
+    return <MessageBox type={language}>{code}</MessageBox>;
+  }
 
   if (language === "") {
     // Test it
-    <div className="code-plain">
-      {/* <Highlight className={language}>{children}</Highlight> */}
-    </div>;
+    return (
+      <div className="code-plain">
+        {/* <Highlight className={language}>{children}</Highlight> */}
+      </div>
+    );
   }
 
   if (language === "result") {
     return (
-      <div className="code-result">
-        {/* <Highlight className={language}>{children}</Highlight> */}
-        <div className="absolute bottom-4 right-4 z-10 text-gray-300">
-          <Icon name="bug" size={22} />
+      <div className="result-block mb-8 -mx-6 sm:mx-0 w-screen sm:w-full relative border-b border-x border-border bg-slate-100 rounded-b-lg">
+        <SyntaxHighlighter
+          language={language}
+          style={theme}
+          codeTagProps={{ alt: "custom-result" }}
+        >
+          {code}
+        </SyntaxHighlighter>
+        <div className="absolute z-50 bg-slate-100 top-px right-0 bottom-3 pt-2 pr-2 w-12 text-gray-300 flex justify-end items-start">
+          <Icon name="bug" size={28} />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="code-block flex flex-col w-full border border-border rounded-lg mt-6 mb-8 overflow-hidden">
-      <div className="flex items-center justify-center bg-[#f9fafb] py-2 px-4 border-b border-b-border">
+    <div
+      className={cn(
+        "code-block -mx-6 w-screen flex flex-col border border-border my-6 overflow-hidden last:mb-0",
+        "md:mx-0 sm:w-full sm:rounded-lg sm:border-x sm:mt-6 sm:mb-6"
+      )}
+    >
+      <div
+        className={cn(
+          "w-full flex items-center justify-center bg-[#f9fafb] py-2 px-4 border-b border-b-border"
+        )}
+      >
         <div className="flex gap-1 mr-3">
           <span className="inline-block w-4 h-4 rounded-full bg-gray-200" />
           <span className="inline-block w-4 h-4 rounded-full bg-gray-200" />
           <span className="inline-block w-4 h-4 rounded-full bg-gray-200" />
         </div>
-        <span className="text-sm mr-auto bg-gray-700">{fileName}</span>
+        <span className="text-sm mr-auto text-gray-700">{fileName}</span>
         <CopyButton text={code} />
         <div className="empty:hidden ml-3">
-          <Icon name={language} size={20} />
+          <Icon name={language} size={20} className="text-gray-500" />
         </div>
       </div>
-      <SyntaxHighlighter language={language} style={theme} showLineNumbers>
+      <SyntaxHighlighter
+        codeTagProps={{ alt: "custom-code" }}
+        language={language}
+        style={theme}
+        showLineNumbers
+      >
         {code}
       </SyntaxHighlighter>
     </div>

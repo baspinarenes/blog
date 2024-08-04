@@ -1,12 +1,12 @@
-import { navigations } from "@/config";
+import { navigations } from "@/configs";
 import { NavigationLink } from "../atoms";
-import { capitalize } from "@/lib/utils";
+import { capitalize } from "@/libraries/utils";
 import { FC } from "react";
 
-export const Navigations: FC<NavigationsProps> = ({ onClick }) => {
+export const Navigations: FC<NavigationsProps> = ({ language, onClick }) => {
   return (
     <nav className="flex flex-col gap-1" onClickCapture={onClick}>
-      {Object.entries(navigations.tr).map(([key, value]) => (
+      {Object.entries(navigations[language]).map(([key, value]) => (
         <NavigationLink key={key} name={capitalize(key)} href={value} />
       ))}
     </nav>
@@ -14,5 +14,6 @@ export const Navigations: FC<NavigationsProps> = ({ onClick }) => {
 };
 
 export type NavigationsProps = Readonly<{
+  language: string;
   onClick?: () => void;
 }>;

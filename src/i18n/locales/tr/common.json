@@ -1,0 +1,13 @@
+{
+  "title": {
+    "home": "Anasayfa",
+    "journey": "Hikayem",
+    "tools": "Araç gereçlerim",
+    "article": "Makalelerim",
+    "writing": "Yazılarım",
+    "snippet": "Snippet'larım",
+    "culture": "Kültürel zırvalamalarım",
+    "thought": "Düşüncelerim"
+  },
+  "not-found": "Böyle bir {{type}} olduğunu kimden duydun? Ama yine de iyi ilerledin."
+}

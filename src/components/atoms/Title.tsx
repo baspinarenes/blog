@@ -1,5 +1,5 @@
-import { cn, dasherize } from "@/lib/utils";
-import { FC } from "react";
+import { type FC } from "react";
+import { cn, dasherize } from "@/libraries/utils";
 
 export const Title: FC<TitleProps> = ({ level, children, className }) => {
   const Heading = `h${level}` as keyof JSX.IntrinsicElements;
@@ -11,16 +11,11 @@ export const Title: FC<TitleProps> = ({ level, children, className }) => {
       id={id}
       className={cn(
         "font-semibold",
-        "group relative cursor-pointer before:absolute before:-left-4 sm:hover:before:content-['#']",
+        "relative cursor-pointer before:absolute before:-left-4 sm:hover:before:content-['#'] hover:before:-ml-1",
         className
       )}
     >
-      <a
-        href={`#${id}`}
-        className="sm:group-hover:underline sm:group-hover:underline-offset-4"
-      >
-        {children}
-      </a>
+      <a href={`#${id}`}>{children}</a>
     </Heading>
   );
 };

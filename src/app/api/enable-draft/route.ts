@@ -1,8 +1,8 @@
+import { fallbackLng } from "@/i18n/settings";
+import { getPostBySlug } from "@/libraries/api";
+import { CategoryType } from "@/models";
 import { draftMode } from "next/headers";
 import { redirect } from "next/navigation";
-import { getPostBySlug } from "../../../lib/api";
-import { CategoryType } from "@/types/contentful";
-import { fallbackLng } from "@/app/i18n/settings";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);

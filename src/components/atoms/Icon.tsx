@@ -35,6 +35,14 @@ import {
   IconBrandCpp,
   IconProps,
   IconFile,
+  IconQuestionMark,
+  IconError404,
+  IconSquareRoundedXFilled,
+  IconInfoSquareRoundedFilled,
+  IconAlertSquareRoundedFilled,
+  IconBrandSwift,
+  IconAlertTriangleFilled,
+  IconBrandGolang,
 } from "@tabler/icons-react";
 
 const getIconByName = (name: string): typeof IconBrandTwitter | null => {
@@ -50,12 +58,14 @@ const getIconByName = (name: string): typeof IconBrandTwitter | null => {
       writing: IconSignature,
       snippet: IconCode,
       tools: IconTools,
+      tool: IconTools,
       culture: IconMasksTheater,
       thought: IconBrain,
       html: IconBrandHtml5,
       css: IconBrandCss3,
       typescript: IconBrandTypescript,
       javascript: IconBrandJavascript,
+      swift: IconBrandSwift,
       bash: IconTerminal2,
       yaml: IconFileCode2,
       gitlab: IconBrandGitlab,
@@ -74,6 +84,12 @@ const getIconByName = (name: string): typeof IconBrandTwitter | null => {
       bug: IconBug,
       back: IconArrowLeft,
       file: IconFile,
+      question: IconQuestionMark,
+      "not-found": IconError404,
+      danger: IconSquareRoundedXFilled,
+      warning: IconAlertTriangleFilled,
+      info: IconInfoSquareRoundedFilled,
+      go: IconBrandGolang,
     }[name] || null
   );
 };

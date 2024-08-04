@@ -1,14 +1,14 @@
 import { Icon } from "./Icon";
 
-export const ReadingTime = ({ time }: ReadingTimeProps) => {
+export const ReadingTime = ({ text }: ReadingTimeProps) => {
   return (
-    <span className="flex gap-1 items-center text-sm text-gray-600">
+    <span className="flex gap-1 items-center">
       <Icon name="clock" size={12} />
-      {time || "-"} min
+      {text || "-"}
     </span>
   );
 };
 
 export type ReadingTimeProps = Readonly<{
-  time: number;
+  text: string;
 }>;

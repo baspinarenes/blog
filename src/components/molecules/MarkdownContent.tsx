@@ -1,11 +1,10 @@
-import { dasherize } from "@/lib/utils";
 import Image from "next/image";
-import Markdown, { Components } from "react-markdown";
-import { CodeBlock } from "../atoms/CodeBlock";
-import { InlineCode, Title } from "../atoms";
+import Markdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import rehypePrism from "rehype-prism-plus";
 import Link from "next/link";
+import { CodeBlock, InlineCode, Title } from "../atoms";
+import { cn } from "@/libraries/utils";
 
 export const MarkdownContent: React.FC<MarkdownContentProps> = ({
   children,
@@ -81,13 +80,21 @@ export const MarkdownContent: React.FC<MarkdownContentProps> = ({
             : props.alt;
 
           return (
-            <figure className="my-12 lg:my-10 flex flex-col justify-center items-center gap-2">
+            <figure
+              className={cn(
+                "flex flex-col -mx-6 w-screen my-6 justify-center items-center gap-2",
+                "md:w-auto sm:mx-0 sm:my-6"
+              )}
+            >
               <Image
                 src={"https:" + props.src}
                 alt={alt || ""}
                 width={props.width ? Number(props.width) : 1920}
                 height={props.height ? Number(props.height) : 1080}
-                className="w-full overflow-hidden rounded-xl animate-reveal border border-gray-200"
+                className={cn(
+                  "flex-1 animate-reveal border-y border-gray-200",
+                  "md:rounded-xl sm:border-x"
+                )}
               />
               {source && (
                 <figcaption className="break-all text-center text-xs font-light text-gray-500">

@@ -10,7 +10,7 @@ import {
 import { IconMenu2 } from "@tabler/icons-react";
 import { MenuDrawer } from "./MenuDrawer";
 
-export const HamburgerMenu: FC<HamburgerMenuProps> = () => {
+export const HamburgerMenu = ({ language }: HamburgerMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const close = () => setIsOpen(false);
@@ -18,14 +18,16 @@ export const HamburgerMenu: FC<HamburgerMenuProps> = () => {
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerTrigger className="mr-3">
-        <IconMenu2 size={24} stroke={1.6} />
+        <IconMenu2 size={16} stroke={1.6} />
       </DrawerTrigger>
       <DrawerContent className="w-screen">
         <DrawerHeader></DrawerHeader>
-        <MenuDrawer onClose={close} />
+        <MenuDrawer language={language} onClose={close} />
       </DrawerContent>
     </Drawer>
   );
 };
 
-export type HamburgerMenuProps = Readonly<{}>;
+export type HamburgerMenuProps = Readonly<{
+  language: string;
+}>;

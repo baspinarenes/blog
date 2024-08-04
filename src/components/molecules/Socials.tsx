@@ -1,6 +1,6 @@
-import { author } from "@/config";
+import { author } from "@/configs";
 import { type FC } from "react";
-import { SocialLink } from "../atoms/SocialLink";
+import { SocialLink } from "./SocialLink";
 
 export const Socials: FC<SocialsProps> = () => {
   return (

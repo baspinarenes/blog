@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/libraries/utils";
 import Image from "next/image";
 
 interface ContentfulImageProps {
@@ -11,11 +12,20 @@ interface ContentfulImageProps {
 }
 
 const contentfulLoader = ({ src, width, quality }: ContentfulImageProps) => {
-  return `${src}?w=${width}&q=${quality || 75}`;
+  return `${src}?w=${width}&q=${quality || 100}`;
 };
 
-export default function ContentfulImage(props: ContentfulImageProps) {
+export function ContentfulImage({
+  description,
+  className,
+  ...otherProps
+}: ContentfulImageProps) {
   return (
-    <Image alt={props.description || ""} loader={contentfulLoader} {...props} />
+    <Image
+      className={cn("w-full rounded-2xl mb-6", className)}
+      alt={description || ""}
+      loader={contentfulLoader}
+      {...otherProps}
+    />
   );
 }
