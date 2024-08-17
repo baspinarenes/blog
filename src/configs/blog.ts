@@ -7,6 +7,10 @@ export const author = {
   surname: "Başpınar",
   title: "Software Engineer",
   age: new Date().getFullYear() - 1999,
+  experience: Math.floor(
+    new Date().getMilliseconds() -
+      new Date(2021, 10, 4).getMilliseconds() / (1000 * 60 * 60 * 24 * 365)
+  ),
   email: "ensbaspinar@gmail.com",
   socials: {
     twitter: "ensbaspinar",

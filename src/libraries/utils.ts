@@ -76,5 +76,6 @@ export const generatePathname = ({
 export const parseCodeBlockMeta = (node: any) => {
   const meta: string = getSafe(() => node.children[0].data?.meta, "");
   const fileName = meta.match(/file=(\S+)/)?.[1] || "";
-  return { fileName };
+  const type = meta.match(/type=(\S+)/)?.[1] || "";
+  return { fileName, type };
 };

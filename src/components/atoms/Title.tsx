@@ -11,7 +11,7 @@ export const Title: FC<TitleProps> = ({ level, children, className }) => {
       id={id}
       className={cn(
         "font-semibold",
-        "relative cursor-pointer before:absolute before:-left-4 sm:hover:before:content-['#'] hover:before:-ml-1",
+        "relative cursor-pointer before:absolute before:-left-4 sm:hover:before:content-['#'] sm:before:text-gray-600 hover:before:-ml-1",
         className
       )}
     >

@@ -93,7 +93,7 @@ export const MarkdownContent: React.FC<MarkdownContentProps> = ({
                 height={props.height ? Number(props.height) : 1080}
                 className={cn(
                   "flex-1 animate-reveal border-y border-gray-200",
-                  "md:rounded-xl sm:border-x"
+                  "sm:rounded-lg sm:border-x"
                 )}
               />
               {source && (

@@ -6,7 +6,7 @@ export function MessageBox({ children, type }: MessageBoxProps) {
   return (
     <div
       className={cn(
-        "p-5 flex flex-col items-center gap-2 my-6 sm:items-start sm:flex-row sm:gap-4 sm:rounded-md -mx-6 sm:mx-0",
+        "message-box p-5 flex flex-col items-center gap-2 my-6 sm:items-start sm:flex-row sm:gap-4 sm:rounded-md -mx-6 sm:mx-0",
         {
           "bg-yellow-400": type === "warning",
           "bg-[rgba(220,38,38,0.5)]": type === "danger",

@@ -9,7 +9,6 @@ import { fallbackLng } from "@/i18n/settings";
 import { getAllPosts, getPostBySlug } from "@/libraries/api";
 import { dasherize, formatDate } from "@/libraries/utils";
 import { SlugPageProps } from "@/models";
-import { Content } from "next/font/google";
 import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 

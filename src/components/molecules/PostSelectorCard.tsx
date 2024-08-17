@@ -33,8 +33,8 @@ export function PostSelectorCard({
       )}
     >
       <h3 className="text-sm font-semibold m-0 break-words">{title}</h3>
-      <div className="flex justify-between mt-2 text-[10px]">
-        <time className="mr-auto block">{formatDate(createdAt)}</time>
+      <div className="flex items-center justify-between mt-1 text-[10px]">
+        <time className="mr-auto block h-fit">{formatDate(createdAt)}</time>
         <div
           className={cn("flex gap-2", {
             "text-white!": isActivePost,

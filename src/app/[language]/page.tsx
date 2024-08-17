@@ -18,7 +18,7 @@ export default async function Home({ params: { language } }: PageProps) {
   const { t } = await useTranslation(language, "home");
 
   return (
-    <main className="w-full pt-4 sm:py-12">
+    <main className="w-full pt-4 sm:py-12 sm:px-8">
       <div className="max-w-3xl mx-auto">
         <Title level={1} className="hidden sm:block">
           {t("title")}

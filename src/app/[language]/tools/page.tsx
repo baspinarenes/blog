@@ -17,7 +17,7 @@ export default async function Page({
   });
 
   return (
-    <main className="w-full my-6 sm:mt-12">
+    <main className="w-full my-6 sm:mb-10 sm:mt-12 sm:px-8">
       <div className="max-w-3xl mx-auto">
         <Title level={1} className="hidden sm:block">
           {t("title")}

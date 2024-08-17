@@ -126,6 +126,11 @@
     margin-bottom: 18px;
   }
 
+  span,
+  p {
+    line-height: 1.6;
+  }
+
   p {
     margin-bottom: 16px;
 
@@ -136,7 +141,7 @@
 
   ol,
   ul {
-    @apply mt-6 mb-8;
+    @apply mt-8 mb-12;
 
     li {
       display: flex;
@@ -168,7 +173,7 @@
         justify-content: center;
         font-weight: 600;
         z-index: 1;
-        // outline: 4px solid white;
+        outline: 5px solid white;
         position: absolute;
         left: 0;
         top: 0;
@@ -176,7 +181,26 @@
       }
 
       &:after {
-        @apply content-[""] block w-px h-full top-0 left-3 bg-border absolute;
+        @apply content-[""] block w-px h-full top-0 left-[11px] bg-border absolute;
+      }
+
+      ul { // list inside list
+        margin-top: 16px;
+        margin-bottom: 0;
+
+        li {
+          padding-bottom: 8px;
+
+          &:after {
+            display: none;
+          }
+
+          &:before {
+            content: "-" !important;
+            background-color: transparent;
+            color: var(--foreground);
+          }
+        }
       }
     }
   }
@@ -216,10 +240,6 @@
         display: block;
       }
     }
-  }
-
-  .linenumber {
-    min-width: 30px !important;
   }
   
   code, pre {
@@ -293,6 +313,34 @@
 
 @layer components {
   .link {
-    @apply text-blue-600 font-semibold border-b-2 border-b-blue-600;
+    @apply text-blue-600 font-semibold border-b-2 border-b-blue-600 pt-0 pb-0.5 mb-1;
   }
+
+  .message-box {
+    ul {
+      margin-top: 16px;
+      margin-bottom: 0;
+
+      li {
+        padding-top: 0;
+        padding-bottom: 8px;
+        padding-left: 24px;
+
+        &::after{
+          display: none;
+        }
+
+        &:before {
+          content: "-" !important;
+          background-color: transparent;
+          color: var(--foreground);
+          outline: none;
+        }
+      }
+    }
+  }
+}
+
+.react-syntax-highlighter-line-number {
+  min-width: 31px !important;
 }

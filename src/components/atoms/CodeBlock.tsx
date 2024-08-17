@@ -25,7 +25,7 @@ export const CodeBlock: FC<CodeBlockProps> = ({
     () => (node as any).children[0].children[0].value.trim(),
     ""
   );
-  const { fileName } = parseCodeBlockMeta(node as any);
+  const { fileName, type } = parseCodeBlockMeta(node as any);
 
   if (["info", "warning", "danger"].includes(language)) {
     return <MessageBox type={language}>{code}</MessageBox>;
@@ -42,7 +42,15 @@ export const CodeBlock: FC<CodeBlockProps> = ({
 
   if (language === "result") {
     return (
-      <div className="result-block mb-8 -mx-6 sm:mx-0 w-screen sm:w-full relative border-b border-x border-border bg-slate-100 rounded-b-lg">
+      <div
+        className={cn(
+          "result-block mb-8 -mx-6 sm:mx-0 w-screen sm:w-full relative border-b border-x border-border rounded-b-lg",
+          {
+            "bg-slate-100": !type || type === "info",
+            "bg-red-50": type === "error",
+          }
+        )}
+      >
         <SyntaxHighlighter
           language={language}
           style={theme}
@@ -50,7 +58,7 @@ export const CodeBlock: FC<CodeBlockProps> = ({
         >
           {code}
         </SyntaxHighlighter>
-        <div className="absolute z-50 bg-slate-100 top-px right-0 bottom-3 pt-2 pr-2 w-12 text-gray-300 flex justify-end items-start">
+        <div className="absolute z-50 bg-transparent top-px right-0 bottom-3 pt-2 pr-2 w-12 text-gray-300 flex justify-end items-start">
           <Icon name="bug" size={28} />
         </div>
       </div>

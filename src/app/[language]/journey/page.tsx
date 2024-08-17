@@ -17,7 +17,7 @@ export default async function Page({ params: { language } }: PageProps) {
   const sortedJourneys = journeys.sort((a, b) => b.year - a.year);
 
   return (
-    <main className="w-full mt-6 sm:mt-12">
+    <main className="w-full mt-6 sm:mt-12 sm:px-8">
       <div className="max-w-3xl mx-auto">
         <Title level={1} className="hidden sm:block">
           {t("title")}
