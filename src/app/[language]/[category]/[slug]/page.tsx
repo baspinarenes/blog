@@ -43,7 +43,7 @@ export default async function Page({
             src={post.heroImage.url}
             width={post.heroImage.width}
             height={post.heroImage.height}
-            className="rounded-none sm:rounded-md -mt-6 -mx-6 min-w-[100vw] h-14 sm:mx-0 sm:min-w-fit sm:h-fit sm:-mt-0"
+            className="rounded-none sm:rounded-md -mt-6 -mx-6 min-w-[100vw] h-14 sm:mx-0 sm:min-w-fit sm:h-fit sm:-mt-0 border"
           />
         )}
         <Title level={1} className="mb-2">

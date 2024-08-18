@@ -8,7 +8,7 @@ export const JourneyGroup: FC<JourneyGroupProps> = ({ year, journeys }) => {
       <div className="border-b border-border text-black py-2">
         <h4 className="mt-0">{String(year)}</h4>
       </div>
-      <ul className="hide-list-trace-line">
+      <ul>
         {journeys.map((journey) => (
           <Journey key={journey.title} {...journey} />
         ))}

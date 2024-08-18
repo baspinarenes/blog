@@ -58,7 +58,15 @@ export const CodeBlock: FC<CodeBlockProps> = ({
         >
           {code}
         </SyntaxHighlighter>
-        <div className="absolute z-50 bg-transparent top-px right-0 bottom-3 pt-2 pr-2 w-12 text-gray-300 flex justify-end items-start">
+        <div
+          className={cn(
+            "absolute z-50 bg-transparent top-px right-0 bottom-3 pt-[0.35rem] pr-2 w-12 text-gray-300 flex justify-end items-start",
+            {
+              "bg-slate-100": !type || type === "info",
+              "bg-red-50": type === "error",
+            }
+          )}
+        >
           <Icon name="bug" size={28} />
         </div>
       </div>
@@ -85,7 +93,7 @@ export const CodeBlock: FC<CodeBlockProps> = ({
         <span className="text-sm mr-auto text-gray-700">{fileName}</span>
         <CopyButton text={code} />
         <div className="empty:hidden ml-3">
-          <Icon name={language} size={20} className="text-gray-500" />
+          <Icon name={language} size={20} />
         </div>
       </div>
       <SyntaxHighlighter

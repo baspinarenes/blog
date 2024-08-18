@@ -67,7 +67,7 @@ export const MarkdownContent: React.FC<MarkdownContentProps> = ({
                 title={props.alt}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
-                className="w-full aspect-[1920/1080] rounded-2xl"
+                className="w-full aspect-[1920/1080] rounded-2xl border"
               />
             );
           }
@@ -92,7 +92,7 @@ export const MarkdownContent: React.FC<MarkdownContentProps> = ({
                 width={props.width ? Number(props.width) : 1920}
                 height={props.height ? Number(props.height) : 1080}
                 className={cn(
-                  "flex-1 animate-reveal border-y border-gray-200",
+                  "border flex-1 animate-reveal border-y border-gray-200",
                   "sm:rounded-lg sm:border-x"
                 )}
               />

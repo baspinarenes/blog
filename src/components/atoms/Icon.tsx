@@ -65,6 +65,7 @@ const getIconByName = (name: string): typeof IconBrandTwitter | null => {
       css: IconBrandCss3,
       typescript: IconBrandTypescript,
       javascript: IconBrandJavascript,
+      js: IconBrandJavascript,
       swift: IconBrandSwift,
       bash: IconTerminal2,
       yaml: IconFileCode2,

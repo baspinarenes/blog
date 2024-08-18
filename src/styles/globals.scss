@@ -124,6 +124,7 @@
   h4 {
     font-size: 16px;
     margin-bottom: 18px;
+    line-height: 1.375;
   }
 
   span,
@@ -141,7 +142,7 @@
 
   ol,
   ul {
-    @apply mt-8 mb-12;
+    @apply mt-8 mb-6 sm:mt-6 sm:mb-8;
 
     li {
       display: flex;
@@ -150,7 +151,7 @@
       flex-direction: column;
       padding-left: 36px;
       padding-bottom: 20px;
-
+      
       span {
         margin-top: -2px; 
       }
