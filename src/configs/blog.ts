@@ -1,5 +1,5 @@
 export const title = "Enes Başpınar";
-export const url = "https://www.enesbaspinar.com";
+export const url = process.env.NODE_ENV === "production" ? "https://www.enesbaspinar.com" : "http://localhost:3000";
 export const description =
   "A weird blog about software engineering, programming, and life.";
 export const author = {

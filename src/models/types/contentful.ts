@@ -24,6 +24,13 @@ export type ContentfulPost = {
     width: number;
     height: number;
   };
+  logo?: {
+    title: string;
+    description: string;
+    url: string;
+    width: number;
+    height: number;
+  };
   heroImage?: {
     title: string;
     description: string;
@@ -47,6 +54,7 @@ export type Post = {
   readingTime: string;
   views: number;
   isDraft: boolean;
+  logo: string;
   coverImage?: {
     title: string;
     description: string;

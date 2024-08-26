@@ -13,6 +13,13 @@ const POST_GRAPHQL_FIELDS = `
     width
     height
   }
+  logo {
+    title
+    description
+    url
+    width
+    height
+  }
   heroImage {
     title
     description
@@ -83,6 +90,7 @@ function mapPost(post: ContentfulPost): Post {
     content: post.content,
     coverImage: post.coverImage,
     heroImage: post.heroImage,
+    logo: post.logo?.url || "",
     tags: post.tags,
     postSeries: post.postSeries,
     isDraft: post.sys.publishedAt === null,

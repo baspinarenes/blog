@@ -6,6 +6,10 @@ import { fallbackLng, languages, cookieName } from "./i18n/settings";
 acceptLanguage.languages(languages);
 
 export function middleware(req: NextRequest) {
+  if (req.nextUrl.pathname.endsWith(".svg")) {
+    return NextResponse.next();
+  }
+
   const headers = new Headers(req.headers);
   headers.set("x-current-path", req.nextUrl.pathname);
 
@@ -32,6 +36,6 @@ export function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js|site.webmanifest).*)",
+    "/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js|site.webmanifest|\.svg).*)",
   ],
 };
