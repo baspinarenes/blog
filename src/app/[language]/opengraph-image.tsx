@@ -1,20 +1,12 @@
 import { ImageResponse } from 'next/og'
 import React from 'react'
-import { SlugPageProps } from '@/models';
-import { getPostBySlug } from '@/libraries/api';
-import { author, url } from '@/configs';
+import { author, description, url } from '@/configs';
 
 export const runtime = 'edge';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
-export default async function OgImage({ params }: SlugPageProps) {
-  const post = await getPostBySlug({
-    category: params.category,
-    language: params.language,
-    slug: params.slug
-  });
-
+export default async function OgImage() {
   const geistRegular = fetch(
     new URL('./fonts/Geist-Regular.otf', url)
   ).then((res) => res.arrayBuffer())
@@ -38,43 +30,11 @@ export default async function OgImage({ params }: SlugPageProps) {
       }}>
         <div style={{
           display: 'flex',
-          alignItems: 'center',
-          justifyContent: "space-between",
-          position: 'absolute',
-          padding: "32px 50px",
-          left: 0,
-          top: 0,
-          right: 0,
-          color: '#9ca3af',
-          fontSize: 32,
-        }}>
-          <div style={{
-            display: 'flex',
-          }}>{author.name} {author.surname} - {author.title}</div>
-          <div style={{
-            display: 'flex',
-            textTransform: "capitalize"
-          }}>{post.category}</div>
-        </div>
-        <div style={{
-          display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          justifyItems: "center",
           width: '100%',
+          paddingBottom: 32,
         }}>
-          {post.tag && <img
-            height={100}
-            width={100}
-            alt='Tag logo'
-            src={`${url}/logo/${post.tag}.svg`}
-            style={{
-              justifyContent: "center",
-              marginBottom: 30,
-              fontSize: 60,
-              height: 100,
-            }}
-          />}
           <div style={{
             display: 'flex',
             justifyContent: "center",
@@ -85,7 +45,7 @@ export default async function OgImage({ params }: SlugPageProps) {
             fontWeight: 800,
             marginBottom: 30,
           }}>
-            {post.title}
+            {author.name} {author.surname}'s Blog
           </div>
           <div style={{
             display: 'flex',
@@ -93,9 +53,9 @@ export default async function OgImage({ params }: SlugPageProps) {
             fontSize: 36,
             color: '#9ca3af',
             textAlign: 'center',
-            width: '70%',
+            width: '80%',
           }}>
-            {post.description}
+            {description}
           </div>
         </div>
         <img

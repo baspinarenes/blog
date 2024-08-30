@@ -1,25 +1,11 @@
 import { CategoryType, ContentfulPost, Post } from "@/models";
-import readingTime from "reading-time";
+import { readingTime } from 'reading-time-estimator'
 
 const POST_GRAPHQL_FIELDS = `
   title
   slug
   description
   content
-  coverImage {
-    title
-    description
-    url
-    width
-    height
-  }
-  logo {
-    title
-    description
-    url
-    width
-    height
-  }
   heroImage {
     title
     description
@@ -27,7 +13,7 @@ const POST_GRAPHQL_FIELDS = `
     width
     height
   }
-  tags
+  tag
   postSeries
   category
   overridedCreatedAt
@@ -88,15 +74,11 @@ function mapPost(post: ContentfulPost): Post {
         post.sys.firstPublishedAt
     ),
     content: post.content,
-    coverImage: post.coverImage,
     heroImage: post.heroImage,
-    logo: post.logo?.url || "",
-    tags: post.tags,
+    tag: post.tag,
     postSeries: post.postSeries,
     isDraft: post.sys.publishedAt === null,
-    readingTime: readingTime(post.content || "", {
-      wordsPerMinute: 180,
-    }).text.replace(" read", ""),
+    readingTime: `${readingTime(post.content || "", 180, "tr").minutes || 1} min`,
     views: 0,
   };
 }

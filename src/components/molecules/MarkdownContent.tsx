@@ -87,13 +87,13 @@ export const MarkdownContent: React.FC<MarkdownContentProps> = ({
               )}
             >
               <Image
-                src={"https:" + props.src}
+                src={props.src.startsWith("http") ? props.src : `https:${props.src}`}
                 alt={alt || ""}
                 width={props.width ? Number(props.width) : 1920}
                 height={props.height ? Number(props.height) : 1080}
                 className={cn(
-                  "border flex-1 animate-reveal border-y border-gray-200",
-                  "sm:rounded-lg sm:border-x"
+                  "flex-1 animate-reveal border-gray-200",
+                  "sm:border sm:border-y sm:rounded-lg sm:border-x"
                 )}
               />
               {source && (

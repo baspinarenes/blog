@@ -13,7 +13,7 @@ export function DesktopLayout({ children, params }: LayoutProps) {
         )}
       >
         {/* className="md:max-w-3xl sm:mx-auto sm:h-full sm:min-h-full" */}
-        <main className="md:h-screen sm:overflow-y-auto">{children}</main>
+        <main className="md:h-screen">{children}</main>
       </div>
     </div>
   );

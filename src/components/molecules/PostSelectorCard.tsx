@@ -10,7 +10,7 @@ export function PostSelectorCard({
   language,
   category,
   slug,
-  tags,
+  tag,
   title,
   readingTime,
   views,
@@ -44,7 +44,7 @@ export function PostSelectorCard({
           <ViewCount count={views} />
         </div>
         {/* <div className="flex gap-1 text-xs">
-          {tags?.[0] && (
+          {tag && (
             <span
               className={cn(
                 "text-[10px] bg-slate-300 px-1.5 py-0.5 rounded-md",
@@ -53,7 +53,7 @@ export function PostSelectorCard({
                 }
               )}
             >
-              {dasherize(tags[0])}
+              {dasherize(tag)}
             </span>
           )}
         </div> */}

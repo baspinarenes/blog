@@ -21,14 +21,14 @@
     "i18next": "^23.12.2",
     "i18next-browser-languagedetector": "^8.0.0",
     "i18next-resources-to-backend": "^1.2.1",
-    "next": "14.2.5",
+    "next": "14.2.7",
     "react": "^18",
     "react-cookie": "^7.2.0",
     "react-dom": "^18",
     "react-i18next": "^15.0.0",
     "react-markdown": "^9.0.1",
     "react-syntax-highlighter": "^15.5.0",
-    "reading-time": "^1.5.0",
+    "reading-time-estimator": "^1.11.0",
     "rehype-highlight": "^7.0.0",
     "rehype-prism-plus": "^2.0.0",
     "sass": "^1.77.8",
@@ -50,5 +50,6 @@
     "postcss": "^8.4.41",
     "tailwindcss": "^3.4.9",
     "typescript": "^5"
-  }
+  },
+  "packageManager": "pnpm@9.1.1+sha256.9551e803dcb7a1839fdf5416153a844060c7bce013218ce823410532504ac10b"
 }

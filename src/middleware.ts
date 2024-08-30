@@ -6,7 +6,7 @@ import { fallbackLng, languages, cookieName } from "./i18n/settings";
 acceptLanguage.languages(languages);
 
 export function middleware(req: NextRequest) {
-  if (req.nextUrl.pathname.endsWith(".svg")) {
+  if (req.nextUrl.pathname.endsWith(".svg") || req.nextUrl.pathname.includes("fonts") || req.nextUrl.pathname.includes("logo")) {
     return NextResponse.next();
   }
 

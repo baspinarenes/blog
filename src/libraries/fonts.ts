@@ -16,8 +16,6 @@ export const jetbrains_mono = JetBrains_Mono({
   variable: "--font-code",
 });
 
-
-
 export const getRegularFont = cache(async () => {
   const response = await readFile('src/assets/fonts/Geist-Regular.otf')
   const font = Uint8Array.from(response).buffer

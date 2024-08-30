@@ -5,11 +5,13 @@ import {
   ViewCount,
 } from "@/components/atoms";
 import { MarkdownContent } from "@/components/molecules";
+import { url } from "@/configs";
 import { fallbackLng } from "@/i18n/settings";
 import { getAllPosts, getPostBySlug } from "@/libraries/api";
 import { dasherize, formatDate } from "@/libraries/utils";
 import { SlugPageProps } from "@/models";
 import { draftMode } from "next/headers";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
@@ -36,14 +38,15 @@ export default async function Page({
   if (!post || !post.content) notFound();
 
   return (
-    <main className="w-full sm:overflow-auto py-6 sm:py-10 sm:px-8">
+    <main className="w-full sm:overflow-y-scroll py-6 sm:py-16 sm:px-8">
       <div className="max-w-3xl mx-auto">
-        {post.heroImage && (
-          <ContentfulImage
-            src={post.heroImage.url}
-            width={post.heroImage.width}
-            height={post.heroImage.height}
-            className="rounded-none sm:rounded-md -mt-6 -mx-6 min-w-[100vw] h-14 sm:mx-0 sm:min-w-fit sm:h-fit sm:-mt-0 border"
+        {post.tag && (
+          <Image
+            src={`${url}/logo/${post.tag}.svg`}
+            alt="Tag logo"
+            height={60}
+            width={60}
+            className="mb-6 h-[60px] w-fit"
           />
         )}
         <Title level={1} className="mb-2">
@@ -53,9 +56,9 @@ export default async function Page({
           <div className="flex items-center gap-2 sm:gap-3 w-full text-gray-400">
             <span>{post.createdAt ? formatDate(post.createdAt) : ""}</span>
             <span>/</span>
-            {post.tags?.length && (
+            {post.tag && (
               <div className="flex gap-1">
-                {post.tags.map((x) => `#${dasherize(x)}`).join(" ")}
+                {`#${dasherize(post.tag)}`}
               </div>
             )}
             <span>/</span>
@@ -63,11 +66,11 @@ export default async function Page({
             <ReadingTime text={post.readingTime} />
           </div>
         </div>
-        {post.coverImage && (
+        {post.heroImage && (
           <ContentfulImage
-            src={post.coverImage.url}
-            width={post.coverImage.width}
-            height={post.coverImage.height}
+            src={post.heroImage.url}
+            width={post.heroImage.width}
+            height={post.heroImage.height}
           />
         )}
         <MarkdownContent>{post.content}</MarkdownContent>
