@@ -12,25 +12,31 @@ export const metadata: Metadata = {
   title,
   description,
   metadataBase: new URL(url),
-  keywords: ['Enes Başpınar', 'Enes Baspinar', 'enesbaspinar', 'enesbaspinar.com', 'blog'],
+  keywords: [
+    "Enes Başpınar",
+    "Enes Baspinar",
+    "enesbaspinar",
+    "enesbaspinar.com",
+    "blog",
+  ],
   openGraph: {
     title: {
       default: title,
-      template: `%s — ${title}`
+      template: `%s — ${title}`,
     },
     description: description,
-    type: 'website',
-    url: 'https://onur.dev',
+    type: "website",
+    url: "https://enesbaspinar.com",
     siteName: title,
-    locale: 'en_IE'
+    locale: "en_IE",
   },
   alternates: {
-    canonical: '/'
+    canonical: "/",
   },
   twitter: {
-    card: 'summary_large_image',
+    card: "summary_large_image",
     site: `@${author.socials.twitter}`,
-    creator: `@${author.socials.twitter}`
+    creator: `@${author.socials.twitter}`,
   },
 };
 
