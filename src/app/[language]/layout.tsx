@@ -45,6 +45,7 @@ export async function generateStaticParams() {
 }
 
 export default async function RootLayout({ children, params }: LayoutProps) {
+  console.log("sadsadasdasdsa")
   const isMobile = await isMobileDevice();
 
   return (

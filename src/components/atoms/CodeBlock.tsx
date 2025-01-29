@@ -14,15 +14,16 @@ export const CodeBlock: FC<CodeBlockProps> = ({
   className,
   node,
   lang,
-  ...rest
+  showLineNumbers = true,
 }) => {
   const language = getSafe(
-    () => (node as any).children[0].properties.className[0].split("-")[1],
+    () =>
+      lang ?? (node as any).children[0].properties.className[0].split("-")[1],
     ""
   );
 
   const code = getSafe(
-    () => (node as any).children[0].children[0].value.trim(),
+    () => children ?? (node as any).children[0].children[0].value.trim(),
     ""
   );
   const { fileName, type } = parseCodeBlockMeta(node as any);
@@ -44,7 +45,7 @@ export const CodeBlock: FC<CodeBlockProps> = ({
     return (
       <div
         className={cn(
-          "result-block mb-8 -mx-6 sm:mx-0 w-screen sm:w-full relative border-b border-x border-border rounded-b-lg",
+          "result-block mb-8 -mx-6 sm:mx-0 relative border-b border-x border-border rounded-b-lg last:mb-0",
           {
             "bg-slate-100": !type || type === "info",
             "bg-red-50": type === "error",
@@ -76,8 +77,8 @@ export const CodeBlock: FC<CodeBlockProps> = ({
   return (
     <div
       className={cn(
-        "code-block -mx-6 w-screen flex flex-col border border-border my-6 overflow-hidden last:mb-0",
-        "md:mx-0 sm:w-full sm:rounded-lg sm:border-x sm:mt-6 sm:mb-6"
+        "code-block -mx-6 flex flex-col border border-border my-6 overflow-hidden last:mb-0",
+        "md:mx-0 sm:rounded-lg sm:border-x sm:mt-6 sm:mb-6"
       )}
     >
       <div
@@ -100,7 +101,7 @@ export const CodeBlock: FC<CodeBlockProps> = ({
         codeTagProps={{ alt: "custom-code" }}
         language={language}
         style={theme}
-        showLineNumbers
+        showLineNumbers={showLineNumbers}
       >
         {code}
       </SyntaxHighlighter>
@@ -109,7 +110,11 @@ export const CodeBlock: FC<CodeBlockProps> = ({
 };
 
 export type CodeBlockProps = Readonly<
-  ClassAttributes<HTMLElement> & HTMLAttributes<HTMLElement> & ExtraProps
+  ClassAttributes<HTMLElement> &
+    HTMLAttributes<HTMLElement> &
+    ExtraProps & {
+      showLineNumbers?: boolean;
+    }
 >;
 
 /*

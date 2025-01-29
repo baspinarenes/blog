@@ -6,7 +6,12 @@ import { fallbackLng, languages, cookieName } from "./i18n/settings";
 acceptLanguage.languages(languages);
 
 export function middleware(req: NextRequest) {
-  if (req.nextUrl.pathname.endsWith(".svg") || req.nextUrl.pathname.includes("fonts") || req.nextUrl.pathname.includes("logo")) {
+  if (
+    req.nextUrl.pathname.endsWith(".svg") ||
+    req.nextUrl.pathname.includes("fonts") ||
+    req.nextUrl.pathname.includes("logo") ||
+    req.nextUrl.pathname.includes("/package")
+  ) {
     return NextResponse.next();
   }
 
@@ -19,7 +24,7 @@ export function middleware(req: NextRequest) {
   } else if (!lng) {
     lng = acceptLanguage.get(req.headers.get("Accept-Language"))!;
   }
-
+  
   const hasLanguageInPath = languages.some((language) =>
     req.nextUrl.pathname.startsWith(`/${language}`)
   );
@@ -36,6 +41,6 @@ export function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js|site.webmanifest|\.svg).*)",
+    "/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js|site.webmanifest|.svg).*)",
   ],
 };
