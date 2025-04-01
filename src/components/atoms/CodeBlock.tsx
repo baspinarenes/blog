@@ -9,21 +9,27 @@ import { cn, getSafe, parseCodeBlockMeta } from "@/libraries/utils";
 import { CopyButton } from "../molecules";
 import { MessageBox } from "../molecules/MessageBox";
 
-export const CodeBlock: FC<CodeBlockProps> = ({
-  children,
-  className,
-  node,
-  lang,
-  showLineNumbers = true,
-}) => {
+export const CodeBlock: FC<CodeBlockProps> = (props) => {
+  const {
+    children,
+    className,
+    node,
+    lang,
+    showLineNumbers = true,
+  } = props;
+
+  console.log("propsprops", props)
   const language = getSafe(
     () =>
       lang ?? (node as any).children[0].properties.className[0].split("-")[1],
     ""
   );
 
+  console.log("children", children);
+  
+
   const code = getSafe(
-    () => children ?? (node as any).children[0].children[0].value.trim(),
+    () =>  (node as any).children[0].children[0].value.trim(),
     ""
   );
   const { fileName, type } = parseCodeBlockMeta(node as any);
@@ -73,6 +79,11 @@ export const CodeBlock: FC<CodeBlockProps> = ({
       </div>
     );
   }
+
+  console.log("ASDASDASDASDAS", {
+    language,
+    code
+  })
 
   return (
     <div
