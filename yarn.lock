@@ -338,21 +338,6 @@
   dependencies:
     "@expressive-code/core" "^0.41.2"
 
-"@fontsource/geist-sans@^5.2.5":
-  version "5.2.5"
-  resolved "https://registry.yarnpkg.com/@fontsource/geist-sans/-/geist-sans-5.2.5.tgz#025bd279367f7b58c2875d2ef12bd369cbd8602a"
-  integrity sha512-anllOHyJbElRs9fV15TeDRqAeb1IKm4bSknPl6ZMoyPTx1BBy7logudcUwpNjmQLkzn4Q0JGQLRCUKJYoyST6A==
-
-"@fontsource/inter@^5.2.5":
-  version "5.2.5"
-  resolved "https://registry.yarnpkg.com/@fontsource/inter/-/inter-5.2.5.tgz#69efffe6ccfae138cbe1806f41daa39cef986b59"
-  integrity sha512-kbsPKj0S4p44JdYRFiW78Td8Ge2sBVxi/PIBwmih+RpSXUdvS9nbs1HIiuUSPtRMi14CqLEZ/fbk7dj7vni1Sg==
-
-"@fontsource/jetbrains-mono@^5.2.5":
-  version "5.2.5"
-  resolved "https://registry.yarnpkg.com/@fontsource/jetbrains-mono/-/jetbrains-mono-5.2.5.tgz#c3e9931ae7ebd70b25b6aaf98caf5c2720aaffb3"
-  integrity sha512-TPZ9b/uq38RMdrlZZkl0RwN8Ju9JxuqMETrw76pUQFbGtE1QbwQaNsLlnUrACNNBNbd0NZRXiJJSkC8ajPgbew==
-
 "@fujocoded/expressive-code-output@^0.0.1":
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@fujocoded/expressive-code-output/-/expressive-code-output-0.0.1.tgz#ad947fcab8ec06504f6cf03fad57cdfacb433068"
@@ -674,28 +659,12 @@
     "@parcel/watcher-win32-ia32" "2.5.1"
     "@parcel/watcher-win32-x64" "2.5.1"
 
-"@popperjs/core@^2.9.3":
-  version "2.11.8"
-  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.8.tgz#6b79032e760a0899cd4204710beede972a3a185f"
-  integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
-
 "@rehype-pretty/transformers@^0.13.2":
   version "0.13.2"
   resolved "https://registry.yarnpkg.com/@rehype-pretty/transformers/-/transformers-0.13.2.tgz#10aa3eccf44a55c8721eaea74d4759e3fe522e7d"
   integrity sha512-p2ciQSwqy5Ip8aNUa9q6rdS/hJZXrxHYYfDVOHvKOsBu3t9HDmQ65YX6r9Qbl19vi160OAxmGF7MIoCRDJrRhg==
 
-"@rollup/plugin-node-resolve@^15.2.3":
-  version "15.3.1"
-  resolved "https://registry.yarnpkg.com/@rollup/plugin-node-resolve/-/plugin-node-resolve-15.3.1.tgz#66008953c2524be786aa319d49e32f2128296a78"
-  integrity sha512-tgg6b91pAybXHJQMAAwW9VuWBO6Thi+q7BCNARLwSqlmsHz0XYURtGvh/AuwSADXSI4h/2uHbs7s4FzlZDGSGA==
-  dependencies:
-    "@rollup/pluginutils" "^5.0.1"
-    "@types/resolve" "1.20.2"
-    deepmerge "^4.2.2"
-    is-module "^1.0.0"
-    resolve "^1.22.1"
-
-"@rollup/pluginutils@^5.0.1", "@rollup/pluginutils@^5.1.4":
+"@rollup/pluginutils@^5.1.4":
   version "5.1.4"
   resolved "https://registry.yarnpkg.com/@rollup/pluginutils/-/pluginutils-5.1.4.tgz#bb94f1f9eaaac944da237767cdfee6c5b2262d4a"
   integrity sha512-USm05zrsFxYLPdWWq+K3STlWiT/3ELn3RcV5hJMghpeAIhxfsUIg6mt12CBJBInWMV4VneoV7SfGv8xIwo2qNQ==
@@ -1069,11 +1038,6 @@
   dependencies:
     undici-types "~5.26.4"
 
-"@types/resolve@1.20.2":
-  version "1.20.2"
-  resolved "https://registry.yarnpkg.com/@types/resolve/-/resolve-1.20.2.tgz#97d26e00cd4a0423b4af620abecf3e6f442b7975"
-  integrity sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==
-
 "@types/tar@^6.1.13":
   version "6.1.13"
   resolved "https://registry.yarnpkg.com/@types/tar/-/tar-6.1.13.tgz#9b5801c02175344101b4b91086ab2bbc8e93a9b6"
@@ -1178,6 +1142,11 @@ astro-expressive-code@^0.41.0:
   integrity sha512-HN0jWTnhr7mIV/2e6uu4PPRNNo/k4UEgTLZqbp3MrHU+caCARveG2yZxaZVBmxyiVdYqW5Pd3u3n2zjnshixbw==
   dependencies:
     rehype-expressive-code "^0.41.2"
+
+astro-font@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/astro-font/-/astro-font-1.1.0.tgz#5daef75eacf7f22fdf15855c02fcdf22d8951054"
+  integrity sha512-hj1A0MkaJTeaArBpf1m9s4Nxu1Bn9h0QiEPeR9Dfjle25pT4CH4higzuadWzCRSvhGO2SzbM11YwZEF+cmLDxg==
 
 astro-icon@^1.1.5:
   version "1.1.5"
@@ -1611,7 +1580,7 @@ dedent-js@^1.0.1:
   resolved "https://registry.yarnpkg.com/dedent-js/-/dedent-js-1.0.1.tgz#bee5fb7c9e727d85dffa24590d10ec1ab1255305"
   integrity sha512-OUepMozQULMLUmhxS95Vudo0jb0UchLimi3+pQ2plj61Fcy8axbP9hbiD4Sz6DPqn6XG3kfmziVfQ1rSys5AJQ==
 
-deepmerge@^4.2.2, deepmerge@^4.3.1:
+deepmerge@^4.3.1:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-4.3.1.tgz#44b5f2147cd3b00d4b56137685966f26fd25dd4a"
   integrity sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==
@@ -1995,33 +1964,6 @@ flattie@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/flattie/-/flattie-1.1.1.tgz#88182235723113667d36217fec55359275d6fe3d"
   integrity sha512-9UbaD6XdAL97+k/n+N7JwX46K/M6Zc6KcFYskrYL8wbBV/Uyk0CTAMY0VT+qiK5PM7AIc9aTWYtq65U7T+aCNQ==
-
-flowbite-datepicker@^1.3.0, flowbite-datepicker@^1.3.1:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/flowbite-datepicker/-/flowbite-datepicker-1.3.2.tgz#ad830d73f923344fb5614978f0d87e790cc69c4b"
-  integrity sha512-6Nfm0MCVX3mpaR7YSCjmEO2GO8CDt6CX8ZpQnGdeu03WUCWtEPQ/uy0PUiNtIJjJZWnX0Cm3H55MOhbD1g+E/g==
-  dependencies:
-    "@rollup/plugin-node-resolve" "^15.2.3"
-    flowbite "^2.0.0"
-
-flowbite@^2.0.0:
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/flowbite/-/flowbite-2.5.2.tgz#4a14b87ad3f2abd8bcd7b0fb52a6b06fd7a74685"
-  integrity sha512-kwFD3n8/YW4EG8GlY3Od9IoKND97kitO+/ejISHSqpn3vw2i5K/+ZI8Jm2V+KC4fGdnfi0XZ+TzYqQb4Q1LshA==
-  dependencies:
-    "@popperjs/core" "^2.9.3"
-    flowbite-datepicker "^1.3.0"
-    mini-svg-data-uri "^1.4.3"
-
-flowbite@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/flowbite/-/flowbite-3.1.2.tgz#a3223462b608119e8388af6579d05642e553a5db"
-  integrity sha512-MkwSgbbybCYgMC+go6Da5idEKUFfMqc/AmSjm/2ZbdmvoKf5frLPq/eIhXc9P+rC8t9boZtUXzHDgt5whZ6A/Q==
-  dependencies:
-    "@popperjs/core" "^2.9.3"
-    flowbite-datepicker "^1.3.1"
-    mini-svg-data-uri "^1.4.3"
-    postcss "^8.5.1"
 
 follow-redirects@^1.15.6:
   version "1.15.9"
@@ -2425,13 +2367,6 @@ is-arrayish@^0.3.1:
   resolved "https://registry.yarnpkg.com/is-arrayish/-/is-arrayish-0.3.2.tgz#4574a2ae56f7ab206896fb431eaeed066fdf8f03"
   integrity sha512-eVRqCvVlZbuw3GrM63ovNSNAeA1K16kaR/LRY/92w0zxQ5/1YzwblUX652i4Xs9RwAGjW9d9y6X88t8OaAJfWQ==
 
-is-core-module@^2.16.0:
-  version "2.16.1"
-  resolved "https://registry.yarnpkg.com/is-core-module/-/is-core-module-2.16.1.tgz#2a98801a849f43e2add644fbb6bc6229b19a4ef4"
-  integrity sha512-UfoeMA6fIJ8wTYFEUjelnaGI67v6+N7qXJEvQuIGa99l4xsCruSYOVSQ0uPANn4dAzm8lkYPaKLrrijLq7x23w==
-  dependencies:
-    hasown "^2.0.2"
-
 is-decimal@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/is-decimal/-/is-decimal-2.0.1.tgz#9469d2dc190d0214fd87d78b78caecc0cc14eef7"
@@ -2470,11 +2405,6 @@ is-inside-container@^1.0.0:
   integrity sha512-KIYLCCJghfHZxqjYBE7rEy0OBuTd5xCHS7tHVgvCLkx7StIoaxwNW3hCALgEUjFfeRk+MG/Qxmp/vtETEF3tRA==
   dependencies:
     is-docker "^3.0.0"
-
-is-module@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/is-module/-/is-module-1.0.0.tgz#3258fb69f78c14d5b815d664336b4cffb6441591"
-  integrity sha512-51ypPSPCoTEIN9dy5Oy+h4pShgJmPCygKfyRCISBI+JoWT/2oJvK8QPxmwv7b/p239jXrm9M1mlQbyKJ5A152g==
 
 is-number@^7.0.0:
   version "7.0.0"
@@ -3272,11 +3202,6 @@ mime-types@^2.1.12:
   dependencies:
     mime-db "1.52.0"
 
-mini-svg-data-uri@^1.4.3:
-  version "1.4.4"
-  resolved "https://registry.yarnpkg.com/mini-svg-data-uri/-/mini-svg-data-uri-1.4.4.tgz#8ab0aabcdf8c29ad5693ca595af19dd2ead09939"
-  integrity sha512-r9deDe9p5FJUPZAk3A59wGH7Ii9YrjjWw0jmw/liSbHl2CHiyXj6FcDXDu2K3TjVAXqiJdaw3xxwlZZr9E6nHg==
-
 minipass@^3.0.0:
   version "3.3.6"
   resolved "https://registry.yarnpkg.com/minipass/-/minipass-3.3.6.tgz#7bba384db3a1520d18c9c0e5251c3444e95dd94a"
@@ -3518,11 +3443,6 @@ pascal-case@^3.1.1:
     no-case "^3.0.4"
     tslib "^2.0.3"
 
-path-parse@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.7.tgz#fbc114b60ca42b30d9daf5858e4bd68bbedb6735"
-  integrity sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==
-
 pathe@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/pathe/-/pathe-1.1.2.tgz#6c4cb47a945692e48a1ddd6e4094d170516437ec"
@@ -3586,7 +3506,7 @@ postcss-selector-parser@^6.1.1:
     cssesc "^3.0.0"
     util-deprecate "^1.0.2"
 
-postcss@^8.4.38, postcss@^8.5.1, postcss@^8.5.3:
+postcss@^8.4.38, postcss@^8.5.3:
   version "8.5.3"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.5.3.tgz#1463b6f1c7fb16fe258736cba29a2de35237eafb"
   integrity sha512-dle9A3yYxlBSrt8Fu+IpjGT8SY8hN0mlaA6GY8t0P5PjIOZemULz/E2Bnm/2dcUOena75OTNkHI76uZBNUUq3A==
@@ -3830,15 +3750,6 @@ remark-stringify@^11.0.0:
     mdast-util-to-markdown "^2.0.0"
     unified "^11.0.0"
 
-resolve@^1.22.1:
-  version "1.22.10"
-  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.22.10.tgz#b663e83ffb09bbf2386944736baae803029b8b39"
-  integrity sha512-NPRy+/ncIMeDlTAsuqwKIiferiawhefFJtkNSW0qZJEqMEb+qBt/77B/jGeeek+F0uOeN05CDa6HXbbIgtVX4w==
-  dependencies:
-    is-core-module "^2.16.0"
-    path-parse "^1.0.7"
-    supports-preserve-symlinks-flag "^1.0.0"
-
 restructure@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/restructure/-/restructure-3.0.2.tgz#e6b2fad214f78edee21797fa8160fef50eb9b49a"
@@ -4067,11 +3978,6 @@ style-to-object@1.0.8:
   integrity sha512-xT47I/Eo0rwJmaXC4oilDGDWLohVhR6o/xAQcPQN8q6QBuZVL8qMYL85kLmST5cPjAorwvqIA4qXTRQoYHaL6g==
   dependencies:
     inline-style-parser "0.2.4"
-
-supports-preserve-symlinks-flag@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
-  integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
 svelte2tsx@^0.7.35:
   version "0.7.36"

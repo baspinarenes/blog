@@ -3,10 +3,7 @@ import { Sidebar, Topbar } from "@components";
 import type { Lang } from "@models/type";
 import { useTranslations } from "@utils";
 import "@styles/global.css";
-import "@fontsource/geist-sans/400.css";
-import "@fontsource/geist-sans/500.css";
-import "@fontsource/geist-sans/600.css";
-import "@fontsource/jetbrains-mono";
+import { AstroFont } from "astro-font";
 
 interface Props {
   title?: string;
@@ -32,6 +29,29 @@ const localeDescription = description || t("description");
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{localeTitle}</title>
+
+    <AstroFont
+      config={[
+        {
+          src: [],
+          name: "JetBrains Mono",
+          googleFontsURL: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap",
+          preload: true,
+          display: "swap",
+          selector: "body",
+          fallback: "monospace",
+        },
+        {
+          src: [],
+          name: "Geist",
+          googleFontsURL: "https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap",
+          preload: true,
+          display: "swap",
+          selector: "body",
+          fallback: "sans-serif",
+        },
+      ]}
+    />
   </head>
   <body
     class="flex flex-col md:flex-row items-stretch min-h-dvh overflow-hidden"
@@ -43,9 +63,5 @@ const localeDescription = description || t("description");
       <Sidebar />
     </div>
     <slot />
-    <script
-      is:inline
-      src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"
-    ></script>
   </body>
 </html>

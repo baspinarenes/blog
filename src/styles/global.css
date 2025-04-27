@@ -1,11 +1,8 @@
 @import "tailwindcss";
-@import "flowbite/src/themes/default";
-@plugin "flowbite/plugin";
-@source "../../node_modules/flowbite";
 
 @layer base {
   body {
-    font-family: 'Geist Sans', sans-serif;
+    font-family: 'Geist', sans-serif;
     @apply min-h-dvh h-dvh md:h-auto text-gray-900;
   }
 
