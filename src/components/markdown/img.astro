@@ -1,0 +1,40 @@
+---
+const { src: _src, alt, title, controls = true, autoplay = false, muted = true, loop = false } = Astro.props;
+
+let src = typeof _src === "string" ? _src : _src.src;
+let width = typeof _src === "string" ? undefined : _src.width;
+let height = typeof _src === "string" ? undefined : _src.height;
+
+// Detect if source is a video based on file extension
+const isVideo = (url: string) => {
+  const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov', '.avi'];
+  return videoExtensions.some(ext => url.toLowerCase().endsWith(ext));
+};
+
+const isSourceVideo = isVideo(src);
+---
+
+{isSourceVideo ? (
+  <video
+    src={src}
+    width={width}
+    height={height}
+    controls={controls}
+    autoplay={autoplay}
+    muted={muted}
+    loop={loop}
+    class="border-y md:border-x border-gray-200 md:rounded-xl"
+  >
+    {alt && <track kind="captions" label={alt} />}
+    Tarayıcınız video etiketini desteklemiyor.
+  </video>
+) : (
+  <img
+    src={src}
+    alt={alt}
+    title={title}
+    width={width}
+    height={height}
+    class="border-y md:border-x border-gray-200 md:rounded-xl"
+  />
+)}

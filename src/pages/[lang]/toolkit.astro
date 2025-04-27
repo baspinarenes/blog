@@ -1,0 +1,88 @@
+---
+import { C } from "@configuration";
+import { BaseLayout } from "@layouts";
+import { useTranslations } from "@utils";
+import type { Lang } from "@models/type";
+import { Table, Title } from "@ui-kit";
+import { getCollection } from "astro:content";
+
+export const getStaticPaths = () =>
+  Object.keys(C.LOCALES).map((lang) => ({ params: { lang } }));
+
+const t = useTranslations(Astro.currentLocale as Lang);
+
+const title = t({
+  en: "My Toolkit",
+  tr: "Araç Çantam",
+});
+
+const [tools, opensourceTechStack] = await Promise.all([
+  getCollection("tools"),
+  getCollection("openSourceTechStack"),
+]);
+
+const commonColumns = [
+  {
+    name: "name",
+    title: t({ en: "Name", tr: "Ad" }),
+  },
+  {
+    name: "description",
+    title: t({ en: "Description", tr: "Açıklama" }),
+  },
+];
+---
+
+<BaseLayout title={title}>
+  <main>
+    <div class="main-container">
+      <Table
+        id="productivity-tools"
+        title={t({
+          en: "Productivity Tools",
+          tr: "Verimlilik Araçları",
+        })}
+        columns={commonColumns}
+        description={t({
+          en: "Essential tools that boost my productivity and streamline my daily development workflow.",
+          tr: "Verimliliğimi artıran ve günlük geliştirme iş akışımı kolaylaştıran temel araçlar.",
+        })}
+        data={tools.map((item) => {
+          return [
+            {
+              value: t(item.data.name),
+              link: t(item.data.link),
+            },
+            {
+              value: t(item.data.description),
+            },
+          ];
+        })}
+        noScroll
+      />
+
+      <Table
+        id="opensource-tech-stack"
+        title={t({
+          en: "Opensource Tech Stack",
+          tr: "Opensource Tech Stack",
+        })}
+        columns={commonColumns}
+        description={t({
+          en: "Used technologies I rely on for open source and personal projects.",
+          tr: "Açık kaynak ve kişisel projelerim için kullandığım teknolojiler.",
+        })}
+        data={opensourceTechStack.map((item) => [
+          {
+            value: t(item.data.name),
+            link: t(item.data.link),
+          },
+          {
+            value: t(item.data.description),
+          },
+        ])}
+        noScroll
+      />
+    </div>
+  </main>
+</BaseLayout>

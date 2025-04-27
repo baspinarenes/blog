@@ -1,0 +1,20 @@
+---
+import { Icon } from "astro-icon/components";
+import { useTranslations } from "@utils";
+import type { Lang } from "@models/type";
+
+const t = useTranslations(Astro.currentLocale as Lang);
+---
+
+<div class="flex-1 p-3 flex items-center justify-center md:items-start md:mt-8">
+  <p class="text-gray-500 flex flex-col justify-center items-center gap-4">
+    <Icon name="coffee" class="text-7xl md:text-4xl" />
+    <span
+      class="text-center"
+      set:html={t({
+        en: "No entries found.<br/>Not yet.",
+        tr: "Henüz bir yazı yazmadım.<br/>Yazarım bi ara.",
+      })}
+    />
+  </p>
+</div>

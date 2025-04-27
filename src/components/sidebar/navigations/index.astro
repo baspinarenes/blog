@@ -1,0 +1,23 @@
+---
+import { C } from "@configuration";
+import type { Lang } from "@models/type";
+import { NavigationItem } from "@components";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+const locale = Astro.currentLocale as Lang;
+---
+
+<nav class="flex flex-col gap-1">
+  {
+    C.NAVIGATIONS.map(
+      (navigation) =>
+        locale &&
+        navigation.locales.includes(locale) && (
+          <NavigationItem
+            name={navigation.name}
+            href={getRelativeLocaleUrl(locale, navigation.href)}
+          />
+        )
+    )
+  }
+</nav>

@@ -1,0 +1,31 @@
+---
+title: Kill the running application using the port number
+description: Belirli portlarda çalışan uygulamaları sonlandırmanın hızlı yöntemi.
+date: 2024-07-22
+topic: bash
+tags: ["bash", "terminal", "networking", "devops", "troubleshooting"]
+---
+
+Terminalde çalışan uygulamalarımı kapattığımda bazen port'lar ölmeyebiliyor ve `killall node` işe yaramayabiliyor. 
+
+Port'u zorla kapatmak için `kill` kullanabilirsiniz.
+
+```bash
+ sudo kill $(sudo lsof -t -i:{PORT})
+```
+
+Ardından kullanımı basitleştirmek için alias atayabilirsiniz.
+
+```bash
+alias killport="killport_function"
+killport_function ()
+{
+  sudo kill $(sudo lsof -t -i:$1)
+}
+```
+
+Yukarıdaki kodu `~/.zshrc` dosyanıza koyun ve `source ~/.zshrc` komutunu çalıştırın. Artık aşağıdaki gibi kullanabilirsiniz. 
+
+```bash
+killport 3000
+```

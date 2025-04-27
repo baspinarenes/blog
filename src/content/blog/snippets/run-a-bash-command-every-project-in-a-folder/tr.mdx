@@ -1,0 +1,24 @@
+---
+title: Run a bash command every project in a folder
+description: Bir dizin içindeki tüm projeler için bash komutu çalıştırmanın pratik yolu.
+date: 2024-07-22
+topic: bash
+tags: ["bash", "automation", "productivity", "scripting", "git"]
+---
+
+Yönetmem gereken proje sayısı arttığında bunları sync tutmak zorlaşmaya başladı. Özellikle tüm projelerde arama yapmak istediğimde her proje için tek tek `git pull` çalıştırmak zorunda kaldım ve bir snippet oluşturdum.
+
+Komutlarınızın bir klasördeki tüm projelerde çalıştırmak için `find -exec` kullanabilirsiniz.
+
+```bash
+find . \
+  -mindepth 1 \
+  -maxdepth 1 \
+  -type d \
+  -exec sh -c '(echo "\n${}" && cd {} && git pull)' \
+\;
+```
+
+## Notes
+
+- `mindepth` ve `maxdepth` ile belirttiğiniz derinlikteki tüm klasörleri gezer.

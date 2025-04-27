@@ -1,0 +1,20 @@
+---
+title: Get the name of changed files in MR
+description: Git komutları kullanarak bir merge request'te değişen dosyaların listesini alma.
+date: 2024-07-22
+topic: git
+tags: ["git", "version-control", "ci-cd", "collaboration", "productivity"]
+---
+
+Oturmamış pipeline sistemlerine sahip şirketlerde config değişikliklerinde her zaman incident riski bulunur. Kısa vadeli çözüm bunların kod ile birlikte gönderilmesini engellemek için değişen dosyaları analiz etmektir.
+
+Yapılan değişikte değişen dosyaların listesini pratik bir şekilde elde etmek için `git diff` kullanabilirsiniz.
+
+```bash
+git diff --name-only ${SHA}
+```
+
+## Notes
+
+- MR pipeline'larda değişen dosyaları bulmak için Gitlab'ın predefined `CI_MERGE_REQUEST_DIFF_BASE_SHA` değişkenini kullanabilirsiniz.
+- Yalnızca dosyaların adlarıyla ilgileniyorsanız `--name-only` flag geçebilirsiniz.

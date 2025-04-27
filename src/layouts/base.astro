@@ -1,0 +1,51 @@
+---
+import { Sidebar, Topbar } from "@components";
+import type { Lang } from "@models/type";
+import { useTranslations } from "@utils";
+import "@styles/global.css";
+import "@fontsource/geist-sans/400.css";
+import "@fontsource/geist-sans/500.css";
+import "@fontsource/geist-sans/600.css";
+import "@fontsource/jetbrains-mono";
+
+interface Props {
+  title?: string;
+  description?: string;
+  date?: Date;
+}
+
+const { title, description, date } = Astro.props;
+const t = useTranslations(Astro.currentLocale as Lang);
+const locale = Astro.currentLocale as Lang;
+const siteTitle = t({
+  en: "Enes Başpınar",
+  tr: "Enes Başpınar",
+});
+const localeTitle = title ? `${title} - ${siteTitle}` : siteTitle;
+const localeDescription = description || t("description");
+---
+
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content={localeDescription} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{localeTitle}</title>
+  </head>
+  <body
+    class="flex flex-col md:flex-row items-stretch min-h-dvh overflow-hidden"
+  >
+    <div class="flex md:hidden">
+      <Topbar {title} {date} />
+    </div>
+    <div class="hidden md:flex">
+      <Sidebar />
+    </div>
+    <slot />
+    <script
+      is:inline
+      src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"
+    ></script>
+  </body>
+</html>

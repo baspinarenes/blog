@@ -1,0 +1,17 @@
+---
+import { BaseLayout } from "@layouts";
+import { Entries } from "@components";
+
+interface Props {
+  title?: string;
+  description?: string;
+  frontmatter?: undefined;
+}
+
+const { title, description } = Astro.props.frontmatter || Astro.props;
+---
+
+<BaseLayout {title} {description}>
+  <Entries />
+  <slot />
+</BaseLayout>

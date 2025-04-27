@@ -1,0 +1,33 @@
+---
+title: Execute Remote Node.js File
+description: Methods to run a Node.js file located on a remote server from your local environment.
+date: 2024-07-23
+topic: nodejs
+tags: ["nodejs", "bash", "automation", "scripts", "ci-cd"]
+---
+
+```js {1, 2-3, 10} /highlight-this-word/
+const largeCodeBlock = undefined;
+```
+
+In professional life, especially if you use microfrontend architecture, you need to manage a lot of projects. You keep scripts common to all these projects in one project and you may need to run these remote files in the pipeline of all projects.
+
+If it has no dependencies, we can download it to the filesystem with `wget` or `curl` and run it.
+
+```bash
+mkdir -p ./temp
+wget -O ./temp/$FILE_NAME.js "https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.${HOST_NAME}.com/${FILE_NAME}.js"
+node ./temp/$FILE_NAME.js
+rm -rf ./temp
+```
+
+If there are dependencies you need to install them. The `npx run-url` tool downloads the file, installs the dependencies specified with `require` and then runs it. Then it cleans up everything.
+
+```bash
+npx run-url "https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.${HOST_NAME}.com/${FILE_NAME}.js"
+```
+
+## Notes
+
+- The reason we add a token to the GitLab link is that the project is private. So you need to add a token to the URL to access it. Otherwise it returns the HTML of the login page.
+- You cannot use `npx run-url` if there is a Git command in the script. Using the first method, make sure you download the script to the same directory as `.git`.

@@ -1,0 +1,40 @@
+---
+import { Icon as AstroIcon } from "astro-icon/components";
+
+type Props = {
+  name: string;
+  size?: number;
+  class?: string;
+  colored?: boolean;
+};
+
+const { name, size = 20, class: className, colored = false } = Astro.props as Props;
+
+const color = {
+  css: "text-[#264de4]",
+  swift: "text-[#F05138]",
+  nodejs: "text-[#3c873a]",
+  git: "text-[#F1502F]",
+  html: "text-[#E44D26]",
+  javascript: "text-[#F0DB4F]",
+  typescript: "text-[#3178C6]",
+  python: "text-[#306998]",
+  react: "text-[#61DAFB]",
+  nextjs: "text-[#000000]",
+  npm: "text-[#CB3837]",
+  gitlab: "text-[#FC6D26]",
+  docker: "text-[#2496ED]",
+  kubernetes: "text-[#326CE5]",
+  sql: "text-[#003B57]",
+  eslint: "text-[#4B32C3]",
+  bash: "text-black",
+}[name]
+
+const hide = colored && !color
+---
+
+{
+  !hide && (
+    <AstroIcon name={name} size={size} class:list={[color, className]} />
+  )
+}

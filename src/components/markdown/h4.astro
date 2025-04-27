@@ -1,0 +1,9 @@
+---
+const { id } = Astro.props;
+---
+
+<h4 id={id} class="text-lg md:text-xl font-bold cursor-pointer mb-3">
+  <a href={`#${id}`}>
+    <slot />
+  </a>
+</h4>

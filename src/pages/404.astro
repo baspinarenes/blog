@@ -1,0 +1,25 @@
+---
+import { BaseLayout } from "@layouts";
+import { Link } from "@ui-kit";
+import { Icon } from "astro-icon/components";
+
+const title = "404";
+---
+
+<BaseLayout {title}>
+  <main
+    class="min-h-[calc(100%-53px)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
+  >
+    <h1 class="text-6xl md:text-9xl font-extrabold text-gray-900">{title}</h1>
+    <h2 class="mt-6 text-xl md:text-3xl font-bold text-gray-900">
+      Aradığın Sayfayı Bulamadım
+    </h2>
+    <p class="mt-2 text-sm text-gray-600 mb-8 text-center">
+      Aradığın sayfayı bulamadım. İstediğiniz dilde olmayabilir veya bozmuş olabilirim.
+    </p>
+    <Link href="javascript:history.back()" class="!hidden !md:inline-flex">
+      <Icon name="back" size={20} />
+      Önceki Sayfaya Dön
+    </Link>
+  </main>
+</BaseLayout>

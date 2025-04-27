@@ -1,0 +1,43 @@
+--- 
+title: How to get merge request ID on Gitlab master pipeline?
+description: ""
+date: 2022-07-22
+topic: "gitlab"
+tags:
+  - gitlab
+  - automation
+---
+
+I love automating daily processes and I recently noticed a problem with my team's deployment processes on monorepo. Collecting and announcing MRs to stakeholders during deployment was tedious and prone to human error. Therefore, I developed a pipeline integration that automates deployment announcements. The flow was as follows:
+
+- When release MR is created, a deployment announcement is sent from the pipeline to the Slack channel.
+- When release MR is merged, it is announced under the announcement message that the deployment has started.
+- When the release pipeline is finished, a message containing the metrics related to the deployment process is sent and the completion of the deployment is announced.
+
+To calculate some metrics, we need to know the creation time of the merge request. This means we technically need the merge request ID in the master pipeline.
+
+## On the merge request pipeline
+
+You can use the `CI_MERGE_REQUEST_IID` predefined variable to get the merge request id in the merge request pipeline. If you set the variable value to `undefined`, you need to add a rule that commits the job to run in the merge request pipeline.
+
+```yaml
+.enable-on-merge-request-pipeline:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+```
+
+## On the master pipeline
+
+Since there is no merge request in the master pipeline anymore, things are different. After obtaining the commit SHA value with `CI_COMMIT_SHA` predefined variable, it is necessary to make a request to GitLab API as follows.
+
+```bash
+curl \
+--location 'https://gitlab.{{companyName}}.com/api/v4/projects/{{projectId}}/repository/commits/{{commitSha}}/merge_requests' \
+--header 'PRIVATE-TOKEN: {{token}}
+```
+
+Matching merge requests will be returned as response. In case more than one merge request is returned, you can compare it with the `CI_COMMIT_TITLE` predefined variable.
+
+---
+
+After a challenging path, we reach our goal. While you solve your problem, I might as well complete my automation journey ☕

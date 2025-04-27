@@ -1,0 +1,26 @@
+---
+import { Profile, Navigations, Socials } from "@components";
+import { Spacer, Seperator } from "@ui-kit";
+import { useTranslations } from "@utils";
+import type { Lang } from "@models/type";
+
+const { lang } = Astro.params;
+const t = useTranslations(lang as Lang);
+---
+
+<div class="flex flex-col w-full h-full">
+  <div class="flex flex-col w-full h-full">
+    <Profile />
+    <Spacer size={8} />
+    <Navigations />
+    <Spacer />
+    <Spacer size={4} />
+    <Socials />
+    <Spacer size={4} />
+    <Seperator />
+    <Spacer size={4} />
+    <footer class="text-xs text-gray-500 text-center">
+      {t("Inspired by onur.dev")}
+    </footer>
+  </div>
+</div>

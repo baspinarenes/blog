@@ -1,0 +1,14 @@
+---
+import { Link } from "@ui-kit";
+import { Icon } from "astro-icon/components";
+
+const removeTrailingSlash = (path: string) => {
+  return path.replace(/\/$/, "");
+};
+
+const previousPage = removeTrailingSlash(Astro.url.pathname).split("/").slice(0, -1).join("/");
+---
+
+<Link href={previousPage} styless>
+  <Icon name="back" size={20} />
+</Link>

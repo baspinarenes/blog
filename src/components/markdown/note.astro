@@ -1,0 +1,66 @@
+---
+import { capitalize } from "@utils";
+import { Icon } from "astro-icon/components";
+import { useTranslations } from "@utils";
+import type { Lang } from "@models/type";
+type Props = {
+  type: "info" | "warning" | "important" | "danger";
+};
+
+const { type } = Astro.props as Props;
+
+const locale = Astro.currentLocale as Lang;
+const t = useTranslations(locale);
+
+const barBgColor = {
+  info: "bg-blue-500",
+  warning: "bg-yellow-400",
+  important: "bg-green-300",
+  danger: "bg-red-300",
+}[type];
+
+const xColor = {
+  info: "bg-blue-50",
+  warning: "bg-yellow-50",
+  important: "bg-green-50",
+  danger: "bg-red-50",
+}[type];
+
+const text = {
+  info: {
+    tr: " Bilgi",
+    en: "Info",
+  },
+  warning: {
+    tr: "Warning",
+    en: "Warning",
+  },
+  important: {
+    tr: "Önemli",
+    en: "Important",
+  },
+  danger: {
+    tr: "Dikkat et",
+    en: "Danger",
+  },
+}[type];
+---
+
+<div
+  class=`note md:rounded-r-lg -mx-4 md:mx-0 mb-6 flex gap-2 relative ${xColor} ![p]:m-0`
+>
+  <div class=`flex gap-1 items-center ${barBgColor} w-1.5 shrink-0` />
+  <div class="py-2.5 px-2">
+    <slot />
+  </div>
+</div>
+
+<style is:global>
+  .note p {
+    margin: 4px 0 !important;
+  }
+
+  .note:not(:first-child) {
+    color: var(--color-gray-600) !important;
+  }
+</style>

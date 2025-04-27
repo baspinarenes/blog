@@ -1,0 +1,272 @@
+---
+title: "Exploring Web APIs: Console"
+description: "We use console object for logging a lot. So is that all?"
+date: 2024-08-11
+topic: web-api
+tags:
+  - web-api
+  - console
+---
+
+Şimdiye kadar API olarak isimlendirmeseniz bile `console`, `window` ve `fetch` gibi birçok Web API kullandınız. Bu makalede, `console.log`'dan ibaret sanılan **Console API**'ye değineceğim.
+
+<Note type="info">
+Tarayıcının sunduğu özelliklere erişmenize olanak tanıyan metodları ve parametreleri barındıran yapılara **Web API** denir.
+</Note>
+
+## Log methods
+
+Önce klasiklerden başlayacağım. Uygulamadaki loglar farklı anlam ifade ederler. Örneğin kullanıcıyı bir fonksiyonun yerine bir başkasını kullanmak için uyarabilir, bir hata meydana geldiğini bildirebilir ya da sonuca dair bilgi verebilirsiniz.
+
+`log()` değişkenin anlık durumunu görmek için kullanılır.
+
+```js
+const result = await axios.get(...);
+console.log("Result:", result);
+```
+
+`info()` son kullanıcıya bir metodun doğru biçimde nasıl kullanılacağıyle ilgili bilgi vermek için kullanılır.
+
+```js
+console.info(
+  'React Hook "useState" is called conditionally.'
+);
+```
+
+`warn()` bir metodun isminin değiştiğini ya da kullanımdan kaldırılacağını bildirmek için kullanılır.
+
+```js
+console.warn(
+  "Warning: componentWillMount has been renamed, and is not recommended for use. See https:/fb.me/react-unsafe-component-lifecycles for details."
+);
+```
+
+`error()` kodda karşılaşılan hatayı ya da yapılması unutulan adımları bildirmek için kullanılır.
+
+```js
+console.error('SyntaxError: /src/App.js: Unexpected token, expected "(" (5:2)');
+```
+
+`debug()` geliştirme yaparken anlık olarak değişkenleri görmek için kullanılır. `log()`'dan farklı olarak varsayılan olarak konsolda gözükmez. Chrome'dan örnek verilirse log seviyelerinden **verbose**'un seçili olması gerekir.
+
+```js
+const response = await fetch(...);
+console.debug("Backend Response:", response);
+```
+
+Bu metodların Chrome'da aşağıdaki gibi gözükür.
+
+
+`console.log` haricindekileri aktif kullanmayabilirsiniz ancak bir paket yazdığınızı varsayarsanız kullanıcının herhangi bir hata ya da uyarıyı doğru şekilde anladığından emin olmak istersiniz.
+
+## Assertion
+
+Belirli koşullar gerçekleşmediği takdirde error loglamak için kullanabilirsiniz. İlk parametre olan koşul gerçekleşmediyse ikinci parametreyi yazdırır.
+
+```js withOutput
+> const response = await fetch("https://jsonplaceholder.typicode.com/users");
+> const statusCode = response.status;
+>
+> console.assert(statusCode === 200, "Occured an error!");
+
+Occured an error!
+```
+
+## Clear logs
+
+O ana kadar atılmış tüm mesajları temizler.
+
+```js
+console.clear();
+```
+
+<Note type="info">
+  Bu metod, tarayıcıda çalışır ancak Node terminalinde çalışmadığını görürsünüz. Bunun yerine `process.stdout.write('\033c');` gibi stdout'a direk müdahale eden bir komut tercih edilebilir.
+</Note>
+
+## Countable log
+
+İşte güzel bir tane! Herhangi bir bloğunun kaç kez çalıştığını loglamak için değişken oluşturmaya son! `count()` metodu bulunduğu kod bloğunun çalıştırılma sayısını saklar ve loglar. Sayacı sıfırlamak için `countReset()` metodu kullanılır. Label parametresi vererek ayrı sayaçlar oluşturulabilir.
+
+```js withOutput  
+> for (let i = 0; i < 5; i++) {
+>   console.count();
+>   console.count("myCounter");
+>
+>   if (i === 2) {
+>     console.countReset();
+>   }
+>
+>   if (i === 4) {
+>     console.countReset("myCounter");
+>   }
+> }
+
+default: 1
+myCounter: 1
+default: 2
+myCounter: 2
+default: 1
+myCounter: 3
+default: 2
+myCounter: 4
+default: 3
+myCounter: 1
+```
+
+## Grouping logs
+
+Loglarda birbiriyle bağlantılı log'ları ayırt etmek zor olabilir. `group()` ve `groupCollapsed()` ile logları gruplayabilirsiniz. Gruplamayı bitirmek içinse `groupEnd()` kullanmalısınız.
+
+```js
+const name = "Enes";
+const age = 21;
+const city = "Bursa";
+const country = "Turkey";
+
+console.group("Person"); // ya da console.groupCollapsed()
+console.log("Age: ", age);
+console.log("City: ", city);
+console.log("Country: ", country);
+console.groupEnd();
+```
+
+
+İç içe de kümelenebilir.
+
+```js
+const name = "Enes";
+const age = 21;
+const city = "Bursa";
+const country = "Turkey";
+
+console.group("Person"); // ya da console.groupCollapsed()
+console.log("Age: ", age);
+console.group("Location");
+console.log("City: ", city);
+console.log("Country: ", country);
+console.groupEnd();
+console.groupEnd();
+```
+
+## Log tables
+
+Nesneleri ve dizileri konsolda okumak ölüm gibi oluyor. Bunları tablo formatında görselleştirebilirsiniz.
+
+```js
+console.table(["Turkey", "Italy", "England"]);
+```
+
+
+```js
+const people = [
+  { firstName: "Kemal", age: 21 },
+  { firstName: "Can", age: 5 },
+  { firstName: "Gürbüz", age: 76 },
+];
+
+console.table(people, ["firstName", "age"]);
+```
+
+
+```js
+class Product {
+  constructor(name, color, price) {
+    this.name = name;
+    this.color = color;
+    this.price = price;
+  }
+}
+
+const product = new Product("Elbise", "Kırmızı", 299.9);
+
+console.table(product);
+```
+
+
+```js
+class Product {
+  constructor(name, color, price) {
+    this.name = name;
+    this.color = color;
+    this.price = price;
+  }
+}
+
+const dress = new Product("Elbise", "Kırmızı", 299.9);
+const shoe = new Product("Ayakkabı", "Beyaz", 123);
+const hat = new Product("Şapka", "Siyah", 520);
+
+console.table([dress, shoe, hat], ["name", "color", "price"]);
+```
+
+## Time logs
+
+Bazen kodların çalışma süresini ölçmek isteriz. Başlangıçta tarih alırız, bitince tarih alırız ve aradaki farkı buluruz. Ancak bir kısayolumuz var. Zamanlayıcıyı başlatmak için `time()`, anlık değerini almak için `timeLog()`, sonlandırıp süresini ekrana yazdırmak için `timeEnd()` kullanırız.
+
+```js withOutput
+> console.time("myTimer");
+>
+> for (let i = 0; i < 10; i += 1) {
+>   console.timeLog("myTimer");
+> }
+> 
+> console.timeEnd("myTimer");
+
+myTimer: 0.003173828125 ms
+myTimer: 0.06396484375 ms
+myTimer: 0.08984375 ms
+myTimer: 0.114013671875 ms
+myTimer: 0.135009765625 ms
+myTimer: 0.154052734375 ms
+myTimer: 0.196044921875 ms
+myTimer: 0.2119140625 ms
+myTimer: 0.23193359375 ms
+myTimer: 0.251953125 ms
+myTimer: 0.27392578125 ms
+```
+
+## Trace
+
+Bir fonksiyonun çağrılmasına kadar hangi sırayla hangi fonksiyonların çalıştığını görmek istersek kullanırız.
+
+```js withOutput
+> function mapData(result) {
+>   console.trace();
+>
+>   return {
+>     name: result.name,
+>     username: result.username,
+>     email: result.email,
+>   };
+> }
+>
+> async function getResult(response) {
+>   const result = await response.json();
+>   return mapData(result);
+> }
+>
+> async function fetchData(string) {
+>  const response = await fetch("https://jsonplaceholder.typicode.com/users/1");
+>  return getResult(response);
+> >}
+>
+> >await fetchData();
+
+console.trace
+overrideMethod
+mapData
+getResult
+await in getResult (async)
+fetchData
+await in fetchData (async)
+(anonymous)
+```
+
+---
+
+Serin ve muazzam bir cuma akşamının verdiği mutlulukla yazdığım bu minik makale burada biter. Sağlıcakla kalın.
+
+## Kaynaklar
+
+1. [Mozilla Web Console API Docs](https://developer.mozilla.org/en-US/docs/Web/API/Console_API)

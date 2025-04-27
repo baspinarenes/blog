@@ -1,0 +1,56 @@
+---
+title: "TypeScript'te Type Import'ları"
+description: "TypeScript'te Type Import'ları"
+date: "1999-01-01"
+topic: "typescript"
+tags: ["typescript"]
+---
+
+Node.js'de minik bir uygulama oluştursak bile onlarca paket kullanıyoruz. Peki paketleri uygulamanıza import ederken ne kadar dikkatli davranıyorsunuz?
+
+## Export Default
+
+```jsx
+import React from "react"; // 6.9k (gzipped: 2.7k)
+
+export const Component = ({ children }: ComponentProps) => {
+  return <div>{children}</div>;
+};
+
+type ComponentProps = {
+  children: React.ReactNode;
+};
+```
+
+```jsx
+import type { ReactNode } from "react"; // 0
+```
+
+## Treeshaking
+
+## Type Importing
+
+Node.js uygulamalarında JavaScript'le birlikte TypeScript'de kullanabildiğimizi biliyoruz ve TypeScript modüllerinde farklı olarak type'ları da export/import edebiliyoruz.
+
+![](https://miro.medium.com/v2/format:webp/0*esTgLmiL7AmZaZFG)
+
+`import` ifadesi modüldeki fonksiyon, nesne, variable, type gibi tüm export'ları dosyaya dahil eder. 
+
+Typescript ile gelen `import type` ifadesi ise modülden export edilen türleri dosyaya dahil eder.
+
+```typescript
+import { useEffect, useState, ReactNode, FC, ElementRef } from "react";
+```
+
+```typescript
+import { useEffect, useState } from "react";
+import type { ReactNode, FC, ElementRef } from "react";
+```
+
+O halde yukarıdaki iki kodun farkı nedir?
+
+### Performance
+
+1. Kod Boyutu: Çok sayıda modül içeren büyük bir kod tabanınız varsa ve belirli bir modülde kullanmadığınız çok sayıda işlevi veya sınıfı içe aktarırsanız, daha büyük bir derlenmiş JavaScript paketine yol açabilir. Bu da yükleme sürelerini ve genel performansı etkileyebilir.
+
+2. Ağaç Çalkalama: Bazı paketleyiciler (Webpack gibi) ağaç sallama işlemi gerçekleştirebilir, yani kullanılmayan kodu son paketten eleyebilirler. Eğer `import type` kullanırsanız, bundler'a içe aktarılan değerlere ihtiyacınız olmadığını açıkça bildirerek ağaç sallamayı daha etkili hale getirirsiniz.

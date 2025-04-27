@@ -1,0 +1,143 @@
+---
+import { useTranslations } from "@utils";
+import BaseLayout from "../../layouts/base.astro";
+import { C } from "@configuration";
+import type { Lang } from "@models/type";
+import { Icon } from "astro-icon/components";
+import { Table, Title } from "@ui-kit";
+import { getEntries } from "@utils";
+import { getCollection } from "astro:content";
+import { iconByLanguage } from "@constants";
+
+export const getStaticPaths = () =>
+  Object.keys(C.LOCALES).map((lang) => ({ params: { lang } }));
+
+const locale = Astro.currentLocale as Lang;
+const t = useTranslations(locale);
+
+const title = t({
+  en: "Home",
+  tr: "Anasayfa",
+});
+
+const description = t({
+  en: `Hi! I'm ${C.AUTHOR.NAME}, I'm ${C.AUTHOR.AGE} years old. I've been working as ${C.AUTHOR.JOB} at ${C.AUTHOR.COMPANY} for ${new Date().getFullYear() - 2021} years. I like researching and learning new things. I like to tell others what I've learned and that's why I keep a blog. When I read monotonous and same content articles, I feel like screaming and I try to write different things to save people from boredom.`,
+  tr: `Selam. Ben ${C.AUTHOR.NAME}, ${C.AUTHOR.AGE} yaşındayım. ${C.AUTHOR.COMPANY}'da ${new Date().getFullYear() - 2021} yıldır ${C.AUTHOR.JOB} olarak çalışıyorum. Araştırmaktan ve yeni şeyler öğrenmekten hoşlanıyorum. Öğrendiklerimi başkalarına anlatmayı seviyorum ve bu yüzden blog tutuyorum. Monoton ve aynı içerikli yazılar okuduğumda çığlık atasım geliyor ve insanları sıkıcılıktan kurtarmak için farklı şeyler yazmaya çalışıyorum.`
+});
+
+const formatEntryForTable = (
+  entry: any,
+): Array<{ value: string; link?: string }> => {
+
+  return [
+    {
+      value: iconByLanguage[entry.data.topic as keyof typeof iconByLanguage],
+    },
+    {
+      value: entry.data.title,
+      link: `/${locale}/snippets/${entry.id.split("/").pop()}`,
+    },
+    {
+      value: "19.000",
+    },
+  ];
+};
+
+const [snippets, articles] = await Promise.all([
+  getEntries({category: "snippets", locale}),
+  getEntries({category: "articles", locale}),
+]);
+
+const latestSnippets = snippets.flat().slice(0, 5).map(formatEntryForTable);
+const latestArticles = articles.flat().slice(0, 5).map(formatEntryForTable);
+---
+
+<BaseLayout title={title}>
+  <main>
+    <div class="main-container">
+      <div class="flex flex-col md:flex-row items-center gap-6 mb-4">
+        <Icon
+          name="logo"
+          size={124}
+          class="mx-auto shrink-0 md:hidden md:mx-0 animate-scream"
+        />
+        <div>
+          <Title
+            >{
+              t({ en: "Welcome to my blog!", tr: "Bloguma hoş geldin!" })
+            }</Title
+          >
+          <p class="md:mt-4 text-justify md:text-left">{description}</p>
+        </div>
+      </div>
+
+      <Table
+        id="articles"
+        title={t({
+          en: "Latest Articles",
+          tr: "Son Yazılarım",
+        })}
+        columns={[
+          { name: "icon", title: t({ en: "", tr: "" }) },
+          { name: "title", title: t({ en: "Title", tr: "Başlık" }) },
+          { name: "views", title: t({ en: "Views", tr: "Görüntülenme" }) },
+        ]}
+        description={t({
+          en: "Articles I've written about my experiences and learnings.",
+          tr: "Deneyimlerim ve öğrenmelerim hakkında yazdığım yazılar.",
+        })}
+        data={latestArticles}
+        headless
+        noScroll
+      />
+
+      <Table
+        id="snippets"
+        title={t({
+          en: "Latest Snippets",
+          tr: "Son Kod Parçalarım",
+        })}
+        columns={[
+          { name: "icon", title: t({ en: "", tr: "" }) },
+          { name: "title", title: t({ en: "Title", tr: "Başlık" }) },
+          { name: "views", title: t({ en: "Views", tr: "Görüntülenme" }) },
+        ]}
+        description={t({
+          en: "Code snippets I use in my daily development process that I believe could be useful to others.",
+          tr: "Günlük geliştirme sürecimde kullandığım ve faydalı olabileceğini düşündüğüm kod parçaları.",
+        })}
+        data={latestSnippets}
+        headless
+        noScroll
+      />
+
+      <!-- <div
+        class="mt-12 bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg shadow-sm"
+      >
+        <h2 class="text-2xl font-bold mb-4">
+          {t({ en: "Newsletter", tr: "Bülten" })}
+        </h2>
+        <p class="mb-4">
+          {
+            t({
+              en: "Subscribe to my newsletter to get the latest updates on my blog posts and projects.",
+              tr: "Blog yazılarım ve projelerim hakkında en son güncellemeleri almak için bültenime abone olun.",
+            })
+          }
+        </p>
+        <div class="flex gap-2">
+          <input
+            type="email"
+            placeholder={t({ en: "Your email", tr: "E-posta adresiniz" })}
+            class="flex-1 px-4 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
+          >
+            {t({ en: "Subscribe", tr: "Abone Ol" })}
+          </button>
+        </div>
+      </div> -->
+    </div>
+  </main>
+</BaseLayout>

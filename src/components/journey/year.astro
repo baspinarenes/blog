@@ -1,0 +1,22 @@
+---
+import { JourneyItem } from "@components";
+import type { Multilingual } from "@models/type";
+
+type Props = {
+  year: number;
+  items: {
+    title: Multilingual;
+    description: Multilingual;
+    image?: string;
+  }[];
+};
+
+const { year, items } = Astro.props;
+---
+
+<div class="flex flex-col gap-5">
+  <h2 class="text-xl font-semibold">{year}</h2>
+  <div class="flex flex-col">
+    {items.map((item) => <JourneyItem {...item} />)}
+  </div>
+</div>

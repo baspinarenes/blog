@@ -1,0 +1,22 @@
+---
+type Props = {
+  src: string;
+  alt: string;
+  class?: string;
+  rounded?: boolean;
+};
+
+const { src, alt, class: className, rounded = true } = Astro.props;
+---
+
+<img
+  src={src}
+  alt={alt}
+  class:list={[
+    "border border-gray-200",
+    className,
+    {
+      "rounded-xl": rounded,
+    },
+  ]}
+/>

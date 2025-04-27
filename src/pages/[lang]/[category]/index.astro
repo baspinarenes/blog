@@ -1,0 +1,23 @@
+---
+import { CategoryLayout } from "@layouts";
+import { C } from "@configuration";
+import { useTranslations } from "@utils";
+import type { Lang, Category } from "@models/type";
+
+export function getStaticPaths() {
+  return C.ENTRY_CATEGORIES.flatMap((category) =>
+    Object.keys(C.LOCALES).map((lang) => {
+      return {
+        params: { lang, category },
+      };
+    })
+  );
+}
+
+const { category, lang } = Astro.params;
+
+const t = useTranslations(lang as Lang);
+const title = t(C.CATEGORIES_LABELS[category as Category]);
+---
+
+<CategoryLayout title={title} />

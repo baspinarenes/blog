@@ -1,0 +1,47 @@
+[
+  {
+    "id": "1",
+    "name": "SvelteKit",
+    "description": {
+      "en": "Fast, clear, and comfortable development kit.",
+      "tr": "Hızlı, anlaşılır ve rahat geliştirme kiti."
+    },
+    "link": "https://nextjs.org"
+  },
+  {
+    "id": "2",
+    "name": "Tailwind",
+    "description": {
+      "en": "Utility-first approach significantly speeds up the development process.",
+      "tr": "Utility-first yaklaşımıyla geliştirme sürecini önemli ölçüde hızlandıran CSS framework."
+    },
+    "link": "https://tailwindcss.com"
+  },
+  {
+    "id": "3",
+    "name": "Astro Icon",
+    "description": {
+      "en": "Contains a wide range of icons and supports local icons.",
+      "tr": "Geniş yelpazede ikon barındırır ve local ikonları destekler."
+    },
+    "link": "https://tablericons.com"
+  },
+  {
+    "id": "4",
+    "name": "Vercel",
+    "description": {
+      "en": "Vercel is a hosting platform for modern web projects, offering fast deployment.",
+      "tr": "Hızlı deploy sağlayan, arayüzü basit hosting platformu."
+    },
+    "link": "https://vercel.com"
+  },
+  {
+    "id": "5",
+    "name": "Fontsource",
+    "description": {
+      "en": "Custom fonts are implemented via Fontsource to maintain consistent typography across projects.",
+      "tr": "Projeler genelinde tutarlı tipografi sağlamak için özel yazı tipleri Fontsource aracılığıyla uygulanır."
+    },
+    "link": "https://fontsource.org"
+  }
+]

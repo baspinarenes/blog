@@ -1,0 +1,43 @@
+---
+import { Languager, Menu, PageBackButton } from "@components";
+import type { Lang } from "@models/type";
+import { Icon, Spacer } from "@ui-kit";
+import { formatDate } from "@utils";
+
+type Props = {
+  title?: string;
+  date?: Date;
+};
+
+const { title, date } = Astro.props as Props;
+
+const locale = Astro.params.lang as Lang;
+
+const currentPath = Astro.url.pathname.endsWith("/")
+  ? Astro.url.pathname
+  : `${Astro.url.pathname}/`;
+const isEntry = currentPath.split("/").length > 4;
+---
+
+<div
+  class="top-0 flex gap-2.5 items-center bg-gray-100 p-4 border-b border-slate-200 w-full"
+>
+  {isEntry ? <PageBackButton /> : <Menu />}
+  {
+    isEntry && date && (
+      <p class="text-sm font-medium !mb-0 leading-4">
+        {formatDate(date, locale)}
+      </p>
+    )
+  }
+  {
+    isEntry && date && (
+      <div class="text-sm ml-auto font-medium flex gap-1 !mb-0 leading-4">
+        / <Icon name="views" size={16} /> ~
+      </div>
+    )
+  }
+  {!isEntry && <h1 class="text-sm font-bold !mb-0 leading-4">{title}</h1>}
+  <Spacer />
+  <Languager />
+</div>

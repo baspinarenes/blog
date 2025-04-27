@@ -1,0 +1,31 @@
+---
+title: Kill the running application using the port number
+description: A quick method to terminate processes running on specific ports.
+date: 2024-07-22
+topic: bash
+tags: ["bash", "terminal", "networking", "devops", "troubleshooting"]
+---
+
+When I close my applications running in the terminal, sometimes ports don't die and `killall node` doesn't work. 
+
+You can use `kill` to force close the port.
+
+```bash
+ sudo kill $(sudo lsof -t -i:{PORT})
+```
+
+You can then assign aliases to simplify usage.
+
+```bash
+alias killport="killport_function"
+killport_function ()
+{
+  sudo kill $(sudo lsof -t -i:$1)
+}
+```
+
+Put the above code in your `~/.zshrc` file and run `source ~/.zshrc`. You can now use it as follows. 
+
+```bash
+killport 3000
+```

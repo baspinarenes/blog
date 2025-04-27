@@ -1,0 +1,27 @@
+---
+import { Link } from "@ui-kit";
+import { Icon } from "astro-icon/components";
+
+type Props = {
+  href: string;
+  title?: string;
+  id?: string;
+  "data-footnote-ref"?: string;
+};
+
+const { href, title, id, ...props } = Astro.props as Props;
+
+const isExternal = href.includes("http");
+---
+
+<a
+  href={href}
+  target={isExternal ? "_blank" : undefined}
+  class:list={[
+    "inline-flex items-center gap-0.5 font-semibold text-blue-600 hover:text-blue-700",
+  ]}
+  {...props}
+>
+  <slot />
+  {isExternal && <Icon name="external-link" class="w-4 h-4" />}
+</a>

@@ -1,0 +1,42 @@
+---
+title: Setup sound notification when bash command is done
+description: Uzun süren bash komutlarınız tamamlandığında sesli bildirim almanın yolu.
+date: 2024-07-22
+topic: bash
+tags: ["bash", "terminal", "productivity", "notification", "automation"]
+---
+
+Uzun süren bir komut çalıştırdığımda başka işlerle uğraşırken tamamlandığını geç farkediyorum. Bu yüzden aşağıdaki script'i kullanarak sesli uyarı sistemi oluşturdum.
+
+```bash
+npm install && say "npm install done"
+```
+
+Sesli komuttan önce ses efekti ekleyerek ayırt edici hale getirmek için `afplay` kullanabilirsiniz.
+
+```bash
+npm install && afplay /System/Library/Sounds/Funk.aiff && say "npm install done"
+```
+
+Bunu bir de alias'a dönüştürürseniz keyifli olur.
+
+```bash
+notify() {
+  local message=$1
+  shift
+  local command="$@"
+  eval $command && afplay /System/Library/Sounds/Funk.aiff && say $message
+}
+```
+
+Artık aşağıdaki gibi kullanabilirsiniz.
+
+```bash
+notify "npm install done" "npm install"
+```
+
+## Notes
+- `say -v \?` komutunu kullanarak seslendirmelere göz atabilirsiniz. Örneğin Türkçe metinler için `Yelda` kullanabilirsiniz.
+  ```bash
+  say -v Yelda "Selamlar"
+  ```

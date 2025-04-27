@@ -1,0 +1,20 @@
+---
+import { Entries } from "@components";
+import { BaseLayout } from "@layouts";
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+}
+
+const { title, description, date } = Astro.props;
+---
+
+<BaseLayout {title} {description} {date}>
+  <div class="hidden md:block">
+    <Entries />
+  </div>
+
+  <slot />
+</BaseLayout>

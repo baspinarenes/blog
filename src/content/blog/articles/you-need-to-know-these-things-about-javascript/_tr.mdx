@@ -1,0 +1,58 @@
+---
+title: "Javascript hakkında bilmeniz gerekenler"
+description: "Javascript hakkında bilmeniz gerekenler"
+date: "1999-01-01"
+topic: "javascript"
+tags: ["javascript"]
+---
+
+Açıklama
+
+## ECMAScript
+
+## Javascript
+
+As an asynchronous event-driven JavaScript runtime, Node.js is designed to build scalable network applications. 
+
+Javascript ECMAScript tabanlı programlama dilidir. ECMAScript ise dil standardını tanımlayan kuralları içerir.
+Javascript ise bu standartların uygulamasıdır.
+
+2008'den önce Javascript sadece tarayıcıda çalışıyordu ancak bu Javascript'in bir sınırlaması değil kodun nerede execute edildiğine ilişkin bir kısıtlamaydı.
+
+Bir JavaScript uygulaması başlatıldığında, bu uygulamadaki tüm kod belleğe yüklenir. 
+
+Some of these functions come in the form of event listeners—function objects that run a corresponding callback function when an event with a matching name is emitted. These functions sit around in memory until event emitters—objects that fire event names—trigger the event listeners to run their callback functions.
+
+Bu şekilde Node.js uygulamaları özellikle hızlı ve verimli bir şekilde çalıştırabilir. Diğer platformlar, belirli bir komutu çalıştırmak için her istek yapıldığında tüm kodlarını yeniden derlemek veya çalıştırmak zorunda kalabilirken, Node.js JavaScript kodunu yalnızca bir kez yükler ve işlevleri ve ilgili geri arama işlevlerini yalnızca olaylar tarafından tetiklendiğinde çalıştırır.
+
+Event-driven development -- Node.js JavaScript kodunu yalnızca bir kez yükler ve işlevleri ve ilgili geri arama işlevlerini yalnızca olaylar tarafından tetiklendiğinde çalıştırır. JavaScript bir dil olarak olay güdümlü geliştirmeyi destekler ancak bunu gerektirmez. Node.js, Node.js event-loop (bkz. ünite 1) kullanarak sunucunun bir uygulamanın görevlerinin çoğunu yürütmesi için bir yol olarak olayların kullanımını teşvik ederek bu mimariden yararlanır.
+
+Asyncronous -- Node.js yalnızca tek bir iş parçacığı gerektirir (event-loop tarafından kullanılır) ve bu iş parçacığı diğer iş parçacıklarını yalnızca daha büyük görevler için gerektiğinde kullanabilir. 
+
+## Javascript Engine
+
+Javascript JS Engine tarafından yorumlanır ve çalıştırılır. Bunu yaparken ECMAScript standartlarını uygular. Ancak yazdığımız kodların çoğu bu standartta bulunmaz. Örneğin DOM "outside world"ün parçasıdır. Dolayısıyla bu kurallar Javascript Runtime'dan gelir.
+
+### SpiderMonkey
+
+### V8
+
+JavaScript'i bilgisayarınızın kolayca çalıştırabileceği makine koduna dönüştüren açık kaynaklı bir yorumlayıcıdır.
+
+## Javascript Runtime
+
+Javascript Runtime, kodun yürütüleceği yer veya ortamdır. Kodun kendisini çalıştıran şey (JS Engine) değildir. Dış dünyanın belirli kısmıyla etkileşime girmenizi sağlayan ortamdır. En yaygını browser'dır. window'a document'a a da DOM'a erişmenize izin verir. Bu sayede JS sayfa ile etkileşime girebilir.
+
+The Node.js runtime uses a JavaScript engine, a program that reads JavaScript code and executes its command
+
+### Browser
+
+### Node.js, Deno, Bun
+
+Node.js bir JavaScript çalışma zamanıdır. Web API gibi şeyler sağlamak yerine, dosya sistemi, HTTP ve işletim sistemi gibi bileşenlerle etkileşim için API'ler sağlar.
+
+Node.js, JavaScript'i bilgisayarınızın kolayca çalıştırabileceği makine koduna dönüştüren açık kaynaklı bir yorumlayıcı olan Google'ın Chrome V8 Java-Script motorunu kullanır.
+
+Bun JavascriptCore engine kullanır.
+
+Single thread'dir. Node.js operates on an event loop using a single thread. A thread is the bundle of computing power and resources needed for the execution of a programmed task. Generally, a thread is responsible for starting and completing a task; the more tasks needed to run simultaneously, the more threads are needed.

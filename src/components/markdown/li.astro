@@ -1,0 +1,18 @@
+---
+const { class: className, ...rest } = Astro.props;
+
+const isTaskItem = className?.includes("task-list-item");
+---
+
+<li
+  class:list={[
+    {
+      "list-none before:content-none": isTaskItem,
+    },
+  ]}
+  {...rest}
+>
+  <div class="ßaddsad">
+    <slot />
+  </div>
+</li>

@@ -1,0 +1,58 @@
+---
+title: "What is CI/CD in 3 minutes?"
+description: "CI/CD kavramını ve etkilerini 3 dakikada keşfedin."
+date: "2024-05-07"
+topic: "ci-cd"
+tags: []
+---
+
+Uzuncası “continuous integration and continuous delivery/deployment” olan bu kavram, DevOps’un mihenk taşı ve yazılım geliştirme sürecinin yaşam döngüsüdür.
+
+Basitleştirelim. Kodunuzu yazarsınız, merge request oluşturursunuz ve minik minik commit'ler atarsınız. Bu süreçte kodunuz üç ana adımdan geçer:
+
+1. **Build**
+2. **Test**
+3. **Deploy**
+
+İşte tüm bu adımların otomatize edildiği yapıya CI/CD denir.
+
+## Why do we need it?
+
+CI/CD sayesinde komutları daha güçlü makinelerde çalıştırabiliriz, binlerce test çalışırken bilgisayarınız yanarak erimez ve makine/işletim sistemi bazlı etkenler devre dışı kalmış olur.
+
+Bu süreçlerin otomatize edilmesinin birkaç avantajı vardır:
+
+- Otomatik yapılabilecek işler için efor harcanmamış olur ve önemli işlere kaydırılabilir.
+- Local'de "test çalıştırmayı unutmuşum" ya da "build almadan deployment yaptım" gibi abzürd durumlarla karşılaşılmaz.
+- Hatalar canlıya çıkmadan önce tespit edilir ve uygulamanın down olma süresi azalır. Yazılımda da itibardan tasarruf olmamalıdır.
+- İşler deployment sırasında haftalarca beklemez. Kullanıcılar daha sık ve kararlı güncellemeler alır.
+- Deployment stresinden kurtulunur ve dolayısıyla burnout azalır.
+- Olası bir incident anında siteyi önceki haline almak daha basittir.
+
+## Concepts
+
+![](https://d36ai2hkxl16us.cloudfront.net/course-uploads/bf663a54-0bb6-4726-bd83-1e76668129cf/8u7utgpy3iuj-GitLabWorkflow.png)
+
+### Continuous Integration (CI)
+
+Birden fazla yazılımcının aynı projede çalıştığı durumlarda, kodların sık sık repoya entegre edilmesidir. Daha sonra değişiklikleri doğrulamak için otomatik build ve testler çalıştırılarak kod kalitesi sağlanır. Sorunlar erken tespit edilir ve merge request’ler birikmez.
+
+### Continuous Delivery (CD)
+
+Continuous Integration’ın bir adım ötesidir. Kod paketlenip otomatik olarak test ortamına deploy edilir ve production için hazırlanır. Production’a deploy etme kararı manueldir.
+
+### Continuous Deployment (CD)
+
+Continuous Delivery’nin bir adım ötesidir. Geliştirmelerinizi production’a otomatik olarak deploy eder.
+
+## How to measure the impact?
+
+CI/CD workflow’unuzun başarısını ölçmek için birkaç metrikten faydalanabilirsiniz:
+
+- **Lead time:** Bir özelliğin fikir olarak ortaya çıkışından itibaren kullanıcılara sunulduğu ana kadar geçen süredir. Ancak yazılımda işin board’a açıldıktan sonrası dikkate alınır. Süre ne kadar uzunsa, iş yapıldıktan sonra geribildirim alınması da o kadar uzun olur.
+- **Cycle time:** İşin yapılmaya başlandığı andan itibaren kullanıcıya sunulduğu ana kadar geçen süredir.
+- **Time to value (TTV):** Kodun geliştirmesi bittikten sonra kullanıcıya sunulana kadar geçen süredir.
+- **Deployment frequency:** Deployment yapmak için CI/CD workflow’unun çalıştırılma sayısıdır. Bu sayı ne kadar yüksekse, çıkan kod o kadar az sayıda değişklik içerir ve incident ihtimali azalır.
+- **Mean time to detect (MTTD):** Deployment yapıldığı andan itibaren değişikliklerden kaynaklanan sorunu tespit etmek için geçen ortalama süredir. Bu süre ne kadar kısa olursa, kullanıcılar o kadar az etkilenir.
+- **Mean time to recovery (MTTR):** Deployment yapıldığı andan itibaren production’daki problemin giderilmesi için geçen ortalama süredir. Otomatik sistem de olsa hatalar kaçınılmaz olabilir. Bu noktada amaç hatalara müdahale süresini en aza indirmektir.
+- **Rollback rate:** Rollback yapılan deployment yüzdesidir. Deployment’ın uygulamada problemlere sebep olmasindan dolayi geri alınma işlemine rollback denir.

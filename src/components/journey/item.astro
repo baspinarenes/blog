@@ -1,0 +1,29 @@
+---
+import type { Lang, Multilingual } from "@models/type";
+import { useTranslations } from "@utils";
+import { Image } from "src/ui-kit";
+
+type Props = {
+  title: Multilingual;
+  description: Multilingual;
+  image?: string;
+};
+
+const { title, description, image } = Astro.props;
+const t = useTranslations(Astro.currentLocale as Lang);
+---
+
+<div
+  class="flex pb-3 gap-4 relative last:before:hidden before:content-[''] before:w-px before:h-full before:bg-gray-200 before:absolute before:left-[10px]"
+>
+  <div
+    class="size-5 bg-white z-10 rounded-full shrink-0 flex items-center justify-center"
+  >
+    <div class="size-2.5 bg-black rounded-full"></div>
+  </div>
+  <div class="flex flex-col gap-1 -mt-0.5">
+    <h3 class="text-base font-semibold">{t(title)}</h3>
+    <p class="text-sm mb-3">{t(description)}</p>
+    {image && <Image src={image} alt={t(title)} class="w-full" rounded />}
+  </div>
+</div>

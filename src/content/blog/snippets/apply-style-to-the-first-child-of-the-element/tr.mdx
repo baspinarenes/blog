@@ -1,0 +1,40 @@
+---
+title: Apply style to the first child of the element
+description: Bir HTML elementinin ilk çocuğuna stil uygulamak için çeşitli CSS teknikleri.
+date: 2024-07-22
+topic: css
+tags: ["css", "selectors", "styling", "frontend", "html"]
+---
+
+CSS'te istediğimiz elemanı seçmek biraz dertli olabilir.
+
+Aşağıdaki HTML'e odaklanın
+
+```html
+<div>
+  <h2>First sub header</h2>
+  <p>Content</p>
+  <h2>Second sub header</h2>
+  <p>Content</p>
+</div>
+```
+
+Bunun ilk öğesini seçmek istiyorsanız, aşağıdaki selector'ü kullanabilirsiniz.
+
+```css
+div {
+  *:first-child {
+    margin-top: 0;
+  }
+}
+```
+
+Yalnızca ilk öğenin `h2` olması durumunda stil uygulamak istiyorsanız, `:is()` selector ekleyebilirsiniz.
+
+```css
+div {
+  *:first-child:is(h2) {
+    margin-top: 0;
+  }
+}
+```

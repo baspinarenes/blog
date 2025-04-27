@@ -1,0 +1,61 @@
+---
+title: How to truncate texts in multiple lines
+description: Various techniques to truncate text content across multiple lines with CSS.
+date: 2024-07-22
+topic: css
+tags: ["css", "typography", "frontend", "styling", "web-design"]
+---
+
+The SCSS implementation is as follows:
+
+```scss
+@mixin truncate-lines($line-count, $breakType: word) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  white-space: pre-wrap;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $line-count;
+
+  @if $breakType =="word" {
+    word-break: break-word;
+  }
+
+  @else if $breakType =="letter" {
+    word-break: break-all
+  }
+
+  @else {
+    @error "Unknown break type #{$breakType}.";
+  }
+}
+
+.title {
+  @include truncate-lines(2, "letter")
+}
+```
+
+The Less implementation is as follows:
+
+```less
+.truncate-lines(@lineCount; @breakType: "word") {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  white-space: pre-wrap;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: @lineCount;
+
+  & when (@breakType = "word") {
+    word-break: break-word;
+  }
+
+  & when (@breakType = "letter") {
+    word-break: break-all;
+  }
+}
+
+.title {
+  .max-lines(2, "letter");
+}
+```

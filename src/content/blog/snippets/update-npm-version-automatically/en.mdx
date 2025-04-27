@@ -1,0 +1,39 @@
+---
+title: Update NPM package version automatically
+description: A useful method to automatically update NPM package versions in your projects.
+date: 2024-05-10
+topic: npm
+tags: ["npm", "package-management", "versioning", "javascript"]
+---
+
+If you don't like to manually increase the version from `package.json` when dealing with NPM packages, you can use the `npm version` command.
+
+```bash withOutput
+> npm version patch
+> npm version minor
+> npm version major
+> npm version preminor
+> npm version prerelease
+> npm version 1.1.4
+
+v0.0.1
+v0.1.0
+v1.0.0
+v1.1.0-0
+v1.1.0-1
+v1.1.4
+```
+
+Sets a new commit containing the version change. You can use the `-m` flag to customize the message.
+
+```bash withOutput
+> npm version patch
+> npm version patch -m "Upgrade to %s for reasons"
+> git log --oneline -2
+
+v0.0.1
+v0.0.2
+
+606095c (HEAD -> main, tag: v0.0.2) Upgrade to 0.0.2 for reasons
+ac7c881 (tag: v0.0.1) 0.0.1
+```

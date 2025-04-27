@@ -1,0 +1,112 @@
+---
+import { Link, Icon } from "@ui-kit";
+
+type Props = {
+  id?: string;
+  title?: string;
+  description?: string;
+  columns: string[] | { name: string; title: string }[];
+  data: any[][] | { value: any; link?: string }[][];
+  headless?: boolean;
+  noScroll?: boolean;
+};
+
+const {
+  id,
+  title,
+  description,
+  columns,
+  data,
+  headless = false,
+  noScroll = false,
+} = Astro.props as Props;
+---
+
+<div
+  class="relative border-gray-200 rounded-lg overflow-hidden inline-block border mb-6"
+>
+  {
+    title && (
+      <div class="px-4 pt-3 md:p-5 text-lg font-semibold text-left rtl:text-right bg-white">
+        {title}
+        {description && (
+          <p class="mt-1 text-sm font-normal text-gray-500">{description}</p>
+        )}
+      </div>
+    )
+  }
+  <div
+    class:list={[
+      "-mx-4 px-4 md:mx-0 md:px-0 leading-0 w-full [scrollbar-width:none] md:[scrollbar-width:auto]",
+      {
+        "overflow-x-auto": !noScroll,
+      },
+    ]}
+  >
+    <table
+      class:list={[
+        "text-sm text-left rtl:text-right md:w-full",
+        {
+          "w-full": noScroll,
+          "w-max": !noScroll,
+        },
+      ]}
+    >
+      {
+        !headless && (
+          <thead class="text-xs bg-gray-50 ">
+            <tr>
+              {columns.map((col) => (
+                <th scope="col" class="px-4 py-3">
+                  {typeof col === "string" ? col : col.title}
+                </th>
+              ))}
+            </tr>
+          </thead>
+        )
+      }
+      <tbody>
+        {
+          data.map((row) => (
+            <tr class="bg-white border-b last:border-none border-gray-200">
+              {columns.map((col, colNo) => {
+                const data = row[colNo];
+                const colName = typeof col === "string" ? col : col.name;
+                let value: any;
+                let link: string | undefined;
+
+                if (typeof data === "object") {
+                  value = data.value;
+                  link = data.link;
+                } else {
+                  value = data;
+                }
+
+                return (
+                  <td
+                    class:list={[
+                      "px-4 py-4 md:max-w-[200px]",
+                      {
+                        "!pl-4 !pr-0 place-items-center": colName === "icon",
+                      },
+                    ]}
+                  >
+                    {(() => {
+                      if (colName === "icon") {
+                        if (value) return <Icon name={value} size={20} />;
+                        if (id) return <Icon name={id} size={20} />;
+                      }
+                      if (colName === "age") return `${value} years old`;
+                      if (link) return <Link href={link}>{value}</Link>;
+                      return value;
+                    })()}
+                  </td>
+                );
+              })}
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

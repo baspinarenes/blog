@@ -1,0 +1,72 @@
+---
+draft: true
+cover: "./images/hero.jpg"
+title: "Architectural Decision Framework: RFC and ADR"
+description: ""
+date: 2023-06-29
+topic: ""
+tags: []
+---
+
+Pek çok kez denk gelmiş olacağınız üzere çalıştığınız şirketlerde bazı gökten gelen kararlar vardır. Bu kararların neden verildiğini anlayamaz, kararı veren kişileri de zaman periyoduna bağlı olarak çoğu zaman bulamazsınız. Başka projeye geçmiş ya da şirket değiştirmiş olması olasıdır. Takımdan birisiyle aranızda geçmesi olası bir muhabbete göz atalım:
+
+- Abi X için neden böyle bir mimari kurduk?
+- X kişisi şöyle yapın dedi biz de öyle yaptık.
+- Peki bu yapının incident oluşturma riskini öngöremedik mi?
+- Valla bilmiyorum ben işin içinde değildim. Sorardık ama adam başka şirkete gitti.
+
+Bla bla bla. Bu örnekte olduğu gibi alınmış yüzlerce kararla karşılaşırsınız. Halbuki alınan tüm bu kararların tartışmalardan geçilerek alınması ve tüm sürecin dökümente edilmesi gerekir. RFC ve ADR, karar alma sürecinin dökümente edilmesini sağlar.
+
+"Biz daha Wiki'yi hakedemedik RFC ve ADR'ı nasıl hakedeceğiz?" diyenler olabilir.
+
+![](./images/01.png)
+
+Bu soruya cevap verip yazıya devam edelim 😀
+
+![](./images/02.mp4)
+
+## RFC (Request For Comments)
+
+Yazılım geliştirme sürecinde belirli konularda paydaşların deneyimleri doğrultusunda bilgi, yorum ve öneri toplamak amacıyla yayınlanan dökümanlardır. Standart oluşturmak (örneğin HTTP standardı), fikir veya çözüm paylaşmak için kullanılabilir.
+
+Bir konuda öneri sunan kişi veya grup, önerilerini bir RFC belgesi olarak yayınlar. Bu belge, diğerlerinin görüşlerini almak ve öneriyi geliştirmek için açık bir tartışma platformu sağlar. Sonuç olarak, RFC belgesi, bir standart, protokol veya prosedürün resmi bir versiyonu olabilir veya sadece bir öneri niteliğinde kalabilir.
+
+### Mini Tarih
+
+RFC, ARPAnet araştırma programının çalışma notlarını düzenlemek amacıyla oluşturuluyor.
+
+![](https://hardtec.com.br/wp-content/uploads/2019/12/1afc66d7078e-article-arpanet-infographic-map.png)
+
+İlk döküman 1969'da [Host Software](https://datatracker.ietf.org/doc/html/rfc1) başlığıyla yayınlandı.  ARPANET'in temelinde yer alan protokoller, iletişim ve veri aktarımı konularında bilgi içeriyordu. Ayrıca, RFC'lerin genel formatını ve kullanımını tanımlayan bir model haline geldi. Dedelerimizin RFC'lerini hala okuyabiliyoruz 😌
+
+### Dökümanın yazılması
+
+RFC dökümanı yazılırken üç adımdan geçilir:
+
+__Problemin açıklanması__
+
+Ele alınan problem ve ihtiyaç açık bir şekilde tanımlanır. Hangi konuda problem yaşadığımızı, nedenlerini, mevcut çözümlerin eksik yanları ve çözümün neden gerekli olduğuna dair bilgi verilir.
+
+Geri bildirim istediğimiz kişilerin problemi doğru anladığından ve aynı sayfada olduğumuzdan emin olmalıyız.
+
+__Çözüm önerisi__
+
+Probleme yönelik çözüm önerisini detaylandırılır. Hangi sorunları çözdüğünden, nasıl çalıştığından, diğer çözümlere göre avantajlarından ve uygulanabilirliğinden bahsederiz. Standart ise yapısını ve implementasyon detaları belirtilir. Kullanım örnekleri paylaşılır. Akla takılan ve çözüme kavuşmayan sorular da öneri almak için paylaşılabilir.
+
+Getirdiğimiz çözüm bizim için kusursuzdur. Dünyayı kurtarmış gibi hissederiz ancak gözden kaçırdığımız bazı durumlar olabilir.
+
+__Yayınlama__
+
+Öneriyi tartışmaya açarız ve bu sayede ekip arkadaşlarınızdan yorum toplayarak öneriyi geliştirebilirsiniz.
+
+### Sürecin takip edilmesi ve sonuçlandırılması
+
+RFC yazarının yayınladıktan sonraki süreci yönetmesi gerekir. Gelen soruları takip etmeli ve cevaplandırmalıdır. Önerilen yöntemleri test etmeli ve fayda sağlıyorsa RFC'yi güncellemelidir.
+
+Gerekli süre tamamlandığında herkes aynı çizgideyse sonuçlandırılabilir. Tüm soruların çözülmesi gerekmez.
+
+> Trendyol'daki sürecimizden bahsedeyim. RFC yazmak için bir şablonumuz bulunuyor. Google Doc'ta şablon oluşturarak dökümanı yazıyoruz. Yazdığımız dökümanı, şimdiye kadar yazılmış tüm RFC'leri barındıran indeks sheet'ine ekleriz. Son olarak geri bildirim istemek için şirkettekilere mail atarız. 2-3 haftalık review sürecinin ardından 1-2 haftalık onay sürecinden geçiririz. Nihayetinde süreci tamamlarız.
+
+[Örnek şablon koy]
+
+## ADR (Architectural Decision Records)

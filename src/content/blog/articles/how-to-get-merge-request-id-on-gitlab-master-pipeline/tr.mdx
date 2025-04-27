@@ -1,0 +1,43 @@
+---
+title: How to get merge request ID on Gitlab master pipeline?
+description: ""
+date: 2022-07-22
+topic: "gitlab"
+tags:
+  - gitlab
+  - automation
+---
+
+Günlük süreçleri otomatize etmeyi seviyorum ve kısa bir süre önce deployment süreçlerinde bir problem farkettim. Deployment yaparken çıkacak MR'ları toplayıp paydaşlara duyurmak hem yorucu hem de insan hatasına açıktı. Bu nedenle, deployment duyurularını otomatize eden bir pipeline entegrasyonu geliştirdim. Akış aşağıdaki gibiydi:
+
+- Release MR oluşturulduğunda pipeline'dan Slack kanalına deployment duyurusu gönderilir.
+- Release MR merge edildiğinde duyuru mesajının altına, deployment'ın başladığı bildirilir.
+- Release pipeline bittiğinde ise deployment süreci ile ilgili metrikleri içeren bir mesaj atılarak deployment'ın tamamlandığı duyurulur.
+
+Bu aşamada bazı metriklerin hesaplanabilmesi için merge request'in oluşturulma zamanını bilmek gerekir. Yani teknik olarak master pipeline'da merge request ID'sine ihtiyaç duyarız.
+
+## On the merge request pipeline
+
+Merge request pipeline'ında merge request id'sini elde etmek için `CI_MERGE_REQUEST_IID` predefined variable'ını kullanabilirsiniz. Değişken değerini `undefined` olarak alırsanız job'ın merge request pipeline'da çalışacağını taahhüt eden bir kural eklemeniz gerekir.
+
+```yaml
+.enable-on-merge-request-pipeline:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+```
+
+## On the master pipeline
+
+Master pipeline'da ortada merge request kalmadığından ötürü olaylar farklılaşır. `CI_COMMIT_SHA` predefined variable ile commit SHA değerini elde ettikten sonra GitLab API'ye aşağıdaki gibi istek atmak gerekir.
+
+```bash
+curl \
+--location 'https://gitlab.{{companyName}}.com/api/v4/projects/{{projectId}}/repository/commits/{{commitSha}}/merge_requests' \
+--header 'PRIVATE-TOKEN: {{token}}
+```
+
+Response olarak eşleşen merge request'ler dönecektir. Birden fazla merge request dönmesi durumunda `CI_COMMIT_TITLE` predefined değişkeni ile karşılaştırabilirsiniz.
+
+---
+
+Meşakatli bir yoldan sonra istediğimize ulaşıyoruz. Siz probleminizi çözerken ben de otomasyonumu tamamlamaya gidebilirim ☕

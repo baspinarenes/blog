@@ -1,0 +1,47 @@
+[
+  {
+    "id": "1",
+    "name": "MeetingBar",
+    "description": {
+      "en": "Keeps my calendar events visible in the menu bar and allows me to join meetings with a single click.",
+      "tr": "Genellikle kodlamaya dalıp toplantıları unutan biri olarak, tüm takvim etkinliklerimi menü çubuğunda görünür tutuyor ve tek tıklamayla katılmamı sağlıyor."
+    },
+    "link": "https://meetingbar.app"
+  },
+  {
+    "id": "3",
+    "name": "Raycast",
+    "description": {
+      "en": "The clipboard history feature and plugins accelerate my development process.",
+      "tr": "Kopyalama geçmişi özelliği ve eklentiler ile development sürecimi hızlandırıyor."
+    },
+    "link": "https://www.raycast.com"
+  },
+  {
+    "id": "4",
+    "name": "MonitorControl",
+    "description": {
+      "en": "Allows me to adjust the brightness and sound settings of my external monitor.",
+      "tr": "Harici ekranımın parlaklık ve ses ayarlarını yapabilmeme olanak veriyor."
+    },
+    "link": "https://github.com/MonitorControl/MonitorControl"
+  },
+  {
+    "id": "5",
+    "name": "Hand Mirror",
+    "description": {
+      "en": "Allows me to quickly check myself with a keyboard shortcut before joining a video call.",
+      "tr": "Hızlı bir klavye kısayolu ile bir görüntülü aramaya geçmeden önce kendimi kontrol edebiliyorum."
+    },
+    "link": "https://handmirror.app"
+  },
+  {
+    "id": "6",
+    "name": "VSCode",
+    "description": {
+      "en": "My primary coding environment for over 4 years. I've customized it with extensions and settings to match my working style.",
+      "tr": "4 yılı aşkın süredir temel kodlama ortamım. Çalışma biçimime uygun olarak eklentiler ve ayarlarla kapsamlı bir şekilde özelleştirdim."
+    },
+    "link": "https://code.visualstudio.com"
+  }
+]

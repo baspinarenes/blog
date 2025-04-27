@@ -1,0 +1,20 @@
+---
+title: Get the name of changed files in MR
+description: How to get a list of all files changed in a merge request using Git commands.
+date: 2024-07-22
+topic: git
+tags: ["git", "version-control", "ci-cd", "collaboration", "productivity"]
+---
+
+In companies with unestablished pipeline systems, there is always a risk of incidents with config changes. The short term solution is to analyze the changed files to prevent them from being sent along with the code.
+
+You can use `git diff` to get a list of changed files in a practical way.
+
+```bash
+git diff --name-only ${SHA}
+```
+
+## Notes
+
+- You can use Gitlab's predefined `CI_MERGE_REQUEST_DIFF_BASE_SHA` variable to find changed files in MR pipelines.
+- If you are only interested in the names of the files, you can switch to the `--name-only` flag.

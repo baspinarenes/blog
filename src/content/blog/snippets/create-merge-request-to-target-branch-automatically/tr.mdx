@@ -1,0 +1,41 @@
+---
+title: Create merge request to target branch automatically
+description: Belirli hedef dallara otomatik olarak merge request oluşturan script.
+date: 2024-07-22
+topic: git
+tags: ["git", "automation", "ci-cd", "gitlab", "version-control"]
+---
+
+Branch'i push'ladıktan sonra Gitlab arayüzünden MR açmaktan benim gibi nefret ediyorsanız aşağıdaki kod parçası işinizi görecektir.
+
+```bash
+git push \
+  -o merge_request.create \
+  -o merge_request.remove_source_branch \
+  -o merge_request.merge_when_pipeline_succeeds	\
+  -o merge_request.target=master \
+  -o merge_request.assign=$(git config user.email | cut -d "@" -f 1) \
+  -o merge_request.title="${TITLE}"
+```
+
+Ardından kullanımı basitleştirmek için alias atayabilirsiniz.
+
+```bash
+alias gpm='git_push_to_master'
+git_push_to_master ()
+{
+  git push --no-verify \
+    -o merge_request.create \
+    -o merge_request.target=master \
+    -o merge_request.assign=$(git config user.email | cut -d "@" -f 1) \
+    -o merge_request.title="$1"
+}
+```
+
+Yukarıdaki kodu `~/.zshrc` dosyasına koyun ve `source ~/.zshrc` komutunu çalıştırın.
+
+Artık aşağıdaki gibi kullanabilirsiniz. 
+
+```bash
+gpm "Test MR Title"
+```

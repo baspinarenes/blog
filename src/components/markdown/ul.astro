@@ -1,0 +1,13 @@
+---
+const props = Astro.props;
+
+const { class: className, ...rest } = props;
+
+const isTaskList = className?.includes("task-list");
+
+// TODO: Task list
+---
+
+<ul class:list={["custom-ul", isTaskList && "list-none"]} {...rest}>
+  <slot />
+</ul>

@@ -1,0 +1,29 @@
+---
+title: Execute Remote Node.js File
+description: Uzak sunucuda bulunan bir Node.js dosyasını yerel ortamınızdan çalıştırma yöntemleri.
+date: 2024-07-23
+topic: nodejs
+tags: ["nodejs", "bash", "automation", "scripts", "ci-cd"]
+---
+
+Profesyonel hayatta, özellikle microfrontend mimarisi kullanılıyorsa, çok fazla proje yönetmeniz gerekir. Tüm bu projelerde ortak kullanılan script'ler bir projede tutarsınız ve bu remote dosyaları tüm projelerin pipeline'ında çalıştırmanız gerekebilir.
+
+Eğer herhangi bir bağımlılığı yoksa `wget` ya da `curl` ile dosya sistemine indirip çalıştırabiliriz.
+
+```bash
+mkdir -p ./temp
+wget -O ./temp/$FILE_NAME.js "https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.${HOST_NAME}.com/${FILE_NAME}.js"
+node ./temp/$FILE_NAME.js
+rm -rf ./temp
+```
+
+Eğer bağımlılık varsa bunları install etmeniz gerekir. `npx run-url` tool'u dosyayı indirir, `require` ile belirtilen dependency'leri kurduktan sonra çalıştırır. Ardından her şeyi temizler.
+
+```bash
+npx run-url "https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.${HOST_NAME}.com/${FILE_NAME}.js"
+```
+
+## Notes
+
+- GitLab linkine token ekleme sebebimiz projesinin private olmasıdır. Bu yüzden erişmek için URL'e token eklemeniz gerekir. Aksi halde login sayfasının HTML'ini döndürür.
+- Script içinde Git komutu varsa `npx run-url` kullanamazsınız. İlk yöntemi kullanarak script'i `.git` ile aynı dizine indirdiğinizden emin olun.

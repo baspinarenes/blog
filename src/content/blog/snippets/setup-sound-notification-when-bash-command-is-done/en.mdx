@@ -1,0 +1,43 @@
+---
+title: Setup sound notification when bash command is done
+description: A quick way to set up a sound notification when your long-running bash command completes.
+date: 2024-07-22
+topic: bash
+tags: ["bash", "terminal", "productivity", "notification", "automation"]
+---
+
+When I run a command that takes a long time, I realize too late that it's completed while I'm doing other things. That's why I created an audible notify system using the script below.
+
+```bash
+npm install && say "npm install done"
+```
+
+If you want to add a tiny sound before the voice, you can use the `afplay` command.
+
+```bash
+npm install && afplay /System/Library/Sounds/Funk.aiff && say "npm install done"
+```
+
+You can convert this script into an alias.
+
+```bash
+notify() {                 
+  local message=$1
+  shift
+  local command="$@"
+  eval "$command" && afplay /System/Library/Sounds/Funk.aiff && say "$message"
+}
+```
+
+You can now use it below:
+
+```bash
+notify "npm install done" "npm install"
+```
+
+## Notes
+
+- You can list voices using the `say -v \?` command. For example, I can use `Yelda` voice for texts in Turkish.
+  ```bash
+  say -v Yelda "Selamlar"
+  ```

@@ -1,0 +1,58 @@
+---
+title: "What is CI/CD in 3 minutes?"
+description: "Discover the concept and impact of CI/CD in 3 minutes."
+date: "2024-05-07"
+topic: "ci-cd"
+tags: []
+---
+
+This concept, fully known as **continuous integration and continuous delivery/deployment**, is the cornerstone of DevOps and the lifecycle of the software development process.
+
+Let's simplify it. You write your code, create merge requests, and make small commits. During this process, your code goes through three main steps:
+
+1. **Build**
+2. **Test**
+3. **Deploy**
+
+The structure that automates all these steps is called CI/CD.
+
+## Why do we need it?
+
+Thanks to CI/CD, we can run commands on more powerful machines, your computer won't melt down while running thousands of tests, and machine/operating system-based factors are eliminated.
+
+There are several advantages to automating these processes:
+
+- No effort is wasted on tasks that can be automated, allowing resources to be redirected to more important work.
+- Absurd situations like "I forgot to run the tests locally" or "I deployed without building" are avoided.
+- Errors are detected before going live, reducing the application's downtime. Reputation should not be compromised in software development either.
+- Work doesn't wait for weeks during deployment. Users receive more frequent and stable updates.
+- Deployment stress is eliminated, thereby reducing burnout.
+- It's easier to revert the site to its previous state in case of an incident.
+
+## Concepts
+
+![](https://d36ai2hkxl16us.cloudfront.net/course-uploads/bf663a54-0bb6-4726-bd83-1e76668129cf/8u7utgpy3iuj-GitLabWorkflow.png)
+
+### Continuous Integration (CI)
+
+In situations where multiple developers work on the same project, code is frequently integrated into the repository. Code quality is ensured by running automated builds and tests to validate changes. Problems are detected early, and merge requests don't pile up.
+
+### Continuous Delivery (CD)
+
+This is one step beyond Continuous Integration. The code is packaged and automatically deployed to a test environment and prepared for production. The decision to deploy to production is manual.
+
+### Continuous Deployment (CD)
+
+This is one step beyond Continuous Delivery. It automatically deploys your developments to production.
+
+## How to measure the impact?
+
+You can use several metrics to measure the success of your CI/CD workflow:
+
+- **Lead time:** The time elapsed from when a feature is first conceived as an idea until it is delivered to users. However, in software, only the time after the task is created on the board is considered. The longer this period, the longer it takes to receive feedback after the work is done.
+- **Cycle time:** The time elapsed from when work begins until it is delivered to the user.
+- **Time to value (TTV):** The time elapsed from when code development is completed until it is delivered to the user.
+- **Deployment frequency:** The number of times the CI/CD workflow is run for deployment. The higher this number, the fewer changes each code release contains, reducing the probability of incidents.
+- **Mean time to detect (MTTD):** The average time it takes to detect a problem caused by changes from the moment of deployment. The shorter this time, the less users are affected.
+- **Mean time to recovery (MTTR):** The average time it takes to resolve a production problem from the moment of deployment. Errors may be inevitable even with automated systems. The goal here is to minimize the response time to errors.
+- **Rollback rate:** The percentage of deployments that are rolled back. A rollback is the process of reverting a deployment due to problems it causes in the application.

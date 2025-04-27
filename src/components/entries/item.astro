@@ -1,0 +1,54 @@
+---
+import type { Lang } from "@models/type";
+import { formatDate } from "@utils";
+import { useTranslations } from "@utils";
+
+interface Props {
+  name: string;
+  href: string;
+  date: Date;
+}
+
+const t = useTranslations(Astro.currentLocale as Lang);
+const { name, href, date = new Date() } = Astro.props;
+const locale = Astro.currentLocale as Lang;
+const formattedDate = formatDate(date, locale, "short");
+
+const currentPath = Astro.url.pathname.endsWith("/")
+  ? Astro.url.pathname
+  : `${Astro.url.pathname}/`;
+const isActive = currentPath.startsWith(href);
+---
+
+<a
+  href={href}
+  class:list={[
+    "border-b md:border-none border-slate-200 px-4 py-3 md:mx-3 md:rounded-lg md:p-3 box-content cursor-pointer",
+    isActive && "bg-black pointer-events-none",
+    !isActive && "hover:bg-gray-100 hover:outline hover:outline-gray-200",
+  ]}
+  data-entry-item
+  data-name={name}
+>
+  <strong
+    class:list={[
+      "text-sm block leading-4.5 mb-1 font-medium break-words",
+      isActive && "text-white",
+    ]}>{name}</strong
+  >
+  <p
+    class:list={[
+      "flex gap-1 text-xs mb-0",
+      isActive && "text-gray-300",
+      !isActive && "text-gray-500",
+    ]}
+  >
+    <span>{formattedDate}</span>
+    ·
+    <span class="flex gap-1 items-center">
+      <!-- TODO: Add views -->
+      ~
+      {t({ en: "views", tr: "okuma" })}
+    </span>
+  </p>
+</a>

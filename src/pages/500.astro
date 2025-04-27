@@ -1,0 +1,13 @@
+---
+import { BaseLayout } from "@layouts";
+
+interface Props {
+  error: unknown;
+}
+
+const { error } = Astro.props;
+---
+
+<BaseLayout title="500: Hata">
+  <div>{error instanceof Error ? error.message : "Unknown error"}</div>
+</BaseLayout>

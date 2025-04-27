@@ -1,0 +1,30 @@
+---
+import { Icon } from "astro-icon/components";
+
+type Props = {
+  href: string;
+  class?: string;
+  active?: boolean;
+  styless?: boolean;
+};
+
+const { href, active = true, styless = false, class: className } = Astro.props as Props;
+
+const isExternal = href?.includes("http");
+---
+
+<a
+  href={href}
+  target={isExternal ? "_blank" : undefined}
+  class:list={[
+    !styless && "inline-flex items-center gap-0.5 font-medium text-blue-600",
+    !styless && {
+          "text-blue-600 hover:text-blue-700": active,
+          "text-gray-500 pointer-events-none": !active,
+    },
+    className,
+  ]}
+>
+  <slot />
+  {isExternal && <Icon name="external-link" class="w-4 h-4" />}
+</a>

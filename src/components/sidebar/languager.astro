@@ -1,0 +1,11 @@
+---
+import { C } from "@configuration";
+import { Icon } from "astro-icon/components";
+import LanguagerSvelte from "../svelte/Languager.svelte";
+const currentLocale = Astro.currentLocale;
+const locales = Object.keys(C.LOCALES);
+---
+
+<LanguagerSvelte client:load currentLocale={currentLocale} locales={locales}>
+  <Icon name="translate" size={20} />
+</LanguagerSvelte>

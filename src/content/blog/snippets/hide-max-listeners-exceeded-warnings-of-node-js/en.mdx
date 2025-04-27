@@ -1,0 +1,21 @@
+---
+title: Hide max listeners exceeded warnings of Node.js
+description: Methods to hide the commonly encountered MaxListenersExceededWarning warnings in Node.js.
+date: 2024-07-22
+topic: nodejs
+tags: ["nodejs", "javascript", "events", "debugging"]
+---
+
+When working with Node.js, you must have come across the following warning.
+
+```plaintext wrap
+MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 input listeners added to [EventEmitter]. Use emitter.setMaxListeners() to increase limit.
+```
+
+
+You can increase the limit to get rid of this warning. But keep in mind that this can create a memory leak. Don't use it to sweep under the rug! I used it to hide logs that show up in cli tool.
+
+```javascript
+import events from 'events';
+events.EventEmitter.prototype.setMaxListeners(30);
+```

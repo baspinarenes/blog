@@ -1,0 +1,720 @@
+---
+title: "Short notes about SQL"
+description: ""
+date: 2022-07-22
+topic: "sql"
+tags:
+  - sql
+---
+
+<Note type="info">
+  **Yaşayan Yazı**, bir yerimden uydurduğum bir terimdir ve ileriki dönemde içeriği zenginleşebilecek ama şu anki
+  haliyle de faydalı olabilecek yazıları belirtir.
+</Note>
+
+<Note type="info">
+  Bu yazıda kullanılan "Employees", "Buildings", "movies" ve "Box Office" tabloları [SQLBolt](https://sqlbolt.com/) sitesinden alınmıştır.
+</Note>
+
+**SQL (Structured Query Language)**, relation database'deki verilerin sorgulanmasına, değiştirilmesine ve dönüştürülmesine olanak sağlamak için tasarlanmış bir dildir. **Relation database** ise iki boyutlu olan ve aralarında ilişki bulunan tablo koleksiyonudur.
+
+Örnek tablolar üzerinden SQL senaryolarına bakalım.
+
+## Veri Okuma
+
+Örneklerde kullandığımız tablolar:
+
+<Table
+  title="Movies"
+  columns={["id", "title", "director", "year", "length_minutes"]}
+  data={[
+    [1, "Toy Story", "John Lasseter", 1995, 81],
+    [2, "A Bug's Life", "John Lasseter", 1998, 95],
+    [3, "Toy Story 2", "John Lasseter", 1999, 93],
+    [4, "The Incredibles", "Brad Bird", 2004, 116],
+    [5, "Cars", "John Lasseter", 2006, 117],
+    [6, "WALL-E", "Andrew Stanton", 2008, 104],
+    [7, "Toy Story 3", "Lee Unkrich", 2010, 103],
+    [8, "Cars 2", "John Lasseter", 2011, 120],
+  ]}
+/>
+
+<Table
+  title="Box Office"
+  columns={["movie_id", "rating", "domestic_sales", "international_sales"]}
+  data={[
+    [5, 8.2, 380843261, 555900000],
+    [8, 8, 206445654, 417277164],
+    [3, 7.9, 245852179, 239163000],
+    [6, 8, 261441092, 370001000],
+    [1, 8.3, 191796233, 170162503],
+    [7, 7.2, 244082982, 217900167],
+    [4, 8.1, 289916256, 272900000],
+    [2, 7.2, 162798565, 200600000],
+  ]}
+/>
+
+Tüm filmleri listeleyelim;
+
+```sql
+SELECT *
+FROM movies;
+```
+
+<Table
+  columns={["id", "title", "director", "year", "length_minutes"]}
+  data={[
+    [1, "Toy Story", "John Lasseter", 1995, 81],
+    [2, "A Bug's Life", "John Lasseter", 1998, 95],
+    [3, "Toy Story 2", "John Lasseter", 1999, 93],
+    [4, "The Incredibles", "Brad Bird", 2004, 116],
+    [5, "Cars", "John Lasseter", 2006, 117],
+    [6, "WALL-E", "Andrew Stanton", 2008, 104],
+    [7, "Toy Story 3", "Lee Unkrich", 2010, 103],
+    [8, "Cars 2", "John Lasseter", 2011, 120],
+  ]}
+/>
+
+Filmlerin yalnızca isimlerini ve yönetmenlerini listeleyelim;
+
+```sql
+SELECT title, director
+FROM movies;
+```
+
+<Table
+  columns={["title", "director"]}
+  data={[
+    ["Toy Story", "John Lasseter"],
+    ["A Bug's Life", "John Lasseter"],
+    ["Toy Story 2", "John Lasseter"],
+    ["The Incredibles", "Brad Bird"],
+    ["Cars", "John Lasseter"],
+    ["WALL-E", "Andrew Stanton"],
+    ["Toy Story 3", "Lee Unkrich"],
+    ["Cars 2", "John Lasseter"],
+  ]}
+/>
+
+Filmleri en uzundan kısaya doğru listeleyelim;
+
+```sql
+SELECT *
+FROM movies
+ORDER BY length_minutes DESC;
+/* sıralama yönünü belirtmezsek varsayılan değer ASC'dir. */
+```
+
+<Table
+  columns={["id", "title", "director", "year", "length_minutes"]}
+  data={[
+    [8, "Cars 2", "John Lasseter", 2011, 120],
+    [5, "Cars", "John Lasseter", 2006, 117],
+    [4, "The Incredibles", "Brad Bird", 2004, 116],
+    [6, "WALL-E", "Andrew Stanton", 2008, 104],
+    [7, "Toy Story 3", "Lee Unkrich", 2010, 103],
+    [2, "A Bug's Life", "John Lasseter", 1998, 95],
+    [3, "Toy Story 2", "John Lasseter", 1999, 93],
+    [1, "Toy Story", "John Lasseter", 1995, 81],
+  ]}
+/>
+
+Çıkış yılına göre ilk dört filmi listeleyelim;
+
+```sql
+SELECT *
+FROM movies
+ORDER BY year ASC
+LIMIT 4;
+/* sıralama yönünü belirtmezsek varsayılan değer ASC'dir. */
+```
+
+<Table
+  columns={["id", "title", "director", "year", "length_minutes"]}
+  data={[
+    [1, "Toy Story", "John Lasseter", 1995, 81],
+    [2, "A Bug's Life", "John Lasseter", 1998, 95],
+    [3, "Toy Story 2", "John Lasseter", 1999, 93],
+    [4, "The Incredibles", "Brad Bird", 2004, 116],
+  ]}
+/>
+
+Çıkış yılına göre son dört filmi eskiden yeniye doğru listeleyelim;
+
+```sql
+SELECT *
+FROM movies
+ORDER BY year ASC
+LIMIT 4 OFFSET (14 - 4);
+/* OFFSET alınacak 4 elemanın hangi index'ten başlayacağını belirtir. */
+```
+
+<Table
+  columns={["id", "title", "director", "year", "length_minutes"]}
+  data={[
+    [8, "Cars 2", "John Lasseter", 2011, 120],
+    [7, "Toy Story 3", "Lee Unkrich", 2010, 103],
+    [6, "WALL-E", "Andrew Stanton", 2008, 104],
+    [5, "Cars", "John Lasseter", 2006, 117],
+  ]}
+/>
+
+Çıkış yılına göre son dört filmi alfabetik olarak listeleyelim;
+
+```sql
+SELECT *
+FROM (
+  SELECT *
+  FROM movies
+  ORDER BY year DESC
+  LIMIT 4
+)
+ORDER BY title ASC;
+/* query'leri iç içe kullanabiliriz. dıştaki query'nin girdisi içerdeki
+query'nin sonuç tablosudur. */
+```
+
+<Table
+  columns={["id", "title", "director", "year", "length_minutes"]}
+  data={[
+    [5, "Cars", "John Lasseter", 2006, 117],
+    [8, "Cars 2", "John Lasseter", 2011, 120],
+    [7, "Toy Story 3", "Lee Unkrich", 2010, 103],
+    [6, "WALL-E", "Andrew Stanton", 2008, 104],
+  ]}
+/>
+
+Uluslarası gişe satışı en az 455 milyon dolar olan filmleri listeleyelim;
+
+```sql
+SELECT title
+FROM movies
+WHERE id IN (
+  SELECT movie_id
+  FROM boxoffice
+  WHERE international_sales > 455000000
+);
+/* query'leri iç içe kullanabiliriz. dıştaki query'nin girdisi içerdeki
+query'nin sonuç tablosudur. */
+```
+
+<Table
+  columns={["title"]}
+  data={[["Finding Nemo"], ["Toy Story 3"], ["Monsters University"]]}
+/>
+
+## Filtreleme
+
+Örneklerde kullandığımız tablolar:
+
+<Table
+  title="Movies"
+  columns={["id", "title", "director", "year", "length_minutes"]}
+  data={[
+    [1, "Toy Story", "John Lasseter", 1995, 81],
+    [2, "A Bug's Life", "John Lasseter", 1998, 95],
+    [3, "Toy Story 2", "John Lasseter", 1999, 93],
+    [4, "The Incredibles", "Brad Bird", 2004, 116],
+    [5, "Cars", "John Lasseter", 2006, 117],
+    [6, "WALL-E", "Andrew Stanton", 2008, 104],
+    [7, "Toy Story 3", "Lee Unkrich", 2010, 103],
+    [8, "Cars 2", "John Lasseter", 2011, 120],
+  ]}
+/>
+
+<Table
+  title="Box Office"
+  columns={["movie_id", "rating", "domestic_sales", "international_sales"]}
+  data={[
+    [5, 8.2, 380843261, 555900000],
+    [8, 8, 206445654, 417277164],
+    [3, 7.9, 245852179, 239163000],
+    [6, 8, 261441092, 370001000],
+    [1, 8.3, 191796233, 170162503],
+    [7, 7.2, 244082982, 217900167],
+    [4, 8.1, 289916256, 272900000],
+    [2, 7.2, 162798565, 200600000],
+  ]}
+/>
+
+Yönetmeni John Lasseter ya da Lee Unkrich olan filmleri listeleyelim;
+
+```sql
+SELECT *
+FROM movies
+  WHERE director IN ("John Lasseter", "Lee Unkrich");
+```
+
+<Table
+  columns={["id", "title", "director", "year", "length_minutes"]}
+  data={[
+    [7, "Toy Story 3", "Lee Unkrich", 2010, 103],
+    [8, "Cars 2", "John Lasseter", 2011, 120],
+  ]}
+/>
+
+2005 ve 2010 yılları arasında çıkan filmleri listeleyelim;
+
+```sql
+SELECT *
+FROM movies
+WHERE (year BETWEEN 2005 AND 2010) AND id != 7;
+```
+
+<Table
+  columns={["id", "title", "director", "year", "length_minutes"]}
+  data={[
+    [6, "WALL-E", "Andrew Stanton", 2008, 104],
+    [7, "Toy Story 3", "Lee Unkrich", 2010, 103],
+  ]}
+/>
+
+Toy Story serisindeki filmlerini listeleyelim;
+
+```sql
+SELECT *
+FROM movies
+WHERE title LIKE "Toy Story%";
+/* ya LIKE "Toy Story%" şeklinde 0+ karakterle
+ya da LIKE "Toy Story _" şeklinde tek bir karakterle eşleştirebiliriz. */
+```
+
+<Table
+  columns={["id", "title", "director", "year", "length_minutes"]}
+  data={[
+    [1, "Toy Story", "John Lasseter", 1995, 81],
+    [3, "Toy Story 2", "John Lasseter", 1999, 93],
+    [7, "Toy Story 3", "Lee Unkrich", 2010, 103],
+  ]}
+/>
+
+Toy Story serisi haricindeki tüm filmleri listeleyelim;
+
+```sql
+SELECT *
+FROM movies
+WHERE title NOT LIKE "Toy Story%";
+```
+
+<Table
+  columns={["id", "title", "director", "year", "length_minutes"]}
+  data={[
+    [2, "A Bug's Life", "John Lasseter", 1998, 95],
+    [4, "The Incredibles", "Brad Bird", 2004, 116],
+    [5, "Cars", "John Lasseter", 2006, 117],
+    [6, "WALL-E", "Andrew Stanton", 2008, 104],
+    [8, "Cars 2", "John Lasseter", 2011, 120],
+  ]}
+/>
+
+Tablodaki yönetmenleri listeleyelim;
+
+```sql
+SELECT DISTINCT director
+FROM movies;
+/* normalde birden fazla filmi olan yönetmenler tabloda birden çok görülür
+ancak DISTINCT ile yinelenen satırları tablodan kaldırıyoruz. */
+```
+
+<Table
+  columns={["director"]}
+  data={[["John Lasseter"], ["Brad Bird"], ["Andrew Stanton"], ["Lee Unkrich"]]}
+/>
+
+Yönetmenlerin film sayılarını filtreleyip John Lasseter'ın film sayısını listeleyelim;
+
+```sql
+SELECT director, COUNT(*) AS movie_count
+FROM movies
+GROUP BY director
+HAVING director = "John Lasseter";
+/* verileri grupladıktan sonra filtre uygulamak için WHERE yerine
+HAVING kullanılır. üretilen sütunu adlandırmak için AS kullanılır.
+sütun adı belirtilmemişse gruptaki satır sayısını, belirtilmediyse
+sütunda hiçbir değeri NULL olmayan satır sayısını verir. */
+```
+
+<Table columns={["director", "movie_count"]} data={[["John Lasseter", 5]]} />
+
+## Birden Fazla Tabloda Çalışma
+
+İlişkisel veritabanlarının hikmeti verinin birden fazla tabloya yayılmasıdır. Bu veriler birbirine bağlanır. Bir tablodaki `PRIMARY KEY` diğer tablodaki `FOREIGN KEY`'e karşılık gelir. Böylece verileri ihtiyaç duyduğumuzda diğer tablolardan toplayabiliyoruz.
+
+Örneklerde kullandığımız tablolar:
+
+<Table
+  title="Employees"
+  columns={["role", "name", "building", "years_employed"]}
+  data={[
+    ["Engineer", "Becky A.", "1e", 4],
+    ["Engineer", "Dan B.", "1e", 2],
+    ["Engineer", "Sharon F.", "1e", 6],
+    ["Engineer", "Dan M.", "1e", 4],
+    ["Engineer", "Malcom S.", "1e", 1],
+    ["Artist", "Tylar S.", "2w", 2],
+    ["Artist", "Sherman D.", "2w", 8],
+    ["Artist", "Jakob J.", "2w", 6],
+    ["Artist", "Lillia A.", "2w", 7],
+    ["Artist", "Brandon J.", "2w", 7],
+    ["Manager", "Scott K.", "1e", 9],
+    ["Manager", "Shirlee M.", "1e", 3],
+    ["Manager", "Daria O.", "2w", 6],
+    ["Engineer", "Yancy I.", "", 0],
+    ["Artist", "Oliver P.", "", 0],
+  ]}
+/>
+
+<Table
+  title="Buildings"
+  columns={["building_name", "capacity"]}
+  data={[
+    ["1e", 24],
+    ["1w", 32],
+    ["2e", 16],
+    ["2w", 20],
+  ]}
+/>
+
+Çalışanları oturdukları binaların kapasitesiyle birlikte listeleyelim;
+
+```sql
+SELECT *
+FROM employees
+INNER JOIN buildings ON building_name = building;
+/* INNER JOIN yerine kısaltma olarak JOIN'de kullanılabilir. */
+```
+
+<Table
+  columns={[
+    "role",
+    "name",
+    "building",
+    "years_employed",
+    "building_name",
+    "capacity",
+  ]}
+  data={[
+    ["Engineer", "Becky A.", "1e", 4, "1e", 24],
+    ["Engineer", "Dan B.", "1e", 2, "1e", 24],
+    ["Engineer", "Sharon F.", "1e", 6, "1e", 24],
+    ["Engineer", "Dan M.", "1e", 4, "1e", 24],
+    ["Engineer", "Malcom S.", "1e", 1, "1e", 24],
+    ["Artist", "Tylar S.", "2w", 2, "2w", 20],
+    ["Artist", "Sherman D.", "2w", 8, "2w", 20],
+    ["Artist", "Jakob J.", "2w", 6, "2w", 20],
+    ["Artist", "Lillia A.", "2w", 7, "2w", 20],
+    ["Artist", "Brandon J.", "2w", 7, "2w", 20],
+    ["Manager", "Scott K.", "1e", 9, "1e", 24],
+    ["Manager", "Shirlee M.", "1e", 3, "1e", 24],
+    ["Manager", "Daria O.", "2w", 6, "2w", 20],
+  ]}
+/>
+
+Dan B.'nin oturduğu binanın kapasitesini listeleyelim;
+
+```sql
+SELECT capacity
+FROM employees
+INNER JOIN buildings ON building_name = building
+WHERE name = "Dan B.";
+/* tablolar ayrı olduğundan bu işlem için JOIN yapmanız gerekir. */
+```
+
+<Table columns={["capacity"]} data={[[24]]} />
+
+İçerisinde yaşayan çalışan olmayan binaları listeleyelim;
+
+```sql
+SELECT *
+FROM buildings
+LEFT JOIN employees ON building_name = building
+WHERE role IS NULL;
+```
+
+<Table
+  columns={["building_name", "capacity"]}
+  data={[
+    ["1w", 32],
+    ["2e", 16],
+  ]}
+/>
+
+Henüz binaya yerleştirilmeyen çalışanları listeleyelim;
+
+```sql
+SELECT name
+FROM employees
+LEFT JOIN buildings ON building_name = building
+WHERE building IS NULL;
+```
+
+<Table columns={["name"]} data={[["Yancy I."], ["Oliver P."]]} />
+
+## Sonucu Dönüştürme
+
+Örneklerde kullandığımız tablolar:
+
+<Table
+  title="Movies"
+  columns={["id", "title", "director", "year", "length_minutes"]}
+  data={[
+    [1, "Toy Story", "John Lasseter", 1995, 81],
+    [2, "A Bug's Life", "John Lasseter", 1998, 95],
+    [3, "Toy Story 2", "John Lasseter", 1999, 93],
+    [4, "The Incredibles", "Brad Bird", 2004, 116],
+    [5, "Cars", "John Lasseter", 2006, 117],
+    [6, "WALL-E", "Andrew Stanton", 2008, 104],
+    [7, "Toy Story 3", "Lee Unkrich", 2010, 103],
+    [8, "Cars 2", "John Lasseter", 2011, 120],
+  ]}
+/>
+
+<Table
+  title="Box Office"
+  columns={["movie_id", "rating", "domestic_sales", "international_sales"]}
+  data={[
+    [5, 8.2, 380843261, 555900000],
+    [8, 8, 206445654, 417277164],
+    [3, 7.9, 245852179, 239163000],
+    [6, 8, 261441092, 370001000],
+    [1, 8.3, 191796233, 170162503],
+    [7, 7.2, 244082982, 217900167],
+    [4, 8.1, 289916256, 272900000],
+    [2, 7.2, 162798565, 200600000],
+  ]}
+/>
+
+Filmleri yurtdışı ve yurtiçi toplam hasılatına göre en yüksekten en düşüğe listeleyelim;
+
+```sql
+SELECT title, ((domestic_sales + international_sales) / 1000000 ) AS total_sales_as_millions
+FROM movies
+JOIN boxoffice ON movies.id = boxoffice.movie_id
+ORDER BY total_sales_as_millions DESC;
+```
+
+<Table
+  columns={["title", "total_sales_as_millions"]}
+  data={[
+    ["Toy Story 3", 1063.171911],
+    ["The Incredibles", 631.442092],
+    ["Cars 2", 559.852396],
+    ["WALL-E", 521.31186],
+    ["Toy Story 2", 485.015179],
+    ["Cars", 461.983149],
+    ["A Bug's Life", 363.398565],
+    ["Toy Story", 361.958736],
+  ]}
+/>
+
+Yönetmenlerin tüm filmlerinden elde ettiği hasılatı listeleyelim;
+
+```sql
+SELECT director, SUM(domestic_sales + international_sales) as cumulative_sales
+FROM movies
+INNER JOIN boxoffice ON movies.id = boxoffice.movie_id
+GROUP BY director;
+```
+
+<Table
+  columns={["director", "cumulative_sales"]}
+  data={[
+    ["Andrew Stanton", 1458055121],
+    ["Brad Bird", 1255164910],
+    ["Brenda Chapman", 538983207],
+    ["Dan Scanlon", 743559607],
+    ["John Lasseter", 2232208025],
+    ["Lee Unkrich", 1063171911],
+    ["Pete Docter", 1294159000],
+  ]}
+/>
+
+## Küme İşlemleri
+
+Tablolar arası küme işlemleri yapılabilir. `UNION` sonuçları birbirine ekler, `INTERSECT` kesişen satırlar bulur, `EXCEPT` ise ilk sonuç kümesinde olup ikincisinde olmayan satırların döndürülmesini sağlar. Bu işlemleri yapabilmek için karşılanması gereken kriterler şunlardır:
+
+- Tablolar aynı sütun sayısına sahip olmalıdır.
+- Sütunlar aynı veri türüne sahip olmalıdır.
+- Sonuçtaki sütunların sırası aynı olmalıdır.
+
+Örneklerde kullandığımız tablolar:
+
+<Table
+  title="American Citizens"
+  columns={["id", "name", "surname", "birthdate", "gender"]}
+  data={[
+    [1, "John", "Doe", "1985-03-12", "Male"],
+    [2, "Jane", "Smith", "1990-07-25", "Female"],
+    [3, "Ahmet", "Uzun", "1989-05-22", "Male"],
+    [4, "Michael", "Johnson", "1978-11-02", "Male"],
+    [5, "Emily", "Williams", "1989-09-18", "Female"],
+  ]}
+/>
+
+<Table
+  title="Turkish Citizens"
+  columns={["id", "name", "surname", "birthdate", "gender"]}
+  data={[
+    [1, "Ahmet", "Uzun", "1989-05-22", "Male"],
+    [2, "Ayşe", "Kaya", "1995-08-12", "Female"],
+    [3, "Mehmet", "Aydın", "1983-11-30", "Male"],
+    [4, "Zeynep", "Demir", "1992-09-18", "Female"],
+    [5, "Michael", "Johnson", "1978-11-02", "Male"],
+  ]}
+/>
+
+Topluluktaki tüm vatandaşları listeleyelim;
+
+```sql
+SELECT "American" AS type, name, surname, birthdate, gender
+FROM american_citizens
+UNION
+SELECT "Turkish" AS type, name, surname, birthdate, gender
+FROM turkish_citizens
+/* Tablolara özel type sütunu ekleyebiliriz. yinelenen satırları korumak
+için UNION ALL kullanılabilir. */
+```
+
+<Table
+  columns={["nationality", "name", "surname", "birthdate", "gender"]}
+  data={[
+    ["American", "John", "Doe", "1985-03-12", "Male"],
+    ["American", "Jane", "Smith", "1990-07-25", "Female"],
+    ["American", "Ahmet", "Uzun", "1989-05-22", "Male"],
+    ["American", "Michael", "Johnson", "1978-11-02", "Male"],
+    ["American", "Emily", "Williams", "1989-09-18", "Female"],
+    ["Turkish", "Ahmet", "Uzun", "1989-05-22", "Male"],
+    ["Turkish", "Ayşe", "Kaya", "1995-08-12", "Female"],
+    ["Turkish", "Mehmet", "Aydın", "1983-11-30", "Male"],
+    ["Turkish", "Zeynep", "Demir", "1992-09-18", "Female"],
+    ["Turkish", "Michael", "Johnson", "1978-11-02", "Male"],
+  ]}
+/>
+
+Topluluktaki hem Amerikan hem de Türk vatandaşı olanları listeleyelim;
+
+```sql
+SELECT name, surname, birthdate, gender
+FROM american_citizens
+INTERSECT
+SELECT name, surname, birthdate, gender
+FROM turkish_citizens
+/* yinelenen satırları korumak için INTERSECT ALL kullanılabilir. */
+```
+
+<Table
+  columns={["name", "surname", "birthdate", "gender"]}
+  data={[
+    ["Ahmet", "Uzun", "1989-05-22", "Male"],
+    ["Michael", "Johnson", "1978-11-02", "Male"],
+  ]}
+/>
+
+Toplulukta yalnızca Amerikan vatandaşı olanları listeleyelim;
+
+```sql
+SELECT name, surname, birthdate, gender
+FROM american_citizens
+EXCEPT
+SELECT name, surname, birthdate, gender
+FROM turkish_citizens
+/* yinelenen satırları korumak için EXCEPT ALL kullanılabilir. */
+```
+
+<Table
+  columns={["name", "surname", "birthdate", "gender"]}
+  data={[
+    ["John", "Doe", "1985-03-12", "Male"],
+    ["Jane", "Smith", "1990-07-25", "Female"],
+    ["Emily", "Williams", "1989-09-18", "Female"],
+  ]}
+/>
+
+Toplulukta yalnızca Türk vatandaşı olanları listeleyelim;
+
+```sql
+SELECT name, surname, birthdate, gender
+FROM turkish_citizens
+EXCEPT
+SELECT name, surname, birthdate, gender
+FROM american_citizens
+/* yinelenen satırları korumak için EXCEPT ALL kullanılabilir. */
+```
+
+<Table
+  columns={["name", "surname", "birthdate", "gender"]}
+  data={[
+    ["Ayşe", "Kaya", "1995-08-12", "Female"],
+    ["Mehmet", "Aydın", "1983-11-30", "Male"],
+    ["Zeynep", "Demir", "1992-09-18", "Female"],
+  ]}
+/>
+
+## Tablo İşlemleri
+
+SQL'de **database schema**, her bir tablonun yapısını ve tablonun her bir sütununun içerebileceği veri türlerini tanımlayan yapıdır. Tablo işlemleri de bununla ilişkilidir.
+
+Örneklerde değindiğimiz film tablosunu oluşturur;
+
+```sql
+CREATE TABLE IF NOT EXISTS movies (
+    id INTEGER AUTOINCREMENT PRIMARY KEY,
+    title TEXT NOT NULL,
+    director TEXT NOT NULL,
+    year INTEGER,
+    length_minutes INTEGER
+);
+```
+
+Tabloya iki yeni çalışan ekler;
+
+```sql
+INSERT INTO movies
+VALUES ("GORA", "Cem Yılmaz", 2004, 127);
+
+INSERT INTO movies (title, director)
+VALUES ("AROG", "Cem Yılmaz");
+/* verisi olmayan satırları NULL bırakmak için sütun isimlerini verebiliriz. */
+```
+
+Eksik bilgi ile eklediğimiz filmi güncelleyelim;
+
+```sql
+UPDATE movies
+SET year = 2008, length_minutes = 128
+WHERE title = "AROG"
+```
+
+2005 yılından önceki filmleri arşivlemek için tablodan çıkaralım;
+
+```sql
+DELETE FROM movies
+WHERE year >= 7;
+```
+
+Film tablosunun şemasını güncelleyerek film dilini tanımlamak için sütun ekleyebiliriz;
+
+```sql
+ALTER TABLE movies
+ADD COLUMN language TEXT DEFAULT "English";
+```
+
+Film dili sütununu geri silebiliriz;
+
+```sql
+ALTER TABLE movies
+DROP language;
+```
+
+Ve hatta film tablosunun isim değiştirebiliriz;
+
+```sql
+ALTER TABLE movies
+RENAME TO movies_archive;
+```
+
+Tabloyu tamamen uçurmak için;
+
+```sql
+DROP TABLE IF EXISTS box_office;
+```

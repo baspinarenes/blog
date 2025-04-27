@@ -1,0 +1,73 @@
+---
+import { C } from "@configuration";
+import type { Lang } from "@models/type";
+import { getLocalePaths, useTranslations } from "@utils";
+
+const t = useTranslations(Astro.currentLocale as Lang);
+const langs = Object.keys(C.LOCALES);
+const defaultLocale = C.DEFAULT_LOCALE;
+---
+
+<html lang={defaultLocale}>
+  <head>
+    <meta charset="UTF-8" />
+    <title>redirect...</title>
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="generator" content={Astro.generator} />
+    {
+      getLocalePaths(Astro.url).map((props) => (
+        <link
+          rel="alternate"
+          hreflang={C.LOCALES[props.lang].lang || props.lang}
+          href={Astro.site?.origin + props.path}
+        />
+      ))
+    }
+
+    <!-- icon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" sizes="192x192" href="/android-chrome.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="color-scheme" content="light dark" />
+
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={t("title")} />
+    <meta property="og:site_name" content={t("title")} />
+    <meta property="og:description" content={t("description")} />
+    <meta property="og:image" content={Astro.site + "ogp.png"} />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:locale" content={defaultLocale} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content={t(C.AUTHOR.SOCIAL_MEDIA.TWITTER)} />
+
+    <noscript>
+      <meta
+        http-equiv="refresh"
+        content={`0;url=/${defaultLocale}`}
+      />
+    </noscript>
+
+    <script is:inline define:vars={{ langs, defaultLocale }}>
+      if (
+        localStorage.selectedLang &&
+        langs.includes(localStorage.selectedLang)
+      ) {
+        location.href = `/${localStorage.selectedLang}`;
+      } else {
+        const browserLang = navigator.language.toLowerCase();
+
+        if (langs.includes(browserLang)) {
+          location.href = `/${browserLang}`;
+        } else if (langs.includes(browserLang.split("-")[0])) {
+          location.href = `/${browserLang.split("-")[0]}`;
+        } else {
+          location.href = `/${defaultLocale}`;
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <h1>redirect...</h1>
+  </body>
+</html>

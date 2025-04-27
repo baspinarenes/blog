@@ -1,0 +1,85 @@
+---
+import { components } from "@components/markdown";
+import { EntryLayout } from "@layouts";
+import { render } from "astro:content";
+import { useTranslations } from "@utils";
+import { getEntries, formatDate } from "@utils";
+import type { Lang } from "@models/type";
+import { Icon, Image } from "@ui-kit";
+
+export async function getStaticPaths() {
+  const entries = await Promise.all(
+    ["articles", "writings", "thoughts", "snippets"].map((category) =>
+      getEntries({ category })
+    )
+  );
+
+  const paths = entries.flat().map((post) => {
+    return {
+      params: {
+        lang: post.lang,
+        category: post.collection,
+        entry: post.id,
+      },
+      props: post,
+    };
+  });
+
+  return paths;
+}
+
+const locale = Astro.params.lang as Lang;
+const t = useTranslations(locale);
+const post = Astro.props;
+
+const { Content } = await render(post);
+
+const { title, description, date, tags, topic, cover } = post.data;
+---
+
+<EntryLayout {title} {description} {date}>
+  <main>
+    <div class="main-container">
+      <article>
+        <div class="hidden md:flex gap-2 items-center text-sm select-none mb-8">
+          <div class="block">{formatDate(date, locale)} /</div>
+          <div class="flex gap-1 items-center mr-auto">
+            <Icon name="clock" size={16} />
+            ~
+            {
+              t({
+                en: "min",
+                tr: "dk",
+              })
+            }
+          </div>
+          <div class="flex gap-1 items-center">
+            {
+              tags
+                .slice(0, 3)
+                .map((tag) => (
+                  <div class="text-xs px-2 py-1 rounded-lg bg-gray-200">
+                    #{tag}
+                  </div>
+                ))
+            }
+          </div>
+        </div>
+        {
+          !cover && (
+            <Icon name={topic} size={64} class="mb-8" colored />
+          )
+        }
+        <h1 class="mb-5 mt-4 md:mb-6 md:mt-5 text-balance">{title}</h1>
+        {
+          cover && (
+            <div class="mb-8">
+              <Image src={cover.src} alt={title} class="w-full h-auto" />
+            </div>
+          )
+        }
+        <Content components={components} />
+      </article>
+    </div>
+  </main>
+</EntryLayout>

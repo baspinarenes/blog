@@ -1,0 +1,1159 @@
+---
+title: "Kıssadan hisse: Swift"
+description: Test
+date: 2024-08-18
+topic: swift
+tags: ["test"]
+---
+
+<Note type="info">
+  **Yaşayan Yazı**, bir yerimden uydurduğum bir terimdir ve ileriki dönemde içeriği zenginleşebilecek ama şu anki
+  haliyle de faydalı olabilecek yazıları belirtir.
+</Note>
+
+## Variables
+
+- Değişkenler için `var`, constant için `let` kullan.
+
+```swift
+var age = 24
+let PI = 3.14159
+```
+
+- Temel değerlerin tipler **type inference** ile otomatik algılanır. Ancak initialize edilmiyorsa **type annotation** verilmelidir.
+
+```swift
+let year = 1999
+let year: Int = 1999
+var name: String
+name = "Enes"
+```
+
+- Değişkenlerin türlerini öğrenmek için `type()` kullanılabilir.
+
+```swift withOutput
+> let double: Double = 5.22
+> print(type(of: double))
+
+Double
+```
+
+## Data Types
+
+### String
+
+```swift
+var name = "Enes"
+```
+
+- Çok satır metinler için üç tırnak kullan. Yeni satıra inmesini engellemek için satır sonuna `\` ekle.
+
+```swift
+var address = """
+Y Mahallesi \
+X Sokak No:1 Kat:5
+Kadıköy/Türkiye
+"""
+```
+
+- Dinamik string'ler için **string interpolation** kullan.
+
+```swift
+// example 1:
+var score = 85
+var str = "Your score was \(score)"
+// example 2:
+var greeting  = "Hi, \(user ?? "Anonymous")"
+```
+
+- String'in boş olup olmadığını kontrol etmek için `.isEmpty()` kullan.
+
+### Integer
+
+```swift
+var age = 24
+var population = 8_000_000
+```
+
+### Float and Double
+
+```swift
+let justOverOneMillion = 1_000_000.000_000_1
+let PI: Float = 3.14159
+```
+
+- Varsayılan noktalı değer tipi **Double**'dır. Float oluşturmak için tip tanımlamalıyız.
+- Int bir değerle toplarken otomatik tür dönüşümü yapılmaz. Bunu yerine `Double()` kullanılabilir.
+
+```swift withOutput
+> let num1 = 1.2
+> let num2 = 5
+> print(num1 + Double(num2))
+
+6.2
+```
+
+- Yuvarlamak için `.rounded()` kullanılabilir.
+
+```swift withOutput
+> let x = 3.14
+> print(x.rounded())
+> print(x.rounded(.down))
+> print(x.rounded(.up))
+
+3.0
+3.0
+4.0
+```
+
+### Boolean
+
+```swift
+var isSuccess = true
+```
+
+## Collections
+
+### Array
+
+```swift
+var emptyArray = [Int]()
+var emptyArray2: [Int] = []
+var emptyArray3: Array<Float> = Array()
+var emptyArray4 = Array<Int>()
+let beatles = ["John Lennon", "Paul McCartney", "George Harrison", "Ringo Starr"]
+let numbers: [Int] = [1, 10, 5, 7]
+```
+
+- Array annotation'ları `[String]` ve `[Boolean]` gibi tanımlanabilir.
+- Değer okunurken köşeli parantez kullanımı uygulanır ve yoksa hata verir.
+
+
+```swift
+let beatles = ["John Lennon", "Paul McCartney", "George Harrison", "Ringo Starr"]
+beatles[1]
+beatles[12] // crash verir
+```
+
+- Sona değer eklemek için `append` metodu kullanılır. Birden fazla değer eklemek için `contentsOf` parametresi kullanılır. Belirli indekse eleman eklemek istersek `insert` metodu kullanılır.
+
+
+```swift withOutput
+> var students = ["Ben", "Ivy", "Jordell"]
+> students.append("Maxime")
+> students.append(contentsOf: ["Shakia", "William"])
+> students.insert("Liam", at: 3)
+> print(students)
+
+["Ben", "Ivy", "Jordell", "Liam", "Maxime", "Shakia", "William"]
+```
+
+- Eleman silmek için `remove` ve `removeLast` kullanılır.
+
+
+```swift withOutput
+> var students = ["Ben", "Ivy", "Jordell", "Liam", "Maxime", "Shakia"]
+> students.remove(at: 0)
+> students.removeLast()
+> print(students)
+
+["Ivy", "Jordell", "Liam", "Maxime", "Shakia"]
+```
+
+- Array'in slice etmek için **range operatör** kullanılabilir.
+
+
+```swift withOutput
+> let names = ["Piper", "Alex", "Suzanne", "Gloria"]
+> print(names[1...3])
+> print(names[2...])
+
+["Alex", "Suzanne", "Gloria"]
+["Suzanne", "Gloria"]
+```
+
+- İki array'i birleştirmek için artı operatörü kullanılabilir. Bu **operator overloading** olarak geçer.
+
+```swift
+let firstHalf = ["John", "Paul"]
+let secondHalf = ["George", "Ringo"]
+let beatles = firstHalf + secondHalf
+```
+
+### Set
+
+```swift withOutput
+> var emptySet1 = Set<String>()
+> var emptySet2: Set<String> = Set()
+> let colors = Set(["red", "green", "blue", "red", "blue"])
+> print(colors)
+
+["red", "green", "blue"]
+```
+
+- Unordered'dır ve öğeler benzersizdir. Bu sayede arama işlemleri çok hızlı gerçekleşir.
+- Tanımlamak için `Set()` fonksiyonu kullanılır.
+
+### Tuple
+
+```swift
+let name = (first: "Taylor", last: "Swift")
+```
+
+- Birkaç değeri tek değerde saklamanıza izin verir.
+- Boyutu sabittir yani öğe eklenemez ve çıkarılamaz. Ancak değerler değiştirilebilir.
+- Dictionary'den farklı olarak bir değerin var olduğu garantidir ve boyutu büyüyemez.
+- Erişmek için index ve key kullanılır.
+
+```swift
+print(name.0)
+print(name.first)
+```
+
+### Dictionary
+
+```swift
+var emptyDict1 = [String: String]()
+var emptyDict2: [String: String] = [:]
+var emptyDict3 = Dictionary<String, Int>()
+let person = [
+  "name": "Enes Başpınar",
+  "aeg": 24
+]
+var responseMessages = [
+  200: "OK",
+  403: "Access forbidden",
+  404: "File not found",
+  500: "Internal server error"
+]
+```
+
+- Değer okunurken key yoksa `nil` yerine varsayılan değer döndürülebilir.
+
+```swift
+favoriteIceCream["Charlotte", default: "Unknown"]
+```
+
+### Enum(eration)
+
+```swift
+enum Result {
+  case success
+  case failure
+}
+```
+
+- İlişkili değerleri bir arada tutar.
+- Değer olarak kullanırken tip tanımlanmışsa `enum` ismini kullanmaya gerek yoktur.
+
+```swift
+var result: Result = Result.success;
+var result2: Result = .success;
+```
+
+- Enum değerlerine raw index ile de erişebiliriz.
+
+
+```swift
+enum Planet: Int {
+  case mercury = 1
+  case venus
+  case earth
+  case mars
+}
+
+let earth = Planet(rawValue: 3)
+```
+
+- Enum değerleri ilişkili değerleri de depolayabilir.
+
+
+```swift
+enum Activity {
+  case bored
+  case running(destination: String)
+  case talking(topic: String)
+  case singing(volume: Int)
+}
+
+let talking = Activity.talking(topic: "football")
+```
+- Enum değerlerini karşılaştırılabilir hale getirmek için `Comparable` protokolü kullanılabilir.
+
+```swift
+enum Sizes: Comparable {
+  case small
+  case medium
+  case large
+}
+
+print(Sizes.small < Sizes.large)
+```
+
+## Conditions
+
+- String'lerde alfabetik sıra olduğu için büyüktür küçüktür kullanılabilir. Örneğin `"Taylor" <= "Swift"`.
+
+### If else
+
+```swift
+let firstCard = 11
+let secondCard = 10
+
+if firstCard + secondCard == 2 {
+  print("Aces – lucky!")
+} else if firstCard + secondCard == 21 {
+  print("Blackjack!")
+} else {
+  print("Regular cards")
+}
+```
+
+### Ternary operator
+
+```swift
+print(isLoggedIn ? "Welcome." : "Please login.")
+```
+
+### Switch
+
+```swift
+switch weather {
+case "rain":
+  print("Bring an umbrella")
+case "snow":
+  print("Wrap up warm")
+case "sunny":
+  print("Wear sunscreen")
+  fallthrough
+default:
+  print("Enjoy your day!")
+}
+```
+
+- Eğer altındaki case'e devam etmesi için `fallthrough` kullanılabilir.
+- Belirli değer aralığında mı diye kontrol etmek için `range` operatör kullanılabilir. `1..<5` ve `1...5` arasındaki fark son değerin dahil edilip edilmediğidir.
+
+```swift
+let score = 85
+
+switch score {
+case 0..<50:
+  print("You failed badly.")
+case 50..<85:
+  print("You did OK.")
+default:
+  print("You did great!")
+}
+```
+
+## Loops
+
+### For
+
+```swift
+// example 1:
+for number in 1...5 {
+  print("Number is \(number)")
+}
+// example 2:
+let names = ["Sterling", "Cyril", "Lana", "Ray", "Pam"]
+for _ in names {
+    print("[CENSORED] is a secret agent!")
+}
+```
+
+- Array iterate etmek için `in` opeatörü kullanılabilir.
+
+```swift
+let albums = ["Red", "1989", "Reputation"]
+
+for album in albums {
+  print("\(album) is on Apple Music")
+}
+```
+
+### While
+
+```swift withOutput
+> var number = 1
+>
+> while number <= 4 {
+>   print(number)
+>   number += 1
+> }
+
+1
+2
+3
+4
+```
+
+### Repeat (aka Do-While)
+
+```swift withOutput
+> var number = 1
+>
+> repeat {
+>   print(number)
+>   number += 1
+> } while number < 1
+
+1
+```
+
+## Functions
+
+```swift
+func square(number: Int) -> Int {
+  return number * number
+}
+
+let result = square(number: 8)
+```
+
+- Fonksiyon tek bir ifade içeriyorsa `return` atlanabilir.
+
+
+```swift
+func isUppercase(string: String) -> Bool {
+  string == string.uppercased()
+}
+
+func greet(name: String) -> String {
+  name == "Taylor Swift" ? "Oh wow!" : "Hello, \(name)"
+}
+```
+
+- Birden çok değer döndürmek istiyorsak **tuple** kullanabiliriz.
+
+```swift withOutput
+> func getUser() -> (firstName: String, lastName: String) {
+>   return (firstName: "Taylor", lastName: "Swift")
+>   // ya da return ("Taylor", "Swift")
+> }
+> let (firstName, lastName) = getUser()
+> print("Name: \(firstName) \(lastName)")
+
+Name: Taylor Swift
+```
+
+- Parametrelere fonksiyon çalıştırırken kullanmak üzere label atayabiliriz.
+
+```swift withOutput
+> func sayHello(to name: String) {
+>   print("Hello, \(name)!")
+> }
+>
+> sayHello(to: "Taylor")
+
+Hello, Taylor!
+```
+
+- Parametre label'ını es geçmek için `_` kullanılabilir.
+
+```swift withOutput
+> func greet(_ person: String, nicely: Bool = true) {
+>   if nicely == true {
+>       print("Hello, \(person)!")
+>   } else {
+>       print("Oh no, it's \(person) again...")
+>   }
+> }
+>
+> greet("Taylor")
+> greet("Taylor", nicely: false)
+
+Hello, Taylor!
+Oh no, it's Taylor again...
+```
+
+- **Variadic** fonksiyon parametresi tanımlamak için tipinin sonuna `...` eklenir. Parametre gönderilmezse değeri `[]` olur.
+
+
+```swift withOutput
+> func square(_ numbers: Int...) {
+>   for number in numbers {
+>     print("\(number) squared is \(number * number)")
+>   }
+> }
+>
+> square(1, 2, 3, 4, 5)
+
+1 squared is 1
+2 squared is 4
+3 squared is 9
+4 squared is 16
+5 squared is 25
+```
+
+
+- Fonksiyon çalışırken hata fırlatmak için `throws` keyword kullanılabilir.
+
+
+```swift
+enum LoginErrors: Error {
+  case badUsername
+  case badPassword
+}
+
+func login(username: String, password: String) throws -> Bool {
+  if username.isEmpty { throw LoginErrors.badUsername }
+  if password.isEmpty { throw LoginErrors.badPassword }
+  return true
+}
+```
+
+- Fonksiyon parametreleri constant'tır. Parametre değiştiğinde orjinalinin de değişmesini istersek `inout` anahtar kelimesi kullanabiliriz.
+
+
+```swift withOutput
+> func doubleInPlace(number: inout Int) {
+>   return number *= 2
+> }
+> var myNum = 10
+> doubleInPlace(number: &myNum)
+> print(myNum)
+
+20
+```
+
+### Closure
+
+```swift
+{ (parameters) -> returnType in
+   // statements
+}
+```
+
+- İsmi olmayan özel bir fonksiyon türüdür.
+- Değişkene atanabilir.
+
+
+```swift
+var greet = {
+  print("Hello, World!")
+}
+
+greet()
+```
+
+- Parametre alabilir. Fonksiyondan farklı olarak çağırırken parametre adını vermek gerekmez.
+
+
+```swift
+let greetUser = { (name: String)  in
+  print("Hey there, \(name).")
+}
+
+greetUser("Delilah")
+```
+
+- Değer döndürebilir.
+
+
+```swift
+// usage 1:
+var findSquare = { (num: Int) -> (Int) in
+  var square = num * num
+  return square
+}
+
+// usage 2:
+var findSquare = { (num: Int) -> Int in num * num }
+
+// usage 3:
+var findSquare: (Int) -> Int = { num in num * num }
+
+// usage 4:
+var findSquare: (Int) -> Int = { $0 * $0 }
+
+var result = findSquare(3)
+```
+
+- Başka fonksiyona parametre olarak iletilebilir.
+
+
+```swift
+func grabLunch(search: () -> ()) {
+  search()
+}
+
+grabLunch(search: {
+  print("Alfredo's Pizza: 2 miles away")
+})
+```
+
+- Fonksiyonun son parametresi closure ise **trailing closure** dediğimiz özel sözdizimi kullanabilir.
+
+
+```swift withOutput
+> func grabLunch(message: String = "", search: () -> ()) {
+>   if (message != "") {
+>     print(message)
+>   }
+>   search()
+> }
+>
+> grabLunch(message:"Let's go out for lunch")  {
+>   print("Alfredo's Pizza: 2 miles away")
+> }
+>
+> grabLunch {
+>   print("Alfredo's Pizza: 2 miles away")
+> }
+
+Let's go out for lunch
+Alfredo's Pizza: 2 miles away
+```
+
+- Referans tiplidir.
+- Tanımlandığı bağlamda bulunan değişkenlerin referanslarını saklar.
+
+```swift withOutput
+> func travel() -> (String) -> Void {
+>   var counter = 1
+>
+>   return {
+>     print("\(counter). I'm going to \($0)")
+>     counter += 1
+>   }
+> }
+>
+> let makeTravel = travel()
+> makeTravel("London")
+> makeTravel("London")
+> makeTravel("London")
+
+1. I'm going to London
+2. I'm going to London
+3. I'm going to London
+```
+
+## Error handling
+
+- Hata fırlatabilecek bir kod çalıştıracaksak `do` bloğu içinde kullanmalıyız. Hata fırlatabilecek fonksiyonun başına `try` konur. Hata fırlattığında `catch`'e düşer.
+
+
+```swift
+enum PasswordError: Error {
+  case obvious
+}
+
+func checkPassword(_ password: String) throws -> Bool {
+  if password == "password" {
+    throw PasswordError.obvious
+  }
+  return true
+}
+
+do {
+  try checkPassword("password")
+  print("That password is good!")
+} catch {
+  print("You can't use that password.")
+}
+```
+
+- Başarısız olduğunda `nil` dönmesini isterseniz `try?` kullanabilirsiniz.
+
+```swift
+if let result = try? checkPassword("password") {
+  print("Result was \(result)")
+} else {
+  print("D'oh.")
+}
+```
+
+## Struct
+
+- Özel değişken tipi oluşturmanın en yaygın yoludur.
+
+```swift withOutput
+> struct Sport {
+>     var name: String
+> }
+>
+> var tennis = Sport(name: "Tennis")
+> print(tennis.name)
+> tennis.name = "Lawn tennis"
+> print(tennis.name)
+
+Tennis
+Lawn tennis
+```
+
+### Initializer
+
+- Varsayılan olarak memberwise initializer ile gelir. Manuel işlemek için `init()` kullanabiliriz.
+- `self` mevcut instance'a işaret eder. `init` haricinde kullanmamalıyız.
+
+
+```swift withOutput
+> // usage 1: memberwise
+> struct Employee {
+>     var name: String
+>     var yearsActive = 0
+> }
+>
+> let roslin = Employee(name: "Laura Roslin")
+> let adama = Employee(name: "William Adama", yearsActive: 45)
+>
+> // usage 2:
+> struct Employee {
+>     var name: String
+>     var yearsActive = 0
+>     init() {
+>         self.name = "Anonymous"
+>         print("Creating an anonymous employee…")
+>     }
+> }
+>
+> var roslin = Employee()
+> roslin.name = "Laura Roslin"
+>
+> // usage 3:
+> struct Employee {
+>     var name: String
+>     var yearsActive = 0
+>     init(name: String) {
+>         self.name = name
+>     }
+> }
+>
+> var roslin = Employee(name: "Laura Roslin")
+
+Creating a new user!
+```
+
+### Property
+
+- Eğer bir property'nin ilk erişildiğinde hesaplanmasını istiyorsak `lazy` anahtar kelimesini kullanabiliriz. Hesaplama maliyeti nesne oluşturulurken atlanmış olur. Sonraki her çağrılışta hesaplanan sonucu bellekten döndürür.
+
+ 
+```swift withOutput
+> struct FamilyTree {
+>   init() {
+>     print("Creating family tree!")
+>   }
+> }
+>
+> struct Person {
+>   var name: String
+>   lazy var familyTree = FamilyTree()
+>
+>   init(name: String) {
+>     self.name = name
+>   }
+> }
+>
+> let ed = Person(name: "Ed")
+> let edFamilyTree = ed.familyTree
+
+Creating family tree!
+```
+
+#### Computed property
+
+- Başka bir property değerine göre hesaplanan property'lerdir. Ağır hesaplamalar için metod kullanmak daha iyidir.
+
+
+```swift
+struct Sport {
+  var name: String
+  var isOlympicSport: Bool
+  var olympicStatus: String {
+    return  isOlympicSport ? "\(name) is an Olympic sport" : "\(name) is not an Olympic sport"
+  }
+
+  func play() {
+    // ...
+  }
+}
+
+let chessBoxing = Sport(name: "Chessboxing", isOlympicSport: false)
+print(chessBoxing.olympicStatus)
+```
+
+### Static property
+
+```swift withOutput
+> struct Student {
+>   static var classSize = 0
+>   var name: String
+>
+>   init(name: String) {
+>     self.name = name
+>     Student.classSize += 1
+>   }
+> }
+>
+> let ed = Student(name: "Ed")
+> let taylor = Student(name: "Taylor")
+> print(Student.classSize)
+
+2
+```
+
+#### Property observe
+
+- Değeri değiştiğinde ve değişmeden önce bir işlem gerçekleştirmek için `didSet` ve `willSet` kullanılır.
+
+
+```swift withOutput
+> struct Progress {
+>   var task: String
+>   var amount: Int {
+>     didSet {
+>       print("\(task) is now \(amount)% complete")
+>     }
+>   }
+> }
+>
+> var progress = Progress(task: "Loading data", amount: 0)
+> progress.amount = 30
+> progress.amount = 80
+> progress.amount = 100
+
+Loading data is now 30% complete
+Loading data is now 80% complete
+Loading data is now 100% complete
+```
+
+#### Mutating
+
+- Varsayılan olarak metotların içinde property değiştirilemez yani **constant struct**'tır. Buna izin vermek için `mutating` anahtar kelimesi kullanılır.
+
+
+```swift
+struct Person {
+  var name: String
+  mutating func makeAnonymous() {
+    name = "Anonymous"
+  }
+}
+
+var person = Person(name: "Ed")
+person.makeAnonymous()
+```
+
+#### Access control
+
+- `public` ve `private` property ve metodlara nereden erişilebileceğini tanımlar.
+
+
+```swift
+struct Person {
+  private var id: String
+
+  init(id: String) {
+    self.id = id
+  }
+
+  func identify() -> String {
+    return "My social security number is \(id)"
+  }
+}
+```
+
+## Class
+
+```swift withOutput
+> class Dog {
+>   var name: String
+>   var breed: String
+>
+>   init(name: String, breed: String) {
+>     self.name = name
+>     self.breed = breed
+>   }
+> }
+>
+> let poppy = Dog(name: "Poppy", breed: "Poodle")
+```
+
+- Referans tiplidirler yani instance'ların referansı aynıdır.
+- Inheritance yapmak için ilgili sınıf annotation ile belirtilebilir.
+
+```swift
+class Dog {
+  var name: String
+  var breed: String
+
+  init(name: String, breed: String) {
+    self.name = name
+    self.breed = breed
+  }
+}
+
+class Poodle: Dog {
+  init(name: String) {
+    super.init(name: name, breed: "Poodle")
+  }
+}
+```
+
+- Inherit edilmemesini istediğimiz fonksiyonları `final` ile tanımlayabiliriz. Kritik bir şey yapıyorsanız override edilmemesi için bunu uygulayabilirsiniz.
+- Metodu override etmek için `override` anahtar kelimesi kullanılır.
+
+```swift withOutput
+> class Dog {
+>   func makeNoise() {
+>     print("Woof!")
+>   }
+> }
+>
+> class Poodle: Dog {
+>   override func makeNoise() {
+>     print("Yip!")
+>   }
+> }
+>
+> let poppy = Poodle()
+> poppy.makeNoise()
+
+Yip!
+```
+
+- Nesne yok edildiğinde bir işlem yapmak için **deinitializer** tanımlanabilir.
+
+```swift withOutput
+> class Person {
+>   var name = "John Doe"
+>
+>   init() {
+>     print("\(name) is alive!")
+>   }
+>
+>   deinit {
+>     print("\(name) is no more!")
+>   }
+>
+>   func printGreeting() {
+>     print("Hello, I'm \(name)")
+>   }
+> }
+>
+> for _ in 1...3 {
+>   let person = Person()
+>   person.printGreeting()
+> }
+
+John Doe is alive!
+Hello, I'm John Doe
+John Doe is no more!
+John Doe is alive!
+Hello, I'm John Doe
+John Doe is no more!
+John Doe is alive!
+Hello, I'm John Doe
+John Doe is no more!
+```
+
+- Sınıf sabit olarak oluşturulduğunda bile bir sınıf üzerindeki property'ler
+  değiştirebilir. Dolayısıyla `mutating` anahtar kelimesine ihtiyacı yok.
+- Bir property'nin immutable olması için `let` ile constant olarak tanımlanabilir.
+
+## Protocol
+
+- Bir şeyin hangi property ve metodlara sahip olması gerektiğini tanımlar. Java interface'lerine çok benzerdir.
+
+```swift
+protocol Purchaseable {
+  var name: String { get set }
+}
+
+struct Book: Purchaseable {
+  var name: String
+  var author: String
+}
+
+struct Movie: Purchaseable {
+  var name: String
+  var actors: [String]
+}
+
+struct Car: Purchaseable {
+  var name: String
+  var manufacturer: String
+}
+
+func buy(_ item: Purchaseable) {
+  print("I'm buying \(item.name)")
+}
+```
+
+- Protocol'lerde inheritance destekler.
+
+```swift
+// bad usage:
+protocol Computer {
+  var price: Double { get set }
+  var weight: Int { get set }
+  var cpu: String { get set }
+  var memory: Int { get set }
+  var storage: Int { get set }
+}
+
+protocol Laptop {
+  var price: Double { get set }
+  var weight: Int { get set }
+  var cpu: String { get set }
+  var memory: Int { get set }
+  var storage: Int { get set }
+  var screenSize: Int { get set }
+}
+
+// good usage:
+protocol Product {
+  var price: Double { get set }
+  var weight: Int { get set }
+}
+
+protocol Computer: Product {
+  var cpu: String { get set }
+  var memory: Int { get set }
+  var storage: Int { get set }
+}
+
+protocol Laptop: Computer {
+  var screenSize: Int { get set }
+}
+```
+
+## Extension
+
+- Orjinalini bozmadan mevcuttaki tiplere ekstra metodlar eklemenize izin verir.
+
+```swift
+extension Int {
+  var isEven: Bool {
+    return self % 2 == 0
+  }
+
+  func squared() -> Int {
+    return self * self
+  }
+}
+
+let number = 8
+print(number.squared())
+print(number.isEven)
+```
+
+- Protokoldeki metodlara varsayılan implementasyon vermek için **protocol extension** kullanılabilir. Protocol inherit eden her yeri etkiler.
+
+```swift
+extension Collection {
+  func summarize() {
+    print("There are \(count) of us:")
+
+    for name in self {
+      print(name)
+    }
+  }
+}
+
+let pythons = ["Eric", "Graham", "John", "Michael", "Terry", "Terry"]
+let beatles = Set(["John", "Paul", "George", "Ringo"])
+
+pythons.summarize()
+beatles.summarize()
+```
+
+## Optionals
+
+- Bir değerin olmayabileceğini (`nil`) belirtir.
+
+```swift
+var age: Int? = nil
+age = 38
+```
+
+- Optional değerler direk kullanılmaz ve **unwrapping** yapmak gerekir. `if let` ve `guard let` ile yapılabilir:
+
+```swift
+func getUsername() -> String? { "Taylor" }
+
+if let username = getUsername() {
+  print("Username is \(username)")
+} else {
+  print("No username")
+}
+```
+
+
+```swift
+func greet(_ name: String?) {
+  guard let unwrapped = name else {
+    print("You didn't provide a name!")
+    return
+  }
+
+  print("Hello, \(unwrapped)!")
+}
+```
+
+- Bazen bir değerin nil olmadığından eminsinizdir. Bu durumda **force unwrapping** kullanılabilir. `!` aynı zamanda **crash operator** olara isimlendirilir.
+
+```swift
+// usage 1:
+enum Direction: CaseIterable {
+  case north, south, east, west
+}
+
+let randomDirection = Direction.allCases.randomElement()!
+
+// usage 2:
+enum Direction: CaseIterable {
+  case north, south, east, west
+
+  static func random() -> Direction {
+    Direction.allCases.randomElement()!
+  }
+}
+
+let randomDirection = Direction.allCases.randomElement()!
+```
+
+- Bir değerin sadece tanımlarken nil olduğunu ancak kullanırken her zaman dolu olacağını biliyorsak direk unwrapped optional olarak tanımlayabiliriz.
+
+```swift
+let age: Int! = nil
+```
+
+- Değer nil olduğunda varsayılan belirtmek için `nil coalescing` kullanılır. Birden fazla zincirlenebilir.
+
+
+```swift
+func username(for id: Int) -> String? {
+  return id == 1 ? "Taylor Swift" : nil
+}
+
+let user = username(for: 15) ?? "Anonymous"
+```
+
+- Nil olabilecek bir nesneden değer okuyacaksak crash almamak için `optional chaining` kullanılabilir.
+
+```swift
+let names = ["Vincent": "van Gogh", "Pablo": "Picasso", "Claude": "Monet"]
+let surnameLetter = names["Vincent"]?.first?.uppercased()
+```
+
+- Initializer'da nesne oluşturma enasında problem yaşadığınızda nil dönmek isterseniz `init?` kullanabilirsiniz.
+
+
+```swift
+struct Employee {
+  var username: String
+  var password: String
+
+  init?(username: String, password: String) {
+    guard password.count >= 8 else { return nil }
+    guard password.lowercased() != "password" else { return nil }
+
+    self.username = username
+    self.password = password
+  }
+}
+```

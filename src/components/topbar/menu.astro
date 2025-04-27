@@ -1,0 +1,26 @@
+---
+import { SidebarContent } from "@components";
+import { Icon } from "astro-icon/components";
+---
+
+<button
+  class="focus:outline-none"
+  type="button"
+  data-drawer-target="menu-drawer"
+  data-drawer-show="menu-drawer"
+  data-drawer-placement="bottom"
+  data-drawer-body-scrolling="false"
+  aria-controls="menu-drawer"
+>
+  <Icon name="menu" size={20} />
+</button>
+
+<div
+  id="menu-drawer"
+  class="flex flex-col gap-5 fixed bottom-0 left-0 right-0 w-full z-40 h-fit max-h-[80dvh] p-4 overflow-y-auto transition-transform translate-y-full bg-white rounded-t-xl"
+  tabindex="-1"
+  aria-labelledby="drawer-label"
+>
+  <div class="mx-auto mt-2 h-2 w-[100px] rounded-full bg-slate-100"></div>
+  <SidebarContent />
+</div>

@@ -1,0 +1,75 @@
+---
+title: "NPM Paket Oluşturma"
+description: "NPM Paket Oluşturma"
+date: "1999-01-01"
+topic: "npm"
+tags: ["npm"]
+---
+
+
+## Create
+
+```bash
+pnpm create vite
+cd package-name
+git init
+pnpm install
+```
+
+```json
+{
+  "name": "package-name",
+  "version": "1.0.0",
+  "description": "Package description.",
+  "main": "index.js",
+  "scripts": {
+    ...
+  },
+  "keywords": [
+    "example-keyword"
+  ],
+  "author": "Package Author Name",
+  "license": "ISC"
+}
+```
+
+```js index.js
+export function sayHello() {
+  console.log("Hello World");
+}
+```
+
+## Debug
+
+```bash
+cd package-name
+pnpm link --dir ../project-that-use-package
+```
+
+## Test
+
+```bash
+pnpm test
+```
+
+## Publish
+
+```bash
+npm login
+```
+
+```json package.json
+{
+  ...
+  "scripts": {
+    ...
+    "publish:major": "npm version major && npm publish",
+    "publish:minor": "npm version minor && npm publish",
+    "publish:patch": "npm version patch && npm publish"
+  },
+}
+```
+
+## Extras
+
+### Scope

@@ -1,0 +1,24 @@
+---
+title: Run a bash command every project in a folder
+description: A handy trick to execute a bash command for every project within a directory.
+date: 2024-07-22
+topic: bash
+tags: ["bash", "automation", "productivity", "scripting", "git"]
+---
+
+When the number of projects I had to manage increased, it became difficult to keep them synchronized. Especially when I wanted to search across all projects, I had to run `git pull` for each project individually. Then I created a snippet.
+
+You can use `find -exec` to run your commands on all projects in a folder.
+
+```bash
+find . \
+  -mindepth 1 \
+  -maxdepth 1 \
+  -type d \
+  -exec sh -c '(echo “\n${}” && cd {} && git pull)' \
+\;
+```
+
+## Notes
+
+- Walks all folders at the depth you specify with `mindepth` and `maxdepth`.

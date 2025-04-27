@@ -1,0 +1,38 @@
+---
+import { C } from "@configuration";
+import type { Lang } from "@models/type";
+import { useTranslations } from "@utils";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  name: string;
+  href: string;
+}
+
+const { name, href } = Astro.props;
+
+const locale = Astro.currentLocale as Lang;
+const t = useTranslations(locale);
+
+const currentPath = Astro.url.pathname.endsWith("/")
+  ? Astro.url.pathname
+  : `${Astro.url.pathname}/`;
+
+let isActive = false;
+if (href === `/${locale}/`) isActive = currentPath === `/${locale}/`;
+else isActive = currentPath.startsWith(href);
+---
+
+<a
+  href={href}
+  class:list={[
+    "flex gap-4 items-center px-2 py-2 rounded-lg text-sm text-slate-700 ",
+    !isActive && "hover:bg-gray-200",
+    isActive && "bg-black text-white",
+  ]}
+>
+  <Icon name={name} size={18} />
+  <span class="text-sm"
+    >{t(C.CATEGORIES_LABELS[name as keyof typeof C.CATEGORIES_LABELS])}
+  </span>
+</a>
