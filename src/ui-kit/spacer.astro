@@ -1,19 +1,22 @@
 ---
 interface Props {
-  size?: number;
+  size?: number | undefined;
 }
 
 const { size } = Astro.props;
 ---
 
 <div
-  class:list={{
-    "flex-1": !size,
-    "h-4 w-4": size === 4,
-    "h-8 w-8": size === 8,
-    "h-12 w-12": size === 12,
-    "h-16 w-16": size === 16,
-    "h-32 w-32": size === 32,
-  }}
+  class:list={[
+    "shrink-0",
+    {
+      "flex-1": !size,
+      "h-4 w-4": size === 4,
+      "h-8 w-8": size === 8,
+      "h-12 w-12": size === 12,
+      "h-16 w-16": size === 16,
+      "h-32 w-32": size === 32,
+    },
+  ]}
 >
 </div>

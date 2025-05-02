@@ -1,11 +1,14 @@
 ---
 import { Link, Icon } from "@ui-kit";
+import { Fragment } from "astro/jsx-runtime";
 
 type Props = {
   id?: string;
   title?: string;
   description?: string;
-  columns: string[] | { name: string; title: string }[];
+  columns:
+    | string[]
+    | { name: string; title: string; class?: string; bold?: boolean }[];
   data: any[][] | { value: any; link?: string }[][];
   headless?: boolean;
   noScroll?: boolean;
@@ -23,7 +26,7 @@ const {
 ---
 
 <div
-  class="relative border-gray-200 rounded-lg overflow-hidden inline-block border mb-6"
+  class="relative border-gray-200 rounded-lg overflow-hidden inline-block border md:mb-6"
 >
   {
     title && (
@@ -37,9 +40,9 @@ const {
   }
   <div
     class:list={[
-      "-mx-4 px-4 md:mx-0 md:px-0 leading-0 w-full [scrollbar-width:none] md:[scrollbar-width:auto]",
+      "leading-0 w-full [scrollbar-width:none] md:[scrollbar-width:auto]",
       {
-        "overflow-x-auto": !noScroll,
+        "-mx-4 px-4 md:mx-0 md:px-0 overflow-x-auto": !noScroll,
       },
     ]}
   >
@@ -57,7 +60,13 @@ const {
           <thead class="text-xs bg-gray-50 ">
             <tr>
               {columns.map((col) => (
-                <th scope="col" class="px-4 py-3">
+                <th
+                  scope="col"
+                  class:list={[
+                    "px-4 py-3",
+                    typeof col === "object" && col.class,
+                  ]}
+                >
                   {typeof col === "string" ? col : col.title}
                 </th>
               ))}
@@ -74,10 +83,11 @@ const {
                 const colName = typeof col === "string" ? col : col.name;
                 let value: any;
                 let link: string | undefined;
-
+                let html: boolean | undefined;
                 if (typeof data === "object") {
                   value = data.value;
                   link = data.link;
+                  html = data.html;
                 } else {
                   value = data;
                 }
@@ -85,21 +95,26 @@ const {
                 return (
                   <td
                     class:list={[
-                      "px-4 py-4 md:max-w-[200px]",
+                      "px-4 py-4",
                       {
                         "!pl-4 !pr-0 place-items-center": colName === "icon",
                       },
+                      typeof col === "object" && col.class,
                     ]}
                   >
-                    {(() => {
-                      if (colName === "icon") {
-                        if (value) return <Icon name={value} size={20} />;
-                        if (id) return <Icon name={id} size={20} />;
-                      }
-                      if (colName === "age") return `${value} years old`;
-                      if (link) return <Link href={link}>{value}</Link>;
-                      return value;
-                    })()}
+                    {html ? (
+                      <div set:html={value} />
+                    ) : (
+                      (() => {
+                        if (colName === "icon") {
+                          if (value) return <Icon name={value} size={20} />;
+                          if (id) return <Icon name={id} size={20} />;
+                        }
+                        if (colName === "age") return `${value} years old`;
+                        if (link) return <Link href={link}>{value}</Link>;
+                        return col.bold ? <b>{value}</b> : value;
+                      })()
+                    )}
                   </td>
                 );
               })}

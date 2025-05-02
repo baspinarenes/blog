@@ -9,7 +9,7 @@ tags:
 
 Bir zamanlar front-end'çilerin bir takım problemleri vardı. Kodlardaki syntax hatalarını görmek zordu, projelerindeki yazılım dilinin standardı yoktu ve bir yazılımcının `if` dediğine diğer `ternary` diyordu. Dolayısıyla codebase'i kontrol eden bir araca ihtiyaç vardı.
 
-Bunu gören **Nicholas C. Zakas** duruma el attı ve ESLint’i yarattı.
+Bunu gören Nicholas C. Zakas duruma el attı ve ESLint’i yarattı.
 
 ![](./images/dont-break-rules-eslint-1-01.jpg)
 
@@ -158,9 +158,9 @@ var sum = (num1, num2) => {
 
 Fonksiyonu incelersek göze çarpan ilk şey `var` kullanımıdır. "Bu devirde hala kullanan kaldı mı?" dediğinizi duyar gibiyim, hala aramızdalar! İkincisi ise noktalı virgül kullanılmamasıdır. Bazı insanlar sever bazı insanlar sevmez ancak otomatik formatlama hatalarının önüne geçmek için kullanmamızın yararı var. Dolayısıyla noktalı virgülün daima konulması ve `var` kullanılmamasına yönelik iki kural tanımlayacağız.
 
-```info
-Kuralların arkaplanda nasıl çalıştığına serinin diğer yazılarında değineceğiz. Şimdilik implementasyonuna odaklanalım.
-```
+<Note type="info">
+  Kuralların arkaplanda nasıl çalıştığına serinin diğer yazılarında değineceğiz. Şimdilik implementasyonuna odaklanalım.
+</Note>
 
 ESLint'te built-in [kurallar](https://eslint.org/docs/rules/) tanımlanılmıştır. `React`, `Typescript` gibi paketlere özgü kurallar için ekstra npm paketleri indirmemiz gerekir. İsteğimizle örtüşen ESLint kurallarına wiki'den bakarsak:
 

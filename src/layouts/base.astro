@@ -4,14 +4,17 @@ import type { Lang } from "@models/type";
 import { useTranslations } from "@utils";
 import "@styles/global.css";
 import { AstroFont } from "astro-font";
+import Analytics from "@vercel/analytics/astro";
+import SpeedInsights from "@vercel/speed-insights/astro";
 
 interface Props {
+  id?: string;
   title?: string;
   description?: string;
   date?: Date;
 }
 
-const { title, description, date } = Astro.props;
+const { id, title, description, date,  } = Astro.props;
 const t = useTranslations(Astro.currentLocale as Lang);
 const locale = Astro.currentLocale as Lang;
 const siteTitle = t({
@@ -35,7 +38,8 @@ const localeDescription = description || t("description");
         {
           src: [],
           name: "JetBrains Mono",
-          googleFontsURL: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap",
+          googleFontsURL:
+            "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap",
           preload: true,
           display: "swap",
           selector: "body",
@@ -44,7 +48,8 @@ const localeDescription = description || t("description");
         {
           src: [],
           name: "Geist",
-          googleFontsURL: "https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap",
+          googleFontsURL:
+            "https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap",
           preload: true,
           display: "swap",
           selector: "body",
@@ -57,11 +62,45 @@ const localeDescription = description || t("description");
     class="flex flex-col md:flex-row items-stretch min-h-dvh overflow-hidden"
   >
     <div class="flex md:hidden">
-      <Topbar {title} {date} />
+      <Topbar {id} {title} {date} />
     </div>
     <div class="hidden md:flex">
       <Sidebar />
     </div>
     <slot />
+    <Analytics />
+    <SpeedInsights />
+
+    <script define:vars={{ locale }}>
+      async function fetchViewCounts() {
+        try {
+          const response = await fetch("/api/get-view-counts", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ locale }),
+          });
+
+          if (!response.ok) throw new Error("View count fetch failed");
+
+          const data = await response.json();
+          
+          if (data.success && data.viewCounts) {
+            const viewCountElements = document.querySelectorAll(
+              `[data-entry-view-count]`
+            );
+
+            viewCountElements.forEach((element) => {
+              element.textContent = `${data.viewCounts[element.getAttribute("data-entry-view-count")] ?? 0}`;
+            });
+          }
+        }  catch (error) {
+          console.error("[ERROR] Failed to fetch view counts:", error);
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", fetchViewCounts);
+    </script>
   </body>
 </html>

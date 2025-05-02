@@ -41,8 +41,8 @@ const openSourceTechStack = defineCollection({
 });
 
 const journey = defineCollection({
-  loader: file("src/content/journey.json"),
-  schema: () =>
+  loader: file("src/content/journey/data.json"),
+  schema: ({ image }) =>
     z.object({
       id: z.string(),
       year: z.number(),
@@ -56,7 +56,7 @@ const journey = defineCollection({
             en: z.string(),
             tr: z.string(),
           }),
-          image: z.string().optional(),
+          image: image().optional(),
         })
       ),
     }),
@@ -75,7 +75,7 @@ const snippets = defineCollection({
     pattern: "**/[^_]*.mdx",
     base: "./src/content/blog/snippets",
   }),
-  schema: entrySchema
+  schema: entrySchema,
 });
 
 const writings = defineCollection({
@@ -83,7 +83,7 @@ const writings = defineCollection({
     pattern: "**/[^_]*.mdx",
     base: "./src/content/blog/writings",
   }),
-  schema: entrySchema
+  schema: entrySchema,
 });
 
 const thoughts = defineCollection({
@@ -91,7 +91,15 @@ const thoughts = defineCollection({
     pattern: "**/[^_]*.mdx",
     base: "./src/content/blog/thoughts",
   }),
-  schema: entrySchema
+  schema: entrySchema,
+});
+
+const cultures = defineCollection({
+  loader: glob({
+    pattern: "**/[^_]*.mdx",
+    base: "./src/content/blog/cultures",
+  }),
+  schema: entrySchema,
 });
 
 export const collections = {
@@ -102,4 +110,5 @@ export const collections = {
   snippets,
   writings,
   thoughts,
+  cultures,
 };

@@ -4,14 +4,19 @@ type Props = {
   alt: string;
   class?: string;
   rounded?: boolean;
+  width?: number;
+  height?: number;
 };
 
-const { src, alt, class: className, rounded = true } = Astro.props;
+const { src, alt, width, height, class: className, rounded = true } = Astro.props;
 ---
 
 <img
   src={src}
   alt={alt}
+  width={width}
+  height={height}
+  fetchpriority="high"
   class:list={[
     "border border-gray-200",
     className,

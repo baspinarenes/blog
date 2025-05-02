@@ -6,12 +6,13 @@ import type { Category, Lang } from "@models/type";
 import { Icon } from "@ui-kit";
 
 const { category, lang } = Astro.params;
+const locale = lang as Lang;
 
-const entries = await getEntries({ category: category!, locale: lang });
+const entries = await getEntries({ category: category!, locale });
 
-const t = useTranslations(lang as Lang);
+const t = useTranslations(locale);
 const title = t(C.CATEGORIES_LABELS[category as Category]);
-
+const entryIds = entries.map((entry) => entry.id);
 ---
 
 <aside
@@ -22,7 +23,7 @@ const title = t(C.CATEGORIES_LABELS[category as Category]);
   </div>
 
   <div class="hidden md:flex px-2 border-b border-slate-200 gap-2 items-center">
-    <Icon name="search" size={16} class="text-gray-400"/>
+    <Icon name="search" size={16} class="text-gray-400" />
     <input
       id="entry-search-input"
       type="text"
@@ -41,6 +42,7 @@ const title = t(C.CATEGORIES_LABELS[category as Category]);
     {
       entries.map((entry) => (
         <EntryItem
+          entryId={entry.id}
           name={entry.data.title}
           date={entry.data.date}
           href={entry.href}
@@ -54,14 +56,16 @@ const title = t(C.CATEGORIES_LABELS[category as Category]);
     class="p-3 text-center text-sm text-gray-500"
     class:list={[
       {
-        "hidden": entries.length > 0
-      }
+        hidden: entries.length > 0,
+      },
     ]}
   >
-    {t({
-      en: "No search results",
-      tr: "Sonuç bulunamadı",
-    })}
+    {
+      t({
+        en: "No search results",
+        tr: "Sonuç bulunamadı",
+      })
+    }
   </div>
 </aside>
 

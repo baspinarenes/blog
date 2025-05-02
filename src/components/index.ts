@@ -1,4 +1,3 @@
-// Sidebar components
 export { default as Sidebar } from "./sidebar/index.astro";
 export { default as SidebarContent } from "./sidebar/content.astro";
 export { default as Profile } from "./sidebar/profile.astro";

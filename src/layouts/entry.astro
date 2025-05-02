@@ -3,15 +3,16 @@ import { Entries } from "@components";
 import { BaseLayout } from "@layouts";
 
 interface Props {
+  entryId: string;
   title: string;
   description: string;
   date: Date;
 }
 
-const { title, description, date } = Astro.props;
+const { entryId, title, description, date } = Astro.props;
 ---
 
-<BaseLayout {title} {description} {date}>
+<BaseLayout id={entryId} {title} {description} {date}>
   <div class="hidden md:block">
     <Entries />
   </div>

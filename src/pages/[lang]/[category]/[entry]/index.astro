@@ -6,12 +6,11 @@ import { useTranslations } from "@utils";
 import { getEntries, formatDate } from "@utils";
 import type { Lang } from "@models/type";
 import { Icon, Image } from "@ui-kit";
+import { C } from "@configuration";
 
 export async function getStaticPaths() {
   const entries = await Promise.all(
-    ["articles", "writings", "thoughts", "snippets"].map((category) =>
-      getEntries({ category })
-    )
+    C.ENTRY_CATEGORIES.map((category) => getEntries({ category }))
   );
 
   const paths = entries.flat().map((post) => {
@@ -31,29 +30,37 @@ export async function getStaticPaths() {
 const locale = Astro.params.lang as Lang;
 const t = useTranslations(locale);
 const post = Astro.props;
+const entryId = post.id.split("/").pop() || "";
 
-const { Content } = await render(post);
-
+const { Content, remarkPluginFrontmatter } = await render(post);
 const { title, description, date, tags, topic, cover } = post.data;
 ---
 
-<EntryLayout {title} {description} {date}>
+<EntryLayout {entryId} {title} {description} {date}>
   <main>
     <div class="main-container">
       <article>
-        <div class="hidden md:flex gap-2 items-center text-sm select-none mb-8">
+        <div
+          class="hidden md:flex gap-2 items-center text-sm select-none mb-8 text-gray-500"
+        >
           <div class="block">{formatDate(date, locale)} /</div>
-          <div class="flex gap-1 items-center mr-auto">
+          <div class="flex gap-1 items-center">
             <Icon name="clock" size={16} />
-            ~
+            {remarkPluginFrontmatter.minutesRead}
             {
               t({
                 en: "min",
                 tr: "dk",
               })
-            }
+            } /
           </div>
-          <div class="flex gap-1 items-center">
+          <div id="view-counter" class="flex gap-1 items-center ml-4 md:ml-0">
+            <Icon name="view" size={16} />
+            <span
+              data-entry-view-count={entryId}
+              class="empty:opacity-0 transition-opacity duration-700 whitespace-nowrap"></span>
+          </div>
+          <div class="flex gap-1 items-center ml-auto">
             {
               tags
                 .slice(0, 3)
@@ -65,11 +72,7 @@ const { title, description, date, tags, topic, cover } = post.data;
             }
           </div>
         </div>
-        {
-          !cover && (
-            <Icon name={topic} size={64} class="mb-8" colored />
-          )
-        }
+        {!cover && <Icon name={topic} size={64} class="mb-8" colored />}
         <h1 class="mb-5 mt-4 md:mb-6 md:mt-5 text-balance">{title}</h1>
         {
           cover && (
@@ -83,3 +86,31 @@ const { title, description, date, tags, topic, cover } = post.data;
     </div>
   </main>
 </EntryLayout>
+
+<script define:vars={{ entryId, locale }}>
+  async function incrementViewCount() {
+    if (
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1"
+    ) {
+      console.log(
+        "[DEBUG] Skipping view count increment in development environment"
+      );
+      return;
+    }
+
+    try {
+      await fetch("/api/increment-view", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ entryId, locale }),
+      });
+    } catch (error) {
+      console.error("[ERROR] Failed to increment view count:", error);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(async () => await incrementViewCount(), 10 * 1000);
+  });
+</script>

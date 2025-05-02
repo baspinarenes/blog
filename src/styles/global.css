@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@import "flowbite/src/themes/default";
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";
 
 @layer base {
   body {
@@ -99,6 +102,12 @@
 }
 
 @layer components {
+  @media (max-width: 768px) {
+    *::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
   *::-webkit-scrollbar {
     width: 0.3rem !important;
     height: 0.3rem !important;

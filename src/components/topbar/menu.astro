@@ -1,26 +1,55 @@
 ---
 import { SidebarContent } from "@components";
-import { Icon } from "astro-icon/components";
+import { Icon } from "@ui-kit";
 ---
 
-<button
-  class="focus:outline-none"
-  type="button"
-  data-drawer-target="menu-drawer"
-  data-drawer-show="menu-drawer"
-  data-drawer-placement="bottom"
-  data-drawer-body-scrolling="false"
-  aria-controls="menu-drawer"
->
+<button id="menu-drawer-btn" class="focus:outline-none">
   <Icon name="menu" size={20} />
 </button>
 
 <div
   id="menu-drawer"
-  class="flex flex-col gap-5 fixed bottom-0 left-0 right-0 w-full z-40 h-fit max-h-[80dvh] p-4 overflow-y-auto transition-transform translate-y-full bg-white rounded-t-xl"
+  class="fixed bottom-0 left-0 z-50 w-full h-[74dvh] p-4 overflow-y-auto transition-transform translate-y-full bg-white rounded-t-lg"
   tabindex="-1"
   aria-labelledby="drawer-label"
 >
-  <div class="mx-auto mt-2 h-2 w-[100px] rounded-full bg-slate-100"></div>
-  <SidebarContent />
+  <SidebarContent parent="menu" />
 </div>
+
+<div id="drawer-backdrop" class="fixed inset-0 z-40 bg-black opacity-50 hidden">
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const topBtn = document.getElementById("menu-drawer-btn");
+    const drawer = document.getElementById("menu-drawer");
+    const closeBtn = document.getElementById("close-drawer-btn");
+    const backdrop = document.getElementById("drawer-backdrop");
+
+    function openDrawer() {
+      if (drawer && backdrop) {
+        drawer.classList.remove("translate-y-full");
+        drawer.classList.add("translate-y-0");
+        backdrop.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      }
+    }
+
+    function closeDrawer() {
+      if (drawer && backdrop) {
+        drawer.classList.add("translate-y-full");
+        drawer.classList.remove("translate-y-0");
+        backdrop.classList.add("hidden");
+        document.body.style.overflow = "";
+      }
+    }
+
+    if (topBtn) topBtn.addEventListener("click", openDrawer);
+    if (closeBtn) closeBtn.addEventListener("click", closeDrawer);
+    if (backdrop) backdrop.addEventListener("click", closeDrawer);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeDrawer();
+    });
+  });
+</script>

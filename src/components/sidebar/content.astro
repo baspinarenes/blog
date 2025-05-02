@@ -1,8 +1,14 @@
 ---
-import { Profile, Navigations, Socials } from "@components";
+import { Profile, Navigations, Socials, Languager } from "@components";
 import { Spacer, Seperator } from "@ui-kit";
 import { useTranslations } from "@utils";
 import type { Lang } from "@models/type";
+
+type Props = {
+  parent?: "menu" | "sidebar";
+};
+
+const { parent = "sidebar" } = Astro.props as Props;
 
 const { lang } = Astro.params;
 const t = useTranslations(lang as Lang);
@@ -10,17 +16,31 @@ const t = useTranslations(lang as Lang);
 
 <div class="flex flex-col w-full h-full">
   <div class="flex flex-col w-full h-full">
-    <Profile />
+    <div class="flex gap-2">
+      <Profile />
+      <div
+        class:list={{
+          hidden: parent === "menu",
+        }}
+      >
+        <Languager />
+      </div>
+    </div>
     <Spacer size={8} />
     <Navigations />
-    <Spacer />
+    <Spacer size={parent === "menu" ? 4 : 0} />
+    {parent === "menu" && <Seperator />}
     <Spacer size={4} />
     <Socials />
     <Spacer size={4} />
+    <div class:list={{
+      "hidden": parent === "menu",
+    }}>
     <Seperator />
-    <Spacer size={4} />
-    <footer class="text-xs text-gray-500 text-center">
-      {t("Inspired by onur.dev")}
-    </footer>
+      <Spacer size={4} />
+      <footer class="text-xs text-gray-500 text-center">
+        {t("Inspired by onur.dev")}
+      </footer>
+    </div>
   </div>
 </div>
