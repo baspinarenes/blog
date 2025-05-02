@@ -6,7 +6,6 @@ import type { Lang } from "@models/type";
 import { Icon } from "astro-icon/components";
 import { Table, Title } from "@ui-kit";
 import { getEntries } from "@utils";
-import { getCollection } from "astro:content";
 import { iconByLanguage } from "@constants";
 
 export const getStaticPaths = () =>
@@ -22,31 +21,41 @@ const title = t({
 
 const description = t({
   en: `Hi! I'm ${C.AUTHOR.NAME}, I'm ${C.AUTHOR.AGE} years old. I've been working as ${C.AUTHOR.JOB} at ${C.AUTHOR.COMPANY} for ${new Date().getFullYear() - 2021} years. I like researching and learning new things. I like to tell others what I've learned and that's why I keep a blog. When I read monotonous and same content articles, I feel like screaming and I try to write different things to save people from boredom.`,
-  tr: `Selam. Ben ${C.AUTHOR.NAME}, ${C.AUTHOR.AGE} yaşındayım. ${C.AUTHOR.COMPANY}'da ${new Date().getFullYear() - 2021} yıldır ${C.AUTHOR.JOB} olarak çalışıyorum. Araştırmaktan ve yeni şeyler öğrenmekten hoşlanıyorum. Öğrendiklerimi başkalarına anlatmayı seviyorum ve bu yüzden blog tutuyorum. Monoton ve aynı içerikli yazılar okuduğumda çığlık atasım geliyor ve insanları sıkıcılıktan kurtarmak için farklı şeyler yazmaya çalışıyorum.`
+  tr: `Selam. Ben ${C.AUTHOR.NAME}, ${C.AUTHOR.AGE} yaşındayım. ${C.AUTHOR.COMPANY}'da ${new Date().getFullYear() - 2021} yıldır ${C.AUTHOR.JOB} olarak çalışıyorum. Araştırmaktan ve yeni şeyler öğrenmekten hoşlanıyorum. Öğrendiklerimi başkalarına anlatmayı seviyorum ve bu yüzden blog tutuyorum. Monoton ve aynı içerikli yazılar okuduğumda çığlık atasım geliyor ve insanları sıkıcılıktan kurtarmak için farklı şeyler yazmaya çalışıyorum.`,
 });
 
-const formatEntryForTable = (
-  entry: any,
-): Array<{ value: string; link?: string }> => {
+const viewCountText = t({
+  en: "views",
+  tr: "okunma",
+});
 
+const [snippets, articles] = await Promise.all([
+  getEntries({ category: "snippets", locale }),
+  getEntries({ category: "articles", locale }),
+]);
+
+// Tüm entry ID'lerini topla
+const allEntries = [...snippets.flat(), ...articles.flat()];
+const entryIds = allEntries.map((entry) => entry.id.split("/").pop() || "");
+
+const formatEntryForTable = (
+  entry: any
+): Array<{ value: string; html?: boolean; link?: string }> => {
+  const entryId = entry.id.split("/").pop() || "";
   return [
     {
       value: iconByLanguage[entry.data.topic as keyof typeof iconByLanguage],
     },
     {
       value: entry.data.title,
-      link: `/${locale}/snippets/${entry.id.split("/").pop()}`,
+      link: `/${locale}/${entry.collection}/${entryId}`,
     },
     {
-      value: "19.000",
+      value: `<span data-entry-view-count="${entryId}" class="text-gray-500 empty:opacity-0 transition-opacity duration-700" />`,
+      html: true,
     },
   ];
 };
-
-const [snippets, articles] = await Promise.all([
-  getEntries({category: "snippets", locale}),
-  getEntries({category: "articles", locale}),
-]);
 
 const latestSnippets = snippets.flat().slice(0, 5).map(formatEntryForTable);
 const latestArticles = articles.flat().slice(0, 5).map(formatEntryForTable);
@@ -55,7 +64,7 @@ const latestArticles = articles.flat().slice(0, 5).map(formatEntryForTable);
 <BaseLayout title={title}>
   <main>
     <div class="main-container">
-      <div class="flex flex-col md:flex-row items-center gap-6 mb-4">
+      <div class="flex flex-col md:flex-row items-center md:gap-6 mb-4">
         <Icon
           name="logo"
           size={124}
@@ -78,9 +87,17 @@ const latestArticles = articles.flat().slice(0, 5).map(formatEntryForTable);
           tr: "Son Yazılarım",
         })}
         columns={[
-          { name: "icon", title: t({ en: "", tr: "" }) },
-          { name: "title", title: t({ en: "Title", tr: "Başlık" }) },
-          { name: "views", title: t({ en: "Views", tr: "Görüntülenme" }) },
+          { name: "icon", title: t({ en: "", tr: "" }), width: "w-4" },
+          {
+            name: "title",
+            title: t({ en: "Title", tr: "Başlık" }),
+            width: "w-auto",
+          },
+          {
+            name: "views",
+            title: t({ en: "Views", tr: "Okunma" }),
+            width: "md:w-40",
+          },
         ]}
         description={t({
           en: "Articles I've written about my experiences and learnings.",
@@ -98,9 +115,17 @@ const latestArticles = articles.flat().slice(0, 5).map(formatEntryForTable);
           tr: "Son Kod Parçalarım",
         })}
         columns={[
-          { name: "icon", title: t({ en: "", tr: "" }) },
-          { name: "title", title: t({ en: "Title", tr: "Başlık" }) },
-          { name: "views", title: t({ en: "Views", tr: "Görüntülenme" }) },
+          { name: "icon", title: t({ en: "", tr: "" }), width: "w-0" },
+          {
+            name: "title",
+            title: t({ en: "Title", tr: "Başlık" }),
+            width: "w-auto",
+          },
+          {
+            name: "views",
+            title: t({ en: "Views", tr: "Okunma" }),
+            width: "md:w-40",
+          },
         ]}
         description={t({
           en: "Code snippets I use in my daily development process that I believe could be useful to others.",
@@ -141,3 +166,39 @@ const latestArticles = articles.flat().slice(0, 5).map(formatEntryForTable);
     </div>
   </main>
 </BaseLayout>
+
+<script define:vars={{ entryIds, locale, viewCountText }}>
+  // Client-side'da görüntüleme sayılarını çek
+  async function fetchViewCounts() {
+    try {
+      const response = await fetch("/api/get-view-counts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ entryIds, locale }),
+      });
+
+      if (!response.ok) throw new Error("View count fetch failed");
+
+      const data = await response.json();
+
+      if (data.success && data.viewCounts) {
+        Object.entries(data.viewCounts).forEach(([entryId, count]) => {
+          const viewCountElements = document.querySelectorAll(
+            `[data-entry-view-count="${entryId}"]`
+          );
+
+          viewCountElements.forEach((element) => {
+            element.textContent = `${count} ${viewCountText}`;
+          });
+        });
+      }
+    } catch (error) {
+      console.error("[ERROR] Failed to fetch view counts:", error);
+    }
+  }
+
+  // Sayfa yüklendiğinde görüntüleme sayılarını çek
+  document.addEventListener("DOMContentLoaded", fetchViewCounts);
+</script>

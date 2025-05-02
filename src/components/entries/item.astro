@@ -1,16 +1,15 @@
 ---
 import type { Lang } from "@models/type";
 import { formatDate } from "@utils";
-import { useTranslations } from "@utils";
 
 interface Props {
+  entryId: string;
   name: string;
   href: string;
   date: Date;
 }
 
-const t = useTranslations(Astro.currentLocale as Lang);
-const { name, href, date = new Date() } = Astro.props;
+const { entryId, name, href, date = new Date() } = Astro.props;
 const locale = Astro.currentLocale as Lang;
 const formattedDate = formatDate(date, locale, "short");
 
@@ -46,9 +45,10 @@ const isActive = currentPath.startsWith(href);
     <span>{formattedDate}</span>
     ·
     <span class="flex gap-1 items-center">
-      <!-- TODO: Add views -->
-      ~
-      {t({ en: "views", tr: "okuma" })}
+      <span
+        data-entry-view-count={entryId}
+        class="text-gray-500 empty:opacity-0 transition-opacity duration-700"
+      ></span>
     </span>
   </p>
 </a>

@@ -4,6 +4,8 @@ import type { Lang } from "@models/type";
 import { useTranslations } from "@utils";
 import "@styles/global.css";
 import { AstroFont } from "astro-font";
+import Analytics from "@vercel/analytics/astro";
+import SpeedInsights from "@vercel/speed-insights/astro";
 
 interface Props {
   title?: string;
@@ -35,7 +37,8 @@ const localeDescription = description || t("description");
         {
           src: [],
           name: "JetBrains Mono",
-          googleFontsURL: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap",
+          googleFontsURL:
+            "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap",
           preload: true,
           display: "swap",
           selector: "body",
@@ -44,7 +47,8 @@ const localeDescription = description || t("description");
         {
           src: [],
           name: "Geist",
-          googleFontsURL: "https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap",
+          googleFontsURL:
+            "https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap",
           preload: true,
           display: "swap",
           selector: "body",
@@ -63,5 +67,7 @@ const localeDescription = description || t("description");
       <Sidebar />
     </div>
     <slot />
+    <Analytics />
+    <SpeedInsights />
   </body>
 </html>
