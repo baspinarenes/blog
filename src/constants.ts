@@ -3,4 +3,15 @@ export const iconByLanguage = {
   swift: "swift",
   nodejs: "nodejs",
   git: "git",
-}
+  html: "html",
+  javascript: "javascript",
+  typescript: "typescript",
+  python: "python",
+  react: "react",
+  nextjs: "nextjs",
+  npm: "npm",
+  gitlab: "gitlab",
+  eslint: "eslint",
+  browser: "browser",
+  sql: "sql",
+};

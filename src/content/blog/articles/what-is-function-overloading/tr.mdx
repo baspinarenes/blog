@@ -1,19 +1,24 @@
 ---
 title: "What is function overloading?"
-description: "Function overloading is a feature that allows you to define multiple functions with the same name, but different parameters. The compiler will choose the correct function based on the arguments passed to it."
+description: "TypeScript'te function overloading hakkında bilgi edinelim."
 date: 2024-10-18
 topic: "typescript"
 tags:
   - overloading
+  - function-signature
+  - clean-code
 ---
 
-**Function overloading**, birçok programlama dilinde mevcut olan bir özelliktir. Aynı davranışı sergileyen ve aynı adı taşıyan birden fazla fonksiyon tanımlamanıza olanak tanır. Derleyici tarafından parametre sayısı ve tipiyle birbirinden ayrıştırılır. Bu özellik sayesinde kodun kullanılabilirliği, okunabilirliğini ve esnekliği artmış olur.
+**Function overloading** is the process of redefining a function with the same name but different
+parameter combinations. The compiler or type system determines the correct function to call based on
+the parameters.
+
+
 
 ## Function overloading in OOP languages
 
-Java ve C++ gibi öz hakiki OOP dillerinde ana konseptlerden biridir. Derleyici doğru fonksiyonu çağırmak için fonksiyon ismi ve parametre türlerinden oluşan signature'a bakarak karar verir.
-
-### Java example
+Java ve C++ gibi dillerde overload işlemi doğrudan desteklenir. Derleyici, çağrılan fonksiyonun
+parametrelerine göre doğru metodu seçer.
 
 Java'da implementasyonu aşağıdaki gibidir:
 
@@ -50,9 +55,7 @@ public class Main {
 }
 ```
 
-### C++ example
-
-C++'da da benzer bir implementasyon mevcuttur:
+C++ dilinde de benzer bir implementasyon mevcuttur:
 
 ```cpp
 class Notification {
@@ -86,17 +89,22 @@ int main() {
 }
 ```
 
-Her iki dilde de overload resolution derleme zamanında yapılır, bu da sağlanan argümanlara göre uygun yöntemin çağrılmasını kesinleştirir.
+Bu örneklerde `send` metodu farklı sayıda ve türde parametrelerle çağrılabilir.
 
-### How to handles function overloading?
+### How does function overloading work?
 
-1. **Function Signatures:** Derleyici, aynı isme sahip fonksiyonların signature'larını kontrol eder. Eğer bu fonksiyonların parametre listeleri farklıysa, derleme başarılı olur; aksi takdirde derleme hatası oluşur.
-2. **Name Mangling:** Aynı isme sahip fonksiyonları ayırt etmek için name mangling tekniğini kullanır. Bu teknik, fonksiyon adlarını parametre türleri ve sayılarıyla birlikte kodlayarak benzersiz hale getirir. Örneğin, `foo(int, double)` ve `foo(double, double)` fonksiyonlarının isimleri derleyicide `foo_id` ve `foo_dd` olarak temsil edilir.
-3. **Call Resolution:** Fonksiyon çağrıldığında derleyici argüman türlerini kontrol eder ve uygun fonksiyonu bulur.
+1. Derleyici, aynı isme sahip fonksiyonların imzalarını kontrol eder. Eğer bu fonksiyonların
+parametre listeleri farklıysa, derleme başarılı olur; aksi takdirde derleme hatası oluşur.
+2. Aynı isme sahip fonksiyonları ayırt etmek için **name mangling** tekniğini kullanır. Bu teknik,
+fonksiyon adlarını parametre sayısı ve türleriyle birlikte kodlayarak benzersiz hale getirir.
+Örneğin, `foo(int, double)` ve `foo(double, double)` fonksiyonlarının isimleri derleyicide `foo_id`
+ve `foo_dd` olarak temsil edilir.
+3. Fonksiyon çağrıldığında derleyici argüman türlerini kontrol eder ve uygun fonksiyonu bulur.
 
 ## Function overloading in TypeScript
 
-TypeScript, JavaScript'in statik tiplerle genişletilmiş üst kümesi olarak function overloading destekler ancak bu işlemi geleneksel OOP dillerinden farklı ele alır. Birden fazla fonksiyon signature'ı tanımlanır ancak implementasyon tek fonksiyonda yapılır.
+TypeScript doğrudan OOP dilleri gibi overload desteklemez. Tek bir implementasyona birdan fazla imza
+type'ı tanımlamanızı sağlar.
 
 ### Example
 
@@ -105,13 +113,19 @@ class Notification {
   send(message: string): void;
   send(subject: string, body: string): void;
   send(email: string, message: string, isUrgent?: boolean): void;
-
   send(arg1: unknown, arg2?: unknown, arg3?: unknown): void {
-    if (typeof arg1 === "string" && !arg2 && !arg3) {
+    // İmza send(message: string) ise
+    if (typeof arg1 === "string" && !arg2 && !arg3) { 
       // ...
-    } else if (typeof arg1 === "string" && typeof arg2 === "string" && !arg3) {
+    } 
+
+    // İmza send(subject: string, body: string) ise
+    else if (typeof arg1 === "string" && typeof arg2 === "string" && !arg3) { 
       // ...
-    } else if (typeof arg1 === "string" && typeof arg2 === "string" && typeof arg3 === "boolean") {
+    } 
+    
+    // İmza send(email: string, message: string, isUrgent?: boolean) ise
+    else if (typeof arg1 === "string" && typeof arg2 === "string" && typeof arg3 === "boolean") { 
       // ...
     }
   }
@@ -134,7 +148,8 @@ notifier.send(
 
 ### Example 2
 
-In the second example, let's see how to change the behavior in a hook we created in React.
+Geçtiğimiz aylarda şirkettekullandığım ve beni bu hook'u yazmaya iten hook örneğini de eklemiş
+olayım.
 
 ```typescript
 type Callback = () => void;
@@ -160,26 +175,40 @@ export function useSeenObserver(arg1: string | Callback, arg2?: Callback): React
     return ref;
   }
 }
+```
 
-/* Usage 1 */
+Hook'u kullanırken return ettiğimiz ref'i kullanarak ilgili elementi belirtebilirsiniz.
+
+```typescript
 const ref = useSeenObserver(() => {
   // ...
 });
 
-/* Usage 2 */
+return <div ref={ref}></div>;
+```
+
+Ya da aşağıdaki gibi bir selector kullanabilirsiniz.
+
+```typescript
 useSeenObserver("#component", () => {
   // ...
 });
+
+return <div id="component"></div>;
 ```
 
-### How to handles function overloading?
+### How does function overloading work?
 
-1. **Checking Function Signatures:** Fonksiyonun belirtilen signature'lardan biriyle uyumlu olup olmadığını görmek için derleme zamanında türü kontrol eder. Aynı zamanda geliştirme esnasında statik kontroller gerçekleştirerek uyumsuzluklar hakkında uyarır.
-2. **Call Resolution:** Typescript, JavaScript'e derlendiğinden dolayı **type safety** ve **signature check** işlemleri run-time'da çalışmaz. Bu sebepten ötürü fonksiyonun içerisinde parametre türlerinin koşullarla kontrol edilmesi gerekir.
+1. Fonksiyonun belirtilen imzalardan biriyle uyumlu olup olmadığını görmek için
+geliştirme ve derleme esnasında tür kontrolleri yapılarak uyarır.
+2. Typescript, JavaScript'e derlendiğinden dolayı **type safety** ve **signature check**
+işlemleri runtime'da çalışmaz. Bu sebepten ötürü fonksiyonun içerisinde parametre
+türlerinin koşullarla kontrol edilir.
 
 ### Why should I use it?
 
-Typescript'te union kullanmak yerine neden signature kullanmalıyım sorusu aklınıza gelebilir. Son örneği signature kullanmadan yeniden yazalım.
+Aynı fonksiyonu union type ile tanımlamak da mümkündür ve bu sebeple neden signature
+kullanmalıyım sorusu aklınıza gelebilir. Son örneği signature kullanmadan yeniden yazalım.
 
 ```typescript
 type Callback = () => void;
@@ -205,17 +234,28 @@ export function useSeenObserver(arg1: string | Callback, arg2?: Callback): React
 }
 ```
 
-Daha sonra, `useSeenObserver' hook'unu kullandığımızda TypeScript'in önerdiği tipe ve yaptığı kontrole bakalım.
+Bu implementasyonu kullandığımızda TypeScript'in önerdiği tipe ve yaptığı kontrole görseldeki
+gibidir.
 
 ![](./images/01.gif)
 
-Görebileceğiniz gibi net bir function overloading template veremez. Argüman isimleri anlamsız kalır. Hangi parametrenin hangisiyle birlikte kullanılması gerektiği konusu bulanıklaşır. Aşağıdaki varyantlarda, hatalı kullanımlar da dahil, TypeScript hata vermez:
+Görebileceğiniz üzere net bir template gösteremez. Argüman isimleri ve hangi parametrenin
+hangisiyle birlikte kullanılabileceği bulanıklaşır. Aşağıdaki hiçbir kombinasyonda TypeScript
+hata vermez:
 
 - `(arg1: string)` -> hatalı kullanım
-- `(arg1: string, arg2: Callback)`
-- `(arg1: Callback)`
+- `(arg1: string, arg2: Callback)` -> doğru kullanım
+- `(arg1: Callback)` -> doğru kullanım
 - `(arg1: Callback, arg2: Callback)` -> hatalı kullanım
 
 Signature kullandığınızda ise aşağıdaki gibi doğru bir API elde etmiş olursunuz.
 
 ![](./images/02.gif)
+
+---
+
+Function overloading, özellikle büyük projelerde hatalara karşı dayanıklı bir API tasarımı sağlar.
+Ama OOP dillerine göre manual kontrollere güvenir ve kodu kirletir. Bu pattern ile genelde çok
+fazla karşılaşılmaz.
+
+Diğer yazılarda buluşalım 👋

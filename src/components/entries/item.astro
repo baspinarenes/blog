@@ -1,4 +1,5 @@
 ---
+import { iconByLanguage } from "@constants";
 import type { Lang } from "@models/type";
 import { Icon } from "@ui-kit";
 import { formatDate } from "@utils";
@@ -7,10 +8,11 @@ interface Props {
   entryId: string;
   name: string;
   href: string;
+  topic: string;
   date: Date;
 }
 
-const { entryId, name, href, date = new Date() } = Astro.props;
+const { entryId, name, href, topic, date = new Date() } = Astro.props;
 const locale = Astro.currentLocale as Lang;
 const formattedDate = formatDate(date, locale, "short");
 
@@ -23,13 +25,22 @@ const isActive = currentPath.startsWith(href);
 <a
   href={href}
   class:list={[
-    "border-b md:border-none border-slate-200 px-4 py-3 md:mx-3 md:rounded-lg md:p-3 box-content cursor-pointer",
+    "border-b relative md:border-none border-slate-200 pl-4 pr-12 py-3 md:mx-3 md:rounded-lg md:p-3 box-content cursor-pointer",
     isActive && "bg-black pointer-events-none",
     !isActive && "hover:bg-gray-100 hover:outline hover:outline-gray-200",
   ]}
   data-entry-item
   data-name={name}
 >
+  {
+    topic && iconByLanguage[topic as keyof typeof iconByLanguage] && (
+      <Icon
+        name={iconByLanguage[topic as keyof typeof iconByLanguage]}
+        size={30}
+        class="absolute top-0 right-4 h-full -z-1 opacity-10 grayscale-100"
+      />
+    )
+  }
   <strong
     class:list={[
       "text-sm block leading-4.5 mb-1 font-medium break-words",

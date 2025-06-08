@@ -1,21 +1,28 @@
 ---
 title: "What is function overloading?"
-description: "Function overloading is a feature that allows you to define multiple functions with the same name, but different parameters. The compiler will choose the correct function based on the arguments passed to it."
+description: "Let's learn about function overloading in TypeScript."
 date: 2024-10-18
 topic: "typescript"
 tags:
   - overloading
+  - function-signature
+  - clean-code
 ---
 
-**Function overloading** is a feature in many programming languages that allows the creation of multiple functions with the same name but different parameters. This means you can define several functions with identical names, differing only in the number or type of parameters. This technique is beneficial for improving code readability, maintainability, and flexibility.
+**Function overloading** is the process of redefining a function with the same name but different
+parameter combinations. The compiler or type system determines the correct function to call based on
+the parameters.
+
+**Function overloading** is the process of redefining a function with the same name but different
+parameter combinations. The compiler or type system determines the correct function to call based on
+the parameters.
 
 ## Function overloading in OOP languages
 
-In OOP languages like Java and C++, function overloading is a fundamental concept. It allows methods to be defined with the same name but different parameter lists. The correct method is selected at compile time based on the method signature, which includes the method name and parameter types.
+Languages like Java and C++ directly support overloading. The compiler chooses the appropriate
+method based on the parameters passed.
 
-### Java example
-
-In Java it is implemented in the following syntax:
+In Java, the implementation looks like this:
 
 ```java
 class Notification {
@@ -50,9 +57,7 @@ public class Main {
 }
 ```
 
-### C++ example
-
-Also C++ has a similar syntax:
+A similar implementation can be seen in C++:
 
 ```cpp
 class Notification {
@@ -86,17 +91,22 @@ int main() {
 }
 ```
 
-In both Java and C++, the overload resolution happens at compile time, ensuring that the appropriate method is invoked based on the arguments provided.
+In these examples, `send` method can be called with different numbers and types of parameters.
 
-### How to handles function overloading?
+### How does function overloading work?
 
-1. **Function Signatures:** The compiler checks the signatures of functions. When multiple functions with the same name are defined, it checks whether the parameter lists of these functions are different. Unless there is a signature difference, a compilation error occurs.
-2. **Name Mangling:** The compiler uses the name mangling technique to distinguish functions with the same name. With this technique, function names are made unique by encoding them together with their parameter types and numbers. For example, `foo(int)` and `foo(double)` are represented by the compiler with different names such as `foo_i` and `foo_d`.
-3. **Call Resolution:** When a function is called, the compiler checks the types of the arguments to resolve which function the call corresponds to. A set of rules and precedence ordering is used to find the most appropriate function signature. If the compiler cannot find a match, or if there is more than one match, it will return a compilation error.
+1. The compiler checks the signatures of functions with the same name. If their parameter lists are
+different, compilation succeeds; otherwise, a compilation error occurs.
+2. It uses a technique called **name mangling** to distinguish functions with the same name. This
+technique encodes function names with parameter count and types to make them unique. For example,
+`foo(int, double)` and `foo(double, double)` might be represented internally as `foo_id` and `foo_dd`.
+3. When the function is called, the compiler checks the argument types and matches them to the
+correct function.
 
 ## Function overloading in TypeScript
 
-TypeScript, being a statically typed superset of JavaScript, also supports function overloading but in a slightly different manner compared to traditional OOP languages. In TypeScript, function overloading is accomplished through the use of overload signatures and a single implementation.
+TypeScript does not support overloading in the same way as OOP languages. Instead, it allows you to
+define multiple type signatures for a single implementation.
 
 ### Example
 
@@ -105,13 +115,19 @@ class Notification {
   send(message: string): void;
   send(subject: string, body: string): void;
   send(email: string, message: string, isUrgent?: boolean): void;
-
   send(arg1: unknown, arg2?: unknown, arg3?: unknown): void {
-    if (typeof arg1 === "string" && !arg2 && !arg3) {
+    // If signature is send(message: string)
+    if (typeof arg1 === "string" && !arg2 && !arg3) { 
       // ...
-    } else if (typeof arg1 === "string" && typeof arg2 === "string" && !arg3) {
+    } 
+
+    // If signature is send(subject: string, body: string)
+    else if (typeof arg1 === "string" && typeof arg2 === "string" && !arg3) { 
       // ...
-    } else if (typeof arg1 === "string" && typeof arg2 === "string" && typeof arg3 === "boolean") {
+    } 
+    
+    // If signature is send(email: string, message: string, isUrgent?: boolean)
+    else if (typeof arg1 === "string" && typeof arg2 === "string" && typeof arg3 === "boolean") { 
       // ...
     }
   }
@@ -119,6 +135,7 @@ class Notification {
 
 const notifier = new Notification();
 
+notifier.send("Hello!");
 notifier.send("Hello!");
 notifier.send(
   "Reminder",
@@ -132,6 +149,8 @@ notifier.send(
 ```
 
 ### Example 2
+
+Let me also share a hook I wrote recently at work that motivated this blog post.
 
 ```typescript
 type Callback = () => void;
@@ -157,26 +176,39 @@ export function useSeenObserver(arg1: string | Callback, arg2?: Callback): React
     return ref;
   }
 }
+```
 
-/* Usage 1 */
+When using the hook, you can pass a ref to the element like this:
+
+```typescript
 const ref = useSeenObserver(() => {
   // ...
 });
 
-/* Usage 2 */
+return <div ref={ref}></div>;
+```
+
+Or you can use a selector as shown below:
+
+```typescript
 useSeenObserver("#component", () => {
   // ...
 });
+
+return <div id="component"></div>;
 ```
 
-### How to handles function overloading?
+### How does function overloading work?
 
-1. **Checking Function Signatures:** Typescript checks the type at build-time to see if your function is compatible with one of the specified signatures. If not, it gives a type error.
-2. **Call Resolution:** Typescript is compiled into JavaScript at build-time. Therefore, at run-time, TypeScript's type safety and signature checks do not apply at run-time. The function itself checks parameter types with in-code checks.
+1. During development and compilation, TypeScript performs type checks to ensure the function
+matches one of the declared signatures.
+2. Since TypeScript compiles to JavaScript, **type safety** and **signature checks** do not run at
+runtime. Therefore, it is necessary to check parameter types manually within the function.
 
 ### Why should I use it?
 
-You may wonder why I should use signature instead of union in Typescript. Let's rewrite the last example without using signature.
+You might wonder why you should use signatures when it is possible to define the function with a
+union type. Let's rewrite the last example without multiple signatures:
 
 ```typescript
 type Callback = () => void;
@@ -202,17 +234,26 @@ export function useSeenObserver(arg1: string | Callback, arg2?: Callback): React
 }
 ```
 
-Next, let's look at the type TypeScript suggests and the check it does when we use the `useSeenObserver` hook.
+When using this implementation, here’s what TypeScript’s autocomplete and type checking looks like:
 
 ![](./images/01.gif)
 
-As you can see, it cannot give a clear function overloading type. Argument names are meaningless.  It is not clear which parameter should be used with which. TypeScript does not give an error for following variants:
+As you can see, it cannot clearly show a valid template. The argument names and their valid
+combinations become unclear. TypeScript won’t throw an error in the following cases:
 
-- `(arg1: string)` -> incorrect use
-- `(arg1: string, arg2: Callback)`
-- `(arg1: Callback)`
-- `(arg1: Callback, arg2: Callback)` -> incorrect use
+- `(arg1: string)` -> invalid usage
+- `(arg1: string, arg2: Callback)` -> valid usage
+- `(arg1: Callback)` -> valid usage
+- `(arg1: Callback, arg2: Callback)` -> invalid usage
 
-When you use signature, you get a correct API as below.
+When you use function signatures, you get a more accurate and descriptive API like this:
 
 ![](./images/02.gif)
+
+---
+
+Function overloading helps you build a safer API design, especially in large projects. However,
+compared to OOP languages, it relies on manual checks and may clutter your code. It’s not a pattern
+you’ll encounter frequently.
+
+See you in other articles 👋

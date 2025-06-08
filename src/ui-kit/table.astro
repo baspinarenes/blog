@@ -112,7 +112,7 @@ const {
                         }
                         if (colName === "age") return `${value} years old`;
                         if (link) return <Link href={link}>{value}</Link>;
-                        return col.bold ? <b>{value}</b> : value;
+                        return col.bold === true ? <b>{value}</b> : value;
                       })()
                     )}
                   </td>

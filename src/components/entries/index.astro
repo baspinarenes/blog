@@ -37,7 +37,7 @@ const entryIds = entries.map((entry) => entry.id);
 
   <div
     id="entry-list-container"
-    class="flex flex-col overflow-y-auto gap-1 md:py-3"
+    class="flex flex-col overflow-y-auto md:gap-1 md:py-3"
   >
     {
       entries.map((entry) => (
@@ -46,6 +46,7 @@ const entryIds = entries.map((entry) => entry.id);
           name={entry.data.title}
           date={entry.data.date}
           href={entry.href}
+          topic={entry.data.topic}
         />
       ))
     }
