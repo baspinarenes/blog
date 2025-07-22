@@ -1,0 +1,126 @@
+---
+title: "Prevent layout shift caused by image loading"
+description: "Prevent layout shift by showing UI after image fully loads."
+date: 2025-07-10
+topic: "performance"
+tags: ["layout-shift", "images", "react", "popup", "web-vitals"]
+---
+
+When images are loaded after the initial render, they often cause layout shifts (unexpected movement of content), which negatively impacts the user experience. In this article, we’ll walk through a simple and effective approach to solving this problem using an image-containing popup example.
+
+## Problem
+
+In the video below, you can see that when the user clicks the **"Size guide"** button, a popup opens, but since the image takes time to load, the layout jumps unexpectedly.
+
+<Note type="info">
+  The loading of the popup has been intentionally delayed.
+</Note>
+
+![](./assets/01.mov)
+
+## Solve
+
+To fix the problem, we take the following steps:
+
+### 1. Track image loading state
+
+We use a `useState` hook to track whether the image has finished loading:
+
+```tsx
+const [imageLoaded, setImageLoaded] = React.useState(false);
+
+const handleLoadImage = () => {
+  setImageLoaded(true);
+};
+````
+
+This state will be updated once the image fires the `onLoad` event.
+
+### 2. Conditionally show the popup based on load state
+
+We use the `classNames` utility to conditionally apply a class when the image is loaded:
+
+```tsx
+<Popup
+  show={showChartPopup}
+  onClose={() => setShowChartPopup(false)}
+  className={classNames("chart-popup", {
+    "chart-popup-loaded": imageLoaded,
+  })}
+>
+```
+
+This allows us to control when the popup becomes visible based on whether the image has been fully loaded.
+
+### 3. Use CSS to control visibility
+
+In the CSS, we define `.chart-popup` to be hidden by default, and only show it when the image has loaded:
+
+```scss
+.chart-popup {
+  display: none;
+}
+
+.chart-popup-loaded {
+  display: block;
+}
+```
+
+This prevents any content from being displayed or jumping until the image is ready.
+
+### 4. Full Component Code
+
+Here is the complete component:
+
+```tsx
+import React, { type FC } from "react";
+import { Popup } from "ui-kit";
+import classNames from "classnames";
+
+export const SizeChartPopup = (sizeChartUrl: string) => {
+  const [showChartPopup, setShowChartPopup] = React.useState(false);
+  const [imageLoaded, setImageLoaded] = React.useState(false);
+
+  const handleLoadImage = () => {
+    setImageLoaded(true);
+  };
+
+  return (
+    <>
+      <button onClick={() => setShowChartPopup(true)}>
+        Size guide
+      </button>
+
+      <Popup
+        show={showChartPopup}
+        onClose={() => setShowChartPopup(false)}
+        className={classNames("chart-popup", {
+          "chart-popup-loaded": imageLoaded,
+        })}
+      >
+        <img
+          src={sizeChartUrl}
+          alt="Product size chart"
+          onLoad={handleLoadImage}
+        />
+      </Popup>
+    </>
+  );
+};
+```
+
+## Result
+
+Here’s the improved version, where the popup appears only after the image has loaded — smooth and stable:
+
+![](./assets/02.mov)
+
+## Conclusion
+
+Image loading can easily lead to unexpected layout shifts, especially in modals or popups. In this post, we:
+
+* Tracked when the image was loaded,
+* Showed the popup only after the image was ready,
+* Prevented visual instability using a simple CSS toggle.
+
+Although it’s a small change in code, it has a significant impact on perceived performance and usability — particularly on mobile devices or slower networks.

@@ -1,0 +1,120 @@
+---
+title: "Prevent layout shift caused by image loading"
+description: "Resim yüklenirken oluşan kaymayı önleyin."
+date: 2025-07-10
+topic: "performance"
+tags: ["layout-shift", "images", "react", "popup", "web-vitals"]
+---
+
+Görseller ilk render işleminden sonra yüklendiğinde, genellikle layout shift'e (içeriğin beklenmedik şekilde kayması) neden olurlar ve bu da kullanıcı deneyimine zarar verir. Bu yazıda, görsel içeren popup örneği üzerinde basit ve etkili bir yaklaşımla nasıl çözdüğümüzü adım adım inceleyeceğiz.
+
+## Problem
+
+Videoda göreceğiniz üzere **Size guide** butonuna tıklandığında açılan popup, görselin yüklenmesi zaman aldığı için beklenmedik şekilde kayar.
+
+<Note type="info">
+  Popup'ın yüklenmesi kasıtlı olarak geciktirilmiştir.
+</Note>
+
+![](./assets/01.mov)
+
+## Solve
+
+Sorunu çözmek için aşağıdaki adımları izliyoruz:
+
+### 1. Track image loading state
+
+Görselin yüklenip yüklenmediğini takip etmek için state kullanıyoruz:
+
+```tsx
+const [imageLoaded, setImageLoaded] = React.useState(false);
+
+const handleLoadImage = () => {
+  setImageLoaded(true);
+};
+````
+
+Bu state, görselin `onLoad` event'i tetiklendiğinde güncellenir.
+
+### 2. Conditionally show the popup based on load state
+
+Görsel yüklendiğinde koşullu olarak bir CSS sınıfı uygulanır:
+
+```tsx
+<Popup
+  show={showChartPopup}
+  onClose={() => setShowChartPopup(false)}
+  className={classNames("chart-popup", {
+    "chart-popup-loaded": imageLoaded,
+  })}
+>
+```
+
+Popup'ın ne zaman görünür hale geleceğini, görselin tamamen yüklenip yüklenmediğine göre kontrol etmemizi sağlar.
+
+### 3. Use CSS to control visibility
+
+`.chart-popup` varsayılan olarak gizlenir ve yalnızca görsel yüklendiğinde gösterilir:
+
+```scss
+.chart-popup {
+  display: none;
+}
+
+.chart-popup-loaded {
+  display: block;
+}
+```
+
+Böylece görsel hazır olana kadar herhangi bir içeriğin görüntülenmesini engeller.
+
+### 4. Full Code
+
+Komponent kodunun son hali aşağıdaki gibi olacaktır:
+
+```tsx
+import React, { type FC } from "react";
+import { Popup } from "ui-kit";
+import classNames from "classnames";
+
+export const SizeChartPopup = (sizeChartUrl: string) => {
+  const [showChartPopup, setShowChartPopup] = React.useState(false);
+  const [imageLoaded, setImageLoaded] = React.useState(false);
+
+  const handleLoadImage = () => {
+    setImageLoaded(true);
+  };
+
+  return (
+    <>
+      <button onClick={() => setShowChartPopup(true)}>
+        Size guide
+      </button>
+
+      <Popup
+        show={showChartPopup}
+        onClose={() => setShowChartPopup(false)}
+        className={classNames("chart-popup", {
+          "chart-popup-loaded": imageLoaded,
+        })}
+      >
+        <img
+          src={sizeChartUrl}
+          alt="Product size chart"
+          onLoad={handleLoadImage}
+        />
+      </Popup>
+    </>
+  );
+};
+```
+
+## Result
+
+İşte iyileştirilmiş versiyon; burada popup yalnızca görsel yüklendikten sonra daha stabil bir şekilde görünür:
+
+![](./assets/02.mov)
+
+## Conclusion
+
+Görsel yüklemesi, özellikle modal veya popup'larda beklenmedik layout shift'lere yol açabilir. Kodda küçük bir değişiklik olmasına rağmen, bu durumun hissedilen performans üzerinde, özellikle mobil cihazlarda ve yavaş ağlarda önemli bir etkisi vardır.
