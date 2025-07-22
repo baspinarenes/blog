@@ -107,8 +107,9 @@ const {
                     ) : (
                       (() => {
                         if (colName === "icon") {
-                          if (value) return <Icon name={value} size={20} />;
-                          if (id) return <Icon name={id} size={20} />;
+                          if (value)
+                            return <Icon name={value} size={20} colored />;
+                          if (id) return <Icon name={id} size={20} colored />;
                         }
                         if (colName === "age") return `${value} years old`;
                         if (link) return <Link href={link}>{value}</Link>;
