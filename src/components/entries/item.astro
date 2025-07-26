@@ -16,7 +16,6 @@ interface Props {
 const { entryId, name, href, topic, date = new Date() } = Astro.props;
 const locale = Astro.currentLocale as Lang;
 const formattedDate = formatDate(date, locale, "short");
-console.log("hrefhrefhrefhref", href);
 const isActive = pathManager.isActive(Astro.url.pathname, href);
 ---
 

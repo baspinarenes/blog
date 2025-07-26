@@ -14,8 +14,6 @@ const { name, href } = Astro.props;
 const locale = Astro.currentLocale as Lang;
 const t = useTranslations(locale);
 
-console.log("currentPathcurrentPath", Astro.url.pathname, href);
-
 let isActive = false;
 isActive = pathManager.isActive(Astro.url.pathname, href);
 ---

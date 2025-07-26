@@ -12,9 +12,10 @@ const { title, description, headers, data } = Astro.props as Props;
 
 const tableBackground = "bg-white";
 const tableTextColor = "text-gray-900";
-
 const headerBackground = "bg-slate-100";
 const headerTextColor = "text-slate-800";
+
+console.log("ASDASDASD22");
 ---
 
 <div
@@ -32,7 +33,9 @@ const headerTextColor = "text-slate-800";
         ]}
       >
         {title}
-        {description && <p class="mt-1 text-sm font-normal text-gray-500">{description}</p>}
+        {description && (
+          <p class="mt-1 text-sm font-normal text-gray-500">{description}</p>
+        )}
       </div>
     )
   }
@@ -49,14 +52,18 @@ const headerTextColor = "text-slate-800";
         {
           headers.map((h) => {
             if (h.includes("icon-")) {
-              return <th scope="col" class="px-6 py-3">
-                <Icon name={h.replace("icon-", "")} size={20} />
-              </th>
+              return (
+                <th scope="col" class="px-6 py-3">
+                  <Icon name={h.replace("icon-", "")} size={20} />
+                </th>
+              );
             }
 
-            return <th scope="col" class="px-6 py-3">
-              {h}
-            </th>
+            return (
+              <th scope="col" class="px-6 py-3">
+                {h}
+              </th>
+            );
           })
         }
       </tr>
@@ -65,19 +72,15 @@ const headerTextColor = "text-slate-800";
       {
         data.map((item) => (
           <tr class="text-black border-b border-gray-200 last:border-b-0">
-            {
-              item.map((x, i) => (
-                i === 0 ? (
-                  <th scope="row" class:list={[
-                    "px-6 py-3 font-medium",
-                  ]}>
-                      {x}
-                  </th>
-                ) : (
-                  <td class="px-6 py-3">{x}</td>
-                )
-              ))
-            }
+            {item.map((x, i) =>
+              i === 0 ? (
+                <th scope="row" class:list={["px-6 py-3 font-medium"]}>
+                  {x}
+                </th>
+              ) : (
+                <td class="px-6 py-3">{x}</td>
+              ),
+            )}
           </tr>
         ))
       }

@@ -23,7 +23,6 @@ class PathManager {
   isAvailable(path: string) {
     const { lang, path: pathWithoutLocale } = this.parse(path);
     const [_, category] = pathWithoutLocale.split("/");
-    console.log("categorycategory", pathWithoutLocale, category);
 
     return C.NAVIGATIONS.some(
       (navigation) =>

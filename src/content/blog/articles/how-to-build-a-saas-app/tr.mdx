@@ -1,0 +1,41 @@
+---
+title: "How to build a SaaS app?"
+description: "Build, deploy, and monetize a SaaS app."
+date: "1999-01-01"
+topic: "fullstack"
+tags: ["saas", "fullstack", "monetization"]
+---
+
+## Idea
+
+
+## Plan
+
+Projelerimde framework olarak developer experience'ı iyi ve race condition'u az olduğunu gördüğüm
+**Sveltekit**'i kullanmayı seviyorum. Stillendirme içinse her zaman **Tailwind** tercih ediyorum.
+Backend tarafında ise hiç tecrübem yok. Halihazırda kullandığım Node.js tabanlı olması, modüler
+mimariye sahip ve güçlü dependency injection desteği yüzünden **NestJS** tercih ettim. Veritabanı
+olarak da güçlü ilişkisel veri yönetimi için **PostgreSQL**, ORM olarak **Prisma** tercih ettim.
+
+Bu sebeplerle uygulamanın techstack aşağıdaki gibi şekillendi:
+
+- **Frontend Framework**: SvelteKit
+- **CSS**: Tailwind ve Shacdn
+- **Backend**: NestJS
+- **Database**: **PostgreSQL
+- **ORM**: Prisma
+- **Frontend Deploy**: Vercel
+- **Backend Deploy**: Render
+
+<Table
+  columns={["Category", "Tech"]}
+  data={[
+    ["Frontend Framework", "SvelteKit"],
+    ["CSS", "Tailwind"],
+    ["Backend", "NestJs"],
+    ["Database", "PostgreSQL"],
+    ["ORM", "Prisma"],
+    ["Frontend Deploy", "Vercel"],
+    ["Backend Deploy", "Render"]
+  ]}
+/>

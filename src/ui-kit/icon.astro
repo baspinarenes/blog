@@ -37,4 +37,12 @@ const color =
   }[name] || "text-gray-600";
 ---
 
-<AstroIcon name={name} size={size} class:list={[colored && color, className]} />
+{
+  name && (
+    <AstroIcon
+      name={name}
+      size={size}
+      class:list={[colored && color, className]}
+    />
+  )
+}

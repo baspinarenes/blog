@@ -10,7 +10,7 @@ import { C } from "@configuration";
 
 export async function getStaticPaths() {
   const entries = await Promise.all(
-    C.ENTRY_CATEGORIES.map((category) => getEntries({ category }))
+    C.ENTRY_CATEGORIES.map((category) => getEntries({ category })),
   );
 
   const paths = entries.flat().map((post) => {
@@ -58,7 +58,8 @@ const { title, description, date, tags, topic, cover } = post.data;
             <Icon name="view" size={16} />
             <span
               data-entry-view-count={entryId}
-              class="empty:opacity-0 transition-opacity duration-700 whitespace-nowrap"></span>
+              class="empty:opacity-0 transition-opacity duration-700 whitespace-nowrap"
+            ></span>
           </div>
           <div class="flex gap-1 items-center ml-auto">
             {
@@ -93,9 +94,6 @@ const { title, description, date, tags, topic, cover } = post.data;
       window.location.hostname === "localhost" ||
       window.location.hostname === "127.0.0.1"
     ) {
-      console.log(
-        "[DEBUG] Skipping view count increment in development environment"
-      );
       return;
     }
 
