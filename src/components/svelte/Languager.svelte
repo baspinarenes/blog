@@ -1,5 +1,5 @@
 <script>
-  import { getRelativeLocaleUrl } from "astro:i18n";
+  import { pathManager } from "../../utils/pathManager";
 
   export let currentLocale;
   export let locales = [];
@@ -9,9 +9,9 @@
 
   function changeLocale() {
     localStorage.setItem("selectedLang", nextLocale);
-    location.href = getRelativeLocaleUrl(
-      nextLocale,
-      window.location.pathname.replace(/^\/[a-zA-Z-]+/, "")
+    location.href = pathManager.changeLocale(
+      window.location.pathname,
+      nextLocale
     );
   }
 </script>

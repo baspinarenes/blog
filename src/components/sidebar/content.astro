@@ -33,10 +33,12 @@ const t = useTranslations(lang as Lang);
     <Spacer size={4} />
     <Socials />
     <Spacer size={4} />
-    <div class:list={{
-      "hidden": parent === "menu",
-    }}>
-    <Seperator />
+    <div
+      class:list={{
+        hidden: parent === "menu",
+      }}
+    >
+      <Seperator />
       <Spacer size={4} />
       <footer class="text-xs text-gray-500 text-center">
         {t("Inspired by onur.dev")}

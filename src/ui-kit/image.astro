@@ -8,7 +8,14 @@ type Props = {
   height?: number;
 };
 
-const { src, alt, width, height, class: className, rounded = true } = Astro.props;
+const {
+  src,
+  alt,
+  width,
+  height,
+  class: className,
+  rounded = true,
+} = Astro.props;
 ---
 
 <img

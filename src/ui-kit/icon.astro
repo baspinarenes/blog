@@ -15,35 +15,26 @@ const {
   colored = false,
 } = Astro.props as Props;
 
-const color = {
-  css: "text-[#264de4]",
-  swift: "text-[#F05138]",
-  nodejs: "text-[#3c873a]",
-  git: "text-[#F1502F]",
-  html: "text-[#E44D26]",
-  javascript: "text-[#F0DB4F]",
-  typescript: "text-[#3178C6]",
-  python: "text-[#306998]",
-  react: "text-[#61DAFB]",
-  nextjs: "text-[#000000]",
-  npm: "text-[#CB3837]",
-  gitlab: "text-[#FC6D26]",
-  docker: "text-[#2496ED]",
-  kubernetes: "text-[#326CE5]",
-  sql: "text-[#003B57]",
-  eslint: "text-[#4B32C3]",
-  bash: "text-black",
-}[name];
-
-const hide = colored && !color;
+const color =
+  {
+    css: "text-[#264de4]",
+    swift: "text-[#F05138]",
+    nodejs: "text-[#3c873a]",
+    git: "text-[#F1502F]",
+    html: "text-[#E44D26]",
+    javascript: "text-[#F0DB4F]",
+    typescript: "text-[#3178C6]",
+    python: "text-[#306998]",
+    react: "text-[#61DAFB]",
+    nextjs: "text-[#000000]",
+    npm: "text-[#CB3837]",
+    gitlab: "text-[#FC6D26]",
+    docker: "text-[#2496ED]",
+    kubernetes: "text-[#326CE5]",
+    sql: "text-[#003B57]",
+    eslint: "text-[#4B32C3]",
+    bash: "text-black",
+  }[name] || "text-gray-600";
 ---
 
-{
-  !hide && (
-    <AstroIcon
-      name={name}
-      size={size}
-      class:list={[colored && color, className]}
-    />
-  )
-}
+<AstroIcon name={name} size={size} class:list={[colored && color, className]} />

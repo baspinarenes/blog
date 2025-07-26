@@ -1,7 +1,7 @@
 ---
 import { C } from "@configuration";
 import type { Lang } from "@models/type";
-import { useTranslations } from "@utils";
+import { pathManager, useTranslations } from "@utils";
 import { Icon } from "astro-icon/components";
 
 interface Props {
@@ -14,13 +14,10 @@ const { name, href } = Astro.props;
 const locale = Astro.currentLocale as Lang;
 const t = useTranslations(locale);
 
-const currentPath = Astro.url.pathname.endsWith("/")
-  ? Astro.url.pathname
-  : `${Astro.url.pathname}/`;
+console.log("currentPathcurrentPath", Astro.url.pathname, href);
 
 let isActive = false;
-if (href === `/${locale}/`) isActive = currentPath === `/${locale}/`;
-else isActive = currentPath.startsWith(href);
+isActive = pathManager.isActive(Astro.url.pathname, href);
 ---
 
 <a

@@ -1,6 +1,6 @@
 import { C } from "@configuration";
-import { getRelativeLocaleUrl } from "astro:i18n";
 import type { Lang, Multilingual } from "@models/type";
+import { pathManager } from "@utils";
 
 export const DEFAULT_LOCALE = C.DEFAULT_LOCALE as Lang;
 
@@ -16,9 +16,9 @@ export function getLocalePaths(url: URL): LocalePath[] {
   return Object.keys(C.LOCALES).map((lang) => {
     return {
       lang: lang as Lang,
-      path: getRelativeLocaleUrl(
-        lang,
-        url.pathname.replace(/^\/[a-zA-Z-]+/, "")
+      path: pathManager.changeLocale(
+        url.pathname.replace(/^\/[a-zA-Z-]+/, ""),
+        lang
       ),
     };
   });
