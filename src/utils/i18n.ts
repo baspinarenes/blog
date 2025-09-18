@@ -1,6 +1,6 @@
-import { C } from "@configuration";
 import type { Lang, Multilingual } from "@models/type";
-import { pathManager } from "@utils";
+import { C } from "../configuration";
+import { pathManager } from "../utils";
 
 export const DEFAULT_LOCALE = C.DEFAULT_LOCALE as Lang;
 

@@ -1,19 +1,44 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"],
+  "include": [
+    ".astro/types.d.ts",
+    "**/*"
+  ],
+  "exclude": [
+    "dist"
+  ],
   "compilerOptions": {
     "baseUrl": ".",
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
     "paths": {
-      "@configuration": ["src/configuration.ts"],
-      "@constants": ["src/constants.ts"],
-      "@components": ["./src/components/index.ts"],
-      "@components/markdown": ["./src/components/markdown/index.ts"],
-      "@layouts": ["./src/layouts/index.ts"],
-      "@utils": ["./src/utils/index.ts"],
-      "@ui-kit": ["./src/ui-kit/index.ts"],
-      "@styles/*": ["./src/styles/*"],
-      "@models/*": ["./src/models/*"],
+      "@configuration": [
+        "src/configuration.ts"
+      ],
+      "@constants": [
+        "src/constants.ts"
+      ],
+      "@components": [
+        "./src/components/index.ts"
+      ],
+      "@components/markdown": [
+        "./src/components/markdown/index.ts"
+      ],
+      "@layouts": [
+        "./src/layouts/index.ts"
+      ],
+      "@utils": [
+        "./src/utils/index.ts"
+      ],
+      "@ui-kit": [
+        "./src/ui-kit/index.ts"
+      ],
+      "@styles/*": [
+        "./src/styles/*"
+      ],
+      "@models/*": [
+        "./src/models/*"
+      ],
     }
   }
 }

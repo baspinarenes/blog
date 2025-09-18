@@ -1,15 +1,16 @@
-import { C } from "./src/configuration";
-import { defineConfig } from "astro/config";
-import tailwindcss from "@tailwindcss/vite";
-import icon from "astro-icon";
 import mdx from "@astrojs/mdx";
+import react from "@astrojs/react";
 import svelte from "@astrojs/svelte";
-import AutoImport from "astro-auto-import";
-import getReadingTime from "reading-time";
-import { toString } from "mdast-util-to-string";
-import expressiveCode from 'astro-expressive-code'
-
 import vercel from "@astrojs/vercel";
+import tailwindcss from "@tailwindcss/vite";
+import AutoImport from "astro-auto-import";
+import expressiveCode from "astro-expressive-code";
+import icon from "astro-icon";
+import { defineConfig } from "astro/config";
+import { toString } from "mdast-util-to-string";
+import getReadingTime from "reading-time";
+import { og } from "./plugins/og";
+import { C } from "./src/configuration";
 
 export default defineConfig({
   site: "https://www.enesbaspinar.com",
@@ -42,9 +43,9 @@ export default defineConfig({
   },
 
   integrations: [
+    og(),
     expressiveCode(),
     icon(),
-    svelte(),
     AutoImport({
       imports: [
         {
@@ -54,6 +55,8 @@ export default defineConfig({
       ],
     }),
     mdx(),
+    svelte(),
+    react(),
   ],
 
   adapter: vercel({

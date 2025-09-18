@@ -45,7 +45,7 @@
   }
 
   iframe {
-    @apply mb-6 rounded-xl;
+    @apply mb-6 rounded-xl w-full h-auto aspect-video;
   }
 
   h1,

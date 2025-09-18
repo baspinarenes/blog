@@ -2,22 +2,24 @@ import { getCollection, type CollectionEntry } from "astro:content";
 
 export async function getEntries({
   category,
-  locale
+  locale,
 }: {
   category: string;
   locale?: string;
 }) {
-  const entries = (await getCollection(category as any)) as unknown as CollectionEntry<"snippets">[];
+  const entries = (await getCollection(
+    category as any
+  )) as unknown as CollectionEntry<"snippets">[];
 
   const mappedEntries = entries.map((entry) => {
     const [slug, lang] = entry.id.split("/");
-    
-    return ({
+
+    return {
       ...entry,
       id: slug,
       href: `/${lang}/${entry.collection}/${slug}`,
       lang: lang,
-    });
+    };
   });
 
   const filteredEntries = mappedEntries.filter((entry) => {
@@ -28,5 +30,5 @@ export async function getEntries({
     return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
   });
 
-  return sortedEntries;
+  return sortedEntries.filter((entry) => !entry.data.draft);
 }
