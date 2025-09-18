@@ -32,7 +32,7 @@ const [imageLoaded, setImageLoaded] = React.useState(false);
 const handleLoadImage = () => {
   setImageLoaded(true);
 };
-````
+```
 
 This state will be updated once the image fires the `onLoad` event.
 
@@ -87,9 +87,7 @@ export const SizeChartPopup = (sizeChartUrl: string) => {
 
   return (
     <>
-      <button onClick={() => setShowChartPopup(true)}>
-        Size guide
-      </button>
+      <button onClick={() => setShowChartPopup(true)}>Size guide</button>
 
       <Popup
         show={showChartPopup}
@@ -119,8 +117,8 @@ Here’s the improved version, where the popup appears only after the image has 
 
 Image loading can easily lead to unexpected layout shifts, especially in modals or popups. In this post, we:
 
-* Tracked when the image was loaded,
-* Showed the popup only after the image was ready,
-* Prevented visual instability using a simple CSS toggle.
+- Tracked when the image was loaded,
+- Showed the popup only after the image was ready,
+- Prevented visual instability using a simple CSS toggle.
 
 Although it’s a small change in code, it has a significant impact on perceived performance and usability — particularly on mobile devices or slower networks.

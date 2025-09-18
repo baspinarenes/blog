@@ -1,6 +1,6 @@
 ---
-import { Icon } from "astro-icon/components";
 import { capitalize } from "@utils";
+import { Icon } from "astro-icon/components";
 
 interface Props {
   name: string;
@@ -12,7 +12,7 @@ const { name, href } = Astro.props;
 
 <a
   href={href}
-  class="flex gap-4 items-center px-2 py-2 rounded-lg text-sm hover:bg-gray-200"
+  class="flex gap-3 items-center px-2 py-2 rounded-lg text-sm hover:bg-gray-200"
 >
   <Icon name={name} size={18} />
   <span class="text-sm">{capitalize(name)}</span>

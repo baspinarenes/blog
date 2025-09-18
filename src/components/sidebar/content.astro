@@ -1,8 +1,14 @@
 ---
-import { Profile, Navigations, Socials, Languager } from "@components";
-import { Spacer, Seperator } from "@ui-kit";
-import { useTranslations } from "@utils";
+import {
+  Languager,
+  Navigations,
+  Packages,
+  Profile,
+  Socials,
+} from "@components";
 import type { Lang } from "@models/type";
+import { Seperator, Spacer } from "@ui-kit";
+import { useTranslations } from "@utils";
 
 type Props = {
   parent?: "menu" | "sidebar";
@@ -29,8 +35,9 @@ const t = useTranslations(lang as Lang);
     <Spacer size={8} />
     <Navigations />
     <Spacer size={parent === "menu" ? 4 : 0} />
+    <Packages />
     {parent === "menu" && <Seperator />}
-    <Spacer size={4} />
+    <Spacer size={8} />
     <Socials />
     <Spacer size={4} />
     <div

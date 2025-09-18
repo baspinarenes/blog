@@ -1,0 +1,134 @@
+---
+title: "Short notes about WXT"
+description: ""
+date: 2024-08-18
+topic: wxt
+tags: []
+series: "Short Notes"
+---
+
+<Note type="info">
+  **Yaşayan Yazı**, bir yerimden uydurduğum bir terimdir ve ileriki dönemde içeriği zenginleşebilecek ama şu anki
+  haliyle de faydalı olabilecek yazıları belirtir.
+</Note>
+
+A modern, open-source framework for building web extensions.
+
+## Introduction
+
+- A modern, open-source framework for building web extensions.
+- You can use extension guide for [Chrome](https://developer.chrome.com/docs/extensions) or [Firefox](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions).
+
+## Web Extensions
+
+### Terminology
+
+<Table
+  columns={["Term", "Description"]}
+  data={[
+    ["Manifest", "Records important metadata, defines resources, declares permissions, and identifies which files to run in the background and on the page."],
+    ["Background Script", "The part of extension that runs continuously in the background. Event listeners, long-running tasks, and network operations are performed here."],
+    ["Content Script", "JS injected into the DOM of the web page. It can read and modify the page content, but has limited API access."],
+    ["Extension Service Worker", "An event-driven background script that runs only when triggered by specific events and then shuts down, improving browser performance and security compared to persistent background pages."]
+  ]}
+/>
+
+## Basic Example
+
+```html title=index.html
+<html>
+  <body>
+    <h1>Hello Extensions</h1>
+    <script src="script.js"></script>
+  </body>
+</html>
+```
+
+```json title=manifest.json
+{
+  "name": "Hello Extensions of the world!",
+  "description": "Base Level Extension",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "icon.png"
+  }
+}
+```
+
+```js title=script.js
+console.log("This is a popup!")
+```
+
+## Manifest
+
+```json
+{
+  "manifest_version": 3,
+  "name": "Minimal Manifest",
+  "version": "1.0.0",
+  "description": "A basic example extension with only required keys",
+  "icons": {
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  }
+}
+```
+
+<Table
+  columns={["Key", "Description", "Example"]}
+  data={[
+    ["manifest_version", "Version of the manifest file format that your extension uses.", "3"],
+    ["name", "A string that identifies the extension in store."],
+    ["version", "A string that identifies the extension's version number."],
+    ["description", "A string that describes the extension."],
+    ["icons", "One or more icons that represent your extension.", '{ "16": "icon16.png", "128": "icon128.png" }'],
+  ]}
+/>
+
+<Table
+  columns={["Key", "Description"]}
+  data={[
+    ["action", "Defines the appearance and behavior of the extension's icon in the Google Toolbar."],
+    ["background", ""],
+    ["chrome_settings_overrides", ""],
+    ["chrome_url_overrides", ""],
+    ["commands", ""],
+    ["content_scripts", ""],
+    ["content_security_policy", ""],
+    ["cross_origin_embedder_policy", ""],
+    ["cross_origin_opener_policy", ""],
+    ["declarative_net_request", ""],
+    ["default_locale", ""],
+    ["devtools_page", ""],
+    ["export", ""],
+    ["externally_connectable", ""],
+    ["file_browser_handlers", ""],
+    ["file_handlers", ""],
+    ["file_system_provider_capabilities", ""],
+    ["homepage_url", ""],
+    ["host_permissions", ""],
+    ["import", ""],
+    ["incognito", ""],
+    ["input_components", ""],
+    ["key", ""],
+    ["minimum_chrome_version", ""],
+    ["oauth2", ""],
+    ["omnibox", ""],
+    ["optional_host_permissions", ""],
+    ["optional_permissions", ""],
+    ["options_page", ""],
+    ["options_ui", ""],
+    ["permissions", ""],
+    ["requirements", ""],
+    ["sandbox", ""],
+    ["short_name", ""],
+    ["side_panel", ""],
+    ["storage", ""],
+    ["tts_engine", ""],
+    ["update_url", ""],
+    ["version_name", ""],
+    ["web_accessible_resources", ""],
+  ]}
+/>

@@ -1,0 +1,30 @@
+---
+import type { Lang } from "@models/type";
+import { pathManager, useTranslations } from "@utils";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  name: string;
+  href: string;
+}
+
+const { name, href } = Astro.props;
+
+const locale = Astro.currentLocale as Lang;
+const t = useTranslations(locale);
+
+let isActive = false;
+isActive = pathManager.isActive(Astro.url.pathname, href);
+---
+
+<a
+  href={href}
+  class:list={[
+    "flex gap-3 items-center px-2 py-2 rounded-lg text-sm text-slate-700 ",
+    !isActive && "hover:bg-gray-200",
+    isActive && "bg-black text-white",
+  ]}
+>
+  <Icon name="package" size={18} />
+  <span class="text-sm">{name}</span>
+</a>

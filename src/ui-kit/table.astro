@@ -23,8 +23,6 @@ const {
   headless = false,
   noScroll = false,
 } = Astro.props as Props;
-
-console.log("ASDASDASD11");
 ---
 
 <div
@@ -82,8 +80,6 @@ console.log("ASDASDASD11");
             <tr class="bg-white border-b last:border-none border-gray-200">
               {columns.map((col, colNo) => {
                 const data = row[colNo];
-                console.log("data", data);
-
                 const colName = typeof col === "string" ? col : col.name;
                 let value: any;
                 let link: string | undefined;

@@ -5,7 +5,7 @@
 
 @layer base {
   body {
-    font-family: 'Geist', sans-serif;
+    font-family: "Geist", sans-serif;
     @apply min-h-dvh h-dvh md:h-auto text-gray-900;
   }
 
@@ -44,6 +44,10 @@
     outline: none !important;
   }
 
+  iframe {
+    @apply mb-6 rounded-xl;
+  }
+
   h1,
   h2,
   h3,
@@ -52,23 +56,52 @@
   h6,
   strong,
   b {
-    @apply text-slate-900 inline-flex scroll-mt-6 md:scroll-mt-3;
+    @apply text-slate-900 inline-flex gap-2 items-center scroll-mt-6 md:scroll-mt-3;
+
+    & ~ h1,
+    & ~ h2,
+    & ~ h3,
+    & ~ h4,
+    & ~ h5,
+    & ~ h6 {
+      @apply flex;
+    }
+
+    code {
+      font-weight: 600;
+    }
   }
 
   h1 {
     @apply text-3xl font-bold mb-10;
+
+    code {
+      font-weight: 600;
+    }
   }
 
   h2 {
     @apply text-2xl font-bold;
+
+    code {
+      @apply text-2xl;
+    }
   }
 
   h3 {
     @apply text-lg font-bold;
+
+    code {
+      @apply text-lg;
+    }
   }
 
   h4 {
     @apply text-base font-bold;
+
+    code {
+      font-weight: 600;
+    }
   }
 
   p {
@@ -96,7 +129,7 @@
   *:has(+ h3),
   *:has(+ h4),
   *:has(+ h5),
-  *:has(+ h6 ),
+  *:has(+ h6),
   *:has(+ hr) {
     @apply !mb-0;
   }
@@ -113,12 +146,12 @@
     width: 0.3rem !important;
     height: 0.3rem !important;
   }
-  
+
   /* Track */
   *::-webkit-scrollbar-track {
     background: transparent !important;
   }
-  
+
   /* Handle */
   *::-webkit-scrollbar-thumb {
     background: #4b5563 !important;
@@ -172,7 +205,7 @@
     margin-bottom: 12px;
 
     code {
-      display: contents  !important;
+      display: contents !important;
     }
 
     &::before {
@@ -235,7 +268,7 @@
     @apply !border-none;
   }
   .expressive-code .copy button:after {
-    background-color: black !important
+    background-color: black !important;
   }
 
   .expressive-code .copy button div {

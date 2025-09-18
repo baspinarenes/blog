@@ -11,11 +11,6 @@ class PathManager {
 
   changeLocale(path: string, newLocale: string) {
     const { path: pathWithoutLocale } = this.parse(path);
-
-    if (newLocale === this.defaultLocale) {
-      return pathWithoutLocale;
-    }
-
     const basePath = pathWithoutLocale === "/" ? "" : pathWithoutLocale;
     return `/${newLocale}${basePath}`;
   }

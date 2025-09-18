@@ -1,0 +1,67 @@
+---
+import type { Lang } from "@models/type";
+import { useTranslations } from "@utils";
+import "@styles/global.css";
+import { AstroFont } from "astro-font";
+import Analytics from "@vercel/analytics/astro";
+import SpeedInsights from "@vercel/speed-insights/astro";
+
+interface Props {
+  id?: string;
+  title?: string;
+  description?: string;
+  date?: Date;
+}
+
+const { id, title, description, date } = Astro.props;
+const t = useTranslations(Astro.currentLocale as Lang);
+const locale = Astro.currentLocale as Lang;
+const siteTitle = t({
+  en: "Enes Başpınar",
+  tr: "Enes Başpınar",
+});
+const localeTitle = title ? `${title} - ${siteTitle}` : siteTitle;
+const localeDescription = description || t("description");
+---
+
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content={localeDescription} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{localeTitle}</title>
+
+    <AstroFont
+      config={[
+        {
+          src: [],
+          name: "JetBrains Mono",
+          googleFontsURL:
+            "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap",
+          preload: true,
+          display: "swap",
+          selector: "body",
+          fallback: "monospace",
+        },
+        {
+          src: [],
+          name: "Geist",
+          googleFontsURL:
+            "https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap",
+          preload: true,
+          display: "swap",
+          selector: "body",
+          fallback: "sans-serif",
+        },
+      ]}
+    />
+  </head>
+  <body
+    class="flex flex-col md:flex-row items-stretch min-h-dvh overflow-hidden"
+  >
+    <slot />
+    <Analytics />
+    <SpeedInsights />
+  </body>
+</html>

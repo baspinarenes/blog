@@ -15,6 +15,60 @@ const {
   colored = false,
 } = Astro.props as Props;
 
+enum IconName {
+  ARTICLES = "articles",
+  BACK = "back",
+  BASH = "bash",
+  BROWSER = "browser",
+  BULLET = "bullet",
+  CLOCK = "clock",
+  CLOSE = "close",
+  COFFEE = "coffee",
+  COPY = "copy",
+  CSS = "css",
+  CULTURES = "cultures",
+  DANGER = "danger",
+  DOCKER = "docker",
+  ESLINT = "eslint",
+  EXTERNAL_LINK = "external-link",
+  FULLSTACK = "fullstack",
+  GIT = "git",
+  GITHUB = "github",
+  GITLAB = "gitlab",
+  HOME = "home",
+  HTML = "html",
+  IMPORTANT = "important",
+  INFO = "info",
+  JAVASCRIPT = "javascript",
+  JOURNEY = "journey",
+  KUBERNETES = "kubernetes",
+  LESS = "less",
+  LINKEDIN = "linkedin",
+  LOGO = "logo",
+  MENU = "menu",
+  NODEJS = "nodejs",
+  NPM = "npm",
+  PACKAGE = "package",
+  PERFORMANCE = "performance",
+  SCSS = "scss",
+  SEARCH = "search",
+  SNIPPETS = "snippets",
+  SOFTWARE_DESIGN = "software-design",
+  SQL = "sql",
+  SWIFT = "swift",
+  THOUGHTS = "thoughts",
+  TOOLKIT = "toolkit",
+  TRANSLATE = "translate",
+  TWITTER = "twitter",
+  TYPESCRIPT = "typescript",
+  VIEW = "view",
+  VIEWS = "views",
+  WARNING = "warning",
+  WRITINGS = "writings",
+  WXT = "wxt",
+  YOUTUBE = "youtube",
+}
+
 const color =
   {
     css: "text-[#264de4]",
@@ -35,10 +89,12 @@ const color =
     eslint: "text-[#4B32C3]",
     bash: "text-black",
   }[name] || "text-gray-600";
+
+const icons = Object.values(IconName) as string[];
 ---
 
 {
-  name && (
+  name && icons.includes(name) && (
     <AstroIcon
       name={name}
       size={size}

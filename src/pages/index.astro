@@ -39,13 +39,10 @@ const defaultLocale = C.DEFAULT_LOCALE;
     <meta property="og:url" content={Astro.url} />
     <meta property="og:locale" content={defaultLocale} />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content={t(C.AUTHOR.SOCIAL_MEDIA.TWITTER)} />
+    <meta name="twitter:site" content={t(C.AUTHOR.SOCIAL_MEDIA.twitter)} />
 
     <noscript>
-      <meta
-        http-equiv="refresh"
-        content={`0;url=/${defaultLocale}`}
-      />
+      <meta http-equiv="refresh" content={`0;url=/${defaultLocale}`} />
     </noscript>
 
     <script is:inline define:vars={{ langs, defaultLocale }}>

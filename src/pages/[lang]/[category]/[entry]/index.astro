@@ -10,7 +10,7 @@ import { C } from "@configuration";
 
 export async function getStaticPaths() {
   const entries = await Promise.all(
-    C.ENTRY_CATEGORIES.map((category) => getEntries({ category })),
+    C.ENTRY_CATEGORIES.map((category) => getEntries({ category }))
   );
 
   const paths = entries.flat().map((post) => {
@@ -41,27 +41,29 @@ const { title, description, date, tags, topic, cover } = post.data;
     <div class="main-container">
       <article>
         <div
-          class="hidden md:flex gap-2 items-center text-sm select-none mb-8 text-gray-500"
+          class="hidden md:flex flex-col lg:flex-row gap-2 text-sm select-none mb-8 text-gray-500"
         >
-          <div class="block">{formatDate(date, locale)} /</div>
-          <div class="flex gap-1 items-center">
-            <Icon name="clock" size={16} />
-            {remarkPluginFrontmatter.minutesRead}
-            {
-              t({
-                en: "min",
-                tr: "dk",
-              })
-            } /
+          <div class="flex gap-2">
+            <div class="block">{formatDate(date, locale)} /</div>
+            <div class="flex gap-1 items-center">
+              <Icon name="clock" size={16} />
+              {remarkPluginFrontmatter.minutesRead}
+              {
+                t({
+                  en: "min",
+                  tr: "dk",
+                })
+              } /
+            </div>
+            <div id="view-counter" class="flex gap-1 items-center ml-4 md:ml-0">
+              <Icon name="view" size={16} />
+              <span
+                data-entry-view-count={entryId}
+                class="empty:opacity-0 transition-opacity duration-700 whitespace-nowrap"
+              ></span>
+            </div>
           </div>
-          <div id="view-counter" class="flex gap-1 items-center ml-4 md:ml-0">
-            <Icon name="view" size={16} />
-            <span
-              data-entry-view-count={entryId}
-              class="empty:opacity-0 transition-opacity duration-700 whitespace-nowrap"
-            ></span>
-          </div>
-          <div class="flex gap-1 items-center ml-auto">
+          <div class="flex gap-1 items-center lg:ml-auto">
             {
               tags
                 .slice(0, 3)

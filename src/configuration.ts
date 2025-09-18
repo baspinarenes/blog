@@ -5,7 +5,10 @@ export const C = {
     JOB: "Software Engineer",
     COMPANY: "Trendyol",
     SOCIAL_MEDIA: {
-      TWITTER: "@ensbaspinar",
+      twitter: "https://x.com/ensbaspinar",
+      linkedin: "https://www.linkedin.com/in/enesbaspinar",
+      github: "https://github.com/baspinarenes",
+      youtube: "https://www.youtube.com/ensbaspinar",
     },
   },
   LOCALES: {
@@ -23,7 +26,7 @@ export const C = {
     "articles",
     "snippets",
     "writings",
-    // "cultures",
+    "cultures",
     "thoughts",
   ],
   NAVIGATIONS: [
@@ -57,17 +60,23 @@ export const C = {
       href: "/writings",
       locales: ["tr"],
     },
-    // {
-    //   name: "culture",
-    //   href: "/culture",
-    //   locales: ["tr"],
-    // },
+    {
+      name: "cultures",
+      href: "/cultures",
+      locales: ["tr"],
+    },
     {
       name: "thoughts",
       href: "/thoughts",
       locales: ["tr"],
     },
   ] as Array<{ name: string; locales: string[]; href: string }>,
+  PACKAGES: [
+    {
+      name: "Money",
+      href: "/packages/money",
+    },
+  ],
   CATEGORIES_LABELS: {
     home: {
       tr: "Anasayfa",
@@ -93,7 +102,7 @@ export const C = {
       tr: "Yazılarım",
       en: "Writings",
     },
-    culture: {
+    cultures: {
       tr: "Kültür & Sanat",
       en: "Culture & Art",
     },
