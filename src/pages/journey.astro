@@ -1,19 +1,9 @@
 ---
-import { C } from "@configuration";
 import { BaseLayout } from "@layouts";
-import { useTranslations } from "@utils";
-import type { Lang } from "@models/type";
 import { getCollection } from "astro:content";
 import { JourneyYear } from "@components";
 
-export const getStaticPaths = () =>
-  Object.keys(C.LOCALES).map((lang) => ({ params: { lang } }));
-
-const t = useTranslations(Astro.currentLocale as Lang);
-const title = t({
-  en: "Journey",
-  tr: "Yolculuğum",
-});
+const title = "Yolculuğum";
 
 const journey = await getCollection("journey");
 const sortedJourney = journey.sort((a, b) => b.data.year - a.data.year);

@@ -1,0 +1,14 @@
+---
+import { CategoryLayout } from "@layouts";
+import { C } from "@configuration";
+import type { Category } from "@models/type";
+
+export function getStaticPaths() {
+  return C.ENTRY_CATEGORIES.map((category) => ({ params: { category } }));
+}
+
+const { category } = Astro.params;
+const title = C.CATEGORIES_LABELS[category as Category];
+---
+
+<CategoryLayout title={title} />

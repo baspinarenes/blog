@@ -2,9 +2,7 @@
 import { components } from "@components/markdown";
 import { EntryLayout } from "@layouts";
 import { render } from "astro:content";
-import { useTranslations } from "@utils";
 import { getEntries, formatDate } from "@utils";
-import type { Lang } from "@models/type";
 import { Icon, Image } from "@ui-kit";
 import { C } from "@configuration";
 
@@ -16,7 +14,6 @@ export async function getStaticPaths() {
   const paths = entries.flat().map((post) => {
     return {
       params: {
-        lang: post.lang,
         category: post.collection,
         entry: post.id,
       },
@@ -27,8 +24,6 @@ export async function getStaticPaths() {
   return paths;
 }
 
-const locale = Astro.params.lang as Lang;
-const t = useTranslations(locale);
 const post = Astro.props;
 const entryId = post.id.split("/").pop() || "";
 
@@ -44,16 +39,10 @@ const { title, description, date, tags, topic, cover } = post.data;
           class="hidden md:flex flex-col lg:flex-row gap-2 text-sm select-none mb-8 text-gray-500"
         >
           <div class="flex gap-2">
-            <div class="block">{formatDate(date, locale)} /</div>
+            <div class="block">{formatDate(date)} /</div>
             <div class="flex gap-1 items-center">
               <Icon name="clock" size={16} />
-              {remarkPluginFrontmatter.minutesRead}
-              {
-                t({
-                  en: "min",
-                  tr: "dk",
-                })
-              } /
+              {remarkPluginFrontmatter.minutesRead} dk /
             </div>
             <div id="view-counter" class="flex gap-1 items-center ml-4 md:ml-0">
               <Icon name="view" size={16} />
@@ -90,7 +79,7 @@ const { title, description, date, tags, topic, cover } = post.data;
   </main>
 </EntryLayout>
 
-<script define:vars={{ entryId, locale }}>
+<script define:vars={{ entryId }}>
   async function incrementViewCount() {
     if (
       window.location.hostname === "localhost" ||
@@ -103,7 +92,7 @@ const { title, description, date, tags, topic, cover } = post.data;
       await fetch("/api/increment-view", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ entryId, locale }),
+        body: JSON.stringify({ entryId }),
       });
     } catch (error) {
       console.error("[ERROR] Failed to increment view count:", error);

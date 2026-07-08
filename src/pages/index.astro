@@ -1,70 +1,28 @@
 ---
 import { C } from "@configuration";
-import type { Lang } from "@models/type";
-import { getLocalePaths, useTranslations } from "@utils";
+import { Icon } from "astro-icon/components";
+import { Title } from "@ui-kit";
+import BaseLayout from "../layouts/base.astro";
 
-const t = useTranslations(Astro.currentLocale as Lang);
-const langs = Object.keys(C.LOCALES);
-const defaultLocale = C.DEFAULT_LOCALE;
+const title = "Anasayfa";
+
+const description = `Selam. Ben ${C.AUTHOR.NAME}, ${C.AUTHOR.AGE} yaşındayım. ${C.AUTHOR.COMPANY}'da ${new Date().getFullYear() - 2021} yıldır ${C.AUTHOR.JOB} olarak çalışıyorum. Araştırmaktan ve yeni şeyler öğrenmekten hoşlanıyorum. Öğrendiklerimi başkalarına anlatmayı seviyorum ve bu yüzden blog tutuyorum. Monoton ve aynı içerikli yazılar okuduğumda çığlık atasım geliyor ve insanları sıkıcılıktan kurtarmak için farklı şeyler yazmaya çalışıyorum.`;
 ---
 
-<html lang={defaultLocale}>
-  <head>
-    <meta charset="UTF-8" />
-    <title>redirect...</title>
-    <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="generator" content={Astro.generator} />
-    {
-      getLocalePaths(Astro.url).map((props) => (
-        <link
-          rel="alternate"
-          hreflang={C.LOCALES[props.lang].lang || props.lang}
-          href={Astro.site?.origin + props.path}
+<BaseLayout title={title}>
+  <main>
+    <div class="main-container">
+      <div class="flex flex-col md:flex-row items-center md:gap-6 mb-4">
+        <Icon
+          name="logo"
+          size={124}
+          class="mx-auto shrink-0 md:hidden md:mx-0 animate-scream"
         />
-      ))
-    }
-
-    <!-- icon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" sizes="192x192" href="/android-chrome.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="color-scheme" content="light dark" />
-
-    <!-- OGP -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content={t("title")} />
-    <meta property="og:site_name" content={t("title")} />
-    <meta property="og:description" content={t("description")} />
-    <meta property="og:image" content={Astro.site + "ogp.png"} />
-    <meta property="og:url" content={Astro.url} />
-    <meta property="og:locale" content={defaultLocale} />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content={t(C.AUTHOR.SOCIAL_MEDIA.twitter)} />
-
-    <noscript>
-      <meta http-equiv="refresh" content={`0;url=/${defaultLocale}`} />
-    </noscript>
-
-    <script is:inline define:vars={{ langs, defaultLocale }}>
-      if (
-        localStorage.selectedLang &&
-        langs.includes(localStorage.selectedLang)
-      ) {
-        location.href = `/${localStorage.selectedLang}`;
-      } else {
-        const browserLang = navigator.language.toLowerCase();
-
-        if (langs.includes(browserLang)) {
-          location.href = `/${browserLang}`;
-        } else if (langs.includes(browserLang.split("-")[0])) {
-          location.href = `/${browserLang.split("-")[0]}`;
-        } else {
-          location.href = `/${defaultLocale}`;
-        }
-      }
-    </script>
-  </head>
-  <body>
-    <h1>redirect...</h1>
-  </body>
-</html>
+        <div>
+          <Title>Bloguma hoş geldin!</Title>
+          <p class="mt-4 text-justify md:text-left">{description}</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
