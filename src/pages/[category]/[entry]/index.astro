@@ -1,8 +1,9 @@
 ---
 import { components } from "@components/markdown";
+import { PoemEntry } from "@components";
 import { EntryLayout } from "@layouts";
 import { render } from "astro:content";
-import { getEntries, formatDate } from "@utils";
+import { getEntries, formatDate, resolvePoemSongUrl } from "@utils";
 import { Icon, Image } from "@ui-kit";
 import { C } from "@configuration";
 
@@ -29,54 +30,74 @@ const entryId = post.id.split("/").pop() || "";
 
 const { Content, remarkPluginFrontmatter } = await render(post);
 const { title, description, date, tags, topic, cover } = post.data;
+
+const isPoem = post.collection === "poems";
+const songData = isPoem ? (post.data as { song?: { file: string; name: string; artist?: string } }).song : undefined;
+const song = songData
+  ? {
+      url: resolvePoemSongUrl(post.id, songData.file),
+      name: songData.name,
+      artist: songData.artist,
+    }
+  : null;
 ---
 
 <EntryLayout {entryId} {title} {description} {date}>
-  <main>
-    <div class="main-container">
-      <article>
-        <div
-          class="hidden md:flex flex-col lg:flex-row gap-2 text-sm select-none mb-8 text-gray-500"
-        >
-          <div class="flex gap-2">
-            <div class="block">{formatDate(date)} /</div>
-            <div class="flex gap-1 items-center">
-              <Icon name="clock" size={16} />
-              {remarkPluginFrontmatter.minutesRead} dk /
-            </div>
-            <div id="view-counter" class="flex gap-1 items-center ml-4 md:ml-0">
-              <Icon name="view" size={16} />
-              <span
-                data-entry-view-count={entryId}
-                class="empty:opacity-0 transition-opacity duration-700 whitespace-nowrap"
-              ></span>
-            </div>
-          </div>
-          <div class="flex gap-1 items-center lg:ml-auto">
-            {
-              tags
-                .slice(0, 3)
-                .map((tag) => (
+  {
+    isPoem ? (
+      <PoemEntry
+        {title}
+        {date}
+        minutesRead={remarkPluginFrontmatter.minutesRead}
+        {entryId}
+        {tags}
+        {song}
+      >
+        <Content components={components} />
+      </PoemEntry>
+    ) : (
+      <main>
+        <div class="main-container">
+          <article>
+            <div class="hidden md:flex flex-col lg:flex-row gap-2 text-sm select-none mb-8 text-gray-500">
+              <div class="flex gap-2">
+                <div class="block">{formatDate(date)} /</div>
+                <div class="flex gap-1 items-center">
+                  <Icon name="clock" size={16} />
+                  {remarkPluginFrontmatter.minutesRead} dk /
+                </div>
+                <div
+                  id="view-counter"
+                  class="flex gap-1 items-center ml-4 md:ml-0"
+                >
+                  <Icon name="view" size={16} />
+                  <span
+                    data-entry-view-count={entryId}
+                    class="empty:opacity-0 transition-opacity duration-700 whitespace-nowrap"
+                  />
+                </div>
+              </div>
+              <div class="flex gap-1 items-center lg:ml-auto">
+                {tags.slice(0, 3).map((tag) => (
                   <div class="text-xs px-2 py-1 rounded-lg bg-gray-200">
                     #{tag}
                   </div>
-                ))
-            }
-          </div>
-        </div>
-        {!cover && <Icon name={topic} size={64} class="mb-8" colored />}
-        <h1 class="mb-5 mt-4 md:mb-6 md:mt-5 text-balance">{title}</h1>
-        {
-          cover && (
-            <div class="mb-8">
-              <Image src={cover.src} alt={title} class="w-full h-auto" />
+                ))}
+              </div>
             </div>
-          )
-        }
-        <Content components={components} />
-      </article>
-    </div>
-  </main>
+            {!cover && <Icon name={topic} size={64} class="mb-8" colored />}
+            <h1 class="mb-5 mt-4 md:mb-6 md:mt-5 text-balance">{title}</h1>
+            {cover && (
+              <div class="mb-8">
+                <Image src={cover.src} alt={title} class="w-full h-auto" />
+              </div>
+            )}
+            <Content components={components} />
+          </article>
+        </div>
+      </main>
+    )
+  }
 </EntryLayout>
 
 <script define:vars={{ entryId }}>
