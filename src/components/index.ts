@@ -13,3 +13,4 @@ export { default as SocialItem } from "./sidebar/socials/item.astro";
 export { default as Topbar } from "./topbar/index.astro";
 export { default as Menu } from "./topbar/menu.astro";
 export { default as PageBackButton } from "./topbar/page-back.astro";
+export { default as PoemEntry } from "./poem-entry.astro";
