@@ -15,6 +15,7 @@ export const C = {
     "writings",
     "cultures",
     "thoughts",
+    "poems",
   ],
   NAVIGATIONS: [
     { name: "home", href: "/" },
@@ -22,6 +23,7 @@ export const C = {
     { name: "writings", href: "/writings" },
     { name: "cultures", href: "/cultures" },
     { name: "thoughts", href: "/thoughts" },
+    { name: "poems", href: "/poems" },
   ] as Array<{ name: string; href: string }>,
   CATEGORIES_LABELS: {
     home: "Anasayfa",
@@ -29,5 +31,6 @@ export const C = {
     writings: "Yazılarım",
     cultures: "Kültür & Sanat",
     thoughts: "Düşüncelerim",
+    poems: "Şiirlerim",
   },
 };
