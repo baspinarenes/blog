@@ -4,3 +4,4 @@ export * from "./request";
 export * from "./string";
 export * from "./supabase";
 export * from "./pathManager";
+export * from "./audio";
