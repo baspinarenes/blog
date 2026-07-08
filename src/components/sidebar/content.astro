@@ -20,17 +20,5 @@ const { parent = "sidebar" } = Astro.props as Props;
     {parent === "menu" && <Seperator />}
     <Spacer size={8} />
     <Socials />
-    <Spacer size={4} />
-    <div
-      class:list={{
-        hidden: parent === "menu",
-      }}
-    >
-      <Seperator />
-      <Spacer size={4} />
-      <footer class="text-xs text-gray-500 text-center">
-        Inspired by onur.dev
-      </footer>
-    </div>
   </div>
 </div>
