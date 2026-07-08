@@ -23,19 +23,12 @@ export const og = (): AstroIntegration => ({
           const parts = pathname.split("/").filter(Boolean);
           let type = "";
 
-          if (
-            [0, 1].includes(parts.length) &&
-            !["404/", "500/"].includes(pathname)
-          )
-            type = "homepage";
-          if ([2].includes(parts.length)) type = "category";
-          if ([3].includes(parts.length)) type = "entry";
+          if (parts.length === 0) type = "homepage";
+          if (parts.length === 1 && !["404/", "500/"].includes(pathname))
+            type = "category";
+          if (parts.length === 2) type = "entry";
 
-          console.log("typetype", type);
-
-          const [locale, category, ...entryPath] = pathname
-            .split("/")
-            .filter(Boolean);
+          const [category, ...entryPath] = parts;
 
           let title = "";
           let description = "";
@@ -49,9 +42,7 @@ export const og = (): AstroIntegration => ({
               break;
             case "entry":
               const file = fs.readFileSync(
-                `src/content/blog/${category}/${entryPath.join(
-                  "/"
-                )}/${locale}.mdx`
+                `src/content/blog/${category}/${entryPath.join("/")}/tr.mdx`
               );
 
               const { title: t, description: d } = parseFrontmatter(file)
