@@ -292,8 +292,11 @@ const songLabel = song
 
     const interactionEvents = ["pointerdown", "keydown", "wheel", "touchmove"];
 
-    function startOnFirstInteraction() {
+    function startOnFirstInteraction(event: Event) {
       cleanup();
+      if (toggle && event.target instanceof Node && toggle.contains(event.target)) {
+        return;
+      }
       if (audio && audio.paused) {
         audio.play().catch(() => {});
       }
