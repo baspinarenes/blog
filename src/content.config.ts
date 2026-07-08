@@ -20,14 +20,8 @@ const journey = defineCollection({
       year: z.number(),
       items: z.array(
         z.object({
-          title: z.object({
-            en: z.string(),
-            tr: z.string(),
-          }),
-          description: z.object({
-            en: z.string(),
-            tr: z.string(),
-          }),
+          title: z.string(),
+          description: z.string(),
           image: image().optional(),
         })
       ),

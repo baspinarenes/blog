@@ -4,14 +4,8 @@
     "year": 1999,
     "items": [
       {
-        "title": {
-          "en": "Born",
-          "tr": "Doğdum"
-        },
-        "description": {
-          "en": "I was born on 21 March Sunday.",
-          "tr": "21 Mart Pazar günü dünyaya herhangi biri katıldı."
-        }
+        "title": "Doğdum",
+        "description": "21 Mart Pazar günü dünyaya herhangi biri katıldı."
       }
     ]
   },
@@ -20,14 +14,8 @@
     "year": 2017,
     "items": [
       {
-        "title": {
-          "en": "Started Kocaeli University",
-          "tr": "Kocaeli Üniversitesi'ne başladım"
-        },
-        "description": {
-          "en": "I was excited to start my computer engineering journey.",
-          "tr": "Çocukluktan beri istediğim bilgisayar mühendisliğini kazandığım için heyecanlıydım."
-        }
+        "title": "Kocaeli Üniversitesi'ne başladım",
+        "description": "Çocukluktan beri istediğim bilgisayar mühendisliğini kazandığım için heyecanlıydım."
       }
     ]
   },
@@ -36,14 +24,8 @@
     "year": 2020,
     "items": [
       {
-        "title": {
-          "en": "Joined Trendyol Bootcamp",
-          "tr": "Trendyol Bootcamp'e katıldım"
-        },
-        "description": {
-          "en": "My career started here 🧡",
-          "tr": "Kariyerimin başlangıç noktası 🧡"
-        }
+        "title": "Trendyol Bootcamp'e katıldım",
+        "description": "Kariyerimin başlangıç noktası 🧡"
       }
     ]
   },
@@ -53,14 +35,8 @@
     "items": [
       {
         "image": "./images/trendyol-team-meeting-1.jpeg",
-        "title": {
-          "en": "I joined Trendyol",
-          "tr": "Trendyol'a katıldım"
-        },
-        "description": {
-          "en": "I started my first job as an Associate Software Developer.",
-          "tr": "Associate Software Developer rolüyle ilk işime başladım."
-        }
+        "title": "Trendyol'a katıldım",
+        "description": "Associate Software Developer rolüyle ilk işime başladım."
       }
     ]
   },
@@ -69,24 +45,12 @@
     "year": 2022,
     "items": [
       {
-        "title": {
-          "en": "Promoted",
-          "tr": "Terfi ettim"
-        },
-        "description": {
-          "en": "I promoted to Software Developer.",
-          "tr": "Software Developer'a terfi ettim."
-        }
+        "title": "Terfi ettim",
+        "description": "Software Developer'a terfi ettim."
       },
       {
-        "title": {
-          "en": "Graduated from Kocaeli University",
-          "tr": "Kocaeli Üniversitesi'nden mezun oldum"
-        },
-        "description": {
-          "en": "I graduated from Kocaeli University after 4 years. The only contribution of the university to me was to try different technologies in the software laboratory and my experience in the unmanned aircraft team.",
-          "tr": "Anlamsız 4 yıldan sonra mezun oldum. Üniversitenin bana tek katkısı yazılım laboratuvarında farklı teknolojiler denemek ve insansız hava uçağı takımındaki tecrübelerim oldu."
-        }
+        "title": "Kocaeli Üniversitesi'nden mezun oldum",
+        "description": "Anlamsız 4 yıldan sonra mezun oldum. Üniversitenin bana tek katkısı yazılım laboratuvarında farklı teknolojiler denemek ve insansız hava uçağı takımındaki tecrübelerim oldu."
       }
     ]
   }
