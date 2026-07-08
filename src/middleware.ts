@@ -1,23 +1,13 @@
 import type { MiddlewareHandler } from "astro";
-import { pathManager } from "./utils/pathManager";
+
+const LEGACY_LOCALE_PREFIX = /^\/(tr|en)(\/|$)/;
 
 export const onRequest: MiddlewareHandler = async (context, next) => {
-  if (
-    context.url.pathname.startsWith("/api") ||
-    context.url.pathname.startsWith("/_astro") ||
-    context.url.pathname.startsWith("/.well-known") ||
-    context.url.pathname.startsWith("/sitemap") ||
-    context.url.pathname.startsWith("/robots") ||
-    context.url.pathname.startsWith("/favicon.ico") ||
-    context.url.pathname.startsWith("/apple-touch-icon") ||
-    context.url.pathname.startsWith("/apple-touch-icon-precomposed") ||
-    context.url.pathname.startsWith("/apple-touch-icon-precomposed-180x180")
-  ) {
-    return next();
-  }
+  const { pathname, search } = context.url;
 
-  if (!pathManager.isAvailable(context.url.pathname)) {
-    return context.redirect(`/${pathManager.getLocale(context.url.pathname)}`);
+  if (LEGACY_LOCALE_PREFIX.test(pathname)) {
+    const target = pathname.replace(/^\/(tr|en)/, "") || "/";
+    return context.redirect(`${target}${search}`, 301);
   }
 
   return next();
