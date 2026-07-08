@@ -1,17 +1,16 @@
 import type { APIRoute } from "astro";
-import { C } from "@configuration";
-import type { Lang } from "@models/type";
 import { supabase } from "@utils";
 
 export const prerender = false;
+
+const LOCALE = "tr";
 
 export const GET: APIRoute = async ({ request }) => {
   try {
     const url = new URL(request.url);
     const entryId = url.searchParams.get("entryId");
-    const locale = url.searchParams.get("locale");
 
-    if (!entryId || !locale || !Object.keys(C.LOCALES).includes(locale)) {
+    if (!entryId) {
       return new Response(
         JSON.stringify({
           success: false,
@@ -21,7 +20,7 @@ export const GET: APIRoute = async ({ request }) => {
       );
     }
 
-    const result = await getViewCount({ entryId, locale: locale as Lang });
+    const result = await getViewCount(entryId);
 
     return new Response(
       JSON.stringify({ success: true, views: result.views }),
@@ -36,19 +35,13 @@ export const GET: APIRoute = async ({ request }) => {
   }
 };
 
-const getViewCount = async ({
-  entryId,
-  locale,
-}: {
-  entryId: string;
-  locale: Lang;
-}) => {
+const getViewCount = async (entryId: string) => {
   try {
     const { data, error } = await supabase
       .from("entry_views")
       .select("views")
       .eq("entry_id", entryId)
-      .eq("locale", locale)
+      .eq("locale", LOCALE)
       .single();
 
     if (error) {

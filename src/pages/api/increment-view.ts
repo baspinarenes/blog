@@ -1,23 +1,23 @@
 import type { APIRoute } from "astro";
 import { supabaseAdmin } from "@utils";
-import { C } from "@configuration";
-import type { Lang } from "@models/type";
 
 export const prerender = false;
+
+const LOCALE = "tr";
 
 export const POST: APIRoute = async ({ request }) => {
   try {
     const data = await request.json();
-    const { entryId, locale } = data;
+    const { entryId } = data;
 
-    if (!entryId || !locale || !Object.keys(C.LOCALES).includes(locale)) {
+    if (!entryId) {
       return new Response(
         JSON.stringify({ success: false, error: "Invalid parameters" }),
         { status: 400 }
       );
     }
 
-    const result = await incrementViewCount({ entryId, locale });
+    const result = await incrementViewCount(entryId);
 
     if (!result.success) {
       return new Response(
@@ -36,19 +36,13 @@ export const POST: APIRoute = async ({ request }) => {
   }
 };
 
-const incrementViewCount = async ({
-  entryId,
-  locale,
-}: {
-  entryId: string;
-  locale: Lang;
-}) => {
+const incrementViewCount = async (entryId: string) => {
   try {
     const { data, error } = await supabaseAdmin
       .from("entry_views")
       .select("*")
       .eq("entry_id", entryId)
-      .eq("locale", locale)
+      .eq("locale", LOCALE)
       .maybeSingle();
 
     if (error) {
@@ -64,7 +58,7 @@ const incrementViewCount = async ({
           updated_at: new Date().toISOString(),
         })
         .eq("entry_id", entryId)
-        .eq("locale", locale);
+        .eq("locale", LOCALE);
 
       if (updateError) {
         console.error("[ERROR] View update error:", updateError);
@@ -75,7 +69,7 @@ const incrementViewCount = async ({
         .from("entry_views")
         .insert({
           entry_id: entryId,
-          locale,
+          locale: LOCALE,
           views: 1,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),

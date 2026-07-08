@@ -1,23 +1,13 @@
 import type { APIRoute } from "astro";
 import { supabaseAdmin } from "@utils";
-import { C } from "@configuration";
-import type { Lang } from "@models/type";
 
 export const prerender = false;
 
-export const POST: APIRoute = async ({ request }) => {
+const LOCALE = "tr";
+
+export const POST: APIRoute = async () => {
   try {
-    const data = await request.json();
-    const { locale } = data;
-
-    if (!locale || !Object.keys(C.LOCALES).includes(locale)) {
-      return new Response(
-        JSON.stringify({ success: false, error: "Invalid parameters" }),
-        { status: 400 }
-      );
-    }
-
-    const viewCounts = await getViewCounts(locale);
+    const viewCounts = await getViewCounts();
 
     return new Response(JSON.stringify({ success: true, viewCounts }), {
       status: 200,
@@ -31,12 +21,12 @@ export const POST: APIRoute = async ({ request }) => {
   }
 };
 
-const getViewCounts = async (locale: Lang): Promise<Record<string, number>> => {
+const getViewCounts = async (): Promise<Record<string, number>> => {
   try {
     const { data, error } = await supabaseAdmin
       .from("entry_views")
       .select("entry_id, views")
-      .eq("locale", locale);
+      .eq("locale", LOCALE);
 
     if (error) {
       console.error("[ERROR] View count fetch error:", error);
