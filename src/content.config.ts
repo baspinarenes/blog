@@ -52,9 +52,18 @@ const cultures = defineCollection({
   schema: entrySchema,
 });
 
+const poems = defineCollection({
+  loader: glob({
+    pattern: "**/[^_]*.mdx",
+    base: "./src/content/blog/poems",
+  }),
+  schema: entrySchema,
+});
+
 export const collections = {
   journey,
   writings,
   thoughts,
   cultures,
+  poems,
 };
