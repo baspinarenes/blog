@@ -8,8 +8,6 @@ export { default as Sidebar } from "./sidebar/index.astro";
 export { default as Languager } from "./sidebar/languager.astro";
 export { default as Navigations } from "./sidebar/navigations/index.astro";
 export { default as NavigationItem } from "./sidebar/navigations/item.astro";
-export { default as Packages } from "./sidebar/packages/index.astro";
-export { default as PackageItem } from "./sidebar/packages/item.astro";
 export { default as Profile } from "./sidebar/profile.astro";
 export { default as Socials } from "./sidebar/socials/index.astro";
 export { default as SocialItem } from "./sidebar/socials/item.astro";

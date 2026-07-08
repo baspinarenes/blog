@@ -4,7 +4,6 @@ import { pathManager } from "./utils/pathManager";
 export const onRequest: MiddlewareHandler = async (context, next) => {
   if (
     context.url.pathname.startsWith("/api") ||
-    context.url.pathname.startsWith("/packages") ||
     context.url.pathname.startsWith("/_astro") ||
     context.url.pathname.startsWith("/.well-known") ||
     context.url.pathname.startsWith("/sitemap") ||

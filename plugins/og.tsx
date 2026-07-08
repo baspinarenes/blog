@@ -21,12 +21,7 @@ export const og = (): AstroIntegration => ({
 
         for (const { pathname } of pages) {
           const parts = pathname.split("/").filter(Boolean);
-          // ["en", "articles", "what-is-function-overloading"]
-          // ["en", "articles"]
-          // ["en", "journey"]
           let type = "";
-
-          console.log(pathname);
 
           if (
             [0, 1].includes(parts.length) &&

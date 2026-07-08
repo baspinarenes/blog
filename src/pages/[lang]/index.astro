@@ -24,13 +24,8 @@ const description = t({
   tr: `Selam. Ben ${C.AUTHOR.NAME}, ${C.AUTHOR.AGE} yaşındayım. ${C.AUTHOR.COMPANY}'da ${new Date().getFullYear() - 2021} yıldır ${C.AUTHOR.JOB} olarak çalışıyorum. Araştırmaktan ve yeni şeyler öğrenmekten hoşlanıyorum. Öğrendiklerimi başkalarına anlatmayı seviyorum ve bu yüzden blog tutuyorum. Monoton ve aynı içerikli yazılar okuduğumda çığlık atasım geliyor ve insanları sıkıcılıktan kurtarmak için farklı şeyler yazmaya çalışıyorum.`,
 });
 
-const [snippets, articles] = await Promise.all([
-  getEntries({ category: "snippets", locale }),
-  getEntries({ category: "articles", locale }),
-]);
-
 const formatEntryForTable = (
-  entry: any
+  entry: any,
 ): Array<{ value: string; html?: boolean; link?: string }> => {
   const entryId = entry.id.split("/").pop() || "";
   return [
@@ -47,9 +42,6 @@ const formatEntryForTable = (
     },
   ];
 };
-
-const latestSnippets = snippets.flat().slice(0, 5).map(formatEntryForTable);
-const latestArticles = articles.flat().slice(0, 5).map(formatEntryForTable);
 ---
 
 <BaseLayout title={title}>
@@ -70,62 +62,6 @@ const latestArticles = articles.flat().slice(0, 5).map(formatEntryForTable);
           <p class="mt-4 text-justify md:text-left">{description}</p>
         </div>
       </div>
-
-      <Table
-        id="articles"
-        title={t({
-          en: "Latest Articles",
-          tr: "Son Makalelerim",
-        })}
-        columns={[
-          { name: "icon", title: t({ en: "", tr: "" }), class: "w-4" },
-          {
-            name: "title",
-            title: t({ en: "Title", tr: "Başlık" }),
-            class: "w-auto",
-          },
-          {
-            name: "views",
-            title: t({ en: "Views", tr: "Okunma" }),
-            class: "md:w-40 whitespace-nowrap text-right",
-          },
-        ]}
-        description={t({
-          en: "Articles I've written about my experiences and learnings.",
-          tr: "Deneyimlerim ve öğrenmelerim hakkında yazdığım yazılar.",
-        })}
-        data={latestArticles}
-        headless
-        noScroll
-      />
-
-      <Table
-        id="snippets"
-        title={t({
-          en: "Latest Snippets",
-          tr: "Son Kod Parçalarım",
-        })}
-        columns={[
-          { name: "icon", title: t({ en: "", tr: "" }), class: "w-0" },
-          {
-            name: "title",
-            title: t({ en: "Title", tr: "Başlık" }),
-            class: "w-auto",
-          },
-          {
-            name: "views",
-            title: t({ en: "Views", tr: "Okunma" }),
-            class: "md:w-40 whitespace-nowrap text-right",
-          },
-        ]}
-        description={t({
-          en: "Code snippets I use in my daily development process that I believe could be useful to others.",
-          tr: "Günlük geliştirme sürecimde kullandığım ve faydalı olabileceğini düşündüğüm kod parçaları.",
-        })}
-        data={latestSnippets}
-        headless
-        noScroll
-      />
 
       <!-- <div
         class="mt-12 bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg shadow-sm"

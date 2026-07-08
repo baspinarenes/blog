@@ -23,8 +23,6 @@ export const C = {
   },
   DEFAULT_LOCALE: "en" as const,
   ENTRY_CATEGORIES: [
-    "articles",
-    "snippets",
     "writings",
     "cultures",
     "thoughts",
@@ -33,27 +31,12 @@ export const C = {
     {
       name: "home",
       href: "/",
-      locales: ["en", "tr"],
+      locales: ["tr"],
     },
     {
       name: "journey",
       href: "/journey",
-      locales: ["en", "tr"],
-    },
-    {
-      name: "toolkit",
-      href: "/toolkit",
-      locales: ["en", "tr"],
-    },
-    {
-      name: "articles",
-      href: "/articles",
-      locales: ["en", "tr"],
-    },
-    {
-      name: "snippets",
-      href: "/snippets",
-      locales: ["en", "tr"],
+      locales: ["tr"],
     },
     {
       name: "writings",
@@ -71,12 +54,6 @@ export const C = {
       locales: ["tr"],
     },
   ] as Array<{ name: string; locales: string[]; href: string }>,
-  PACKAGES: [
-    {
-      name: "Money",
-      href: "/packages/money",
-    },
-  ],
   CATEGORIES_LABELS: {
     home: {
       tr: "Anasayfa",
@@ -85,18 +62,6 @@ export const C = {
     journey: {
       tr: "Yolculuğum",
       en: "Journey",
-    },
-    toolkit: {
-      tr: "Araçlarım",
-      en: "My Toolkit",
-    },
-    articles: {
-      tr: "Makalelerim",
-      en: "Articles",
-    },
-    snippets: {
-      tr: "Kod Parçalarım",
-      en: "Snippets",
     },
     writings: {
       tr: "Yazılarım",
@@ -118,9 +83,6 @@ export const C = {
       description: "A starter template for Astro with i18n support.",
       "navigation.home": "Home",
       "navigation.journey": "Journey",
-      "navigation.toolkit": "Toolkit",
-      "navigation.articles": "Articles",
-      "navigation.snippets": "Snippets",
     },
     tr: {
       language: "Türkçe",
@@ -128,9 +90,6 @@ export const C = {
       description: "A starter template for Astro with i18n support.",
       "navigation.home": "Anasayfa",
       "navigation.journey": "Yolculuğum",
-      "navigation.toolkit": "Araç Çantam",
-      "navigation.articles": "Makaleler",
-      "navigation.snippets": "Kod Parçaları",
     },
   } satisfies { [key: string]: { [key: string]: string } },
 };

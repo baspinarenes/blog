@@ -27,8 +27,6 @@ class PathManager {
   }
 
   isActive(href: string, path: string) {
-    // href: /tr/articles/what-is-function-overloading
-    // path: /tr
     if (path.length === 3 && href.length !== 3) {
       return false;
     }

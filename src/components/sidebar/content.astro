@@ -1,11 +1,5 @@
 ---
-import {
-  Languager,
-  Navigations,
-  Packages,
-  Profile,
-  Socials,
-} from "@components";
+import { Languager, Navigations, Profile, Socials } from "@components";
 import type { Lang } from "@models/type";
 import { Seperator, Spacer } from "@ui-kit";
 import { useTranslations } from "@utils";
@@ -35,7 +29,6 @@ const t = useTranslations(lang as Lang);
     <Spacer size={8} />
     <Navigations />
     <Spacer size={parent === "menu" ? 4 : 0} />
-    <Packages />
     {parent === "menu" && <Seperator />}
     <Spacer size={8} />
     <Socials />
