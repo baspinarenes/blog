@@ -1,7 +1,5 @@
 ---
 import { Sidebar, Topbar } from "@components";
-import type { Lang } from "@models/type";
-import { useTranslations } from "@utils";
 import "@styles/global.css";
 import { AstroFont } from "astro-font";
 import Analytics from "@vercel/analytics/astro";
@@ -15,24 +13,21 @@ interface Props {
 }
 
 const { id, title = "", description, date } = Astro.props;
-const t = useTranslations(Astro.currentLocale as Lang);
 const url = Astro.url.href;
-const locale = Astro.currentLocale as Lang;
-const siteTitle = t({
-  en: "Enes Başpınar",
-  tr: "Enes Başpınar",
-});
-const localeTitle = title ? `${title} - ${siteTitle}` : siteTitle;
-const localeDescription = description || t("description");
+const siteTitle = "Enes Başpınar";
+const pageTitle = title ? `${title} - ${siteTitle}` : siteTitle;
+const pageDescription =
+  description ||
+  "Enes Başpınar'ın kişisel blogu; yazılım, kültür-sanat ve düşünceler.";
 ---
 
-<html lang={locale}>
+<html lang="tr">
   <head>
     <meta charset="utf-8" />
-    <meta name="description" content={localeDescription} />
+    <meta name="description" content={pageDescription} />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{localeTitle}</title>
+    <title>{pageTitle}</title>
 
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
@@ -43,6 +38,7 @@ const localeDescription = description || t("description");
     />
     <meta property="og:type" content="article" />
     <meta property="og:url" content={url} />
+    <meta property="og:locale" content="tr_TR" />
 
     <!-- Twitter card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -93,15 +89,11 @@ const localeDescription = description || t("description");
     <Analytics />
     <SpeedInsights />
 
-    <script define:vars={{ locale }}>
+    <script>
       async function fetchViewCounts() {
         try {
           const response = await fetch("/api/get-view-counts", {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ locale }),
           });
 
           if (!response.ok) throw new Error("View count fetch failed");

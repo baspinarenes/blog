@@ -1,16 +1,9 @@
 ---
-import { capitalize } from "@utils";
-import { Icon } from "astro-icon/components";
-import { useTranslations } from "@utils";
-import type { Lang } from "@models/type";
 type Props = {
   type: "info" | "warning" | "important" | "danger";
 };
 
 const { type } = Astro.props as Props;
-
-const locale = Astro.currentLocale as Lang;
-const t = useTranslations(locale);
 
 const barBgColor = {
   info: "bg-blue-500",
@@ -24,25 +17,6 @@ const xColor = {
   warning: "bg-yellow-50",
   important: "bg-green-50",
   danger: "bg-red-50",
-}[type];
-
-const text = {
-  info: {
-    tr: " Bilgi",
-    en: "Info",
-  },
-  warning: {
-    tr: "Warning",
-    en: "Warning",
-  },
-  important: {
-    tr: "Önemli",
-    en: "Important",
-  },
-  danger: {
-    tr: "Dikkat et",
-    en: "Danger",
-  },
 }[type];
 ---
 

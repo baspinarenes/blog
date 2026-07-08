@@ -1,12 +1,11 @@
 ---
 import { JourneyItem } from "@components";
-import type { Multilingual } from "@models/type";
 
 type Props = {
   year: number;
   items: {
-    title: Multilingual;
-    description: Multilingual;
+    title: string;
+    description: string;
     image?: ImageMetadata;
   }[];
 };

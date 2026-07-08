@@ -1,23 +1,12 @@
 ---
 import { NavigationItem } from "@components";
 import { C } from "@configuration";
-import type { Lang } from "@models/type";
-import { pathManager } from "@utils";
-
-const locale = Astro.currentLocale as Lang;
 ---
 
 <nav class="flex flex-col gap-1">
   {
-    C.NAVIGATIONS.map(
-      (navigation) =>
-        locale &&
-        navigation.locales.includes(locale) && (
-          <NavigationItem
-            name={navigation.name}
-            href={pathManager.changeLocale(navigation.href, locale)}
-          />
-        )
-    )
+    C.NAVIGATIONS.map((navigation) => (
+      <NavigationItem name={navigation.name} href={navigation.href} />
+    ))
   }
 </nav>

@@ -1,17 +1,15 @@
 ---
 import { EntryItem, EntriesNotFound } from "@components";
-import { useTranslations, getEntries } from "@utils";
+import { getEntries } from "@utils";
 import { C } from "@configuration";
-import type { Category, Lang } from "@models/type";
+import type { Category } from "@models/type";
 import { Icon } from "@ui-kit";
 
-const { category, lang } = Astro.params;
-const locale = lang as Lang;
+const { category } = Astro.params;
 
-const entries = await getEntries({ category: category!, locale });
+const entries = await getEntries({ category: category! });
 
-const t = useTranslations(locale);
-const title = t(C.CATEGORIES_LABELS[category as Category]);
+const title = C.CATEGORIES_LABELS[category as Category];
 const entryIds = entries.map((entry) => entry.id);
 ---
 
@@ -27,10 +25,7 @@ const entryIds = entries.map((entry) => entry.id);
     <input
       id="entry-search-input"
       type="text"
-      placeholder={t({
-        en: "Search",
-        tr: "Ara",
-      })}
+      placeholder="Ara"
       class="w-full p-2 border-none text-xs bg-transparent placeholder:text-gray-400 focus:outline-none focus:ring-0"
     />
   </div>
@@ -61,12 +56,7 @@ const entryIds = entries.map((entry) => entry.id);
       },
     ]}
   >
-    {
-      t({
-        en: "No search results",
-        tr: "Sonuç bulunamadı",
-      })
-    }
+    Sonuç bulunamadı
   </div>
 </aside>
 
