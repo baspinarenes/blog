@@ -10,19 +10,9 @@ import { defineConfig } from "astro/config";
 import { toString } from "mdast-util-to-string";
 import getReadingTime from "reading-time";
 import { og } from "./plugins/og";
-import { C } from "./src/configuration";
 
 export default defineConfig({
   site: "https://www.enesbaspinar.com",
-
-  i18n: {
-    locales: Object.keys(C.LOCALES),
-    defaultLocale: "en",
-    routing: {
-      prefixDefaultLocale: true,
-      redirectToDefaultLocale: false,
-    },
-  },
 
   vite: {
     plugins: [tailwindcss()],
