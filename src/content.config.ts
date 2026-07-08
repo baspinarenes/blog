@@ -57,7 +57,16 @@ const poems = defineCollection({
     pattern: "**/[^_]*.mdx",
     base: "./src/content/blog/poems",
   }),
-  schema: entrySchema,
+  schema: (ctx: { image: any }) =>
+    entrySchema(ctx).extend({
+      song: z
+        .object({
+          file: z.string(),
+          name: z.string(),
+          artist: z.string().optional(),
+        })
+        .optional(),
+    }),
 });
 
 export const collections = {
