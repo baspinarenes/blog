@@ -12,7 +12,9 @@ interface Props {
 }
 
 const { title, date, minutesRead, entryId, tags, song } = Astro.props;
-const songLabel = song ? [song.artist, song.name].filter(Boolean).join(" — ") : "";
+const songLabel = song
+  ? [song.artist, song.name].filter(Boolean).join(" — ")
+  : "";
 ---
 
 <main class="poem-paper">
@@ -74,7 +76,7 @@ const songLabel = song ? [song.artist, song.name].filter(Boolean).join(" — ") 
             <span />
             <span />
           </span>
-          {songLabel && <span class="poem-song-label">{songLabel}</span>}
+          <span class="poem-song-label">Müzik telif </span>
         </div>
       )
     }
@@ -83,7 +85,14 @@ const songLabel = song ? [song.artist, song.name].filter(Boolean).join(" — ") 
 
 <style>
   .poem-paper {
-    background: linear-gradient(180deg, #f6f1e5 0%, #efe7d4 100%);
+    background:
+      linear-gradient(rgba(58, 47, 36, 0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(58, 47, 36, 0.055) 1px, transparent 1px),
+      linear-gradient(180deg, #f6f1e5 0%, #efe7d4 100%);
+    background-size:
+      24px 24px,
+      24px 24px,
+      100% 100%;
     font-family: "Lora", Georgia, serif;
     color: #3a2f24;
   }
