@@ -10,7 +10,7 @@ const sortedJourney = journey.sort((a, b) => b.data.year - a.data.year);
 ---
 
 <BaseLayout title={title}>
-  <main>
+  <main class="no-grid">
     <div class="main-container">
       {
         sortedJourney.map((item) => (
