@@ -6,15 +6,14 @@
 @layer base {
   body {
     font-family: "Geist", sans-serif;
-    background-color: #faf9f5;
     @apply min-h-dvh h-dvh md:h-auto text-gray-900;
   }
 
   main {
     background:
-      linear-gradient(rgba(58, 47, 36, 0.055) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(58, 47, 36, 0.055) 1px, transparent 1px),
-      linear-gradient(180deg, #f6f1e5 0%, #efe7d4 100%);
+      linear-gradient(rgba(0, 0, 0, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.045) 1px, transparent 1px),
+      #ffffff;
     background-size:
       24px 24px,
       24px 24px,
