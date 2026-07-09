@@ -15,7 +15,7 @@
 | Otomatik oynatma | Autoplay denenir; engellenirse ilk kullanıcı etkileşiminde (pointerdown/keydown/scroll) kendiliğinden başlar |
 | Atmosfer | Kâğıt & mürekkep (krem zemin, serif, ince çerçeve) |
 | Kapsam | Mevcut blog düzeni korunur; kâğıt dokusu yalnızca içerik alanını kaplar. Sidebar, şiir listesi (Entries), topbar aynen kalır |
-| Şarkı bitince | Başa sarar (loop) |
+| Şarkı bitince | Durur (loop yok — kullanıcı kararıyla güncellendi, 2026-07-09) |
 
 ## İçerik Modeli
 
@@ -62,7 +62,7 @@ Mp3 dosyaları şiir klasöründe co-locate edilir (ör. `src/content/blog/poems
 - **Görünüm:** kâğıt tonlarında hap (pill) player — yuvarlak oynat/duraklat düğmesi (`#3a2f24` zemin, krem ikon), çalarken hareket eden 4 çubuklu ekolayzer animasyonu, `"{artist} — {name}"` metni (artist yoksa yalnız `name`).
 - **Konum:** içerik alanının altına yapışık (`position: sticky; bottom: …`), uzun şiirlerde de görünür kalır.
 - **Davranış:**
-  - Sayfa yüklenince `audio.play()` denenir (`loop = true`, `volume = 0.7`).
+  - Sayfa yüklenince `audio.play()` denenir (`loop = false`, `volume = 0.7`); şarkı bitince durur.
   - Promise reddedilirse `pointerdown`, `keydown`, `wheel`/`touchmove` olaylarına tek seferlik dinleyiciler takılır; ilk etkileşimde çalma yeniden denenir ve dinleyiciler kaldırılır.
   - Oynat/duraklat düğmesi her durumda manuel kontrol sağlar; ekolayzer yalnızca çalarken hareket eder.
   - Sayfadan ayrılınca ses doğal olarak durur (tam sayfa geçişleri, SPA yok).
@@ -79,7 +79,7 @@ Mp3 dosyaları şiir klasöründe co-locate edilir (ör. `src/content/blog/poems
 Dev sunucusunda şiir sayfası açılarak:
 
 1. Autoplay / ilk-etkileşimde başlama davranışı (yeni sekmede açıp hiç etkileşmeden ve etkileşerek),
-2. Döngü (şarkı sonunda başa sarma),
+2. Şarkı sonunda durma (loop yok),
 3. Oynat/duraklat ve ekolayzer durumları,
 4. `song`suz şiirde player'ın görünmemesi,
 5. Şiir dışı bir kategorinin detay sayfasının etkilenmediği

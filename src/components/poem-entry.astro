@@ -265,7 +265,7 @@ const songLabel = song ? [song.artist, song.name].filter(Boolean).join(" — ") 
   const toggle = document.getElementById("poem-play-toggle");
 
   if (player && audio && toggle) {
-    audio.loop = true;
+    audio.loop = false;
     audio.volume = 0.7;
 
     audio.addEventListener("play", () => player.classList.add("is-playing"));
