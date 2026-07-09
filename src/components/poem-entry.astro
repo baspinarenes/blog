@@ -35,49 +35,49 @@ const songLabel = song ? [song.artist, song.name].filter(Boolean).join(" — ") 
 
       <h1 class="poem-title">{title}</h1>
 
+      {
+        song && (
+          <div id="poem-player" class="poem-player">
+            <audio src={song.url} preload="auto" />
+            <button
+              id="poem-play-toggle"
+              class="poem-play-btn"
+              aria-label="Müziği başlat veya durdur"
+            >
+              <svg
+                class="icon-play"
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="currentColor"
+              >
+                <path d="M2 1l9 5-9 5V1z" />
+              </svg>
+              <svg
+                class="icon-pause"
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="currentColor"
+              >
+                <path d="M2 1h3v10H2V1zm5 0h3v10H7V1z" />
+              </svg>
+            </button>
+            <span class="poem-eq" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+              <span />
+            </span>
+            {songLabel && <span class="poem-song-label">{songLabel}</span>}
+          </div>
+        )
+      }
+
       <article class="poem-verses">
         <slot />
       </article>
     </div>
-
-    {
-      song && (
-        <div id="poem-player" class="poem-player">
-          <audio src={song.url} preload="auto" />
-          <button
-            id="poem-play-toggle"
-            class="poem-play-btn"
-            aria-label="Müziği başlat veya durdur"
-          >
-            <svg
-              class="icon-play"
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              fill="currentColor"
-            >
-              <path d="M2 1l9 5-9 5V1z" />
-            </svg>
-            <svg
-              class="icon-pause"
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              fill="currentColor"
-            >
-              <path d="M2 1h3v10H2V1zm5 0h3v10H7V1z" />
-            </svg>
-          </button>
-          <span class="poem-eq" aria-hidden="true">
-            <span />
-            <span />
-            <span />
-            <span />
-          </span>
-          {songLabel && <span class="poem-song-label">{songLabel}</span>}
-        </div>
-      )
-    }
   </div>
 </main>
 
@@ -169,9 +169,7 @@ const songLabel = song ? [song.artist, song.name].filter(Boolean).join(" — ") 
   }
 
   .poem-player {
-    position: sticky;
-    bottom: 1rem;
-    margin: 2.5rem auto 0;
+    margin: 0 auto 1.5rem;
     display: flex;
     align-items: center;
     gap: 0.625rem;
