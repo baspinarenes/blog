@@ -77,7 +77,7 @@ const pageDescription =
     />
   </head>
   <body
-    class="flex flex-col md:flex-row items-stretch min-h-dvh overflow-hidden"
+    class="flex flex-col md:flex-row items-stretch min-h-dvh overflow-hidden bg-transparent"
   >
     <div class="flex md:hidden">
       <Topbar {id} {title} {date} />
@@ -102,7 +102,7 @@ const pageDescription =
 
           if (data.success && data.viewCounts) {
             const viewCountElements = document.querySelectorAll(
-              `[data-entry-view-count]`
+              `[data-entry-view-count]`,
             );
 
             viewCountElements.forEach((element) => {

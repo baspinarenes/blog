@@ -9,7 +9,7 @@ import { C } from "@configuration";
 
 export async function getStaticPaths() {
   const entries = await Promise.all(
-    C.ENTRY_CATEGORIES.map((category) => getEntries({ category }))
+    C.ENTRY_CATEGORIES.map((category) => getEntries({ category })),
   );
 
   const paths = entries.flat().map((post) => {
@@ -32,7 +32,10 @@ const { Content, remarkPluginFrontmatter } = await render(post);
 const { title, description, date, tags, topic, cover } = post.data;
 
 const isPoem = post.collection === "poems";
-const songData = isPoem ? (post.data as { song?: { file: string; name: string; artist?: string } }).song : undefined;
+const songData = isPoem
+  ? (post.data as { song?: { file: string; name: string; artist?: string } })
+      .song
+  : undefined;
 const song = songData
   ? {
       url: resolvePoemSongUrl(post.id, songData.file),
@@ -61,27 +64,25 @@ const song = songData
           <article>
             <div class="hidden md:flex flex-col lg:flex-row gap-2 text-sm select-none mb-8 text-gray-500">
               <div class="flex gap-2">
-                <div class="block">{formatDate(date)} /</div>
+                <div class="block">{formatDate(date)}</div>
                 <div class="flex gap-1 items-center">
                   <Icon name="clock" size={16} />
-                  {remarkPluginFrontmatter.minutesRead} dk /
+                  {remarkPluginFrontmatter.minutesRead} dk
                 </div>
                 <div
                   id="view-counter"
                   class="flex gap-1 items-center ml-4 md:ml-0"
                 >
-                  <Icon name="view" size={16} />
+                  <Icon name="view" size={18} />
                   <span
                     data-entry-view-count={entryId}
                     class="empty:opacity-0 transition-opacity duration-700 whitespace-nowrap"
                   />
                 </div>
               </div>
-              <div class="flex gap-1 items-center lg:ml-auto">
+              <div class="flex items-center lg:ml-auto">
                 {tags.slice(0, 3).map((tag) => (
-                  <div class="text-xs px-2 py-1 rounded-lg bg-gray-200">
-                    #{tag}
-                  </div>
+                  <div class="text-xs px-1 py-1">#{tag}</div>
                 ))}
               </div>
             </div>
