@@ -13,24 +13,21 @@ export const C = {
   },
   ENTRY_CATEGORIES: [
     "writings",
-    "cultures",
-    "thoughts",
     "poems",
+    "cultures",
   ],
   NAVIGATIONS: [
     { name: "home", href: "/" },
     { name: "journey", href: "/journey" },
     { name: "writings", href: "/writings" },
-    { name: "cultures", href: "/cultures" },
-    { name: "thoughts", href: "/thoughts" },
     { name: "poems", href: "/poems" },
+    { name: "cultures", href: "/cultures" },
   ] as Array<{ name: string; href: string }>,
   CATEGORIES_LABELS: {
     home: "Anasayfa",
     journey: "Yolculuğum",
     writings: "Yazılarım",
     cultures: "Kültür & Sanat",
-    thoughts: "Düşüncelerim",
     poems: "Şiirlerim",
   },
 };
