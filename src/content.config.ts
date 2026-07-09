@@ -58,15 +58,17 @@ const poems = defineCollection({
     base: "./src/content/blog/poems",
   }),
   schema: (ctx: { image: any }) =>
-    entrySchema(ctx).extend({
-      song: z
-        .object({
-          file: z.string(),
-          name: z.string(),
-          artist: z.string().optional(),
-        })
-        .optional(),
-    }),
+    entrySchema(ctx)
+      .extend({
+        song: z
+          .object({
+            file: z.string(),
+            name: z.string().optional(),
+            artist: z.string().optional(),
+          })
+          .optional(),
+      })
+      .partial({ topic: true, tags: true }),
 });
 
 export const collections = {
