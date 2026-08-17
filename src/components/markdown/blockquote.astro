@@ -1,22 +1,32 @@
 ---
-import { Icon } from "astro-icon/components";
+
 ---
 
-<div
-  class="blockquote-container relative mt-8 mb-6 flex flex-col items-center border border-gray-300 rounded-lg"
+<figure
+  class="blockquote-container relative -mx-4 md:mx-0 mb-6 flex gap-3 md:rounded-r-lg bg-slate-50 border-[1px] border-l-[3px] border-slate-300 border-l-slate-800"
 >
-  <div
-    class="absolute -top-5 px-4 bg-white w-fit flex justify-center items-center gap-2 text-gray-500"
+  <blockquote
+    class="relative w-full px-4 md:px-6 py-4 text-[15px] md:text-base leading-7 text-slate-700"
   >
-    <Icon name="logo" size={44} class="rotate-6" />
-  </div>
-  <blockquote class="px-6 pt-8 pb-4 w-full italic">
+    <span
+      aria-hidden="true"
+      class="pointer-events-none absolute right-3 top-1 -z-0 select-none font-serif text-5xl leading-none text-slate-900/[0.07]"
+      >&rdquo;</span
+    >
     <slot />
   </blockquote>
-</div>
+</figure>
 
-<style>
+<style is:global>
+  .blockquote-container blockquote > p + p {
+    margin-top: 0.75rem !important;
+  }
+
+  .blockquote-container blockquote > :last-child {
+    margin-bottom: 0 !important;
+  }
+
   .blockquote-container .blockquote-container {
-    margin-bottom: 0;
+    margin: 1rem 0 0;
   }
 </style>
