@@ -18,7 +18,7 @@ export const C = {
   ],
   NAVIGATIONS: [
     { name: "home", href: "/" },
-    { name: "journey", href: "/journey" },
+    // { name: "journey", href: "/journey" },
     { name: "writings", href: "/writings" },
     { name: "poems", href: "/poems" },
     { name: "cultures", href: "/cultures" },
