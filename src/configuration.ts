@@ -9,6 +9,7 @@ export const C = {
       linkedin: "https://www.linkedin.com/in/enesbaspinar",
       github: "https://github.com/baspinarenes",
       youtube: "https://www.youtube.com/ensbaspinar",
+      instagram: "https://www.instagram.com/nsbaspinar",
     },
   },
   ENTRY_CATEGORIES: [
